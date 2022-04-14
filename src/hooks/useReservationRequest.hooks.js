@@ -19,7 +19,8 @@ export const useReservationRequest = () => {
   const [group_list, setGroup_list] = useState([]);
   const [subject_list, setSubject_list] = useState(new Map());
   const [sent, setSent] = useState(false);
-
+  const [totalStudents, setTotalStudents] = useState(0);
+  const [periodSelected, setPeriodSelected] = useState("");
   const fetchDataTeacher = async () => {
     const response = mockTeacher;
     setTeacher({ name: response.name });
@@ -42,22 +43,27 @@ export const useReservationRequest = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (e.target.value === "") {
-    //   alert("Llene todos los campos");
-    // } else {
     setSent(true);
-    // }
   };
 
   const handleChangeSubject = (e) => {
     setSubjectSelected(e.target.value);
-    setGroup_list(subject_list.get(e.target.value));
   };
 
   const handleChangeGroup = (e) => {
-    setGroup_list(e.target.value);
+    const {
+      target: { value },
+    } = e;
+    setGroup_list(typeof value === "string" ? value.split(",") : value);
   };
 
+  const handleChangeTotalStudents = (e) => {
+    setTotalStudents(e.target.value);
+  };
+
+  const handleChangePeriod = (e) => {
+    setPeriodSelected(e.target.value);
+  };
   return {
     teacher,
     subjectSelected,
@@ -67,5 +73,9 @@ export const useReservationRequest = () => {
     handleSubmit,
     handleChangeSubject,
     handleChangeGroup,
+    totalStudents,
+    handleChangeTotalStudents,
+    periodSelected,
+    handleChangePeriod,
   };
 };

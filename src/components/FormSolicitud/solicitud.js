@@ -14,7 +14,9 @@ import React from "react";
 import { useReservationRequest } from "../../hooks/useReservationRequest.hooks";
 import FormInputControl from "../inputs/input/input.js";
 import DateController from "../../utilities/DateController";
-const periodos = ["6:45", "8:15", "9:45"];
+import FormSelectControl from "../inputs/inputSelect/inputSelect";
+import FormMultiselectControl from "../inputs/inputMultiselect/inputMultiselect";
+const periods = ["6:45", "8:15", "9:45"];
 
 function Solicitud() {
   const [age, setAge] = React.useState("");
@@ -28,6 +30,10 @@ function Solicitud() {
     handleSubmit,
     handleChangeSubject,
     handleChangeGroup,
+    totalStudents,
+    handleChangeTotalStudents,
+    periodSelected,
+    handleChangePeriod,
   } = useReservationRequest();
 
   return (
@@ -49,37 +55,20 @@ function Solicitud() {
                 {teacher.name}
               </Typography>
               <div>
-                <FormControl sx={{ m: 1, width: 300 }}>
-                  <InputLabel id="demo-simple-select-label">Materia</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={subjectSelected}
-                    label="Materia"
-                    onChange={handleChangeSubject}
-                  >
-                    {[...subject_list].map((subject) => {
-                      return (
-                        <MenuItem value={subject[0]}>{subject[0]}</MenuItem>
-                      );
-                    })}
-                  </Select>
-                </FormControl>
+                <FormSelectControl
+                  myLabel="Materia"
+                  value={subjectSelected}
+                  setValue={handleChangeSubject}
+                  list={[...subject_list.keys()]}
+                />
+
                 {subjectSelected !== "" ? (
-                  <FormControl sx={{ m: 1, width: 300 }}>
-                    <InputLabel id="demo-simple-select-label">Grupo</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value="dsd"
-                      label="Grupo"
-                      onChange={handleChangeGroup}
-                    >
-                      {group_list.map((group) => {
-                        return <MenuItem value={group}>{group}</MenuItem>;
-                      })}
-                    </Select>
-                  </FormControl>
+                  <FormMultiselectControl
+                    myLabel="Grupo"
+                    value={group_list}
+                    setValue={handleChangeGroup}
+                    list={[...subject_list.get(subjectSelected)]}
+                  />
                 ) : (
                   <Typography
                     variant="body2"
@@ -95,7 +84,13 @@ function Solicitud() {
                 myLabel="Total estudiantes"
                 myType="number"
                 myVariant="outlined"
+                value={totalStudents}
+                myInputProps={{
+                  inputProps: { pattern: "[0-9]+" },
+                }}
+                setValue={handleChangeTotalStudents}
               />
+
               <FormInputControl
                 myLabel="Motivo de solicitud"
                 myMultiline={true}
@@ -105,23 +100,18 @@ function Solicitud() {
                 <FormInputControl
                   myLabel="Fecha"
                   myType="date"
-                  myInputProps={{ inputProps: { min: DateController.getToday() } }}
+                  myInputProps={{
+                    inputProps: { min: DateController.getToday() },
+                  }}
                   myDefaultValue={DateController.getToday()}
                 />
-                <FormControl sx={{ m: 1, width: 300 }}>
-                  <InputLabel id="demo-simple-select-label">Hora</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={age}
-                    label="Grupo"
-                    onChange={handleChangeGroup}
-                  >
-                    {periodos.map((periodo) => {
-                      return <MenuItem value={periodo}>{periodo}</MenuItem>;
-                    })}
-                  </Select>
-                </FormControl>
+
+                <FormSelectControl
+                  myLabel="Hora"
+                  value={periodSelected}
+                  setValue={handleChangePeriod}
+                  list={periods}
+                />
               </div>
               <div>
                 <FormInputControl
