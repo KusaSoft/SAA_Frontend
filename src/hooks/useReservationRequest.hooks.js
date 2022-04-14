@@ -8,7 +8,7 @@ const mockTeacher = {
     },
     {
       name_subject: "Introducción a la programación",
-      group_list: [1, 4],
+      group_list: [1, 6, 4],
     },
   ],
 };
@@ -37,14 +37,8 @@ export const useReservationRequest = () => {
 
   useEffect(() => {
     if (subject_list.size > 0) {
-      console.log(subject_list.get("Elementos"));
     }
   }, [subject_list]);
-
-  const handleChange = (e) => {
-    setSubjectSelected(e.target.value);
-    setGroup_list(subject_list.get(e.target.value));
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -56,7 +50,8 @@ export const useReservationRequest = () => {
   };
 
   const handleChangeSubject = (e) => {
-    setSubject_list(e.target.value);
+    setSubjectSelected(e.target.value);
+    setGroup_list(subject_list.get(e.target.value));
   };
 
   const handleChangeGroup = (e) => {
@@ -69,7 +64,6 @@ export const useReservationRequest = () => {
     group_list,
     subject_list,
     sent,
-    handleChange,
     handleSubmit,
     handleChangeSubject,
     handleChangeGroup,
