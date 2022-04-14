@@ -10,11 +10,10 @@ import {
   CardContent,
   Card,
 } from "@mui/material";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import React from "react";
 import { useReservationRequest } from "../../hooks/useReservationRequest.hooks";
-//import './FormSol.Styled';
-
+import FormInputControl from "../inputs/input/input.js";
+import DateController from "../../utilities/DateController";
 const periodos = ["6:45", "8:15", "9:45"];
 
 function Solicitud() {
@@ -92,35 +91,22 @@ function Solicitud() {
                   </Typography>
                 )}
               </div>
+              <FormInputControl
+                myLabel="Total estudiantes"
+                myType="number"
+                myVariant="outlined"
+              />
+              <FormInputControl
+                myLabel="Motivo de solicitud"
+                myMultiline={true}
+                myRows={4}
+              />
               <div>
-                <FormControl sx={{ m: 1, width: 300 }}>
-                  <TextField
-                    label="Total Estudiantes"
-                    type="number"
-                    variant="outlined"
-                  ></TextField>
-                </FormControl>
-              </div>
-              <div>
-                <FormControl sx={{ m: 1, width: 300 }}>
-                  <TextField
-                    id="outlined-multiline-static"
-                    label="Motivo de solicitud"
-                    multiline
-                    rows={4}
-                  />
-                </FormControl>
-              </div>
-              <div>
-                <TextField
-                  id="date"
-                  label="Fecha"
-                  type="date"
-                  defaultValue="2017-05-24"
-                  sx={{ width: 220 }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                <FormInputControl
+                  myLabel="Fecha"
+                  myType="date"
+                  myInputProps={{ inputProps: { min: DateController.getToday() } }}
+                  myDefaultValue={DateController.getToday()}
                 />
                 <FormControl sx={{ m: 1, width: 300 }}>
                   <InputLabel id="demo-simple-select-label">Hora</InputLabel>
@@ -138,12 +124,11 @@ function Solicitud() {
                 </FormControl>
               </div>
               <div>
-                <TextField
-                  sx={{ m: 1, width: 300 }}
-                  label="Cantidad de periodos"
-                  type="number"
-                  variant="outlined"
-                ></TextField>
+                <FormInputControl
+                  myLabel="Cantidad de periodos"
+                  myType="number"
+                  myVariant="outlined"
+                ></FormInputControl>
               </div>
               <Grid item xs={11}>
                 <Button
