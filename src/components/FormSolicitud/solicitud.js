@@ -18,7 +18,7 @@ import FormInputControl from "../inputs/input/input.js";
 import DateController from "../../utilities/DateController";
 import FormSelectControl from "../inputs/inputSelect/inputSelect";
 import FormMultiselectControl from "../inputs/inputMultiselect/inputMultiselect";
-import { PropaneSharp } from "@mui/icons-material";
+import { Grid4x4, PropaneSharp } from "@mui/icons-material";
 const periods = ["6:45", "8:15", "9:45"];
 
 function Solicitud() {
@@ -44,11 +44,10 @@ function Solicitud() {
       <Typography gutterBottom variant="h3" align="center">
         Solicitud de Reserva
       </Typography>
-      <Card style={{ minWidth: 400, maxWidth: 700, padding: "10px 2px", margin: "auto" }}>
+      <Card style={{ maxWidth: 700, padding: "10px 2px", margin: "auto" }}>
         <CardContent>
           <form>
             <List container spacing={0}>
-
               <div>
                 <Typography
                   padding="0px 16px"
@@ -63,8 +62,8 @@ function Solicitud() {
                 </Typography>
               </div>
 
-              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid item xs={6}>
+              <Grid container spacing={2}>
+                <Grid item sm={6} xs={12}>
                   <FormSelectControl
                     myLabel="Materia"
                     value={subjectSelected}
@@ -72,7 +71,7 @@ function Solicitud() {
                     list={[...subject_list.keys()]}
                   />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item sm={6} xs={12}>
                   <FormMultiselectControl
                     disabled={subjectSelected === ""}
                     myLabel="Grupo"
@@ -82,39 +81,42 @@ function Solicitud() {
                   />
                 </Grid>
               </Grid>
-
-              <div>
-                <FormInputControl
-                  maxWidth="200px"
-                  myLabel="Total estudiantes"
-                  myType="number"
-                  myVariant="outlined"
-                  value={totalStudents}
-                  myInputProps={{
-                    inputProps: { pattern: "[0-9]+" },
-                  }}
-                  setValue={handleChangeTotalStudents}
-                />
-              </div>
-              <div>
-                <FormInputControl
-                  myLabel="Motivo de solicitud"
-                  myMultiline={true}
-                  myRows={4}
-                />
-              </div>
-              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid item xs={6}>
+              <Grid container spacing={2}>
+                <Grid item sm={2} xs={6}>
+                  <FormInputControl
+                    maxWidth="500px"
+                    myLabel="Total estudiantes"
+                    myType="number"
+                    myVariant="outlined"
+                    value={totalStudents}
+                    myInputProps={{
+                      inputProps: { pattern: "[0-9]+", min:"1"},
+                    }}
+                    setValue={handleChangeTotalStudents}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={2}>
+                <Grid item sm={12} xs={12}>
+                  <FormInputControl
+                    myLabel="Motivo de solicitud"
+                    myMultiline={true}
+                    myRows={4}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={2}>
+                <Grid item sm={6} xs={12}>
                   <FormInputControl
                     myLabel="Fecha"
                     myType="date"
                     myInputProps={{
-                      inputProps: { min: DateController.getToday() },
+                      inputProps: { min: DateController.getToday() }
                     }}
                     myDefaultValue={DateController.getToday()}
                   />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item sm={6} xs={12}>
                   <FormSelectControl
                     myLabel="Hora"
                     value={periodSelected}
@@ -122,27 +124,27 @@ function Solicitud() {
                     list={periods}
                   />
                 </Grid>
-
-
               </Grid>
-              <div>
+              <Grid>
                 <FormInputControl
-                  maxWidth="200px"
+                  maxWidth="300px"
                   myLabel="Cantidad de periodos"
                   myType="number"
                   myVariant="outlined"
+                  myInputProps={{
+                    inputProps: { pattern:"[0-9]*",min:"1", max:"5" ,step:"1" },
+                  }}
                 ></FormInputControl>
-              </div>
-              <div>
+              </Grid>
+              <Grid>
                 <Button
                   type="submit"
                   variant="contained"
                   color="primary"
-                //fullWidth
                 >
                   Enviar Solicitud
                 </Button>
-              </div>
+              </Grid>
             </List>
           </form>
         </CardContent>

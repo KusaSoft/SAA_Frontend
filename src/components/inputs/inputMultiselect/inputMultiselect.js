@@ -38,6 +38,7 @@ export default function FormMultiselectControl(props) {
         <InputLabel>{props.myLabel}</InputLabel>
         <Select
           multiple
+          required
           value={props.value}
           onChange={props.setValue}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
