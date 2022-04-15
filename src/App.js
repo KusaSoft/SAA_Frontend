@@ -13,6 +13,7 @@ import {
 import ReservationRequest from "./pages/ReservationRequest";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import PersistentDrawerLeft from "./components/Dashboard/Dashboard";
 const ROLES = {
   User: 2001,
   Editor: 1984,
@@ -39,7 +40,9 @@ function App() {
 
         <Route path="/" element={<Navigate replace to="/home" />} />
         {/* </Route> */}
+        
       </Routes>
+      <PersistentDrawerLeft/>
     </>
   );
 }
