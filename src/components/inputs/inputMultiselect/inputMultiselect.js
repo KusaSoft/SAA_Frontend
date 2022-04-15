@@ -34,7 +34,7 @@ export default function FormMultiselectControl(props) {
   const theme = useTheme();
   return (
     <Wrapper>
-      <FormControlInput>
+      <FormControlInput disabled={props.disabled}>
         <InputLabel>{props.myLabel}</InputLabel>
         <Select
           multiple

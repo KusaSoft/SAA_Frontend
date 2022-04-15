@@ -5,7 +5,7 @@ import { FormControlInput, Wrapper } from "./input.styles";
 export default function FormInputControl(props) {
 
   return (
-    <Wrapper>
+    <Wrapper maxWidth={props.maxWidth}>
       <FormControlInput>
         <TextField
           value={props.value}

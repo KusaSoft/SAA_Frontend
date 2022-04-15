@@ -4,7 +4,7 @@ import { FormControlInput, Wrapper } from "./inputSelect.styles";
 export default function FormSelectControl(props) {
   return (
     <Wrapper>
-      <FormControlInput>
+      <FormControlInput disabled={props.disabled}>
         <InputLabel>{props.myLabel}</InputLabel>
         <Select
           value={props.value}

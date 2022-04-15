@@ -48,6 +48,7 @@ export const useReservationRequest = () => {
 
   const handleChangeSubject = (e) => {
     setSubjectSelected(e.target.value);
+    setGroup_list([]);
   };
 
   const handleChangeGroup = (e) => {
