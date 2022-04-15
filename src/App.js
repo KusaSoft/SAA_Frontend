@@ -13,7 +13,11 @@ import {
 import ReservationRequest from "./pages/ReservationRequest";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-
+const ROLES = {
+  User: 2001,
+  Editor: 1984,
+  Admin: 5150,
+};
 function App() {
   return (
     <>
