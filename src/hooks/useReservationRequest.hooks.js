@@ -19,7 +19,7 @@ export const useReservationRequest = () => {
   const [group_list, setGroup_list] = useState([]);
   const [subject_list, setSubject_list] = useState(new Map());
   const [sent, setSent] = useState(false);
-  const [totalStudents, setTotalStudents] = useState(0);
+  const [totalStudents, setTotalStudents] = useState("");
   const [periodSelected, setPeriodSelected] = useState("");
   const fetchDataTeacher = async () => {
     const response = mockTeacher;
