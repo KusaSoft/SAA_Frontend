@@ -6,6 +6,5 @@ export const FormControlInput = styled(FormControl)`
 `;
 export const Wrapper = styled.div`
   padding: 1rem;
-  min-width: 200px;
-  max-width: ${props => ( props.maxWidth)};
+  min-width: 300px;
 `;

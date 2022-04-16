@@ -17,6 +17,7 @@ export default function FormInputControl(props) {
           rows={props.myRows}
           defaultValue={props.myDefaultValue}
           InputProps={props.myInputProps}
+          required
         ></TextField>
       </FormControlInput>
     </Wrapper>

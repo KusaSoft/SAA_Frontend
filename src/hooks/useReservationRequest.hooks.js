@@ -1,17 +1,28 @@
 import { useState, useEffect } from "react";
 const mockTeacher = {
-  name: "Leticia",
+  name: "Corina",
   subject: [
     {
-      name_subject: "Elementos",
-      group_list: [1, 4],
+      name_subject: "Taller de Ingenieria de Software",
+      group_list: ["2, Leticia Blanco", "3, David Escalera", "4, Patricia Rodriguez"],
     },
     {
       name_subject: "Introducción a la programación",
-      group_list: [1, 6, 4],
+      group_list: ["1, Carla Salazar","2, Leticia Blanco","3, Vladimir Costas"],
     },
   ],
 };
+
+const mockNewTeachers = [
+  {
+    name: "Vladimir",
+    group_list: [2],
+  },
+  {
+    name: "Leticia",
+    group_list: [3, 5],
+  }
+]
 
 export const useReservationRequest = () => {
   const [teacher, setTeacher] = useState({});
@@ -19,8 +30,11 @@ export const useReservationRequest = () => {
   const [group_list, setGroup_list] = useState([]);
   const [subject_list, setSubject_list] = useState(new Map());
   const [sent, setSent] = useState(false);
-  const [totalStudents, setTotalStudents] = useState(0);
+  const [totalStudents, setTotalStudents] = useState("");
   const [periodSelected, setPeriodSelected] = useState("");
+  const [teachers, setTeachers] = useState([]);
+  const [teachersSelected, setTeachersSelected] = useState([]);
+
   const fetchDataTeacher = async () => {
     const response = mockTeacher;
     setTeacher({ name: response.name });
@@ -29,8 +43,12 @@ export const useReservationRequest = () => {
       subject_list_Map.set(subject.name_subject, subject.group_list);
     });
     setSubject_list(subject_list_Map);
-    console.log(mockTeacher, teacher, subject_list);
   };
+
+  const fetchDataTeachers = async (subject) => {
+    const response = mockNewTeachers;
+    setTeachers(response);
+  }
 
   useEffect(() => {
     fetchDataTeacher();
@@ -49,6 +67,8 @@ export const useReservationRequest = () => {
   const handleChangeSubject = (e) => {
     setSubjectSelected(e.target.value);
     setGroup_list([]);
+    fetchDataTeachers();
+    setTeachersSelected([]);
   };
 
   const handleChangeGroup = (e) => {
@@ -65,6 +85,11 @@ export const useReservationRequest = () => {
   const handleChangePeriod = (e) => {
     setPeriodSelected(e.target.value);
   };
+
+  const handleTeachersSelected = (e) => {
+    setTeachersSelected([...teachersSelected]+e.target.value);
+  }
+
   return {
     teacher,
     subjectSelected,
@@ -78,5 +103,8 @@ export const useReservationRequest = () => {
     handleChangeTotalStudents,
     periodSelected,
     handleChangePeriod,
+    teachersSelected,
+    handleTeachersSelected,
+    teachers,
   };
 };
