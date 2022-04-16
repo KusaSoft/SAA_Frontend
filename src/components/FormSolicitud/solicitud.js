@@ -10,7 +10,9 @@ import {
   CardContent,
   Card,
   List,
-  Stack
+  Stack,
+  Box,
+  Divider
 } from "@mui/material";
 import React from "react";
 import { useReservationRequest } from "../../hooks/useReservationRequest.hooks";
@@ -18,8 +20,7 @@ import FormInputControl from "../inputs/input/input.js";
 import DateController from "../../utilities/DateController";
 import FormSelectControl from "../inputs/inputSelect/inputSelect";
 import FormMultiselectControl from "../inputs/inputMultiselect/inputMultiselect";
-import { Grid4x4, PropaneSharp } from "@mui/icons-material";
-const periods = ["6:45", "8:15", "9:45"];
+const periods = ["06:45 - 08:15", "08:15 - 09:45", "09:45 - 11:15", "11:15 - 12:45", "12:45 - 14:15", "14:15 - 15:45", "15:45 - 17:15", "17:15 - 18:45", "18:45 - 20:15", "20:15 - 21:45"];
 
 function Solicitud() {
   const [age, setAge] = React.useState("");
@@ -37,6 +38,9 @@ function Solicitud() {
     handleChangeTotalStudents,
     periodSelected,
     handleChangePeriod,
+    teachersSelected,
+    handleTeachersSelected,
+    teachers,
   } = useReservationRequest();
 
   return (
@@ -62,7 +66,7 @@ function Solicitud() {
                 </Typography>
               </div>
 
-              <Grid container spacing={2}>
+              <Grid container spacing={2} columns={12}>
                 <Grid item sm={6} xs={12}>
                   <FormSelectControl
                     myLabel="Materia"
@@ -81,22 +85,39 @@ function Solicitud() {
                   />
                 </Grid>
               </Grid>
-              <Grid container spacing={2}>
-                <Grid item sm={2} xs={6}>
+              <Grid container spacing={2} columns={12}>
+                <Grid item sm={6} xs={12}>
                   <FormInputControl
-                    maxWidth="500px"
                     myLabel="Total estudiantes"
                     myType="number"
                     myVariant="outlined"
                     value={totalStudents}
                     myInputProps={{
-                      inputProps: { pattern: "[0-9]+", min:"1"},
+                      inputProps: { pattern: "[0-9]+", min: "1" },
                     }}
                     setValue={handleChangeTotalStudents}
                   />
                 </Grid>
               </Grid>
-              <Grid container spacing={2}>
+              {/* <Divider></Divider> */}
+              {/* <List>
+                {subjectSelected === ""?<></>:
+
+                }
+
+              </List> */}
+              {/* <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row-reverse',
+                }}
+              >
+                <Button variant="contained" disabled>
+                  Agregar Docentes
+                </Button>
+              </Box> */}
+
+              <Grid container spacing={2} columns={12}>
                 <Grid item sm={12} xs={12}>
                   <FormInputControl
                     myLabel="Motivo de solicitud"
@@ -105,7 +126,7 @@ function Solicitud() {
                   />
                 </Grid>
               </Grid>
-              <Grid container spacing={2}>
+              <Grid container spacing={2} columns={12}>
                 <Grid item sm={6} xs={12}>
                   <FormInputControl
                     myLabel="Fecha"
@@ -125,26 +146,30 @@ function Solicitud() {
                   />
                 </Grid>
               </Grid>
-              <Grid>
-                <FormInputControl
-                  maxWidth="300px"
-                  myLabel="Cantidad de periodos"
-                  myType="number"
-                  myVariant="outlined"
-                  myInputProps={{
-                    inputProps: { pattern:"[0-9]*",min:"1", max:"5" ,step:"1" },
-                  }}
-                ></FormInputControl>
+              <Grid container spacing={2} columns={12}>
+                <Grid item sm={6} xs={12}>
+                  <FormInputControl
+                    myLabel="Cantidad de periodos"
+                    myType="number"
+                    myVariant="outlined"
+                    myInputProps={{
+                      inputProps: { pattern: "[0-9]*", min: "1", max: "5", step: "1" },
+                    }}
+                  ></FormInputControl>
+                </Grid>
               </Grid>
-              <Grid>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                >
+
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row-reverse',
+                }} padding="1rem"
+              >
+                <Button variant="contained" type="submit"
+                  color="primary">
                   Enviar Solicitud
                 </Button>
-              </Grid>
+              </Box>
             </List>
           </form>
         </CardContent>
