@@ -3,7 +3,9 @@ import logo from "./logo.svg";
 import "./App.css";
 import {
   Routes,
+  BrowserRouter,
   Route,
+  Switch,
   Link,
   useNavigate,
   useLocation,
@@ -14,6 +16,9 @@ import ReservationRequest from "./pages/ReservationRequest";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import PersistentDrawerLeft from "./components/Dashboard/Dashboard";
+
+import Navbar from "./components/Dashboard/Navbar";
+
 const ROLES = {
   User: 2001,
   Editor: 1984,
@@ -22,6 +27,8 @@ const ROLES = {
 function App() {
   return (
     <>
+    {/* <PersistentDrawerLeft/> */}
+    <Navbar/>
       <Routes>
         {/* <Route element={<Layout />}> */}
         {/* <Route path="/" element={<PublicPage />} /> */}
@@ -42,7 +49,7 @@ function App() {
         {/* </Route> */}
         
       </Routes>
-      <PersistentDrawerLeft/>
+      
     </>
   );
 }

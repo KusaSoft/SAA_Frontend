@@ -21,41 +21,43 @@ import {Link} from 'react-router-dom';
 
 const drawerWidth = 240;
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  }),
-);
+// const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+//   ({ theme, open }) => ({
+//     flexGrow: 1,
+//     padding: theme.spacing(3),
+//     transition: theme.transitions.create('margin', {
+//       easing: theme.transitions.easing.sharp,
+//       duration: theme.transitions.duration.leavingScreen,
+//     }),
+//     marginLeft: `-${drawerWidth}px`,
+//     ...(open && {
+//       transition: theme.transitions.create('margin', {
+//         easing: theme.transitions.easing.easeOut,
+//         duration: theme.transitions.duration.enteringScreen,
+//       }),
+//       marginLeft: 0,
+//     }),
+//   }),
+// );
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
+   transition: theme.transitions.create(['margin', 'width'], {
+     easing: theme.transitions.easing.sharp,
+     duration: theme.transitions.duration.leavingScreen,
+   }),
+   ...(open && {
+     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: `${drawerWidth}px`,
+    backgroundColor: (255 ,255, 255, 0), 
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
-}));
+}) 
+);
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -65,6 +67,9 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   ...theme.mixins.toolbar,
   justifyContent: 'flex-end',
 }));
+
+const ListaDocente = [{icono:"nomIcono", ruta:"ruta", texto:"texto"}]
+const ListaAdmin = [{icono:"nomIcono", ruta:"ruta", texto:"texto"}]
 
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
@@ -81,8 +86,17 @@ export default function PersistentDrawerLeft() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
+      <AppBar sx={{                                
+                  // backgroundColor: 'rgba(255, 255, 255, 0)',
+                  // boxShadow: "none",
+                }} position="fixed" open={open}>
+        <Toolbar sx={{
+                  display: 'flex',
+                  // flexDirection: 'row-reverse',
+                  justifyContent: 'space-between',
+                  backgroundColor: 'rgba(255, 255, 255, 0)'
+                }}>
+          
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -92,8 +106,13 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Persistent drawer
+          
+          <Typography sx={{
+                  display: 'flex',
+                  flexDirection: 'row-reverse',
+                  color: "red"
+                }} variant="h6" noWrap component="div">
+            Ejemplo
           </Typography>
         </Toolbar>
       </AppBar>
@@ -116,9 +135,9 @@ export default function PersistentDrawerLeft() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        {<List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
+            <ListItem button key={text}> 
             <Link to="/login">
                 <ListItemIcon> 
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
@@ -128,13 +147,13 @@ export default function PersistentDrawerLeft() {
               
             </ListItem>
           ))}
-        </List>
+        </List>}
         
       </Drawer>
-      <Main open={open}>
+        {/* <Main open={open}>
         <DrawerHeader />
         
-      </Main>
+      </Main> */}
     </Box>
   );
 }
