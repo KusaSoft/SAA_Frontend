@@ -1,0 +1,25 @@
+// import * as FaIcons from "react-icons/fa";
+
+export const SidebarData = [
+  {
+    id: 1,
+    title: "Home",
+    cName: "sidebar-item",
+    // icon: <FaIcons.FaHome />,
+    path: "/home",
+  },
+  {
+    id: 2,
+    title: "Solicitar Reserva",
+    cName: "sidebar-item",
+    // icon: <FaIcons.FaCartPlus />,
+    path: "/reservationRequest",
+  },
+  {
+    id: 3,
+    title: "Iniciar Sesion",
+    cName: "sidebar-item",
+    // icon: <FaIcons.FaEnvelopeOpenText />,
+    path: "/login",
+  },
+];
