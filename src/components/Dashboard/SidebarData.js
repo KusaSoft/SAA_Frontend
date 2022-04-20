@@ -15,11 +15,4 @@ export const SidebarData = [
     // icon: <FaIcons.FaCartPlus />,
     path: "/reservationRequest",
   },
-  {
-    id: 3,
-    title: "Iniciar Sesion",
-    cName: "sidebar-item",
-    // icon: <FaIcons.FaEnvelopeOpenText />,
-    path: "/login",
-  },
 ];

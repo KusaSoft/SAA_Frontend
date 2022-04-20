@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useFormik } from "formik";
+import { useLocation, Navigate, Outlet } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 import * as Yup from "yup";
 import {
   Box,
@@ -10,8 +12,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import AuthContext from "../contexts/AuthProvider";
 
 function Login() {
+  const location = useLocation();
+  const { setAuth } = useContext(AuthContext);
+  const { auth } = useAuth();
   const formik = useFormik({
     initialValues: {
       email: "demo@devias.io",
@@ -27,11 +33,13 @@ function Login() {
         .required("La contraseña es requerida"),
     }),
     onSubmit: () => {
-      // router.push("/");
+      setAuth({
+        user: "mochito",
+        roles: [1984],
+      });
     },
   });
-
-  return (
+  return auth.user === null ? (
     <>
       <Box
         component="main"
@@ -90,6 +98,8 @@ function Login() {
         </Container>
       </Box>
     </>
+  ) : (
+    <Navigate to="/home" state={{ from: location }} replace />
   );
 }
 
