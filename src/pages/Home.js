@@ -7,6 +7,7 @@ export default function Home() {
       <p>
         This is the Home page. It is rendered when the user navigates to /home.
       </p>
+      
     </div>
   );
 }
