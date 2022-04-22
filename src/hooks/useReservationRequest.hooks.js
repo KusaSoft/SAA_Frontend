@@ -31,9 +31,11 @@ export const useReservationRequest = () => {
   const [subject_list, setSubject_list] = useState(new Map());
   const [sent, setSent] = useState(false);
   const [totalStudents, setTotalStudents] = useState("");
-  const [periodSelected, setPeriodSelected] = useState("");
-  const [teachers, setTeachers] = useState([]);
-  const [teachersSelected, setTeachersSelected] = useState([]);
+  const [periodIniSelected, setPeriodIniSelected] = useState("");
+  const [periodEndSelected, setPeriodEndSelected] = useState("");
+  const [motiveRequest,setMotiveRequest]=useState("");
+  // const [teachers, setTeachers] = useState([]);
+  // const [teachersSelected, setTeachersSelected] = useState([]);
 
   const fetchDataTeacher = async () => {
     const response = mockTeacher;
@@ -45,10 +47,10 @@ export const useReservationRequest = () => {
     setSubject_list(subject_list_Map);
   };
 
-  const fetchDataTeachers = async (subject) => {
-    const response = mockNewTeachers;
-    setTeachers(response);
-  }
+  // const fetchDataTeachers = async (subject) => {
+  //   const response = mockNewTeachers;
+  //   setTeachers(response);
+  // }
 
   useEffect(() => {
     fetchDataTeacher();
@@ -67,8 +69,8 @@ export const useReservationRequest = () => {
   const handleChangeSubject = (e) => {
     setSubjectSelected(e.target.value);
     setGroup_list([]);
-    fetchDataTeachers();
-    setTeachersSelected([]);
+    // fetchDataTeachers();
+    // setTeachersSelected([]);
   };
 
   const handleChangeGroup = (e) => {
@@ -82,13 +84,20 @@ export const useReservationRequest = () => {
     setTotalStudents(e.target.value);
   };
 
-  const handleChangePeriod = (e) => {
-    setPeriodSelected(e.target.value);
+  const handleChangePeriodIni = (e) => {
+    setPeriodIniSelected(e.target.value);
+  };
+  const handleChangePeriodEnd = (e) => {
+    setPeriodEndSelected(e.target.value);
   };
 
-  const handleTeachersSelected = (e) => {
-    setTeachersSelected([...teachersSelected]+e.target.value);
-  }
+  // const handleTeachersSelected = (e) => {
+  //   setTeachersSelected([...teachersSelected]+e.target.value);
+  // }
+
+  const handleMotiveRequest = (e) => {
+    setMotiveRequest(e.target.value);
+  };
 
   return {
     teacher,
@@ -101,10 +110,14 @@ export const useReservationRequest = () => {
     handleChangeGroup,
     totalStudents,
     handleChangeTotalStudents,
-    periodSelected,
-    handleChangePeriod,
-    teachersSelected,
-    handleTeachersSelected,
-    teachers,
+    periodIniSelected,
+    periodEndSelected,
+    handleChangePeriodIni,
+    handleChangePeriodEnd,
+    // teachersSelected,
+    // handleTeachersSelected,
+    // teachers,
+    motiveRequest,
+    handleMotiveRequest,
   };
 };

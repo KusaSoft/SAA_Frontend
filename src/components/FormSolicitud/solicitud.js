@@ -20,11 +20,15 @@ import FormInputControl from "../inputs/input/input.js";
 import DateController from "../../utilities/DateController";
 import FormSelectControl from "../inputs/inputSelect/inputSelect";
 import FormMultiselectControl from "../inputs/inputMultiselect/inputMultiselect";
-const periods = ["06:45 - 08:15", "08:15 - 09:45", "09:45 - 11:15", "11:15 - 12:45", "12:45 - 14:15", "14:15 - 15:45", "15:45 - 17:15", "17:15 - 18:45", "18:45 - 20:15", "20:15 - 21:45"];
+import { GifBoxSharp } from "@mui/icons-material";
+
+const periodsIni = ["06:45", "08:15", "09:45", "11:15", "12:45", "14:15", "15:45", "17:15", "18:45", "20:15"];
+const periodsEnd = ["08:15", "09:45", "11:15", "12:45", "14:15", "15:45", "17:15", "18:45", "20:15", "21:45"];
+const motive= ["Examen","Exposición","Capacitación","Otro"]
 
 function Solicitud() {
-  const [age, setAge] = React.useState("");
-  const [value, setValue] = React.useState("Controlled");
+  // const [age, setAge] = React.useState("");
+  // const [value, setValue] = React.useState("Controlled");
   const {
     teacher,
     subjectSelected,
@@ -36,11 +40,15 @@ function Solicitud() {
     handleChangeGroup,
     totalStudents,
     handleChangeTotalStudents,
-    periodSelected,
-    handleChangePeriod,
-    teachersSelected,
-    handleTeachersSelected,
-    teachers,
+    periodIniSelected,
+    periodEndSelected,
+    handleChangePeriodIni,
+    handleChangePeriodEnd,
+    // teachersSelected,
+    // handleTeachersSelected,
+    // teachers,
+    motiveRequest,
+    handleMotiveRequest,
   } = useReservationRequest();
 
   return (
@@ -85,7 +93,34 @@ function Solicitud() {
                   />
                 </Grid>
               </Grid>
+              <Box display="flex" justifyContent="flex-end">
+                <Grid item sm={6} xs={12}>
+                  <FormMultiselectControl
+                    disabled={subjectSelected === ""}
+                    myLabel="Agregar otro grupo(s)"
+                    value={group_list}
+                    setValue={handleChangeGroup}
+                    list={subjectSelected !== "" ? [...subject_list.get(subjectSelected)] : []}
+                  />
+                </Grid>
+              </Box>
+
               <Grid container spacing={2} columns={12}>
+                <Grid item sm={6} xs={12}>
+                  <FormSelectControl
+                    myLabel="Motivo de Solicitud"
+                    value={motiveRequest}
+                    setValue={handleMotiveRequest}
+                    list={motive}
+                  />
+                </Grid>
+                {/* <Grid item sm={6} xs={12}>
+                  <FormInputControl
+                    myLabel="Motivo de solicitud"
+                    myMultiline={true}
+                    myRows={2}
+                  />
+                </Grid> */}
                 <Grid item sm={6} xs={12}>
                   <FormInputControl
                     myLabel="Total estudiantes"
@@ -96,33 +131,6 @@ function Solicitud() {
                       inputProps: { pattern: "[0-9]+", min: "1" },
                     }}
                     setValue={handleChangeTotalStudents}
-                  />
-                </Grid>
-              </Grid>
-              {/* <Divider></Divider> */}
-              {/* <List>
-                {subjectSelected === ""?<></>:
-
-                }
-
-              </List> */}
-              {/* <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row-reverse',
-                }}
-              >
-                <Button variant="contained" disabled>
-                  Agregar Docentes
-                </Button>
-              </Box> */}
-
-              <Grid container spacing={2} columns={12}>
-                <Grid item sm={12} xs={12}>
-                  <FormInputControl
-                    myLabel="Motivo de solicitud"
-                    myMultiline={true}
-                    myRows={4}
                   />
                 </Grid>
               </Grid>
@@ -137,29 +145,55 @@ function Solicitud() {
                     myDefaultValue={DateController.getToday()}
                   />
                 </Grid>
+              </Grid>
+              <Grid container spacing={2} columns={12}>
                 <Grid item sm={6} xs={12}>
                   <FormSelectControl
-                    myLabel="Hora"
-                    value={periodSelected}
-                    setValue={handleChangePeriod}
-                    list={periods}
+                    myLabel="Hora Inicio"
+                    value={periodIniSelected}
+                    setValue={handleChangePeriodIni}
+                    list={periodsIni}
+                  />
+                </Grid>
+                <Grid item sm={6} xs={12}>
+                  <FormSelectControl
+                    myLabel="Hora Fin"
+                    value={periodEndSelected}
+                    setValue={handleChangePeriodEnd}
+                    list={periodsEnd}
                   />
                 </Grid>
               </Grid>
               <Grid container spacing={2} columns={12}>
                 <Grid item sm={6} xs={12}>
-                  <FormInputControl
-                    myLabel="Cantidad de periodos"
-                    myType="number"
-                    myVariant="outlined"
-                    myInputProps={{
-                      inputProps: { pattern: "[0-9]*", min: "1", max: "5", step: "1" },
-                    }}
-                  ></FormInputControl>
+                  <Button
+                    color="primary"
+                    // disabled={!formik.isValid || formik.isSubmitting}
+                    // fullWidth
+                    size="large"
+                    type="button"
+                    variant="contained"
+                    padding="1rem"
+                  >
+                    Guardar Cambios
+                  </Button>
+                </Grid>
+                <Grid item sm={6} xs={12}>
+                  <Button
+                    color="primary"
+                    // disabled={!formik.isValid || formik.isSubmitting}
+                    // fullWidth
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                    padding="1rem"
+                  >
+                    Enviar Solicitud
+                  </Button>
                 </Grid>
               </Grid>
 
-              <Box
+              {/* <Box
                 sx={{
                   display: 'flex',
                   flexDirection: 'row-reverse',
@@ -169,12 +203,12 @@ function Solicitud() {
                   color="primary">
                   Enviar Solicitud
                 </Button>
-              </Box>
+              </Box> */}
             </List>
           </form>
         </CardContent>
       </Card>
-    </div>
+    </div >
   );
 }
 

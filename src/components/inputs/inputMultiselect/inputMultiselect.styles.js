@@ -6,5 +6,5 @@ export const FormControlInput = styled(FormControl)`
 `;
 export const Wrapper = styled.div`
   padding: 1rem;
-  min-width: 300px;
+  min-width: 200px;
 `;
