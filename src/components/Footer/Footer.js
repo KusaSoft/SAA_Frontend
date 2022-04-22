@@ -75,7 +75,9 @@ function Footer() {
             src={LogoKusaSoft}
           />
         </Stack>
-        <Box>© {new Date().getFullYear()}, Desarrollado por kusaSoft.</Box>
+        <Box sx={{ fontSize: "0.8rem", paddingBottom: "1rem" }}>
+          © {new Date().getFullYear()}, Desarrollado por kusaSoft.
+        </Box>
       </Box>
     </>
   );

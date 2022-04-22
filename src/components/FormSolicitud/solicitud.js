@@ -1,10 +1,5 @@
 import {
   Typography,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  TextField,
   Grid,
   Button,
   CardContent,
@@ -12,7 +7,7 @@ import {
   List,
   Stack,
   Box,
-  Divider
+  Divider,
 } from "@mui/material";
 import React from "react";
 import { useReservationRequest } from "../../hooks/useReservationRequest.hooks";
@@ -20,15 +15,13 @@ import FormInputControl from "../inputs/input/input.js";
 import DateController from "../../utilities/DateController";
 import FormSelectControl from "../inputs/inputSelect/inputSelect";
 import FormMultiselectControl from "../inputs/inputMultiselect/inputMultiselect";
-import { GifBoxSharp } from "@mui/icons-material";
-
-const periodsIni = ["06:45", "08:15", "09:45", "11:15", "12:45", "14:15", "15:45", "17:15", "18:45", "20:15"];
-const periodsEnd = ["08:15", "09:45", "11:15", "12:45", "14:15", "15:45", "17:15", "18:45", "20:15", "21:45"];
-const motive= ["Examen","Exposición","Capacitación","Otro"]
-
+import { useModal } from "../../hooks/useModal";
+import Modal from "../Modals/Modal";
+import AskReservationRequest from "../ask/askReservationRequest";
+import { PERIODSRANGE } from "../../services/Constant";
+import { MOTIVES } from "../../services/Constant";
 function Solicitud() {
-  // const [age, setAge] = React.useState("");
-  // const [value, setValue] = React.useState("Controlled");
+  const [isOpenModal1, openModal1, closeModal1] = useModal(false);
   const {
     teacher,
     subjectSelected,
@@ -44,36 +37,33 @@ function Solicitud() {
     periodEndSelected,
     handleChangePeriodIni,
     handleChangePeriodEnd,
-    // teachersSelected,
-    // handleTeachersSelected,
-    // teachers,
     motiveRequest,
     handleMotiveRequest,
   } = useReservationRequest();
 
   return (
-    <div className="App">
-      <Typography gutterBottom variant="h3" align="center">
+    <div style={{ backgroundColor: "#fafbfc" }}>
+      <Typography
+        gutterBottom
+        variant="h3"
+        align="center"
+        sx={{ paddingTop: "10px" }}
+      >
         Solicitud de Reserva
       </Typography>
       <Card style={{ maxWidth: 700, padding: "10px 2px", margin: "auto" }}>
         <CardContent>
           <form>
-            <List container spacing={0}>
-              <div>
-                <Typography
-                  padding="0px 16px"
-                  variant="body2"
-                  color="textSecondary"
-                  component="p"
-                  gutterBottom
-                  align="left"
-                >
-                  La solicitud de la reserva se realizará en nombre de:{" "}
-                  <b>{teacher.name}</b>
-                </Typography>
-              </div>
-
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              align="left"
+            >
+              La solicitud de la reserva se realizará en nombre de:{" "}
+              <b>{teacher.name}</b>
+            </Typography>
+            <List container spacing={1}>
               <Grid container spacing={2} columns={12}>
                 <Grid item sm={6} xs={12}>
                   <FormSelectControl
@@ -89,7 +79,11 @@ function Solicitud() {
                     myLabel="Grupo"
                     value={group_list}
                     setValue={handleChangeGroup}
-                    list={subjectSelected !== "" ? [...subject_list.get(subjectSelected)] : []}
+                    list={
+                      subjectSelected !== ""
+                        ? [...subject_list.get(subjectSelected)]
+                        : []
+                    }
                   />
                 </Grid>
               </Grid>
@@ -100,7 +94,11 @@ function Solicitud() {
                     myLabel="Agregar otro grupo(s)"
                     value={group_list}
                     setValue={handleChangeGroup}
-                    list={subjectSelected !== "" ? [...subject_list.get(subjectSelected)] : []}
+                    list={
+                      subjectSelected !== ""
+                        ? [...subject_list.get(subjectSelected)]
+                        : []
+                    }
                   />
                 </Grid>
               </Box>
@@ -111,7 +109,7 @@ function Solicitud() {
                     myLabel="Motivo de Solicitud"
                     value={motiveRequest}
                     setValue={handleMotiveRequest}
-                    list={motive}
+                    list={MOTIVES}
                   />
                 </Grid>
                 {/* <Grid item sm={6} xs={12}>
@@ -140,7 +138,7 @@ function Solicitud() {
                     myLabel="Fecha"
                     myType="date"
                     myInputProps={{
-                      inputProps: { min: DateController.getToday() }
+                      inputProps: { min: DateController.getToday() },
                     }}
                     myDefaultValue={DateController.getToday()}
                   />
@@ -152,7 +150,7 @@ function Solicitud() {
                     myLabel="Hora Inicio"
                     value={periodIniSelected}
                     setValue={handleChangePeriodIni}
-                    list={periodsIni}
+                    list={[...PERIODSRANGE.slice(0, PERIODSRANGE.length - 1)]}
                   />
                 </Grid>
                 <Grid item sm={6} xs={12}>
@@ -160,7 +158,7 @@ function Solicitud() {
                     myLabel="Hora Fin"
                     value={periodEndSelected}
                     setValue={handleChangePeriodEnd}
-                    list={periodsEnd}
+                    list={[...PERIODSRANGE.slice(1)]}
                   />
                 </Grid>
               </Grid>
@@ -187,28 +185,21 @@ function Solicitud() {
                     type="submit"
                     variant="contained"
                     padding="1rem"
+                    // sx={{ alignSelf: "flex-end", justifySelf: "flex-end" }}
+                    onClick={openModal1}
                   >
                     Enviar Solicitud
                   </Button>
                 </Grid>
               </Grid>
-
-              {/* <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row-reverse',
-                }} padding="1rem"
-              >
-                <Button variant="contained" type="submit"
-                  color="primary">
-                  Enviar Solicitud
-                </Button>
-              </Box> */}
             </List>
           </form>
         </CardContent>
       </Card>
-    </div >
+      <Modal isOpen={isOpenModal1} closeModal={closeModal1}>
+        <AskReservationRequest action={closeModal1}></AskReservationRequest>
+      </Modal>
+    </div>
   );
 }
 
