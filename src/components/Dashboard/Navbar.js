@@ -34,6 +34,20 @@ function Navbar() {
               {/* <FaIcons.FaWindowClose /> */}
             </Link>
           </li>
+          <li>
+            <button
+              className="sidebar-logout"
+              onClick={() => {
+                setAuth({
+                  user: null,
+                  roles: [],
+                  token: null,
+                });
+              }}
+            >
+              Cerrar Sesión
+            </button>
+          </li>
           {SidebarData.map((sidebaritem) => {
             return (
               <li

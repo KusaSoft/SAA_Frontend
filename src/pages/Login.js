@@ -20,8 +20,8 @@ function Login() {
   const { auth } = useAuth();
   const formik = useFormik({
     initialValues: {
-      email: "demo@devias.io",
-      password: "Password123",
+      email: "",
+      password: "",
     },
     validationSchema: Yup.object({
       email: Yup.string()
@@ -45,15 +45,26 @@ function Login() {
         component="main"
         sx={{
           alignItems: "center",
+          textAlign: "center",
           display: "flex",
+          justifyContent: "center",
           flexGrow: 1,
           minHeight: "100%",
+          height: "100vh",
         }}
       >
-        <Container maxWidth="sm">
+        <Container
+          maxWidth="sm"
+          sx={{
+            backgroundColor: "white",
+            borderRadius: "10px",
+            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+            padding: "20px",
+          }}
+        >
           <form onSubmit={formik.handleSubmit}>
-            <Box sx={{ my: 3 }}>
-              <Typography color="textPrimary" variant="h4">
+            <Box sx={{ my: 9, textAlign: "center" }}>
+              <Typography color="textPrimary" variant="h2">
                 Iniciar Sesión
               </Typography>
             </Box>
@@ -61,7 +72,7 @@ function Login() {
               error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
               helperText={formik.touched.email && formik.errors.email}
-              label="Email Address"
+              label="Correo electrónico"
               margin="normal"
               name="email"
               onBlur={formik.handleBlur}
@@ -69,12 +80,13 @@ function Login() {
               type="email"
               value={formik.values.email}
               variant="outlined"
+              sx={{ mt: 5 }}
             />
             <TextField
               error={Boolean(formik.touched.password && formik.errors.password)}
               fullWidth
               helperText={formik.touched.password && formik.errors.password}
-              label="Password"
+              label="Contraseña"
               margin="normal"
               name="password"
               onBlur={formik.handleBlur}
@@ -82,8 +94,8 @@ function Login() {
               type="password"
               value={formik.values.password}
               variant="outlined"
+              sx={{ mt: 5 }}
             />
-            {/* button login */}
             <Button
               color="primary"
               disabled={!formik.isValid || formik.isSubmitting}
@@ -91,6 +103,7 @@ function Login() {
               size="large"
               type="submit"
               variant="contained"
+              sx={{ mt: 5, width: "fit-content" }}
             >
               Iniciar Sesión
             </Button>

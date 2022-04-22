@@ -9,7 +9,7 @@ const Modals = () => {
       <h2>Modales</h2>
       <button onClick={openModal1}>Modal 1</button>
       <Modal isOpen={isOpenModal1} closeModal={closeModal1}>
-        <AskReservationRequest action={closeModal1}></AskReservationRequest>
+        <AskReservationRequest  action={closeModal1}></AskReservationRequest>
       </Modal>
     </div>
   );
