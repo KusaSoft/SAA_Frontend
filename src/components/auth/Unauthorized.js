@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useNavigate } from "react-router-dom";
+import Modals from "../Modals/Modals";
 
 const Unauthorized = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const Unauthorized = () => {
       <p>You do not have access to the requested page.</p>
       <div className="flexGrow">
         <button onClick={goBack}>Go Back</button>
+        <Modals></Modals>
       </div>
     </section>
   );
