@@ -1,16 +1,13 @@
 import {
   Typography,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  TextField,
   Grid,
   Button,
   CardContent,
   Card,
   List,
-  Stack
+  Stack,
+  Box,
+  Divider,
 } from "@mui/material";
 import React from "react";
 import { useReservationRequest } from "../../hooks/useReservationRequest.hooks";
@@ -18,12 +15,13 @@ import FormInputControl from "../inputs/input/input.js";
 import DateController from "../../utilities/DateController";
 import FormSelectControl from "../inputs/inputSelect/inputSelect";
 import FormMultiselectControl from "../inputs/inputMultiselect/inputMultiselect";
-import { PropaneSharp } from "@mui/icons-material";
-const periods = ["6:45", "8:15", "9:45"];
-
+import { useModal } from "../../hooks/useModal";
+import Modal from "../Modals/Modal";
+import AskReservationRequest from "../ask/askReservationRequest";
+import { PERIODSRANGE } from "../../services/Constant";
+import { MOTIVES } from "../../services/Constant";
 function Solicitud() {
-  const [age, setAge] = React.useState("");
-  const [value, setValue] = React.useState("Controlled");
+  const [isOpenModal1, openModal1, closeModal1] = useModal(false);
   const {
     teacher,
     subjectSelected,
@@ -35,36 +33,39 @@ function Solicitud() {
     handleChangeGroup,
     totalStudents,
     handleChangeTotalStudents,
-    periodSelected,
-    handleChangePeriod,
+    periodIniSelected,
+    periodEndSelected,
+    handleChangePeriodIni,
+    handleChangePeriodEnd,
+    motiveRequest,
+    handleMotiveRequest,
   } = useReservationRequest();
 
   return (
-    <div className="App">
-      <Typography gutterBottom variant="h3" align="center">
+    <div style={{ backgroundColor: "#fafbfc" }}>
+      <Typography
+        gutterBottom
+        variant="h3"
+        align="center"
+        sx={{ paddingTop: "10px" }}
+      >
         Solicitud de Reserva
       </Typography>
-      <Card style={{ minWidth: 400, maxWidth: 700, padding: "10px 2px", margin: "auto" }}>
+      <Card style={{ maxWidth: 700, padding: "10px 2px", margin: "auto" }}>
         <CardContent>
           <form>
-            <List container spacing={0}>
-
-              <div>
-                <Typography
-                  padding="0px 16px"
-                  variant="body2"
-                  color="textSecondary"
-                  component="p"
-                  gutterBottom
-                  align="left"
-                >
-                  La solicitud de la reserva se realizará en nombre de:{" "}
-                  <b>{teacher.name}</b>
-                </Typography>
-              </div>
-
-              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid item xs={6}>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              align="left"
+            >
+              La solicitud de la reserva se realizará en nombre de:{" "}
+              <b>{teacher.name}</b>
+            </Typography>
+            <List container spacing={1}>
+              <Grid container spacing={2} columns={12}>
+                <Grid item sm={6} xs={12}>
                   <FormSelectControl
                     myLabel="Materia"
                     value={subjectSelected}
@@ -72,39 +73,67 @@ function Solicitud() {
                     list={[...subject_list.keys()]}
                   />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item sm={6} xs={12}>
                   <FormMultiselectControl
                     disabled={subjectSelected === ""}
                     myLabel="Grupo"
                     value={group_list}
                     setValue={handleChangeGroup}
-                    list={subjectSelected !== "" ? [...subject_list.get(subjectSelected)] : []}
+                    list={
+                      subjectSelected !== ""
+                        ? [...subject_list.get(subjectSelected)]
+                        : []
+                    }
                   />
                 </Grid>
               </Grid>
+              <Box display="flex" justifyContent="flex-end">
+                <Grid item sm={6} xs={12}>
+                  <FormMultiselectControl
+                    disabled={subjectSelected === ""}
+                    myLabel="Agregar otro grupo(s)"
+                    value={group_list}
+                    setValue={handleChangeGroup}
+                    list={
+                      subjectSelected !== ""
+                        ? [...subject_list.get(subjectSelected)]
+                        : []
+                    }
+                  />
+                </Grid>
+              </Box>
 
-              <div>
-                <FormInputControl
-                  maxWidth="200px"
-                  myLabel="Total estudiantes"
-                  myType="number"
-                  myVariant="outlined"
-                  value={totalStudents}
-                  myInputProps={{
-                    inputProps: { pattern: "[0-9]+" },
-                  }}
-                  setValue={handleChangeTotalStudents}
-                />
-              </div>
-              <div>
-                <FormInputControl
-                  myLabel="Motivo de solicitud"
-                  myMultiline={true}
-                  myRows={4}
-                />
-              </div>
-              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid item xs={6}>
+              <Grid container spacing={2} columns={12}>
+                <Grid item sm={6} xs={12}>
+                  <FormSelectControl
+                    myLabel="Motivo de Solicitud"
+                    value={motiveRequest}
+                    setValue={handleMotiveRequest}
+                    list={MOTIVES}
+                  />
+                </Grid>
+                {/* <Grid item sm={6} xs={12}>
+                  <FormInputControl
+                    myLabel="Motivo de solicitud"
+                    myMultiline={true}
+                    myRows={2}
+                  />
+                </Grid> */}
+                <Grid item sm={6} xs={12}>
+                  <FormInputControl
+                    myLabel="Total estudiantes"
+                    myType="number"
+                    myVariant="outlined"
+                    value={totalStudents}
+                    myInputProps={{
+                      inputProps: { pattern: "[0-9]+", min: "1" },
+                    }}
+                    setValue={handleChangeTotalStudents}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={2} columns={12}>
+                <Grid item sm={6} xs={12}>
                   <FormInputControl
                     myLabel="Fecha"
                     myType="date"
@@ -114,39 +143,62 @@ function Solicitud() {
                     myDefaultValue={DateController.getToday()}
                   />
                 </Grid>
-                <Grid item xs={6}>
+              </Grid>
+              <Grid container spacing={2} columns={12}>
+                <Grid item sm={6} xs={12}>
                   <FormSelectControl
-                    myLabel="Hora"
-                    value={periodSelected}
-                    setValue={handleChangePeriod}
-                    list={periods}
+                    myLabel="Hora Inicio"
+                    value={periodIniSelected}
+                    setValue={handleChangePeriodIni}
+                    list={[...PERIODSRANGE.slice(0, PERIODSRANGE.length - 1)]}
                   />
                 </Grid>
-
-
+                <Grid item sm={6} xs={12}>
+                  <FormSelectControl
+                    myLabel="Hora Fin"
+                    value={periodEndSelected}
+                    setValue={handleChangePeriodEnd}
+                    list={[...PERIODSRANGE.slice(1)]}
+                  />
+                </Grid>
               </Grid>
-              <div>
-                <FormInputControl
-                  maxWidth="200px"
-                  myLabel="Cantidad de periodos"
-                  myType="number"
-                  myVariant="outlined"
-                ></FormInputControl>
-              </div>
-              <div>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                //fullWidth
-                >
-                  Enviar Solicitud
-                </Button>
-              </div>
+              <Grid container spacing={2} columns={12}>
+                <Grid item sm={6} xs={12}>
+                  <Button
+                    color="primary"
+                    // disabled={!formik.isValid || formik.isSubmitting}
+                    // fullWidth
+                    size="large"
+                    type="button"
+                    variant="contained"
+                    padding="1rem"
+                  >
+                    Guardar Cambios
+                  </Button>
+                </Grid>
+                <Grid item sm={6} xs={12}>
+                  <Button
+                    color="primary"
+                    // disabled={!formik.isValid || formik.isSubmitting}
+                    // fullWidth
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                    padding="1rem"
+                    // sx={{ alignSelf: "flex-end", justifySelf: "flex-end" }}
+                    onClick={openModal1}
+                  >
+                    Enviar Solicitud
+                  </Button>
+                </Grid>
+              </Grid>
             </List>
           </form>
         </CardContent>
       </Card>
+      <Modal isOpen={isOpenModal1} closeModal={closeModal1}>
+        <AskReservationRequest action={closeModal1}></AskReservationRequest>
+      </Modal>
     </div>
   );
 }

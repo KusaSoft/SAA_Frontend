@@ -3,7 +3,6 @@ import useInput from "../../../hooks/useInput.hooks";
 import { TextField } from "@mui/material";
 import { FormControlInput, Wrapper } from "./input.styles";
 export default function FormInputControl(props) {
-
   return (
     <Wrapper maxWidth={props.maxWidth}>
       <FormControlInput>
@@ -17,6 +16,13 @@ export default function FormInputControl(props) {
           rows={props.myRows}
           defaultValue={props.myDefaultValue}
           InputProps={props.myInputProps}
+          error={props.myError}
+          helperText={props.myHelperText}
+          margin="normal"
+          name={props.myName}
+          onBlur={props.myOnBlur}
+          fullWidth
+          required
         ></TextField>
       </FormControlInput>
     </Wrapper>

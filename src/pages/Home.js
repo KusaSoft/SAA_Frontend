@@ -1,17 +1,4 @@
 import React from "react";
-
-// export default function Home() {
-//   return (
-//     <div>
-//       <h1>Home</h1>
-//       <p>
-//         This is the Home page. It is rendered when the user navigates to /home.
-//       </p>
-//     </div>
-//   );
-// }
-
-// import * as React from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';

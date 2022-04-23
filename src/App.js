@@ -1,55 +1,42 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import {
-  Routes,
-  BrowserRouter,
-  Route,
-  Switch,
-  Link,
-  useNavigate,
-  useLocation,
-  Navigate,
-  Outlet,
-} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import ReservationRequest from "./pages/ReservationRequest";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-import PersistentDrawerLeft from "./components/Dashboard/Dashboard";
-
+import RequireAuth from "./components/auth/RequireAuth";
 import Navbar from "./components/Dashboard/Navbar";
+import Unauthorized from "./components/auth/Unauthorized";
 
 const ROLES = {
-  User: 2001,
-  Editor: 1984,
+  Reviewer: 2001,
+  Teacher: 1984,
   Admin: 5150,
 };
 function App() {
   return (
     <>
-    {/* <PersistentDrawerLeft/> */}
-    <Navbar/>
+      <Navbar />
       <Routes>
-        {/* <Route element={<Layout />}> */}
-        {/* <Route path="/" element={<PublicPage />} /> */}
-        <Route path="/home" element={<Home />} />
-        <Route path="/reservationRequest" element={<ReservationRequest />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Navigate replace to="/login" />} />
 
-        {/* <Route
-            path="/protected"
-            element={
-              <RequireAuth>
-                <ProtectedPage />
-              </RequireAuth>
-            }
-          /> */}
-
-        <Route path="/" element={<Navigate replace to="/home" />} />
+        {/* <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}> */}
+        <Route path="unauthorized" element={<Unauthorized />} />
         {/* </Route> */}
-        
+        <Route
+          element={
+            <RequireAuth
+              allowedRoles={[ROLES.Teacher, ROLES.Admin, ROLES.Reviewer]}
+            />
+          }
+        >
+          <Route path="/home" element={<Home />} />
+        </Route>
+        <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
+          <Route path="/reservationRequest" element={<ReservationRequest />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
       </Routes>
-      
     </>
   );
 }

@@ -10,6 +10,7 @@ export default function FormSelectControl(props) {
           value={props.value}
           label={props.myLabel}
           onChange={props.setValue}
+          required
         >
           {props.list.map((e) => {
             return <MenuItem value={e}>{e}</MenuItem>;
