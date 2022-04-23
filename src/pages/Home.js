@@ -38,7 +38,7 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs() {
+export default function Home() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -47,12 +47,12 @@ export default function BasicTabs() {
 
   return (
     
-    <Box sx={{ width:'70%',margin:"auto" }}>
+    <div style={{ width:'100%', height:"100vh", margin:"auto", background: "blue" }}>
       <h1 style={{color: "red", textAlign:"center"}}>Lista de Solicitudes</h1>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
-          <Tab label="Pendientes" {...a11yProps(0)} sx={{ width: '40%' }}/>
-          <Tab label="Borradores" {...a11yProps(1)} sx={{ width: '40%' }}/>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' ,paddingX:"40px"}}>
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered textColor="black" indicatorColor="inherit" variant="fullWidth" >
+          <Tab label="Pendientes" {...a11yProps(0)} sx={{ width: '40%', background:value==0?"#8993A4":"#EBECF0" , color:value!==0? "black":"white" }}/>
+          <Tab label="Borradores" {...a11yProps(1)} sx={{ width: '40%', background:value==1?"#8993A4":"#EBECF0", color:value!==1? "black":"white" }}/>
           {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
         </Tabs>
       </Box>
@@ -65,6 +65,6 @@ export default function BasicTabs() {
       {/* <TabPanel value={value} index={2}>
         Item Three
       </TabPanel> */}
-    </Box>
+    </div>
   );
 }

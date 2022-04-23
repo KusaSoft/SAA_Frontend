@@ -8,6 +8,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { height } from "@mui/system";
 import useAuth from "../../hooks/useAuth";
 
+
+
 function Navbar() {
   const { setAuth } = useAuth();
   const { auth } = useAuth();
@@ -22,7 +24,7 @@ function Navbar() {
         <Link to="#" className="nav-menu-icon" onClick={showSidebar}>
           <MenuIcon  />
         </Link>
-        <p style={{color:"white", position:"absolute", right:"100px"}}>Nombre</p>
+        <p style={{color:"white", position:"absolute", right:"100px"}}>{auth.user}</p>
         <AccountCircleIcon sx={{color:"white", marginRight:"2rem" }}  />
       </div>
       <div

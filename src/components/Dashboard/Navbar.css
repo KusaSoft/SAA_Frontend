@@ -28,11 +28,14 @@
     top: 0;
     left: -100%;
     transition: 1s;
+    
+    
   }
   
   .sidebar-container.active {
     left: 0;
     transition: 500ms;
+    /* position: relative; */
   }
   
   .sidebar-item {
