@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { height } from "@mui/system";
 
 function Navbar() {
   const [sidebar, setSidebar] = useState(false);
@@ -16,10 +17,12 @@ function Navbar() {
     <>
       <div className="navbar">
         <Link to="#" className="nav-menu-icon" onClick={showSidebar}>
-          <MenuIcon/>
-          <AccountCircleIcon/>
-          {/* <FaIcons.FaBars /> */}
+          <MenuIcon  />
+          
+        {/* <FaIcons.FaBars /> */}
         </Link>
+        <p style={{color:"white", position:"absolute", right:"100px"}}>Nombre</p>
+        <AccountCircleIcon sx={{color:"white", marginRight:"2rem" }}  />
       </div>
       <div
         className={sidebar ? "sidebar-container active" : "sidebar-container"}
