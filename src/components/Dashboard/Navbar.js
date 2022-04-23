@@ -3,8 +3,9 @@ import "./Navbar.css";
 import { Link } from "react-router-dom";
 // import * as FaIcons from "react-icons/fa";
 import { SidebarData } from "./SidebarData";
-import MenuIcon from "@mui/icons-material/Menu";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { height } from "@mui/system";
 import useAuth from "../../hooks/useAuth";
 
 function Navbar() {
@@ -19,10 +20,10 @@ function Navbar() {
     <>
       <div className="navbar">
         <Link to="#" className="nav-menu-icon" onClick={showSidebar}>
-          <MenuIcon />
-          <AccountCircleIcon />
-          {/* <FaIcons.FaBars /> */}
+          <MenuIcon  />
         </Link>
+        <p style={{color:"white", position:"absolute", right:"100px"}}>Nombre</p>
+        <AccountCircleIcon sx={{color:"white", marginRight:"2rem" }}  />
       </div>
       <div
         className={sidebar ? "sidebar-container active" : "sidebar-container"}
