@@ -15,7 +15,7 @@ const ROLES = {
 };
 function App() {
   return (
-    <>
+    <div style={{position:"relative",background:"red" }}>
       <Navbar />
       <Routes>
         <Route path="/" element={<Navigate replace to="/login" />} />
@@ -37,7 +37,7 @@ function App() {
         </Route>
         <Route path="/login" element={<Login />} />
       </Routes>
-    </>
+    </div>
   );
 }
 
