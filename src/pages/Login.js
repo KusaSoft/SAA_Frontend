@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import AuthContext from "../contexts/AuthProvider";
 import { Email, Image, Lock, Password } from "@mui/icons-material";
-
+import LogoFCyT from "../assets/fcyt.png";
 import Footer from "../components/Footer/Footer";
 
 function Login() {
@@ -56,13 +56,13 @@ function Login() {
           flexGrow: 1,
           minHeight: "100%",
           height: "100vh",
-          backgroundColor: "#172B4D",
+          backgroundColor: "#FAFBFC",
         }}
       >
         <Container
-          maxWidth="sm"
+          maxWidth="xs"
           sx={{
-            backgroundColor: "#fafbfc",
+            backgroundColor: "#FFFFFF",
             borderRadius: "10px",
             boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
             marginBottom: "150px",
@@ -70,10 +70,20 @@ function Login() {
           }}
         >
           <form onSubmit={formik.handleSubmit}>
-            <Box sx={{ mb: 3, textAlign: "center" }}>
-              <Typography color="textPrimary" variant="h4">
-                Sistema de asignación de aulas
+            <Box sx={{textAlign: "center" }}>
+              <Box
+                component="img"
+                sx={{
+                  width: 60,
+                  maxWidth: { xs: 60, md: 60 },
+                }}
+                alt="logo fcyt."
+                src={LogoFCyT}
+              />
+              <Typography color="textPrimary" variant="h4" padding="1rem">
+                Sistema de Asignación de Aulas
               </Typography>
+
             </Box>
 
             <Box
@@ -81,7 +91,6 @@ function Login() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                mt: 1,
               }}
             >
               <Email
@@ -117,7 +126,6 @@ function Login() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                mt: 1,
               }}
             >
               <Lock

@@ -25,11 +25,11 @@ function Footer() {
           textAlign: "center",
           flexDirection: "column",
           fontSize: "0.8rem",
-          color: "textSecondary",
+          color: "white",
           position: "absolute",
           bottom: 1,
           width: "100%",
-          backgroundColor: "#DFE1E6",
+          backgroundColor: "#060B26",
         }}
       >
         <Divider
