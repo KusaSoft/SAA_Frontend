@@ -7,21 +7,14 @@ import Home from "./pages/Home";
 import RequireAuth from "./components/auth/RequireAuth";
 import Navbar from "./components/Dashboard/Navbar";
 import Unauthorized from "./components/auth/Unauthorized";
+import { Box } from "@mui/material";
+import MainLayout from "./components/Layout/MainLayout";
 
 const ROLES = {
   Reviewer: 2001,
   Teacher: 1984,
   Admin: 5150,
 };
-
-function MainLayout() {
-  return (
-    <div style={{ background: "blue" }}>
-      <Navbar />
-      <Outlet />
-    </div>
-  );
-}
 
 function App() {
   return (
