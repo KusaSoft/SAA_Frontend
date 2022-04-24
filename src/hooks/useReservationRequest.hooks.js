@@ -4,11 +4,19 @@ const mockTeacher = {
   subject: [
     {
       name_subject: "Taller de Ingenieria de Software",
-      group_list: ["2, Leticia Blanco", "3, David Escalera", "4, Patricia Rodriguez"],
+      group_list: [
+        "2, Leticia Blanco",
+        "3, David Escalera",
+        "4, Patricia Rodriguez",
+      ],
     },
     {
       name_subject: "Introducción a la programación",
-      group_list: ["1, Carla Salazar","2, Leticia Blanco","3, Vladimir Costas"],
+      group_list: [
+        "1, Carla Salazar",
+        "2, Leticia Blanco",
+        "3, Vladimir Costas",
+      ],
     },
   ],
 };
@@ -21,8 +29,8 @@ const mockNewTeachers = [
   {
     name: "Leticia",
     group_list: [3, 5],
-  }
-]
+  },
+];
 
 export const useReservationRequest = () => {
   const [teacher, setTeacher] = useState({});
@@ -33,9 +41,10 @@ export const useReservationRequest = () => {
   const [totalStudents, setTotalStudents] = useState("");
   const [periodIniSelected, setPeriodIniSelected] = useState("");
   const [periodEndSelected, setPeriodEndSelected] = useState("");
-  const [motiveRequest,setMotiveRequest]=useState("");
-  // const [teachers, setTeachers] = useState([]);
-  // const [teachersSelected, setTeachersSelected] = useState([]);
+  const [motiveRequest, setMotiveRequest] = useState("");
+  const [teachers, setTeachers] = useState([]);
+  const [teachersSelected, setTeachersSelected] = useState([]);
+  const [reservation, setReservation] = useState({});
 
   const fetchDataTeacher = async () => {
     const response = mockTeacher;
@@ -47,10 +56,10 @@ export const useReservationRequest = () => {
     setSubject_list(subject_list_Map);
   };
 
-  // const fetchDataTeachers = async (subject) => {
-  //   const response = mockNewTeachers;
-  //   setTeachers(response);
-  // }
+  const fetchDataTeachers = async (subject) => {
+    const response = mockNewTeachers;
+    setTeachers(response);
+  };
 
   useEffect(() => {
     fetchDataTeacher();
@@ -64,13 +73,22 @@ export const useReservationRequest = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSent(true);
+    setReservation({
+      name: e.target.elements.name.value,
+      // subject: e.target.elements.subject.value,
+      // group: e.target.elements.group.value,
+      // total_students: e.target.elements.total_students.value,
+      // period_ini: e.target.elements.period_ini.value,
+      // period_end: e.target.elements.period_end.value,
+      // motive: e.target.elements.motive.value,
+    });
   };
 
   const handleChangeSubject = (e) => {
     setSubjectSelected(e.target.value);
     setGroup_list([]);
-    // fetchDataTeachers();
-    // setTeachersSelected([]);
+    fetchDataTeachers();
+    setTeachersSelected([]);
   };
 
   const handleChangeGroup = (e) => {
@@ -91,9 +109,9 @@ export const useReservationRequest = () => {
     setPeriodEndSelected(e.target.value);
   };
 
-  // const handleTeachersSelected = (e) => {
-  //   setTeachersSelected([...teachersSelected]+e.target.value);
-  // }
+  const handleTeachersSelected = (e) => {
+    setTeachersSelected([...teachersSelected] + e.target.value);
+  };
 
   const handleMotiveRequest = (e) => {
     setMotiveRequest(e.target.value);
@@ -114,10 +132,10 @@ export const useReservationRequest = () => {
     periodEndSelected,
     handleChangePeriodIni,
     handleChangePeriodEnd,
-    // teachersSelected,
-    // handleTeachersSelected,
-    // teachers,
     motiveRequest,
     handleMotiveRequest,
+    teachersSelected,
+    handleTeachersSelected,
+    teachers,
   };
 };

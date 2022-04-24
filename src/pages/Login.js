@@ -179,7 +179,7 @@ function Login() {
       <Footer />
     </>
   ) : (
-    <Navigate to="/home" state={{ from: location }} replace />
+    <Navigate to="/user" state={{ from: location }} replace />
   );
 }
 

@@ -6,13 +6,13 @@ export const SidebarData = [
     title: "Home",
     cName: "sidebar-item",
     // icon: <FaIcons.FaHome />,
-    path: "/home",
+    path: "/user/home",
   },
   {
     id: 2,
     title: "Solicitar Reserva",
     cName: "sidebar-item",
     // icon: <FaIcons.FaCartPlus />,
-    path: "/reservationRequest",
+    path: "/user/reservationRequest",
   },
 ];
