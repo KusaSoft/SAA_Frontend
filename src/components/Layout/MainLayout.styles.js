@@ -14,11 +14,29 @@ export const Dashboard = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  background-color: white;
+  background-color: #dfe1e6;
   height: 100vh;
-  width: 15%;
+  width: ${(props) => (props.open ? "300px" : "0px")};
+  min-width: ${(props) => (props.open ? "300px" : "0px")};
   z-index: 11;
-  min-width: 250px;
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideOut {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
 `;
 
 export const LayoutSite = styled.div`
@@ -27,7 +45,8 @@ export const LayoutSite = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  width: 85%;
+  // width: ${(props) => (props.open ? "85%" : "100%")};
+  width: 100%;
 `;
 
 export const Header = styled.div`
@@ -36,7 +55,9 @@ export const Header = styled.div`
   padding: 0.6rem 0;
   text-align: center;
   z-index: 10;
-  height: 80px;
+  height: 40px;
+  max-height: 40px;
   fontsize: 0.9rem;
-  background: green;
+  background: #dfe1e6;
+  justify-content: space-between;
 `;
