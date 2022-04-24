@@ -163,7 +163,11 @@ function Solicitud() {
                 </Grid>
               </Grid>
               <Grid container spacing={2} columns={12}>
-                <Grid item sm={6} xs={12}>
+                <Grid item sm={6} xs={12} sx={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  
+                }}>
                   <Button
                     color="primary"
                     // disabled={!formik.isValid || formik.isSubmitting}

@@ -16,70 +16,69 @@ import LogoUMSS from "../../assets/umss.png";
 import LogoKusaSoft from "../../assets/kusasoft.png";
 function Footer() {
   return (
-    <>
-      <Box
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
+        flexDirection: "column",
+        fontSize: "0.8rem",
+        color: "textSecondary",
+        bottom: 1,
+        width: "100%",
+        backgroundColor: "#DFE1E6",
+        position: "fixed",
+        zIndex: "30",
+      }}
+    >
+      <Divider
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          textAlign: "center",
-          flexDirection: "column",
-          fontSize: "0.8rem",
-          color: "textSecondary",
-          position: "absolute",
-          bottom: 1,
-          width: "100%",
-          backgroundColor: "#DFE1E6",
+          height: 1,
+          backgroundColor: "divider.primary",
+          margin: "10px 0",
         }}
+      />
+      <Stack
+        sx={{
+          mb: 1,
+        }}
+        direction="row"
+        spacing={1}
       >
-        <Divider
+        <Box
+          component="img"
           sx={{
-            height: 1,
-            backgroundColor: "divider.primary",
-            margin: "10px 0",
+            width: 60,
+            maxWidth: { xs: 60, md: 60 },
           }}
+          alt="logo fcyt."
+          src={LogoFCyT}
         />
-        <Stack
+        <Box
+          component="img"
           sx={{
-            mb: 1,
+            minWidth: 120,
+            minHeight: 50,
+            maxWidth: { xs: 120, ys: 50 },
           }}
-          direction="row"
-          spacing={1}
-        >
-          <Box
-            component="img"
-            sx={{
-              width: 60,
-              maxWidth: { xs: 60, md: 60 },
-            }}
-            alt="logo fcyt."
-            src={LogoFCyT}
-          />
-          <Box
-            component="img"
-            sx={{
-              minWidth: 120,
-              minHeight: 50,
-              maxWidth: { xs: 120, ys: 50 },
-            }}
-            alt="logo fcyt."
-            src={LogoUMSS}
-          />
-          <Box
-            component="img"
-            sx={{
-              width: 60,
-              maxWidth: { xs: 60, md: 60 },
-            }}
-            alt="logo fcyt."
-            src={LogoKusaSoft}
-          />
-        </Stack>
-        <Box sx={{ fontSize: "0.8rem", paddingBottom: "1rem" }}>
-          © {new Date().getFullYear()}, Desarrollado por kusaSoft.
-        </Box>
+          alt="logo fcyt."
+          src={LogoUMSS}
+        />
+        <Box
+          component="img"
+          sx={{
+            width: 60,
+            maxWidth: { xs: 60, md: 60 },
+          }}
+          alt="logo fcyt."
+          src={LogoKusaSoft}
+        />
+      </Stack>
+      <Box sx={{ fontSize: "0.8rem", paddingBottom: "1rem" }}>
+        © {new Date().getFullYear()}, Desarrollado por kusaSoft.
       </Box>
-    </>
+    </Box>
   );
 }
 
