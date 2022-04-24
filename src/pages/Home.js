@@ -4,6 +4,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Lista from '../components/ListaSolicitud/Lista'
+import ListaBorradores from "../components/ListaSolicitud/ListaBorradores";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -47,20 +49,21 @@ export default function Home() {
 
   return (
     
-    <div style={{ width:'100%', height:"100vh", margin:"auto", background: "blue" }}>
-      <h1 style={{color: "red", textAlign:"center"}}>Lista de Solicitudes</h1>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' ,paddingX:"40px"}}>
+    <div style={{ width:'90%', height:"100%", margin:"auto" }}>
+      <h1 style={{color: "#172B4D", textAlign:"center", fontFamily:"roboto"}}>Lista de Solicitudes</h1>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' ,paddingX:"30px"}}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered textColor="black" indicatorColor="inherit" variant="fullWidth" >
-          <Tab label="Pendientes" {...a11yProps(0)} sx={{ width: '40%', background:value==0?"#8993A4":"#EBECF0" , color:value!==0? "black":"white" }}/>
-          <Tab label="Borradores" {...a11yProps(1)} sx={{ width: '40%', background:value==1?"#8993A4":"#EBECF0", color:value!==1? "black":"white" }}/>
+          <Tab label="Pendientes" {...a11yProps(0)} sx={{ width: '40%', background:value==0?"#172B4D":"#EBECF0" , color:value!==0? "black":"white" }}/>
+          <Tab label="Borradores" {...a11yProps(1)} sx={{ width: '40%', background:value==1?"#172B4D":"#EBECF0", color:value!==1? "black":"white" }}/>
           {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0} sx={{ width: '100%' }}>
-        Esta es la pestaña Pendientes 
+      <TabPanel value={value} index={0} sx={{ width: '100%'}}>
+        {/* <div style={{background:"red", width:"99%", margin:"auto"}}>hola que tal</div>  */}
+        <Lista/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Esta es la pestaña Borradores
+        <ListaBorradores/>
       </TabPanel>
       {/* <TabPanel value={value} index={2}>
         Item Three
