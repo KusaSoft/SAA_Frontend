@@ -59,6 +59,7 @@ function Solicitud() {
               color="textSecondary"
               component="p"
               align="left"
+              padding="1rem"
             >
               La solicitud de la reserva se realizará en nombre de:{" "}
               <b>{teacher.name}</b>
@@ -87,7 +88,7 @@ function Solicitud() {
                   />
                 </Grid>
               </Grid>
-              <Box display="flex" justifyContent="flex-end">
+              <Grid container spacing={2} columns={12} justifyContent="flex-end">
                 <Grid item sm={6} xs={12}>
                   <FormMultiselectControl
                     disabled={subjectSelected === ""}
@@ -101,7 +102,7 @@ function Solicitud() {
                     }
                   />
                 </Grid>
-              </Box>
+              </Grid>
 
               <Grid container spacing={2} columns={12}>
                 <Grid item sm={6} xs={12}>
@@ -163,7 +164,11 @@ function Solicitud() {
                 </Grid>
               </Grid>
               <Grid container spacing={2} columns={12}>
-                <Grid item sm={6} xs={12}>
+                <Grid item sm={6} xs={12}
+                sx={{
+                  display: 'flex',
+                  justifyContent: "center",
+                }}>
                   <Button
                     color="primary"
                     // disabled={!formik.isValid || formik.isSubmitting}
@@ -176,7 +181,11 @@ function Solicitud() {
                     Guardar Cambios
                   </Button>
                 </Grid>
-                <Grid item sm={6} xs={12}>
+                <Grid item sm={6} xs={12}
+                sx={{
+                  display: 'flex',
+                  justifyContent: "center",
+                }}>
                   <Button
                     color="primary"
                     // disabled={!formik.isValid || formik.isSubmitting}

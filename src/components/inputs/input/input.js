@@ -18,7 +18,7 @@ export default function FormInputControl(props) {
           InputProps={props.myInputProps}
           error={props.myError}
           helperText={props.myHelperText}
-          margin="normal"
+          //margin="normal"
           name={props.myName}
           onBlur={props.myOnBlur}
           fullWidth
