@@ -1,18 +1,18 @@
-// import * as FaIcons from "react-icons/fa";
-
+import React from "react";
+import { Home, Add } from "@mui/icons-material";
 export const SidebarData = [
   {
     id: 1,
     title: "Home",
     cName: "sidebar-item",
-    // icon: <FaIcons.FaHome />,
+    icon: <Home sx={{ marginRight: "1rem" }} />,
     path: "/user/home",
   },
   {
     id: 2,
     title: "Solicitar Reserva",
     cName: "sidebar-item",
-    // icon: <FaIcons.FaCartPlus />,
+    icon: <Add sx={{ marginRight: "1rem" }} />,
     path: "/user/reservationRequest",
   },
 ];

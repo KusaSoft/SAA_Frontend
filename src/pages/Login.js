@@ -70,7 +70,7 @@ function Login() {
           }}
         >
           <form onSubmit={formik.handleSubmit}>
-            <Box sx={{textAlign: "center" }}>
+            <Box sx={{ textAlign: "center" }}>
               <Box
                 component="img"
                 sx={{
@@ -83,7 +83,6 @@ function Login() {
               <Typography color="textPrimary" variant="h4" padding="1rem">
                 Sistema de Asignación de Aulas
               </Typography>
-
             </Box>
 
             <Box
@@ -179,7 +178,7 @@ function Login() {
       <Footer />
     </>
   ) : (
-    <Navigate to="/user" state={{ from: location }} replace />
+    <Navigate to="/user/home" state={{ from: location }} replace />
   );
 }
 

@@ -9,28 +9,35 @@ import {
   Header,
 } from "./MainLayout.styles";
 import useAuth from "../../hooks/useAuth";
+import Sidebar from "../Dashboard/Navbar";
 
 function MainLayout() {
   const { auth } = useAuth();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
-    <Box
-      sx={{
-        alignItems: "center",
-        textAlign: "center",
+    <body
+      style={{
         display: "flex",
-        justifyContent: "center",
-        flexGrow: 1,
+        flexDirection: "column",
+        margin: 0,
         minHeight: "100%",
-        height: "100vh",
+        height: "100%",
+        background: "#172b4d",
       }}
     >
       <ContentSite>
-        <Dashboard open={open} />
+        <Dashboard open={open}>
+          <Sidebar />
+        </Dashboard>
         <LayoutSite>
           <Header>
             <Button
+              style={{
+                color: "#FFFFFF",
+                borderColor: "#FFFFFF",
+                marginLeft: "1rem",
+              }}
               variant="outlined"
               startIcon={open ? <ClearAll /> : <Menu />}
               onClick={() => setOpen(!open)}
@@ -40,7 +47,8 @@ function MainLayout() {
                 display: "flex",
                 width: "100%",
                 height: "100%",
-                padding: "1rem",
+                color: "white",
+                alignItems: "center",
                 justifyContent: "flex-end",
               }}
             >
@@ -49,6 +57,7 @@ function MainLayout() {
                 size="large"
                 sx={{
                   marginLeft: "1rem",
+                  marginRight: "1rem",
                 }}
               />
             </Box>
@@ -56,7 +65,7 @@ function MainLayout() {
           <Outlet />
         </LayoutSite>
       </ContentSite>
-    </Box>
+    </body>
   );
 }
 
