@@ -49,7 +49,8 @@ export default function Home() {
 
   return (
     
-    <div style={{ width:'90%', height:"100%", margin:"auto" }}>
+    <div style={{ background:"#FAFBFC",flex: "1", 
+         width:'100%', height:"100%", minHeight:"95vh"  }}>
       <h1 style={{color: "#172B4D", textAlign:"center", fontFamily:"roboto"}}>Lista de Solicitudes</h1>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' ,paddingX:"30px"}}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered textColor="black" indicatorColor="inherit" variant="fullWidth" >
