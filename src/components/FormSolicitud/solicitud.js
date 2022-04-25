@@ -8,6 +8,8 @@ import {
   Stack,
   Box,
   Divider,
+  Autocomplete,
+  TextField,
 } from "@mui/material";
 import React from "react";
 import { useReservationRequest } from "../../hooks/useReservationRequest.hooks";
@@ -111,22 +113,20 @@ function Solicitud() {
 
               <Grid container spacing={2} columns={12}>
                 <Grid item sm={6} xs={12}>
-                  <FormSelectControl
-                    myLabel="Motivo de Solicitud"
-                    value={motiveRequest}
-                    setValue={handleMotiveRequest}
-                    list={MOTIVES}
-                    defaultValue={MOTIVES[0]}
+                  <Autocomplete
+                    disablePortal
+                    freeSolo
+                    options={MOTIVES}
+                    sx={{ width: 200 }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        setValue={handleMotiveRequest}
+                        label="Motivo de Solicitud"
+                        value={motiveRequest}
+                      />
+                    )}
                   />
-                  {motiveRequest === "Otro" && (
-                    <FormInputControl
-                      myLabel="Otro motivo de solicitud"
-                      myMultiline={true}
-                      myRows={2}
-                      value={anotherMotive}
-                      setValue={handleAnotherMotiveRequest}
-                    />
-                  )}
                 </Grid>
                 <Grid item sm={6} xs={12}></Grid>
                 <Grid item sm={6} xs={12}>
