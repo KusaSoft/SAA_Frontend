@@ -25,8 +25,8 @@ function Solicitud() {
   const {
     teacher,
     subjectSelected,
-    group_list,
-    subject_list,
+    myGroupList,
+    subjectList,
     sent,
     handleSubmit,
     handleChangeSubject,
@@ -39,6 +39,11 @@ function Solicitud() {
     handleChangePeriodEnd,
     motiveRequest,
     handleMotiveRequest,
+    otherGroupList,
+    handleTeachersSelected,
+    teachers,
+    handleAnotherMotiveRequest,
+    anotherMotive,
   } = useReservationRequest();
 
   return (
@@ -70,18 +75,18 @@ function Solicitud() {
                     myLabel="Materia"
                     value={subjectSelected}
                     setValue={handleChangeSubject}
-                    list={[...subject_list.keys()]}
+                    list={[...subjectList.keys()]}
                   />
                 </Grid>
                 <Grid item sm={6} xs={12}>
                   <FormMultiselectControl
                     disabled={subjectSelected === ""}
                     myLabel="Grupo"
-                    value={group_list}
+                    value={myGroupList}
                     setValue={handleChangeGroup}
                     list={
                       subjectSelected !== ""
-                        ? [...subject_list.get(subjectSelected)]
+                        ? [...subjectList.get(subjectSelected)]
                         : []
                     }
                   />
@@ -97,13 +102,9 @@ function Solicitud() {
                   <FormMultiselectControl
                     disabled={subjectSelected === ""}
                     myLabel="Agregar otro grupo(s)"
-                    value={group_list}
-                    setValue={handleChangeGroup}
-                    list={
-                      subjectSelected !== ""
-                        ? [...subject_list.get(subjectSelected)]
-                        : []
-                    }
+                    value={otherGroupList}
+                    setValue={handleTeachersSelected}
+                    list={subjectSelected !== "" ? [...teachers] : []}
                   />
                 </Grid>
               </Grid>
@@ -115,15 +116,19 @@ function Solicitud() {
                     value={motiveRequest}
                     setValue={handleMotiveRequest}
                     list={MOTIVES}
+                    defaultValue={MOTIVES[0]}
                   />
+                  {motiveRequest === "Otro" && (
+                    <FormInputControl
+                      myLabel="Otro motivo de solicitud"
+                      myMultiline={true}
+                      myRows={2}
+                      value={anotherMotive}
+                      setValue={handleAnotherMotiveRequest}
+                    />
+                  )}
                 </Grid>
-                {/* <Grid item sm={6} xs={12}>
-                  <FormInputControl
-                    myLabel="Motivo de solicitud"
-                    myMultiline={true}
-                    myRows={2}
-                  />
-                </Grid> */}
+                <Grid item sm={6} xs={12}></Grid>
                 <Grid item sm={6} xs={12}>
                   <FormInputControl
                     myLabel="Total estudiantes"
@@ -131,7 +136,7 @@ function Solicitud() {
                     myVariant="outlined"
                     value={totalStudents}
                     myInputProps={{
-                      inputProps: { pattern: "[0-9]+", min: "1" },
+                      inputProps: { pattern: "[0-9]+", min: "1", max: "1500" },
                     }}
                     setValue={handleChangeTotalStudents}
                   />

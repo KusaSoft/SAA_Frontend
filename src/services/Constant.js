@@ -23,4 +23,4 @@ export const PERIODSRANGE = [
   "21:45",
 ];
 
-export const MOTIVES = ["Examen", "Exposición", "Capacitación", "Otro"];
+export const MOTIVES = ["Otro", "Examen", "Exposición", "Capacitación"];

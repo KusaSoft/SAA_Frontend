@@ -7,6 +7,7 @@ export default function FormInputControl(props) {
     <Wrapper maxWidth={props.maxWidth}>
       <FormControlInput>
         <TextField
+          hidden={props.hidden}
           value={props.value}
           onChange={props.setValue}
           label={props.myLabel}
@@ -18,7 +19,6 @@ export default function FormInputControl(props) {
           InputProps={props.myInputProps}
           error={props.myError}
           helperText={props.myHelperText}
-          //margin="normal"
           name={props.myName}
           onBlur={props.myOnBlur}
           fullWidth

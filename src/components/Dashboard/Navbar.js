@@ -3,9 +3,10 @@ import "./Navbar.css";
 import { Link } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
 import useAuth from "../../hooks/useAuth";
-import { Box, Button, Divider } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import LogoFCyT from "../../assets/fcyt.png";
 import { Logout } from "@mui/icons-material";
+import Button from "../../components/Button/Button";
 function Sidebar() {
   const { setAuth } = useAuth();
   const { auth } = useAuth();
@@ -13,32 +14,39 @@ function Sidebar() {
   return (
     <div className="nav_container">
       <div className="nav_content">
-        <Box
-          component="img"
-          sx={{
-            width: 120,
-            maxWidth: { xs: 120, md: 120 },
-            display: "flex",
-          }}
-          alt="logo fcyt."
-          src={LogoFCyT}
-        />
-        <ul className="sidebar-items">
-          {SidebarData.map((sidebarItem) => {
-            return (
-              <li key={sidebarItem.id} className={sidebarItem.cName}>
-                <Link to={sidebarItem.path}>
-                  {sidebarItem.icon}
-                  <span>{sidebarItem.title}</span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
         <Box>
+          <Box
+            component="img"
+            sx={{
+              width: 120,
+              maxWidth: { xs: 120, md: 120 },
+              display: "flex",
+            }}
+            alt="logo fcyt."
+            src={LogoFCyT}
+          />
           <Divider />
+          <ul className="sidebar-items">
+            {SidebarData.map((sidebarItem) => {
+              return (
+                <li key={sidebarItem.id} className={sidebarItem.cName}>
+                  <Link to={sidebarItem.path}>
+                    {sidebarItem.icon}
+                    <span>{sidebarItem.title}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </Box>
+        <Box>
+          <Divider
+            style={{
+              color: "white",
+            }}
+          />
           <Button
-            className="sidebar-logout"
+            variant="contained"
             onClick={() => {
               setAuth({
                 user: null,
@@ -46,9 +54,10 @@ function Sidebar() {
                 token: null,
               });
             }}
-            style={{
-              color: "#FFFFFF",
-            }}
+            hoverBackground="#DFE1E6"
+            hoverColor="#000000"
+            color="#fff"
+            background="#172b4d"
           >
             <Logout
               sx={{
