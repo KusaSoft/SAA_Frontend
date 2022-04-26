@@ -115,7 +115,18 @@ export const useReservationRequest = ({ request, user }) => {
         group: myGroupList,
         state: "sent",
       });
-      apiSettings.postReservationRequest(reservationRequest);
+      apiSettings.postReservationRequest({
+        id: id,
+        name: teacher.name,
+        subject: subjectSelected,
+        teacher_list: otherGroupList,
+        total_students: totalStudents,
+        horario_ini: periodIniSelected,
+        horario_fin: periodEndSelected,
+        request_reason: motiveRequest,
+        group: myGroupList,
+        state: "sent",
+      });
     }
   };
 

@@ -52,7 +52,7 @@ const apiSettings = {
 
   postReservationRequest: async (reservationRequest) => {
     //post in form data
-    console.log(response);
+    console.log(reservationRequest);
     const response = await axios.post(
       `${API_URL}/reservation-request`,
       reservationRequest

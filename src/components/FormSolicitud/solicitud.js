@@ -132,11 +132,11 @@ function Solicitud(props) {
               <Grid container spacing={2} columns={12}>
                 <Grid item sm={6} xs={12}>
                   <Autocomplete
-                    disablePortal
                     freeSolo
                     options={MOTIVES}
                     value={motiveRequest}
                     inputValue={motiveRequest}
+                    disableClearable={true}
                     onInputChange={(e, newValue) => {
                       handleMotiveRequest(newValue);
                     }}
