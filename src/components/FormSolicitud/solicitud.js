@@ -125,14 +125,15 @@ function Solicitud(props) {
                     options={MOTIVES}
                     value={motiveRequest}
                     inputValue={motiveRequest}
-                    onInputChange={handleMotiveRequest}
-                    onChange={handleMotiveRequest}
+                    onInputChange={(e, newValue) => {
+                      handleMotiveRequest(newValue);
+                    }}
+                    onChange={(e, newValue) => {
+                      handleMotiveRequest(newValue);
+                    }}
                     sx={{ minWidth: "200px", padding: "1rem" }}
                     renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Motivo de Solicitud"
-                      />
+                      <TextField {...params} label="Motivo de Solicitud" />
                     )}
                   />
                 </Grid>

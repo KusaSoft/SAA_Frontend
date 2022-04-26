@@ -113,7 +113,7 @@ export const useReservationRequest = ({ request }) => {
     setGroupList(myGroupList.filter((item) => item !== e));
   };
   const handleMotiveRequest = (e) => {
-    setMotiveRequest(e.target.value);
+    setMotiveRequest(e);
   };
 
   return {
