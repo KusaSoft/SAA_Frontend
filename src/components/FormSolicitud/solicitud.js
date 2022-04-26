@@ -67,6 +67,7 @@ function Solicitud() {
               color="textSecondary"
               component="p"
               align="left"
+              padding="0 1rem"
             >
               La solicitud de la reserva se realizará en nombre de:{" "}
               <b>{teacher.name}</b>
@@ -120,7 +121,7 @@ function Solicitud() {
                     disablePortal
                     freeSolo
                     options={MOTIVES}
-                    sx={{ width: 200 }}
+                    sx={{ minWidth: "200px",padding: "1rem" }}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -131,7 +132,6 @@ function Solicitud() {
                     )}
                   />
                 </Grid>
-                <Grid item sm={6} xs={12}></Grid>
                 <Grid item sm={6} xs={12}>
                   <FormInputControl
                     myLabel="Total estudiantes"
