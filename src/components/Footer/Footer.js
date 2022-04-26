@@ -27,7 +27,7 @@ function Footer() {
         color: "textSecondary",
         bottom: 1,
         width: "100%",
-        backgroundColor: "#DFE1E6",
+        backgroundColor: "#172B4D",
         position: "fixed",
         zIndex: "30",
       }}
@@ -53,6 +53,7 @@ function Footer() {
         }}
         direction="row"
         spacing={1}
+        padding="1rem 0 0"
       >
         <Box
           component="img"
@@ -83,7 +84,7 @@ function Footer() {
           src={LogoKusaSoft}
         />
       </Stack>
-      <Box sx={{ fontSize: "0.8rem", paddingBottom: "1rem" }}>
+      <Box sx={{ fontSize: "0.8rem", paddingBottom: "1rem", color:"white"}}>
         © {new Date().getFullYear()}, Desarrollado por kusaSoft.
       </Box>
     </Box>
