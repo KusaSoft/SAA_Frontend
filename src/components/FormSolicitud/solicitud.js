@@ -24,7 +24,9 @@ import { PERIODSRANGE } from "../../services/Constant";
 import { MOTIVES } from "../../services/Constant";
 
 function Solicitud(props) {
+  const [isOpenModal, setIsOpenModal] = useModal(false);
   const [isOpenModal1, openModal1, closeModal1] = useModal(false);
+
   const {
     teacher,
     subjectSelected,
@@ -47,6 +49,10 @@ function Solicitud(props) {
     teachers,
     handleDeleteTeachersSelected,
     handleDeleteMyGroup,
+    handleSaveSubmit,
+    dateReservation,
+    handleChangeDate,
+    allFilled,
   } = useReservationRequest({
     request: `${props.reservationRequest}`,
   });
@@ -79,7 +85,7 @@ function Solicitud(props) {
                 <Grid item sm={6} xs={12}>
                   <FormSelectControl
                     myLabel="Materia"
-                    value={subjectSelected}
+                    myValue={subjectSelected}
                     setValue={handleChangeSubject}
                     list={[...subjectList.keys()]}
                   />
@@ -155,6 +161,7 @@ function Solicitud(props) {
                   <FormInputControl
                     myLabel="Fecha"
                     myType="date"
+                    onChange={handleChangeDate}
                     myInputProps={{
                       inputProps: { min: DateController.getToday() },
                     }}
@@ -166,7 +173,7 @@ function Solicitud(props) {
                 <Grid item sm={6} xs={12}>
                   <FormSelectControl
                     myLabel="Hora Inicio"
-                    value={periodIniSelected}
+                    myValue={periodIniSelected}
                     setValue={handleChangePeriodIni}
                     list={[...PERIODSRANGE.slice(0, PERIODSRANGE.length - 1)]}
                   />
@@ -174,7 +181,7 @@ function Solicitud(props) {
                 <Grid item sm={6} xs={12}>
                   <FormSelectControl
                     myLabel="Hora Fin"
-                    value={periodEndSelected}
+                    myValue={periodEndSelected}
                     setValue={handleChangePeriodEnd}
                     list={[...PERIODSRANGE.slice(1)]}
                   />
@@ -192,12 +199,11 @@ function Solicitud(props) {
                 >
                   <Button
                     color="primary"
-                    // disabled={!formik.isValid || formik.isSubmitting}
-                    // fullWidth
                     size="large"
                     type="button"
                     variant="contained"
                     padding="1rem"
+                    onClick={handleSubmit}
                   >
                     Guardar Cambios
                   </Button>
@@ -213,14 +219,12 @@ function Solicitud(props) {
                 >
                   <Button
                     color="primary"
-                    // disabled={!formik.isValid || formik.isSubmitting}
-                    // fullWidth
                     size="large"
                     type="submit"
                     variant="contained"
                     padding="1rem"
-                    // sx={{ alignSelf: "flex-end", justifySelf: "flex-end" }}
                     onClick={openModal1}
+                    disabled={!allFilled}
                   >
                     Enviar Solicitud
                   </Button>
@@ -233,6 +237,7 @@ function Solicitud(props) {
       <Modal isOpen={isOpenModal1} closeModal={closeModal1}>
         <AskReservationRequest action={closeModal1}></AskReservationRequest>
       </Modal>
+      <Modal></Modal>
     </div>
   );
 }

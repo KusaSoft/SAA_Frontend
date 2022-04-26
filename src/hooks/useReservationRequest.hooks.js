@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { PERIODSRANGE } from "../services/Constant";
-import { mockNewTeachersIntro, mockTeacher } from "../services/Mock";
+import {
+  mockNewTeachersIntro,
+  mockTeacher,
+  mockReservationRequest,
+} from "../services/Mock";
 import DateController from "../utilities/DateController";
 export const useReservationRequest = ({ request }) => {
   const [teacher, setTeacher] = useState({});
@@ -14,8 +18,9 @@ export const useReservationRequest = ({ request }) => {
   const [motiveRequest, setMotiveRequest] = useState("");
   const [teachers, setTeachers] = useState([]);
   const [otherGroupList, setOtherGroupList] = useState([]);
+  const [dateReservation, setDateReservation] = useState(new Date());
   const [reservationRequest, setReservationRequest] = useState({});
-
+  const [allFilled, setAllFilled] = useState(false);
   const fetchDataTeacher = async () => {
     const response = mockTeacher;
     setTeacher({ name: response.name });
@@ -28,11 +33,11 @@ export const useReservationRequest = ({ request }) => {
 
   const fetchDataReservationRequest = async () => {
     if (request !== "new") {
-      const response = mockNewTeachersIntro;
+      const response = mockReservationRequest;
       setTeacher({ name: response.name });
-      setPeriodIniSelected(response.period_ini);
-      setPeriodEndSelected(response.period_end);
-      setMotiveRequest(response.motive_request);
+      setPeriodIniSelected(response.horario_ini);
+      setPeriodEndSelected(response.horario_end);
+      setMotiveRequest(response.request_reason);
       setTotalStudents(response.total_students);
       setSubjectSelected(response.subject);
       setGroupList(response.group_list);
@@ -53,11 +58,59 @@ export const useReservationRequest = ({ request }) => {
   }, []);
 
   useEffect(() => {
-    if (subjectList.size > 0) {
+    console.log("noooooooooooooooooooooooooooooo");
+    if (
+      subjectSelected !== "" &&
+      totalStudents !== "" &&
+      periodIniSelected !== "" &&
+      periodEndSelected !== "" &&
+      motiveRequest !== "" &&
+      dateReservation !== "" &&
+      myGroupList.length > 0
+    ) {
+      setAllFilled(true);
+    } else {
+      setAllFilled(false);
     }
-  }, [subjectList]);
+  }, [
+    subjectSelected,
+    periodIniSelected,
+    periodEndSelected,
+    totalStudents,
+    motiveRequest,
+    myGroupList,
+    dateReservation,
+  ]);
 
   const handleSubmit = (e) => {
+    e.preventDefault();
+    setSent(true);
+    const id = request !== "new" ? request : "";
+
+    if (
+      periodEndSelected !== "" &&
+      periodIniSelected !== "" &&
+      subjectSelected !== "" &&
+      totalStudents !== "" &&
+      motiveRequest !== "" &&
+      teachers.length > 0 &&
+      myGroupList.length > 0 &&
+      dateReservation !== ""
+    ) {
+      setReservationRequest({
+        id: id,
+        name: teacher.name,
+        subject: subjectSelected,
+        teacher_list: [...myGroupList, ...otherGroupList],
+        total_students: totalStudents,
+        horario_ini: periodIniSelected,
+        horario_fin: periodEndSelected,
+        request_reason: motiveRequest,
+      });
+    }
+  };
+
+  const handleSaveSubmit = (e) => {
     e.preventDefault();
     setSent(true);
     const id = request !== "new" ? request : "";
@@ -66,7 +119,7 @@ export const useReservationRequest = ({ request }) => {
       name: teacher.name,
       subject: subjectSelected,
       teacher_list: [...myGroupList, ...otherGroupList],
-      totalStudents: totalStudents,
+      total_students: totalStudents,
       horario_ini: periodIniSelected,
       horario_fin: periodEndSelected,
       request_reason: motiveRequest,
@@ -116,6 +169,10 @@ export const useReservationRequest = ({ request }) => {
     setMotiveRequest(e);
   };
 
+  const handleChangeDate = (e) => {
+    setDateReservation(e);
+  };
+
   return {
     teacher,
     subjectSelected,
@@ -138,5 +195,9 @@ export const useReservationRequest = ({ request }) => {
     teachers,
     handleDeleteTeachersSelected,
     handleDeleteMyGroup,
+    handleSaveSubmit,
+    dateReservation,
+    handleChangeDate,
+    allFilled,
   };
 };

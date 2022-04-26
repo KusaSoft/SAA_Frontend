@@ -29,7 +29,7 @@ export default function AskReservationRequest(props) {
         </Typography>
       </Typography>
       <Box display="flex" justifyContent="flex-end" mt={2}>
-        <Link to="/login" style={{ textDecoration: "none" }}>
+        <Link to="/user/home" style={{ textDecoration: "none" }}>
           <Button variant="contained" color="primary">
             Aceptar
           </Button>

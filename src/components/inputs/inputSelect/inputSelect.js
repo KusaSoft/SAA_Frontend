@@ -7,7 +7,7 @@ export default function FormSelectControl(props) {
       <FormControlInput disabled={props.disabled}>
         <InputLabel>{props.myLabel}</InputLabel>
         <Select
-          value={props.value}
+          value={props.myValue}
           label={props.myLabel}
           onChange={props.setValue}
           required
