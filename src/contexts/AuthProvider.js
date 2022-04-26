@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }) => {
     user: null,
     roles: [],
     token: null,
+    id: null,
   });
 
   return (

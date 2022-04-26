@@ -41,6 +41,7 @@ function Login() {
       setAuth({
         user: "mochito",
         roles: [1984],
+        id: "1",
       });
     },
   });

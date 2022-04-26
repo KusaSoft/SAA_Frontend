@@ -15,6 +15,7 @@ export const mockTeacher = {
   ],
 };
 
+
 export const mockNewTeachersIntro = [
   "1, Carla Salazar Serrudo",
   "2, Leticia Blanco Coca",

@@ -22,8 +22,9 @@ import Modal from "../Modals/Modal";
 import AskReservationRequest from "../ask/askReservationRequest";
 import { PERIODSRANGE } from "../../services/Constant";
 import { MOTIVES } from "../../services/Constant";
-
+import useAuth from "../../hooks/useAuth";
 function Solicitud(props) {
+  const { auth } = useAuth();
   const [isOpenModal, setIsOpenModal] = useModal(false);
   const [isOpenModal1, openModal1, closeModal1] = useModal(false);
 
@@ -55,6 +56,7 @@ function Solicitud(props) {
     allFilled,
   } = useReservationRequest({
     request: `${props.reservationRequest}`,
+    user: auth,
   });
 
   return (
@@ -118,7 +120,11 @@ function Solicitud(props) {
                     value={otherGroupList}
                     setValue={handleTeachersSelected}
                     deleteT={handleDeleteTeachersSelected}
-                    list={subjectSelected !== "" ? [...teachers] : []}
+                    list={
+                      subjectSelected !== ""
+                        ? [...teachers.get(subjectSelected)]
+                        : []
+                    }
                   />
                 </Grid>
               </Grid>

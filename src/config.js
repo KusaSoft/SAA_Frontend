@@ -1,4 +1,4 @@
-const API_URL = "https://localhost:5001/api/";
-const LOGIN_URL = `${API_URL}authentication`;
+// const API_URL = "https://tis-server2.herokuapp.com/api/";
+// const LOGIN_URL = `${API_URL}authentication`;
 
-export { API_URL, LOGIN_URL };
+// export { API_URL, LOGIN_URL };

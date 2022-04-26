@@ -52,6 +52,7 @@ function Sidebar() {
                 user: null,
                 roles: [],
                 token: null,
+                id:null,
               });
             }}
             hoverBackground="#DFE1E6"

@@ -5,8 +5,11 @@ import {
   mockTeacher,
   mockReservationRequest,
 } from "../services/Mock";
+import apiSettings from "../services/service";
 import DateController from "../utilities/DateController";
-export const useReservationRequest = ({ request }) => {
+import useAuth from "./useAuth";
+
+export const useReservationRequest = ({ request, user }) => {
   const [teacher, setTeacher] = useState({});
   const [subjectSelected, setSubjectSelected] = useState("");
   const [myGroupList, setGroupList] = useState([]);
@@ -22,10 +25,10 @@ export const useReservationRequest = ({ request }) => {
   const [reservationRequest, setReservationRequest] = useState({});
   const [allFilled, setAllFilled] = useState(false);
   const fetchDataTeacher = async () => {
-    const response = mockTeacher;
-    setTeacher({ name: response.name });
+    const response = await apiSettings.getSubjects(user.id);
+    setTeacher({ name: user.user });
     const subjectListMap = new Map();
-    response.subject.map((subject) => {
+    response.map((subject) => {
       subjectListMap.set(subject.name_subject, subject.group_list);
     });
     setSubjectList(subjectListMap);
@@ -47,18 +50,22 @@ export const useReservationRequest = ({ request }) => {
     }
   };
 
-  const fetchDataTeachers = async (subject) => {
-    const response = mockNewTeachersIntro;
-    setTeachers(response);
+  const fetchDataTeachers = async () => {
+    const response = await apiSettings.getTeachers(user.id);
+    const subjectListMap = new Map();
+    response.map((subject) => {
+      subjectListMap.set(subject.name_subject, subject.group_list);
+    });
+    setTeachers(subjectListMap);
   };
 
   useEffect(() => {
     fetchDataReservationRequest();
     fetchDataTeacher();
+    fetchDataTeachers();
   }, []);
 
   useEffect(() => {
-    console.log("noooooooooooooooooooooooooooooo");
     if (
       subjectSelected !== "" &&
       totalStudents !== "" &&
