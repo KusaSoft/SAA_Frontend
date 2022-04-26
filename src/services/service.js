@@ -49,6 +49,15 @@ const apiSettings = {
     console.log(newSubjects);
     return newSubjects;
   },
+
+  postReservationRequest: async (reservationRequest) => {
+    //post in form data
+    console.log(response);
+    const response = await axios.post(
+      `${API_URL}/reservation-request`,
+      reservationRequest
+    );
+  },
 };
 
 export default apiSettings;

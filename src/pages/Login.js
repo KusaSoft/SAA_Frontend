@@ -18,7 +18,7 @@ import AuthContext from "../contexts/AuthProvider";
 import { Email, Image, Lock, Password } from "@mui/icons-material";
 import LogoFCyT from "../assets/fcyt.png";
 import Footer from "../components/Footer/Footer";
-
+import { mockLogin } from "../services/Mock";
 function Login() {
   const location = useLocation();
   const { setAuth } = useContext(AuthContext);
@@ -38,11 +38,28 @@ function Login() {
         .required("La contraseña es requerida"),
     }),
     onSubmit: () => {
-      setAuth({
-        user: "mochito",
-        roles: [1984],
-        id: "1",
-      });
+      if (
+        mockLogin[0].email === formik.values.email &&
+        mockLogin[0].password === formik.values.password
+      ) {
+        setAuth({
+          user: mockLogin[0].user,
+          roles: [...mockLogin[0].roles],
+          id: mockLogin[0].id,
+        });
+      } else if (
+        mockLogin[1].email === formik.values.email &&
+        mockLogin[1].password === formik.values.password
+      ) {
+        setAuth({
+          user: mockLogin[1].user,
+          roles: [...mockLogin[1].roles],
+          id: mockLogin[1].id,
+        });
+      } else {
+        alert("Usuario o contraseña incorrectos");
+        formik.setSubmitting(false);
+      }
     },
   });
   return auth.user === null ? (

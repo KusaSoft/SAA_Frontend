@@ -100,7 +100,6 @@ export const useReservationRequest = ({ request, user }) => {
       subjectSelected !== "" &&
       totalStudents !== "" &&
       motiveRequest !== "" &&
-      teachers.length > 0 &&
       myGroupList.length > 0 &&
       dateReservation !== ""
     ) {
@@ -108,12 +107,15 @@ export const useReservationRequest = ({ request, user }) => {
         id: id,
         name: teacher.name,
         subject: subjectSelected,
-        teacher_list: [...myGroupList, ...otherGroupList],
+        teacher_list: otherGroupList,
         total_students: totalStudents,
         horario_ini: periodIniSelected,
         horario_fin: periodEndSelected,
         request_reason: motiveRequest,
+        group: myGroupList,
+        state: "sent",
       });
+      apiSettings.postReservationRequest(reservationRequest);
     }
   };
 
@@ -125,11 +127,12 @@ export const useReservationRequest = ({ request, user }) => {
       id: id,
       name: teacher.name,
       subject: subjectSelected,
-      teacher_list: [...myGroupList, ...otherGroupList],
+      teacher_list: otherGroupList,
       total_students: totalStudents,
       horario_ini: periodIniSelected,
       horario_fin: periodEndSelected,
       request_reason: motiveRequest,
+      group: myGroupList,
     });
   };
 

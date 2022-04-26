@@ -209,7 +209,7 @@ function Solicitud(props) {
                     type="button"
                     variant="contained"
                     padding="1rem"
-                    onClick={handleSubmit}
+                    onClick={handleSaveSubmit}
                   >
                     Guardar Cambios
                   </Button>
@@ -229,7 +229,10 @@ function Solicitud(props) {
                     type="submit"
                     variant="contained"
                     padding="1rem"
-                    onClick={openModal1}
+                    onClick={(e) => {
+                      handleSubmit(e);
+                      // openModal1();
+                    }}
                     disabled={!allFilled}
                   >
                     Enviar Solicitud

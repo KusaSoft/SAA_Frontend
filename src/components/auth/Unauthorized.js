@@ -10,12 +10,11 @@ const Unauthorized = () => {
 
   return (
     <section>
-      <h1>Unauthorized</h1>
+      <h1>Acceso no autorizado</h1>
       <br />
-      <p>You do not have access to the requested page.</p>
+      <p>No tienes permisos para acceder a esta pagina.</p>
       <div className="flexGrow">
-        <button onClick={goBack}>Go Back</button>
-        <Modals></Modals>
+        <button onClick={goBack}>Retroceder</button>
       </div>
     </section>
   );

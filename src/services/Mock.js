@@ -15,7 +15,6 @@ export const mockTeacher = {
   ],
 };
 
-
 export const mockNewTeachersIntro = [
   "1, Carla Salazar Serrudo",
   "2, Leticia Blanco Coca",
@@ -37,3 +36,20 @@ export const mockReservationRequest = {
   total_students: "12",
   other_group_list: ["2, Carla Salazar Serrudo", "3, Leticia Blanco Coca"],
 };
+
+export const mockLogin = [
+  {
+    id: "1",
+    user: "Corina Flores Villarroel",
+    password: "12345",
+    email: "corina@gmail.com",
+    roles: [1984],
+  },
+  {
+    id: "2",
+    user: "Carla Salazar Serrudo",
+    password: "12345",
+    email: "carla@gmail.com",
+    roles: [1984],
+  },
+];
