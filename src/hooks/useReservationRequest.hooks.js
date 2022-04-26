@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { PERIODSRANGE } from "../services/Constant";
 import { mockNewTeachersIntro, mockTeacher } from "../services/Mock";
-
+import DateController from "../utilities/DateController";
 export const useReservationRequest = () => {
   const [teacher, setTeacher] = useState({});
   const [subjectSelected, setSubjectSelected] = useState("");
@@ -14,7 +15,6 @@ export const useReservationRequest = () => {
   const [teachers, setTeachers] = useState([]);
   const [otherGroupList, setOtherGroupList] = useState([]);
   const [reservationRequest, setReservationRequest] = useState({});
-  const [anotherMotive, setAnotherMotive] = useState("");
 
   const fetchDataTeacher = async () => {
     const response = mockTeacher;
@@ -86,12 +86,15 @@ export const useReservationRequest = () => {
     setOtherGroupList(typeof value === "string" ? value.split(",") : value);
   };
 
-  const handleMotiveRequest = (e) => {
-    setMotiveRequest(e.target.value);
+  const handleDeleteTeachersSelected = (e) => {
+    setOtherGroupList(otherGroupList.filter((item) => item !== e));
   };
 
-  const handleAnotherMotiveRequest = (e) => {
-    setAnotherMotive(e.target.value);
+  const handleDeleteMyGroup = (e) => {
+    setGroupList(myGroupList.filter((item) => item !== e));
+  };
+  const handleMotiveRequest = (e) => {
+    setMotiveRequest(e.target.value);
   };
 
   return {
@@ -114,7 +117,7 @@ export const useReservationRequest = () => {
     otherGroupList,
     handleTeachersSelected,
     teachers,
-    handleAnotherMotiveRequest,
-    anotherMotive,
+    handleDeleteTeachersSelected,
+    handleDeleteMyGroup,
   };
 };

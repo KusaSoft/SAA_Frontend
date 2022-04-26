@@ -32,6 +32,7 @@ function getStyles(group, groupList, theme) {
 
 export default function FormMultiselectControl(props) {
   const theme = useTheme();
+
   return (
     <Wrapper>
       <FormControlInput disabled={props.disabled}>
@@ -45,7 +46,17 @@ export default function FormMultiselectControl(props) {
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
               {selected.map((value) => (
-                <Chip key={value} label={value} />
+                <Chip
+                  key={value}
+                  label={value}
+                  onMouseDown={(event) => {
+                    event.stopPropagation();
+                  }}
+                  onDelete={(e) => {
+                    e.stopPropagation();
+                    props.deleteT(value);
+                  }}
+                />
               ))}
             </Box>
           )}

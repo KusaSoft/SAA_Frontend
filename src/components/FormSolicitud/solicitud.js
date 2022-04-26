@@ -22,6 +22,7 @@ import Modal from "../Modals/Modal";
 import AskReservationRequest from "../ask/askReservationRequest";
 import { PERIODSRANGE } from "../../services/Constant";
 import { MOTIVES } from "../../services/Constant";
+
 function Solicitud() {
   const [isOpenModal1, openModal1, closeModal1] = useModal(false);
   const {
@@ -44,8 +45,8 @@ function Solicitud() {
     otherGroupList,
     handleTeachersSelected,
     teachers,
-    handleAnotherMotiveRequest,
-    anotherMotive,
+    handleDeleteTeachersSelected,
+    handleDeleteMyGroup,
   } = useReservationRequest();
 
   return (
@@ -86,6 +87,7 @@ function Solicitud() {
                     myLabel="Grupo"
                     value={myGroupList}
                     setValue={handleChangeGroup}
+                    deleteT={handleDeleteMyGroup}
                     list={
                       subjectSelected !== ""
                         ? [...subjectList.get(subjectSelected)]
@@ -106,6 +108,7 @@ function Solicitud() {
                     myLabel="Agregar otro grupo(s)"
                     value={otherGroupList}
                     setValue={handleTeachersSelected}
+                    deleteT={handleDeleteTeachersSelected}
                     list={subjectSelected !== "" ? [...teachers] : []}
                   />
                 </Grid>

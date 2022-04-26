@@ -1,3 +1,4 @@
+import { PERIODSRANGE } from "../services/Constant";
 const DateController = {
   getToday: () => {
     const today = new Date();
@@ -12,6 +13,24 @@ const DateController = {
     const mm = String(today.getMinutes()).padStart(2, "0"); //January is 0!
     const ss = String(today.getSeconds()).padStart(2, "0");
     return `${hh}:${mm}:${ss}`;
+  },
+  findPeriod: (period) => {
+    const periodSelected = PERIODSRANGE.find((item) => {
+      if (item.key === period) {
+        return item.value;
+      }
+    });
+    return periodSelected;
+  },
+  beforeLimit: (period, periodLimit, direction) => {
+    const periodSelected = period;
+    const periodLimitSelected = periodLimit;
+    console.log(periodSelected, periodLimitSelected);
+    if (direction === "up") {
+      return periodSelected < periodLimitSelected;
+    } else {
+      return periodSelected > periodLimitSelected;
+    }
   },
 };
 
