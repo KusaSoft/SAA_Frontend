@@ -23,7 +23,7 @@ import AskReservationRequest from "../ask/askReservationRequest";
 import { PERIODSRANGE } from "../../services/Constant";
 import { MOTIVES } from "../../services/Constant";
 
-function Solicitud() {
+function Solicitud(props) {
   const [isOpenModal1, openModal1, closeModal1] = useModal(false);
   const {
     teacher,
@@ -47,7 +47,9 @@ function Solicitud() {
     teachers,
     handleDeleteTeachersSelected,
     handleDeleteMyGroup,
-  } = useReservationRequest();
+  } = useReservationRequest({
+    request: `${props.reservationRequest}`,
+  });
 
   return (
     <div style={{ backgroundColor: "#fafbfc" }}>
@@ -121,13 +123,15 @@ function Solicitud() {
                     disablePortal
                     freeSolo
                     options={MOTIVES}
-                    sx={{ minWidth: "200px",padding: "1rem" }}
+                    value={motiveRequest}
+                    inputValue={motiveRequest}
+                    onInputChange={handleMotiveRequest}
+                    onChange={handleMotiveRequest}
+                    sx={{ minWidth: "200px", padding: "1rem" }}
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        setValue={handleMotiveRequest}
                         label="Motivo de Solicitud"
-                        value={motiveRequest}
                       />
                     )}
                   />

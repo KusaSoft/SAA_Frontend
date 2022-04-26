@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { PERIODSRANGE } from "../services/Constant";
 import { mockNewTeachersIntro, mockTeacher } from "../services/Mock";
 import DateController from "../utilities/DateController";
-export const useReservationRequest = () => {
+export const useReservationRequest = ({ request }) => {
   const [teacher, setTeacher] = useState({});
   const [subjectSelected, setSubjectSelected] = useState("");
   const [myGroupList, setGroupList] = useState([]);
@@ -26,12 +26,29 @@ export const useReservationRequest = () => {
     setSubjectList(subjectListMap);
   };
 
+  const fetchDataReservationRequest = async () => {
+    if (request !== "new") {
+      const response = mockNewTeachersIntro;
+      setTeacher({ name: response.name });
+      setPeriodIniSelected(response.period_ini);
+      setPeriodEndSelected(response.period_end);
+      setMotiveRequest(response.motive_request);
+      setTotalStudents(response.total_students);
+      setSubjectSelected(response.subject);
+      setGroupList(response.group_list);
+      setOtherGroupList(response.other_group_list);
+      setReservationRequest(response);
+      setSubjectList(response.subject_list);
+    }
+  };
+
   const fetchDataTeachers = async (subject) => {
     const response = mockNewTeachersIntro;
     setTeachers(response);
   };
 
   useEffect(() => {
+    fetchDataReservationRequest();
     fetchDataTeacher();
   }, []);
 
@@ -43,10 +60,12 @@ export const useReservationRequest = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSent(true);
+    const id = request !== "new" ? request : "";
     setReservationRequest({
+      id: id,
       name: teacher.name,
       subject: subjectSelected,
-      teacher_list: myGroupList,
+      teacher_list: [...myGroupList, ...otherGroupList],
       totalStudents: totalStudents,
       horario_ini: periodIniSelected,
       horario_fin: periodEndSelected,
