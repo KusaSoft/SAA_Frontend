@@ -13,6 +13,6 @@ export const SidebarData = [
     title: "Solicitar Reserva",
     cName: "sidebar-item",
     icon: <Add sx={{ marginRight: "1rem" }} />,
-    path: "/user/reservationRequest",
+    path: "/user/reservationRequest/new",
   },
 ];

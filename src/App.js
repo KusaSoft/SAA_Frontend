@@ -23,6 +23,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
       <Route path="/user" element={<MainLayout />}>
+        <Route path="/user" element={<Navigate replace to="/user/home" />} />
         <Route
           element={
             <RequireAuth
@@ -33,7 +34,10 @@ function App() {
           <Route path="home" element={<Home />} />
         </Route>
         <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
-          <Route path="reservationRequest" element={<ReservationRequest />} />
+          <Route
+            path="reservationRequest/:reservationRequest"
+            element={<ReservationRequest />}
+          />
         </Route>
       </Route>
     </Routes>
