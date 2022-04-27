@@ -1,25 +1,88 @@
 import React from "react";
-
-const Card =(props) => {
+import { Delete, Edit } from "@mui/icons-material";
+import { STATUS } from "../../services/Constant";
+import { Fab, Stack } from "@mui/material";
+const Card = (props) => {
   return (
-    <div style={{background:"#172B4D", 
-                  color:"white", 
-                  display:"flex", 
-                  justifyContent:"space-between",
-                  marginTop:"20px"}}>
-      <div style={{paddingLeft:"10px", marginBlock: "10px"}}>
-          <b style={{fontWeight:"bold"}}>Materia: </b> {props.mockRequest.materia}
-          
-          <div>
-          <b style={{fontWeight:"bold"}}>Motivo: </b> {props.mockRequest.motivo}
-         
-          </div> 
+    <div
+      style={{
+        color: "white",
+        display: "flex",
+        justifyContent: "space-between",
+        flexDirection: "column",
+        marginTop: "20px",
+      }}
+    >
+      <div
+        style={{
+          padding: "10px",
+          display: "flex",
+          justifyContent: "space-between",
+          background: "#172B4D",
+        }}
+      >
+        <div>
+          <b style={{ fontWeight: "bold" }}>Materia: </b>{" "}
+          {props.request.materia}
+        </div>
+        <div style={{}}>
+          <b style={{ fontWeight: "bold" }}>Fecha: </b> {props.request.fecha}
+        </div>
       </div>
-
-      <div style={{marginBlock: "10px"}}>
-          <b style={{fontWeight:"bold"}}>Fecha: </b> {props.mockRequest.fecha} 
-          
-      </div> 
+      <div>
+        <div style={{ background: "#EBECF0", color: "black", padding: "10px" }}>
+          <b style={{ fontWeight: "bold" }}>Motivo: </b> {props.request.motivo}
+        </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-end",
+          background: "#EBECF0",
+          color: "black",
+        }}
+      >
+        <div
+          style={{
+            minWidth: "100px",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Stack direction="row" spacing={1}>
+            {props.request.status == STATUS.DRAFT ? (
+              <Fab
+                color="neutral"
+                size="small"
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "#DFE1E6",
+                    color: "black",
+                  },
+                }}
+              >
+                <Edit />
+              </Fab>
+            ) : (
+              <></>
+            )}
+            <Fab
+              color="neutral"
+              size="small"
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#DFE1E6",
+                  color: "black",
+                },
+              }}
+            >
+              <Delete onClick={() => alert("Borrar")} />
+            </Fab>
+          </Stack>
+        </div>
+      </div>
     </div>
   );
 };

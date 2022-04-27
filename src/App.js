@@ -9,38 +9,49 @@ import Navbar from "./components/Dashboard/Navbar";
 import Unauthorized from "./components/auth/Unauthorized";
 import { Box } from "@mui/material";
 import MainLayout from "./components/Layout/MainLayout";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const ROLES = {
   Reviewer: 2001,
   Teacher: 1984,
   Admin: 5150,
 };
+const theme = createTheme({
+  palette: {
+    neutral: {
+      main: "#64748B",
+      contrastText: "#fff",
+    },
+  },
+});
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Navigate replace to="/login" />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/unauthorized" element={<Unauthorized />} />
-      <Route path="/user" element={<MainLayout />}>
-        <Route path="/user" element={<Navigate replace to="/user/home" />} />
-        <Route
-          element={
-            <RequireAuth
-              allowedRoles={[ROLES.Teacher, ROLES.Admin, ROLES.Reviewer]}
-            />
-          }
-        >
-          <Route path="home" element={<Home />} />
-        </Route>
-        <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
+    <ThemeProvider theme={theme}>
+      <Routes>
+        <Route path="/" element={<Navigate replace to="/login" />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="/user" element={<MainLayout />}>
+          <Route path="/user" element={<Navigate replace to="/user/home" />} />
           <Route
-            path="reservationRequest/:reservationRequest"
-            element={<ReservationRequest />}
-          />
+            element={
+              <RequireAuth
+                allowedRoles={[ROLES.Teacher, ROLES.Admin, ROLES.Reviewer]}
+              />
+            }
+          >
+            <Route path="home" element={<Home />} />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
+            <Route
+              path="reservationRequest/:reservationRequest"
+              element={<ReservationRequest />}
+            />
+          </Route>
         </Route>
-      </Route>
-    </Routes>
+      </Routes>
+    </ThemeProvider>
   );
 }
 

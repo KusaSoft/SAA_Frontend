@@ -24,3 +24,10 @@ export const PERIODSRANGE = [
 ];
 
 export const MOTIVES = ["Examen", "Exposición", "Capacitación"];
+
+export const STATUS = {
+  SENT: "sent",
+  DRAFT: "draft",
+  REJECTED: "rejected",
+  APPROVED: "approved",
+};

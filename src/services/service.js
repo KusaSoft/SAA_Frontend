@@ -58,6 +58,10 @@ const apiSettings = {
       reservationRequest
     );
   },
+
+  getStatusList: async (status) => {
+    return [];
+  },
 };
 
 export default apiSettings;

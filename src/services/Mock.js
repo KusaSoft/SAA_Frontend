@@ -53,3 +53,77 @@ export const mockLogin = [
     roles: [1984],
   },
 ];
+
+export const mockListSent = [
+  {
+    IDreserva: 1,
+    namedoc: "leticia",
+    materia: "introduccion a la Programacion",
+    grupo: "2",
+    totalEst: "150",
+    motivo:
+      "examen     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod,nisl eget consectetur consectetur, erat nisi aliquet nunc, euconsectetur nisl nunc euismod nunc. Nullam euismod, nisl eget    ",
+    fecha: "10/10/22",
+    horaINI: "09:45",
+    horaFin: "12:45",
+    grupoOtro: "costasG1",
+    status: "sent",
+  },
+  {
+    IDreserva: 2,
+    namedoc: "leticia",
+    materia: "Elementos de la programacion",
+    grupo: "1",
+    totalEst: "100",
+    motivo: "examen",
+    fecha: "20/10/22",
+    horaINI: "11:15",
+    horaFin: "14:15",
+    grupoOtro: "RosemaryG1",
+    status: "sent",
+  },
+  {
+    IDreserva: 2,
+    namedoc: "leticia",
+    materia: "Taller Ingenieria Software",
+    grupo: "3",
+    totalEst: "15",
+    motivo: "examen",
+    fecha: "30/10/22",
+    horaINI: "11:15",
+    horaFin: "12:45",
+    grupoOtro: "RosemaryG1",
+    status: "sent",
+  },
+];
+
+export const mockListDraft = [
+  {
+    IDreserva: 1,
+    namedoc: "leticia",
+    materia: "introduccion a la Programacion",
+    grupo: "2",
+    totalEst: "150",
+    motivo:
+      "examen     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod,nisl eget consectetur consectetur, erat nisi aliquet nunc, euconsectetur nisl nunc euismod nunc. Nullam euismod, nisl eget    ",
+    fecha: "10/10/22",
+    horaINI: "09:45",
+    horaFin: "12:45",
+    grupoOtro: "costasG1",
+    status: "draft",
+  },
+  {
+    IDreserva: 2,
+    namedoc: "leticia",
+    materia: "Elementos de la programacion",
+    grupo: "1",
+    totalEst: "100",
+    motivo: "examen",
+    fecha: "20/10/22",
+    horaINI: "11:15",
+    horaFin: "14:15",
+    grupoOtro: "RosemaryG1",
+    status: "draft",
+  },
+];
+
