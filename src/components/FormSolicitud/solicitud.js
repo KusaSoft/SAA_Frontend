@@ -89,7 +89,7 @@ function Solicitud(props) {
                     myLabel="Materia"
                     myValue={subjectSelected}
                     setValue={handleChangeSubject}
-                    list={[...subjectList.keys()]}
+                    list={subjectList ? [...subjectList.keys()] : []}
                   />
                 </Grid>
                 <Grid item sm={6} xs={12}>
@@ -101,7 +101,9 @@ function Solicitud(props) {
                     deleteT={handleDeleteMyGroup}
                     list={
                       subjectSelected !== ""
-                        ? [...subjectList.get(subjectSelected)]
+                        ? subjectList
+                          ? [...subjectList.get(subjectSelected)]
+                          : []
                         : []
                     }
                   />
@@ -122,7 +124,9 @@ function Solicitud(props) {
                     deleteT={handleDeleteTeachersSelected}
                     list={
                       subjectSelected !== ""
-                        ? [...teachers.get(subjectSelected)]
+                        ? teachers
+                          ? [...teachers.get(subjectSelected)]
+                          : []
                         : []
                     }
                   />
@@ -193,27 +197,14 @@ function Solicitud(props) {
                   />
                 </Grid>
               </Grid>
-              <Grid container spacing={2} columns={12}>
-                <Grid
-                  item
-                  sm={6}
-                  xs={12}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Button
-                    color="primary"
-                    size="large"
-                    type="button"
-                    variant="contained"
-                    padding="1rem"
-                    onClick={handleSaveSubmit}
-                  >
-                    Guardar Cambios
-                  </Button>
-                </Grid>
+              <Grid
+                container
+                columns={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
                 <Grid
                   item
                   sm={6}

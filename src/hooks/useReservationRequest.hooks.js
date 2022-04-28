@@ -31,6 +31,7 @@ export const useReservationRequest = ({ request, user }) => {
     response.map((subject) => {
       subjectListMap.set(subject.name_subject, subject.group_list);
     });
+    console.log(subjectListMap);
     setSubjectList(subjectListMap);
   };
 
@@ -46,7 +47,6 @@ export const useReservationRequest = ({ request, user }) => {
       setGroupList(response.group_list);
       setOtherGroupList(response.other_group_list);
       setReservationRequest(response);
-      setSubjectList(response.subject_list);
     }
   };
 
@@ -56,11 +56,12 @@ export const useReservationRequest = ({ request, user }) => {
     response.map((subject) => {
       subjectListMap.set(subject.name_subject, subject.group_list);
     });
+    console.log(subjectListMap);
     setTeachers(subjectListMap);
+    fetchDataReservationRequest();
   };
 
   useEffect(() => {
-    fetchDataReservationRequest();
     fetchDataTeacher();
     fetchDataTeachers();
   }, []);

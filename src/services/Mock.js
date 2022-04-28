@@ -28,13 +28,13 @@ export const mockNewTeachersIntro = [
 export const mockReservationRequest = {
   id: "1",
   name: "Corina Flores Villarroel",
-  subject: "Introducción a la programación",
-  group_list: ["7, Corina Flores Villarroel"],
+  subject: "Introduccion a la programacion",
+  group_list: ["1. 2"],
   horario_ini: "03:45",
   horario_end: "05:15",
   request_reason: "Expresito",
   total_students: "12",
-  other_group_list: ["2, Carla Salazar Serrudo", "3, Leticia Blanco Coca"],
+  other_group_list: ["3"],
 };
 
 export const mockLogin = [
@@ -56,9 +56,9 @@ export const mockLogin = [
 
 export const mockListSent = [
   {
-    IDreserva: 1,
+    id: 1,
     namedoc: "leticia",
-    materia: "introduccion a la Programacion",
+    materia: "Introduccion a la programacion",
     grupo: "2",
     totalEst: "150",
     motivo:
@@ -70,7 +70,7 @@ export const mockListSent = [
     status: "sent",
   },
   {
-    IDreserva: 2,
+    id: 2,
     namedoc: "leticia",
     materia: "Elementos de la programacion",
     grupo: "1",
@@ -83,7 +83,7 @@ export const mockListSent = [
     status: "sent",
   },
   {
-    IDreserva: 2,
+    id: 2,
     namedoc: "leticia",
     materia: "Taller Ingenieria Software",
     grupo: "3",
@@ -99,7 +99,7 @@ export const mockListSent = [
 
 export const mockListDraft = [
   {
-    IDreserva: 1,
+    id: 1,
     namedoc: "leticia",
     materia: "introduccion a la Programacion",
     grupo: "2",
@@ -113,7 +113,7 @@ export const mockListDraft = [
     status: "draft",
   },
   {
-    IDreserva: 2,
+    id: 2,
     namedoc: "leticia",
     materia: "Elementos de la programacion",
     grupo: "1",
@@ -126,4 +126,3 @@ export const mockListDraft = [
     status: "draft",
   },
 ];
-

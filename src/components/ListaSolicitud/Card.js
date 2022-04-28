@@ -2,6 +2,7 @@ import React from "react";
 import { Delete, Edit } from "@mui/icons-material";
 import { STATUS } from "../../services/Constant";
 import { Fab, Stack } from "@mui/material";
+import { Link } from "react-router-dom";
 const Card = (props) => {
   return (
     <div
@@ -39,7 +40,7 @@ const Card = (props) => {
           display: "flex",
           flexDirection: "row",
           justifyContent: "flex-end",
-          background: "#EBECF0",
+          background: "linear-gradient(180deg, #EBECF0 50%, #FAFBFC 50%)",
           color: "black",
         }}
       >
@@ -53,18 +54,20 @@ const Card = (props) => {
         >
           <Stack direction="row" spacing={1}>
             {props.request.status == STATUS.DRAFT ? (
-              <Fab
-                color="neutral"
-                size="small"
-                sx={{
-                  "&:hover": {
-                    backgroundColor: "#DFE1E6",
-                    color: "black",
-                  },
-                }}
-              >
-                <Edit />
-              </Fab>
+              <Link to={`/user/reservationRequest/${props.request.id}`}>
+                <Fab
+                  color="neutral"
+                  size="small"
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "#DFE1E6",
+                      color: "black",
+                    },
+                  }}
+                >
+                  <Edit />
+                </Fab>
+              </Link>
             ) : (
               <></>
             )}

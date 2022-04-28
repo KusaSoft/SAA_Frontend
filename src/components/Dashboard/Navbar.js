@@ -14,7 +14,13 @@ function Sidebar() {
   return (
     <div className="nav_container">
       <div className="nav_content">
-        <Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <Box
             component="img"
             sx={{
@@ -52,7 +58,7 @@ function Sidebar() {
                 user: null,
                 roles: [],
                 token: null,
-                id:null,
+                id: null,
               });
             }}
             hoverBackground="#DFE1E6"
