@@ -10,12 +10,8 @@ import Unauthorized from "./components/auth/Unauthorized";
 import { Box } from "@mui/material";
 import MainLayout from "./components/Layout/MainLayout";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ROLES } from "./services/Constant";
 
-const ROLES = {
-  Reviewer: 2001,
-  Teacher: 1984,
-  Admin: 5150,
-};
 const theme = createTheme({
   palette: {
     neutral: {
@@ -35,15 +31,15 @@ function App() {
         <Route path="/user" element={<MainLayout />}>
           <Route path="/user" element={<Navigate replace to="/user/home" />} />
           <Route
-            element={
+            element={ 
               <RequireAuth
-                allowedRoles={[ROLES.Teacher, ROLES.Admin, ROLES.Reviewer]}
+                allowedRoles={[ROLES.TEACHER, ROLES.ADMIN, ROLES.REVIEWER]}
               />
             }
           >
             <Route path="home" element={<Home />} />
           </Route>
-          <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.TEACHER]} />}>
             <Route
               path="reservationRequest/:reservationRequest"
               element={<ReservationRequest />}

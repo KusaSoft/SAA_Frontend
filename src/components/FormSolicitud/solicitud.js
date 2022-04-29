@@ -10,6 +10,7 @@ import {
   Divider,
   Autocomplete,
   TextField,
+  CircularProgress,
 } from "@mui/material";
 import React from "react";
 import { useReservationRequest } from "../../hooks/useReservationRequest.hooks";
@@ -23,11 +24,19 @@ import AskReservationRequest from "../ask/askReservationRequest";
 import { PERIODSRANGE } from "../../services/Constant";
 import { MOTIVES } from "../../services/Constant";
 import useAuth from "../../hooks/useAuth";
+import { useRequest } from "../../hooks/useRequest.hooks";
 function Solicitud(props) {
   const { auth } = useAuth();
   const [isOpenModal, setIsOpenModal] = useModal(false);
   const [isOpenModal1, openModal1, closeModal1] = useModal(false);
-
+  const [
+    loadingR,
+    errorR,
+    messageR,
+    responseR,
+    statusR,
+    handleRequestR,
+  ] = useRequest();
   const {
     teacher,
     subjectSelected,
@@ -54,6 +63,7 @@ function Solicitud(props) {
     dateReservation,
     handleChangeDate,
     allFilled,
+    reservationRequest,
   } = useReservationRequest({
     request: `${props.reservationRequest}`,
     user: auth,
@@ -220,13 +230,14 @@ function Solicitud(props) {
                     type="submit"
                     variant="contained"
                     padding="1rem"
-                    onClick={(e) => {
-                      handleSubmit(e);
-                      // openModal1();
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      handleRequestR(reservationRequest);
+                      openModal1();
                     }}
                     disabled={!allFilled}
                   >
-                    Enviar Solicitud
+                    Enviar
                   </Button>
                 </Grid>
               </Grid>
@@ -235,9 +246,17 @@ function Solicitud(props) {
         </CardContent>
       </Card>
       <Modal isOpen={isOpenModal1} closeModal={closeModal1}>
-        <AskReservationRequest action={closeModal1}></AskReservationRequest>
+        {loadingR ? (
+          <CircularProgress color="inherit" />
+        ) : (
+          <AskReservationRequest
+            action={closeModal1}
+            reservation={responseR}
+            error={errorR}
+            message={messageR}
+          ></AskReservationRequest>
+        )}
       </Modal>
-      <Modal></Modal>
     </div>
   );
 }
