@@ -44,6 +44,7 @@ export const mockLogin = [
     password: "12345",
     email: "corina@gmail.com",
     roles: [1984],
+    tokenAccess:"tokensito..........."
   },
   {
     id: "2",
@@ -51,6 +52,7 @@ export const mockLogin = [
     password: "12345",
     email: "carla@gmail.com",
     roles: [1984],
+    tokenAccess:"tokensito..........."
   },
 ];
 

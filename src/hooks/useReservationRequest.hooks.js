@@ -221,5 +221,6 @@ export const useReservationRequest = ({ request, user }) => {
     dateReservation,
     handleChangeDate,
     allFilled,
+    reservationRequest,
   };
 };

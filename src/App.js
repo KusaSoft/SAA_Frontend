@@ -10,14 +10,13 @@ import Unauthorized from "./components/auth/Unauthorized";
 import { Box } from "@mui/material";
 import MainLayout from "./components/Layout/MainLayout";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+
 import Pendientes from "./pages/Pendientes";
 import Borradores from "./pages/Borradores";
 
-const ROLES = {
-  Reviewer: 2001,
-  Teacher: 1984,
-  Admin: 5150,
-};
+import { ROLES } from "./services/Constant";
+
+
 const theme = createTheme({
   palette: {
     neutral: {
@@ -37,30 +36,31 @@ function App() {
         <Route path="/user" element={<MainLayout />}>
           <Route path="/user" element={<Navigate replace to="/user/home" />} />
           <Route
-            element={
+            element={ 
               <RequireAuth
-                allowedRoles={[ROLES.Teacher, ROLES.Admin, ROLES.Reviewer]}
+                allowedRoles={[ROLES.TEACHER, ROLES.ADMIN, ROLES.REVIEWER]}
               />
             }
           >
             <Route path="home" element={<Home />} />
           </Route>
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.TEACHER]} />}>
+
             <Route
               path="reservationRequest/:reservationRequest"
               element={<ReservationRequest />}
             />
           </Route>
           
-          <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.TEACHER]} />}>
             <Route
               path="Pendientes"
               element={<Pendientes />}
             />
           </Route>
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.TEACHER]} />}>
             <Route
               path="Borradores"
               element={<Borradores />}

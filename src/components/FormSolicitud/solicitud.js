@@ -10,6 +10,8 @@ import {
   Divider,
   Autocomplete,
   TextField,
+  CircularProgress,
+  CardHeader,
 } from "@mui/material";
 import React from "react";
 import { useReservationRequest } from "../../hooks/useReservationRequest.hooks";
@@ -23,11 +25,21 @@ import AskReservationRequest from "../ask/askReservationRequest";
 import { PERIODSRANGE } from "../../services/Constant";
 import { MOTIVES } from "../../services/Constant";
 import useAuth from "../../hooks/useAuth";
+import { useRequest } from "../../hooks/useRequest.hooks";
+import { Link } from "react-router-dom";
+import { Save, CleaningServices } from "@mui/icons-material";
 function Solicitud(props) {
   const { auth } = useAuth();
   const [isOpenModal, setIsOpenModal] = useModal(false);
   const [isOpenModal1, openModal1, closeModal1] = useModal(false);
-
+  const [
+    loadingR,
+    errorR,
+    messageR,
+    responseR,
+    statusR,
+    handleRequestR,
+  ] = useRequest();
   const {
     teacher,
     subjectSelected,
@@ -54,6 +66,7 @@ function Solicitud(props) {
     dateReservation,
     handleChangeDate,
     allFilled,
+    reservationRequest,
   } = useReservationRequest({
     request: `${props.reservationRequest}`,
     user: auth,
@@ -65,12 +78,33 @@ function Solicitud(props) {
         gutterBottom
         variant="h3"
         align="center"
-        sx={{ paddingTop: "10px" }}
+        sx={{ paddingTop: "5px" }}
       >
         Solicitud de Reserva
       </Typography>
-      <Card style={{ maxWidth: 700, padding: "10px 2px" }}>
-        <CardContent>
+      <Card style={{ maxWidth: 900 }}>
+        <CardHeader
+          avatar={
+            <Stack spacing={1} direction="row">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSaveSubmit}
+              >
+                <Save />
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSaveSubmit}
+              >
+                <CleaningServices />
+              </Button>
+            </Stack>
+          }
+        />
+
+        <CardContent style={{ padding: "10px 2px" }}>
           <form>
             <Typography
               variant="body2"
@@ -197,47 +231,58 @@ function Solicitud(props) {
                   />
                 </Grid>
               </Grid>
-              <Grid
+              <Box
                 container
                 columns={12}
                 sx={{
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent: "flex-end",
                 }}
               >
-                <Grid
-                  item
-                  sm={6}
-                  xs={12}
+                <Stack
+                  spacing={2}
+                  direction="row"
                   sx={{
                     display: "flex",
-                    justifyContent: "center",
+                    justifyContent: "flex-end",
                   }}
                 >
+                  <Link to="/user/home" style={{ textDecoration: "none" }}>
+                    <Button variant="outlined" color="error">
+                      Cancelar
+                    </Button>
+                  </Link>
                   <Button
                     color="primary"
-                    size="large"
                     type="submit"
                     variant="contained"
-                    padding="1rem"
-                    onClick={(e) => {
-                      handleSubmit(e);
-                      // openModal1();
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      handleRequestR(reservationRequest);
+                      openModal1();
                     }}
                     disabled={!allFilled}
                   >
-                    Enviar Solicitud
+                    Enviar
                   </Button>
-                </Grid>
-              </Grid>
+                </Stack>
+              </Box>
             </List>
           </form>
         </CardContent>
       </Card>
       <Modal isOpen={isOpenModal1} closeModal={closeModal1}>
-        <AskReservationRequest action={closeModal1}></AskReservationRequest>
+        {loadingR ? (
+          <CircularProgress color="inherit" />
+        ) : (
+          <AskReservationRequest
+            action={closeModal1}
+            reservation={responseR}
+            error={errorR}
+            message={messageR}
+          ></AskReservationRequest>
+        )}
       </Modal>
-      <Modal></Modal>
     </div>
   );
 }

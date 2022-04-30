@@ -13,8 +13,7 @@ export default function ReservationRequest() {
         alignItems: "center",
         background: "#FAFBFC",
         height: "100%",
-        width: "100%",  
-        padding: "2rem 0",
+        width: "100%",
       }}
     >
       <Solicitud reservationRequest={reservationRequest} />
