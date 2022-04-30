@@ -10,7 +10,12 @@ import Unauthorized from "./components/auth/Unauthorized";
 import { Box } from "@mui/material";
 import MainLayout from "./components/Layout/MainLayout";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+import Pendientes from "./pages/Pendientes";
+import Borradores from "./pages/Borradores";
+
 import { ROLES } from "./services/Constant";
+
 
 const theme = createTheme({
   palette: {
@@ -39,12 +44,31 @@ function App() {
           >
             <Route path="home" element={<Home />} />
           </Route>
+
           <Route element={<RequireAuth allowedRoles={[ROLES.TEACHER]} />}>
+
             <Route
               path="reservationRequest/:reservationRequest"
               element={<ReservationRequest />}
             />
           </Route>
+          
+          <Route element={<RequireAuth allowedRoles={[ROLES.TEACHER]} />}>
+            <Route
+              path="Pendientes"
+              element={<Pendientes />}
+            />
+          </Route>
+
+          <Route element={<RequireAuth allowedRoles={[ROLES.TEACHER]} />}>
+            <Route
+              path="Borradores"
+              element={<Borradores />}
+            />
+          </Route>
+
+
+          
         </Route>
       </Routes>
     </ThemeProvider>
