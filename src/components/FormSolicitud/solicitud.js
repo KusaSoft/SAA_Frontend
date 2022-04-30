@@ -260,8 +260,9 @@ function Solicitud(props) {
                     variant="contained"
                     onClick={async (e) => {
                       e.preventDefault();
-                      openModal1();
-                      handleRequestR(handleSubmit());
+                      handleSubmit();
+                      // openModal1();
+                      // handleRequestR(handleSubmit());
                     }}
                     disabled={!allFilled}
                   >

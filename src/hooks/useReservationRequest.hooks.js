@@ -7,6 +7,7 @@ import {
 } from "../services/Mock";
 import apiSettings from "../services/service";
 import DateController from "../utilities/DateController";
+import DataTransform from "../utilities/DataTransform/DataTransform";
 import useAuth from "./useAuth";
 
 export const useReservationRequest = ({ request, user }) => {
@@ -19,7 +20,7 @@ export const useReservationRequest = ({ request, user }) => {
   const [periodIniSelected, setPeriodIniSelected] = useState("");
   const [periodEndSelected, setPeriodEndSelected] = useState("");
   const [motiveRequest, setMotiveRequest] = useState("");
-  const [teachers, setTeachers] = useState([]);
+  const [teachers, setTeachers] = useState(new Map());
   const [otherGroupList, setOtherGroupList] = useState([]);
   const [dateReservation, setDateReservation] = useState(new Date());
   const [reservationRequest, setReservationRequest] = useState({});
@@ -121,17 +122,21 @@ export const useReservationRequest = ({ request, user }) => {
         id: id,
         name: teacher.name,
         subject: subjectSelected,
-        teacher_list: otherGroupList,
+        teacher_list: DataTransform.getOriginalTeachersList(
+          otherGroupList,
+          teachers
+        ),
         total_students: totalStudents,
         horario_ini: periodIniSelected,
         horario_fin: periodEndSelected,
         request_reason: motiveRequest,
-        group: myGroupList,
+        group: DataTransform.getOriginalTeachersList(myGroupList, subjectList),
         state: request !== "new" ? "sent" : "draft",
       };
     } else {
       reservationRequestP = null;
     }
+
     return reservationRequestP;
   };
 
