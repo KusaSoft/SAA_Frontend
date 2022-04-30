@@ -10,6 +10,8 @@ import Unauthorized from "./components/auth/Unauthorized";
 import { Box } from "@mui/material";
 import MainLayout from "./components/Layout/MainLayout";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Pendientes from "./pages/Pendientes";
+import Borradores from "./pages/Borradores";
 
 const ROLES = {
   Reviewer: 2001,
@@ -43,12 +45,30 @@ function App() {
           >
             <Route path="home" element={<Home />} />
           </Route>
+
           <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
             <Route
               path="reservationRequest/:reservationRequest"
               element={<ReservationRequest />}
             />
           </Route>
+          
+          <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
+            <Route
+              path="Pendientes"
+              element={<Pendientes />}
+            />
+          </Route>
+
+          <Route element={<RequireAuth allowedRoles={[ROLES.Teacher]} />}>
+            <Route
+              path="Borradores"
+              element={<Borradores />}
+            />
+          </Route>
+
+
+          
         </Route>
       </Routes>
     </ThemeProvider>

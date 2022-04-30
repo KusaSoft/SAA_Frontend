@@ -61,7 +61,7 @@ export default function Home() {
       <h1
         style={{ color: "#172B4D", textAlign: "center", fontFamily: "roboto" }}
       >
-        Lista de Solicitudes
+        Pagina Principal
       </h1>
       <Box sx={{ borderBottom: 1, borderColor: "divider", paddingX: "30px" }}>
         <Tabs
@@ -94,10 +94,10 @@ export default function Home() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0} sx={{ width: "100%" }}>
-        <Lista list={sentList ? sentList : []} />
+        {/* <Lista list={sentList ? sentList : []} /> */}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Lista list={draftList ? draftList : []} />
+        {/* <Lista list={draftList ? draftList : []} /> */}
       </TabPanel>
     </div>
   );
