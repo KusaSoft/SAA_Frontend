@@ -58,18 +58,46 @@ const apiSettings = {
       `${API_URL}/reservation-request`,
       reservationRequest
     );
-    console.log(response);
     response = {
-      error: "Lo sentimos, no se pudo realizar la reserva!! :(",
-      message: "Lamentalbemente usted tiene una reserva mal planeadas",
+      error: "Lo sentimos, no se pudo realizar la solicitud de reserva!! :(",
+      message: "Lamentalbemente usted tiene una reserva mal planeada",
       data: reservationRequest,
     };
-    // response = {
-    //   error: "",
-    //   message: "Reserva creada correctamente",
-    //   data: reservationRequest,
-    // };
+    response = {
+      error: "",
+      message: "Reserva creada correctamente",
+      data: reservationRequest,
+    };
     return response;
+  },
+
+  putReservationRequest: async (reservationRequest) => {
+    //put in form data
+    console.log(reservationRequest);
+    let response = await axios.post(
+      `${API_URL}/reservation-request/${reservationRequest.id}`,
+      reservationRequest
+    );
+    console.log(response);
+    response = {
+      error: "Lo sentimos, no se pudo realizar la solicitud de reserva!! :(",
+      message: "Lamentalbemente usted tiene una reserva mal planeada",
+      data: reservationRequest,
+    };
+    response = {
+      error: "",
+      message: "Reserva fue actualizada correctamente",
+      data: reservationRequest,
+    };
+    return response;
+  },
+
+  getReservationRequest: async (reservationRequest) => {
+    const response = await axios.get(
+      `${API_URL}/reservation/${reservationRequest.id}`
+    );
+    console.log(response.data);
+    return response.data;
   },
 
   getStatusList: async (status) => {

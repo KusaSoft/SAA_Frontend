@@ -37,10 +37,27 @@ export const mockReservationRequest = {
   other_group_list: ["3"],
 };
 
+
+// {
+// 		"id": 1,
+// 		"user_id": 2,
+// 		"subject_id": 1,
+// 		"classroom_id": 3,
+// 		"date": "2022-04-15 00:00:00",
+// 		"request_reason": "Primer parcial de introduccion",
+// 		"horario_ini": "12:45",
+// 		"horario_end": "14:15",
+// 		"state": "sent",
+// 		"group_list": "1 2",
+// 		"other_groups": "3",
+// 		"created_at": null,
+// 		"updated_at": null
+// 	},
+
 export const mockLogin = [
   {
     id: "1",
-    user: "Corina Flores Villarroel",
+    user: "Corina Flores",
     password: "12345",
     email: "corina@gmail.com",
     roles: [1984],
@@ -48,7 +65,7 @@ export const mockLogin = [
   },
   {
     id: "2",
-    user: "Carla Salazar Serrudo",
+    user: "Carla Salazar",
     password: "12345",
     email: "carla@gmail.com",
     roles: [1984],
