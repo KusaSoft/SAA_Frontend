@@ -94,7 +94,7 @@ const apiSettings = {
 
   getReservationRequest: async (reservationRequest) => {
     const response = await axios.get(
-      `${API_URL}/reservation/${reservationRequest.id}`
+      `${API_URL}/reservation/${reservationRequest}`
     );
     console.log(response.data);
     return response.data;

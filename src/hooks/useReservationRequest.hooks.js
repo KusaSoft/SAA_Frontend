@@ -37,17 +37,21 @@ export const useReservationRequest = ({ request, user }) => {
   };
 
   const fetchDataReservationRequest = async () => {
-    if (request !== "new") {
-      const response = mockReservationRequest;
-      setTeacher({ name: response.name });
+    if (request !== "new" && request !== null) {
+      console.log(request, "REQUEST ID");
+      const response = await apiSettings.getReservationRequest(request);
+      setTeacher({
+        name: user.user,
+      });
+      console.log(response, "reservation request");
       setPeriodIniSelected(response.horario_ini);
       setPeriodEndSelected(response.horario_end);
       setMotiveRequest(response.request_reason);
-      setTotalStudents(response.total_students);
+      // setTotalStudents(response.total_students);
       setSubjectSelected(response.subject);
-      setGroupList(response.group_list);
-      setOtherGroupList(response.other_group_list);
-      setReservationRequest(response);
+      // setGroupList(response.group_list);
+      // setOtherGroupList(response.other_group_list);
+      // setReservationRequest(response);
     }
   };
 
@@ -144,23 +148,6 @@ export const useReservationRequest = ({ request, user }) => {
     return reservationRequestP;
   };
 
-  const handleSaveSubmit = (e) => {
-    e.preventDefault();
-    setSent(true);
-    const id = request !== "new" ? request : "";
-    setReservationRequest({
-      id: id,
-      name: teacher.name,
-      subject: subjectSelected,
-      teacher_list: otherGroupList,
-      total_students: totalStudents,
-      horario_ini: periodIniSelected,
-      horario_fin: periodEndSelected,
-      request_reason: motiveRequest,
-      group: myGroupList,
-    });
-  };
-
   const handleChangeSubject = (e) => {
     setSubjectSelected(e.target.value);
     setGroupList([]);
@@ -229,7 +216,6 @@ export const useReservationRequest = ({ request, user }) => {
     teachers,
     handleDeleteTeachersSelected,
     handleDeleteMyGroup,
-    handleSaveSubmit,
     dateReservation,
     handleChangeDate,
     allFilled,

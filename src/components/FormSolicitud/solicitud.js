@@ -62,7 +62,6 @@ function Solicitud(props) {
     teachers,
     handleDeleteTeachersSelected,
     handleDeleteMyGroup,
-    handleSaveSubmit,
     dateReservation,
     handleChangeDate,
     allFilled,
@@ -89,14 +88,14 @@ function Solicitud(props) {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={handleSaveSubmit}
+                // onClick={()}
               >
                 <Save />
               </Button>
               <Button
                 variant="contained"
                 color="primary"
-                onClick={handleSaveSubmit}
+                // onClick={()}
               >
                 <CleaningServices />
               </Button>
