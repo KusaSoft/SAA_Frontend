@@ -29,7 +29,7 @@ export const mockReservationRequest = {
   id: "1",
   name: "Corina Flores Villarroel",
   subject: "Introduccion a la programacion",
-  group_list: ["1. 2"],
+  group_list: ["1", " 2"],
   horario_ini: "03:45",
   horario_end: "05:15",
   request_reason: "Expresito",
@@ -44,7 +44,7 @@ export const mockLogin = [
     password: "12345",
     email: "corina@gmail.com",
     roles: [1984],
-    tokenAccess:"tokensito..........."
+    tokenAccess: "tokensito...........",
   },
   {
     id: "2",
@@ -52,7 +52,7 @@ export const mockLogin = [
     password: "12345",
     email: "carla@gmail.com",
     roles: [1984],
-    tokenAccess:"tokensito..........."
+    tokenAccess: "tokensito...........",
   },
 ];
 

@@ -31,7 +31,7 @@ export const useReservationRequest = ({ request, user }) => {
     response.map((subject) => {
       subjectListMap.set(subject.name_subject, subject.group_list);
     });
-    console.log(subjectListMap);
+    console.log(subjectListMap, "teacher group");
     setSubjectList(subjectListMap);
   };
 
@@ -54,9 +54,23 @@ export const useReservationRequest = ({ request, user }) => {
     const response = await apiSettings.getTeachers(user.id);
     const subjectListMap = new Map();
     response.map((subject) => {
-      subjectListMap.set(subject.name_subject, subject.group_list);
+      if (subjectListMap.has(subject.name_subject)) {
+        console.log(subject.group_list, "subject");
+        if (
+          !subjectListMap
+            .get(subject.name_subject)
+            .some((group) => group.id === subject.group_list.id)
+        ) {
+          subjectListMap.set(subject.name_subject, [
+            ...subjectListMap.get(subject.name_subject),
+            subject.group_list,
+          ]);
+        }
+      } else {
+        subjectListMap.set(subject.name_subject, [subject.group_list]);
+      }
     });
-    console.log(subjectListMap);
+    console.log(subjectListMap, "other group list");
     setTeachers(subjectListMap);
     fetchDataReservationRequest();
   };
@@ -90,11 +104,10 @@ export const useReservationRequest = ({ request, user }) => {
     dateReservation,
   ]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     setSent(true);
     const id = request !== "new" ? request : "";
-
+    let reservationRequestP;
     if (
       periodEndSelected !== "" &&
       periodIniSelected !== "" &&
@@ -104,7 +117,7 @@ export const useReservationRequest = ({ request, user }) => {
       myGroupList.length > 0 &&
       dateReservation !== ""
     ) {
-      setReservationRequest({
+      reservationRequestP = {
         id: id,
         name: teacher.name,
         subject: subjectSelected,
@@ -114,21 +127,12 @@ export const useReservationRequest = ({ request, user }) => {
         horario_fin: periodEndSelected,
         request_reason: motiveRequest,
         group: myGroupList,
-        state: "sent",
-      });
-      apiSettings.postReservationRequest({
-        id: id,
-        name: teacher.name,
-        subject: subjectSelected,
-        teacher_list: otherGroupList,
-        total_students: totalStudents,
-        horario_ini: periodIniSelected,
-        horario_fin: periodEndSelected,
-        request_reason: motiveRequest,
-        group: myGroupList,
-        state: "sent",
-      });
+        state: request !== "new" ? "sent" : "draft",
+      };
+    } else {
+      reservationRequestP = null;
     }
+    return reservationRequestP;
   };
 
   const handleSaveSubmit = (e) => {
@@ -151,7 +155,6 @@ export const useReservationRequest = ({ request, user }) => {
   const handleChangeSubject = (e) => {
     setSubjectSelected(e.target.value);
     setGroupList([]);
-    fetchDataTeachers();
     setOtherGroupList([]);
   };
 

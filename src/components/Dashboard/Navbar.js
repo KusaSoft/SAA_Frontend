@@ -13,8 +13,6 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-
-
 function Sidebar() {
   const { setAuth } = useAuth();
   const { auth } = useAuth();
@@ -52,32 +50,27 @@ function Sidebar() {
               );
             })}
 
-      <div>
-      <Accordion sx={{background:"#172B4D", color:"white", }}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon sx={{color:"white"}} />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>Solicitudes</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-            
-              <ul > 
-                    <li className="sidebar-item" >
-                      
+            <div>
+              <Accordion sx={{ background: "#172B4D", color: "white" }}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography>Solicitudes</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <ul>
+                    <li className="sidebar-item">
                       <Link to={"/user/Pendientes"}>Pendientes</Link>
                     </li>
                     <li className="sidebar-item">
-                      
                       <Link to={"/user/Borradores"}>Borradores</Link>
                     </li>
-                    
-              </ul>
-        </AccordionDetails>
-      </Accordion>
-      </div>
-       
+                  </ul>
+                </AccordionDetails>
+              </Accordion>
+            </div>
           </ul>
         </Box>
         <Box>

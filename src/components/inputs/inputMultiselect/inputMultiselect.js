@@ -32,7 +32,7 @@ function getStyles(group, groupList, theme) {
 
 export default function FormMultiselectControl(props) {
   const theme = useTheme();
-
+  console.log(props, "props");
   return (
     <Wrapper>
       <FormControlInput disabled={props.disabled}>
@@ -64,11 +64,11 @@ export default function FormMultiselectControl(props) {
         >
           {props.list.map((e) => (
             <MenuItem
-              key={e}
-              value={e}
+              key={e.id}
+              value={`G${e.id} ${e.name}`}
               style={getStyles(e, props.value, theme)}
             >
-              {e}
+              {`G${e.id} ${e.name}`}
             </MenuItem>
           ))}
         </Select>

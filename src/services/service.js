@@ -17,14 +17,12 @@ const apiSettings = {
       promises.push(promise);
     });
     const subjectList = await Promise.all(promises);
-
     const newSubjects = subjects.map((subject, index) => {
       return {
         name_subject: subject.name_subject,
-        group_list: subjectList[index].data.map((group) => group.group),
+        group_list: subjectList[index].data.map((group) => group),
       };
     });
-    console.log(newSubjects);
     return newSubjects;
   },
   getTeachers: async (userID) => {
@@ -39,14 +37,17 @@ const apiSettings = {
       promises.push(promise);
     });
     const subjectList = await Promise.all(promises);
-
-    const newSubjects = subjects.map((subject, index) => {
-      return {
-        name_subject: subject.name_subject,
-        group_list: subjectList[index].data.map((group) => group.group),
-      };
+    let newSubjects = [];
+    subjects.filter((subject, index) => {
+      if (subjectList[index].data.message !== "no hay grupos registrados") {
+        const newSubject = {
+          name_subject: subject.name_subject,
+          group_list: { ...subjectList[index].data[0] },
+        };
+        newSubjects.push(newSubject);
+      }
     });
-    console.log(newSubjects);
+    console.log(newSubjects, "siiiiiiiiiiiiiiiiiii");
     return newSubjects;
   },
 

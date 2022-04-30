@@ -159,7 +159,9 @@ function Solicitud(props) {
                     list={
                       subjectSelected !== ""
                         ? teachers
-                          ? [...teachers.get(subjectSelected)]
+                          ? teachers.has(subjectSelected)
+                            ? [...teachers.get(subjectSelected)]
+                            : []
                           : []
                         : []
                     }
@@ -258,8 +260,8 @@ function Solicitud(props) {
                     variant="contained"
                     onClick={async (e) => {
                       e.preventDefault();
-                      handleRequestR(reservationRequest);
                       openModal1();
+                      handleRequestR(handleSubmit());
                     }}
                     disabled={!allFilled}
                   >
