@@ -19,6 +19,7 @@ import { Email, Image, Lock, Password } from "@mui/icons-material";
 import LogoFCyT from "../assets/fcyt.png";
 import Footer from "../components/Footer/Footer";
 import { mockLogin } from "../services/Mock";
+import apiSettings from "../services/service";
 function Login() {
   const location = useLocation();
   const { setAuth } = useContext(AuthContext);
@@ -37,29 +38,15 @@ function Login() {
         .max(255)
         .required("La contraseña es requerida"),
     }),
-    onSubmit: () => {
-      if (
-        mockLogin[0].email === formik.values.email &&
-        mockLogin[0].password === formik.values.password
-      ) {
-        setAuth({
-          user: mockLogin[0].user,
-          roles: [...mockLogin[0].roles],
-          id: mockLogin[0].id,
-        });
-      } else if (
-        mockLogin[1].email === formik.values.email &&
-        mockLogin[1].password === formik.values.password
-      ) {
-        setAuth({
-          user: mockLogin[1].user,
-          roles: [...mockLogin[1].roles],
-          id: mockLogin[1].id,
-        });
-      } else {
-        alert("Usuario o contraseña incorrectos");
-        formik.setSubmitting(false);
-      }
+    onSubmit: async () => {
+      const responseLogin = await apiSettings.login(formik.values);
+      console.log(responseLogin, "responseLogin");
+      setAuth({
+        user: responseLogin.name,
+        id: responseLogin.id,
+        roles: [responseLogin.role],
+        token: responseLogin.token,
+      });
     },
   });
   return auth.user === null ? (

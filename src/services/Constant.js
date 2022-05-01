@@ -33,7 +33,7 @@ export const STATUS = {
 };
 
 export const ROLES = {
-  REVIEWER: 2001,
-  TEACHER: 1984,
-  ADMIN: 5150,
+  REVIEWER: "operador",
+  TEACHER: "docente",
+  ADMIN: "admin",
 };

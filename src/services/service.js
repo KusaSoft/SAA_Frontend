@@ -103,6 +103,11 @@ const apiSettings = {
   getStatusList: async (status) => {
     return [];
   },
+
+  login: async (user) => {
+    const response = await axios.post(`${LOGIN_URL}/login`, user);
+    return response.data;
+  },
 };
 
 export default apiSettings;
