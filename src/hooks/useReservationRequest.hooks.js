@@ -77,20 +77,11 @@ export const useReservationRequest = ({ request, user }) => {
       setOtherGroupList([
         ...DataTransform.getGroupsById(response.other_groups, subjectListMap),
       ]);
-
-      // setSubjectSelected(DataTransform.getGroupsById(response.other_groups, otherGroupList ));
-      // setOtherGroupList(response.other_group_list);
-      // setReservationRequest(response);
     }
   };
 
   useEffect(() => {
-    const fetchAll = async () => {
-      // const done = await fetchDataTeacher();
-      fetchDataTeachers();
-      // fetchDataReservationRequest();
-    };
-    fetchAll();
+    fetchDataTeachers();
   }, []);
 
   useEffect(() => {
@@ -131,7 +122,7 @@ export const useReservationRequest = ({ request, user }) => {
       dateReservation !== ""
     ) {
       reservationRequestP = {
-        id: id,
+        id: parseInt(id),
         name: teacher.name,
         subject: subjectSelected,
         group_list: DataTransform.getOriginalTeachersList(
