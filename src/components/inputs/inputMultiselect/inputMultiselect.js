@@ -32,7 +32,7 @@ function getStyles(group, groupList, theme) {
 
 export default function FormMultiselectControl(props) {
   const theme = useTheme();
-  console.log(props, "props");
+  // console.log(props, "props");
   return (
     <Wrapper>
       <FormControlInput disabled={props.disabled}>

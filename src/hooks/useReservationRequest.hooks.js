@@ -25,37 +25,15 @@ export const useReservationRequest = ({ request, user }) => {
   const [dateReservation, setDateReservation] = useState(new Date());
   const [reservationRequest, setReservationRequest] = useState({});
   const [allFilled, setAllFilled] = useState(false);
-  const fetchDataTeacher = async () => {
-    const response = await apiSettings.getSubjects(user.id);
-    setTeacher({ name: user.user });
-    const subjectListMap = new Map();
-    response.map((subject) => {
-      subjectListMap.set(subject.name_subject, subject.group_list);
-    });
-    console.log(subjectListMap, "teacher group");
-    setSubjectList(subjectListMap);
-  };
-
-  const fetchDataReservationRequest = async () => {
-    if (request !== "new" && request !== null) {
-      console.log(request, "REQUEST ID");
-      const response = await apiSettings.getReservationRequest(request);
-      setTeacher({
-        name: user.user,
-      });
-      console.log(response, "reservation request");
-      setPeriodIniSelected(response.horario_ini);
-      setPeriodEndSelected(response.horario_end);
-      setMotiveRequest(response.request_reason);
-      // setTotalStudents(response.total_students);
-      setSubjectSelected(response.subject);
-      // setGroupList(response.group_list);
-      // setOtherGroupList(response.other_group_list);
-      // setReservationRequest(response);
-    }
-  };
 
   const fetchDataTeachers = async () => {
+    const responseF = await apiSettings.getSubjects(user.id);
+    setTeacher({ name: user.user });
+    const subjectListMapF = new Map();
+    responseF.map((subject) => {
+      subjectListMapF.set(subject.name_subject, subject.group_list);
+    });
+    setSubjectList(subjectListMapF);
     const response = await apiSettings.getTeachers(user.id);
     const subjectListMap = new Map();
     response.map((subject) => {
@@ -75,14 +53,44 @@ export const useReservationRequest = ({ request, user }) => {
         subjectListMap.set(subject.name_subject, [subject.group_list]);
       }
     });
-    console.log(subjectListMap, "other group list");
     setTeachers(subjectListMap);
-    fetchDataReservationRequest();
+    if (request !== "new" && request !== null) {
+      console.log(request, "REQUEST ID");
+      const response = await apiSettings.getReservationRequest(request);
+      setTeacher({
+        name: user.user,
+      });
+      console.log(
+        response,
+        "reservation request",
+        subjectListMap,
+        subjectListMapF
+      );
+      setPeriodIniSelected(response.horario_ini);
+      setPeriodEndSelected(response.horario_end);
+      setMotiveRequest(response.request_reason);
+      setTotalStudents(response.total_students);
+      setSubjectSelected(response.subject);
+      setGroupList([
+        ...DataTransform.getGroupsById(response.group_list, subjectListMapF),
+      ]);
+      setOtherGroupList([
+        ...DataTransform.getGroupsById(response.other_groups, subjectListMap),
+      ]);
+
+      // setSubjectSelected(DataTransform.getGroupsById(response.other_groups, otherGroupList ));
+      // setOtherGroupList(response.other_group_list);
+      // setReservationRequest(response);
+    }
   };
 
   useEffect(() => {
-    fetchDataTeacher();
-    fetchDataTeachers();
+    const fetchAll = async () => {
+      // const done = await fetchDataTeacher();
+      fetchDataTeachers();
+      // fetchDataReservationRequest();
+    };
+    fetchAll();
   }, []);
 
   useEffect(() => {

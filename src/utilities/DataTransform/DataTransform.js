@@ -17,7 +17,24 @@ const DataTransform = {
     return teachersList;
   },
 
+  getGroupsById: (idList, groupList) => {
+    let groupListId = [];
+    const newIdList = idList.split(" ");
+    newIdList.map((id) => {
+      [...groupList.values()].map((group) => {
+        group.map((specificGroup) => {
+          if (id == specificGroup.id) {
+            groupListId.push(`G${specificGroup.id} ${specificGroup.name}`);
+          }
+        });
+      });
+    });
+    return groupListId;
+  },
 
+  castStringToSrray: (list) => {
+    return list.split(" ");
+  },
 };
 
 export default DataTransform;
