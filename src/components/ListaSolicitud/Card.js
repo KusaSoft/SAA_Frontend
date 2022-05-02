@@ -84,7 +84,6 @@ const Card = (props) => {
               }}
             >
               <Delete onClick={() => apiSettings.deleteReservationRequest(props.request.id)} 
-              
               />
             </Fab>
           </Stack>

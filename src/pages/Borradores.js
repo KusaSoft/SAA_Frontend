@@ -5,7 +5,7 @@ import { STATUS } from "../services/Constant";
 function Borradores(){
     // const [value, setValue] = React.useState(0);
     // const [sentList] = useStatusList({ status: STATUS.SENT });
-    const [draftList] = useStatusList({ status: STATUS.DRAFT });
+    const [draftList, setStatusListData, deleteElement] = useStatusList({ status: STATUS.DRAFT });
     // const handleChange = (event, newValue) => {
     // setValue(newValue);
     // };
