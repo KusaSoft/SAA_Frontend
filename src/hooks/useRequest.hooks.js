@@ -12,15 +12,15 @@ export const useRequest = () => {
     setError("");
     setSuccess("");
     try {
-      const response = apiSettings.postReservationRequest(request);
+      const response = await apiSettings.postReservationRequest(request);
       const data = response;
       setLoading(false);
-      setSuccess(data.message);
-      setResponse(data.response);
+      setResponse(data.data);
     } catch (error) {
       setLoading(false);
       setError(error.message);
     }
+
   };
 
   return [loading, error, success, response, status, handleRequest];

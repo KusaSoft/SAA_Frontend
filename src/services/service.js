@@ -53,21 +53,11 @@ const apiSettings = {
 
   postReservationRequest: async (reservationRequest) => {
     //post in form data
-    console.log(reservationRequest);
-    let response = await axios.post(
+    const response = await axios.post(
       `${API_URL}/reservation-request`,
       reservationRequest
     );
-    response = {
-      error: "Lo sentimos, no se pudo realizar la solicitud de reserva!! :(",
-      message: "Lamentalbemente usted tiene una reserva mal planeada",
-      data: reservationRequest,
-    };
-    response = {
-      error: "",
-      message: "Reserva creada correctamente",
-      data: reservationRequest,
-    };
+    console.log(response);
     return response;
   },
 
