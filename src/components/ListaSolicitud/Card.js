@@ -3,6 +3,8 @@ import { Delete, Edit } from "@mui/icons-material";
 import { STATUS } from "../../services/Constant";
 import { Fab, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
+import apiSettings from "../../services/service";
+
 const Card = (props) => {
   return (
     <div
@@ -24,7 +26,7 @@ const Card = (props) => {
       >
         <div>
           <b style={{ fontWeight: "bold" }}>Materia: </b>{" "}
-          {props.request.materia}
+          {props.request.subject}
         </div>
         <div style={{}}>
           <b style={{ fontWeight: "bold" }}>Fecha: </b> {props.request.fecha}
@@ -53,7 +55,7 @@ const Card = (props) => {
           }}
         >
           <Stack direction="row" spacing={1}>
-            {props.request.status == STATUS.DRAFT ? (
+            {props.request.state == STATUS.DRAFT ? (
               <Link to={`/user/reservationRequest/${props.request.id}`}>
                 <Fab
                   color="neutral"
@@ -81,7 +83,9 @@ const Card = (props) => {
                 },
               }}
             >
-              <Delete onClick={() => alert("Borrar")} />
+              <Delete onClick={() => apiSettings.deleteReservationRequest(props.request.id)} 
+              
+              />
             </Fab>
           </Stack>
         </div>
