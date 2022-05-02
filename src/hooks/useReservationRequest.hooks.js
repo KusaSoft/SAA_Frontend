@@ -66,8 +66,8 @@ export const useReservationRequest = ({ request, user }) => {
         subjectListMap,
         subjectListMapF
       );
-      setPeriodIniSelected(response.horario_ini!==null?response.horario_ini:null);
-      setPeriodEndSelected(response.horario_end!==null?response.horario_end:null);
+      setPeriodIniSelected(response.horario_ini!==null?response.horario_ini:"");
+      setPeriodEndSelected(response.horario_end!==null?response.horario_end:"");
       setMotiveRequest(response.request_reason!==null?response.request_reason:"");
       setTotalStudents(response.total_students!==null?response.total_students:"");
       setSubjectSelected(response.subject!==null?response.subject:"");
