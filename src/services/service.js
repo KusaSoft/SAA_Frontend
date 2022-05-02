@@ -108,6 +108,25 @@ const apiSettings = {
     const response = await axios.post(`${LOGIN_URL}/login`, user);
     return response.data;
   },
+
+  getRequestStatus: async (userID, status) => {
+    const response = await axios.get(`${API_URL}/reservation/${userID}/${status}`);
+    console.log(response);
+    
+    const list = response.data.map((id) => {
+      return { id: id.id, subject: id.subject, fecha: id.reservation_date, motivo:"no existe batty te olvidaste", state: id.state };
+    });
+    console.log(list);
+    return list;
+    // return response.data;
+    },
+  
+  deleteReservationRequest: async (requestID)=>{
+    const response = await axios.delete(`${API_URL}/draft/${requestID}`);
+  }
+
+
+
 };
 
 export default apiSettings;
