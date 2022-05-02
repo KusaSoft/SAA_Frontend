@@ -31,10 +31,14 @@ import useAuth from "../../hooks/useAuth";
 import { useRequest } from "../../hooks/useRequest.hooks";
 import { Link } from "react-router-dom";
 import { Save, Delete } from "@mui/icons-material";
+import apiSettings from "../../services/service";
+import { CheckCircleOutline, ErrorOutline } from "@mui/icons-material";
 function Solicitud(props) {
   const { auth } = useAuth();
   const [isOpenModal, openModal, closeModal] = useModal(false);
   const [isOpenModal1, openModal1, closeModal1] = useModal(false);
+  const [isOpenModal2, openModal2, closeModal2] = useModal(false);
+  const [isOpenModal3, openModal3, closeModal3] = useModal(false);
   const [
     loadingR,
     errorR,
@@ -42,7 +46,15 @@ function Solicitud(props) {
     responseR,
     statusR,
     handleRequestR,
-  ] = useRequest();
+  ] = useRequest({ methodRequest: apiSettings.postReservationRequest });
+  const [
+    loadingDel,
+    errorDel,
+    messageDel,
+    responseDel,
+    statusDel,
+    handleRequestDel,
+  ] = useRequest({ methodRequest: apiSettings.deleteReservationRequest });
   const {
     teacher,
     subjectSelected,
@@ -102,17 +114,18 @@ function Solicitud(props) {
               >
                 <Save />
               </Button>
-              {props.reservationRequest !== "new"?
-              <Button
-                variant="contained"
-                color="redDark"
-                onClick={(e) => {
-                  e.preventDefault();
-                  alert("Esta seguro que desea eliminar la solicitud?");
-                }}>
-                <Delete/>
-              </Button>
-              :null}
+              {props.reservationRequest !== "new" ? (
+                <Button
+                  variant="contained"
+                  color="redDark"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    openModal2();
+                  }}
+                >
+                  <Delete />
+                </Button>
+              ) : null}
             </Stack>
           }
         />
@@ -297,7 +310,6 @@ function Solicitud(props) {
               height: "100%",
             }}
           >
-
             <CircularProgress color="inherit" />
           </Box>
         ) : (
@@ -319,11 +331,9 @@ function Solicitud(props) {
               height: "100%",
             }}
           >
-
             <CircularProgress color="inherit" />
           </Box>
-        ) : (
-        subjectSelected === "" ? (
+        ) : subjectSelected === "" ? (
           <Box
             sx={{
               display: "flex",
@@ -353,11 +363,13 @@ function Solicitud(props) {
             <Alert severity="success">
               <AlertTitle>Exito</AlertTitle>
               Su solicitud se ha guardado con éxito!!
-              <Stack 
-              sx={{
-                paddingTop: "1rem",
-              }}
-              direction="row" spacing={2}>
+              <Stack
+                sx={{
+                  paddingTop: "1rem",
+                }}
+                direction="row"
+                spacing={2}
+              >
                 <Link to="/user/Borradores" style={{ textDecoration: "none" }}>
                   <Button>Salir</Button>
                 </Link>
@@ -365,7 +377,9 @@ function Solicitud(props) {
                   to={`/user/reservationRequest/${responseR.id}`}
                   style={{ textDecoration: "none" }}
                 >
-                  <Button variant="contained" color="success"
+                  <Button
+                    variant="contained"
+                    color="success"
                     onClick={closeModal}
                   >
                     Continuar
@@ -374,8 +388,68 @@ function Solicitud(props) {
               </Stack>
             </Alert>
           </Box>
-        ))}
+        )}
       </Dialog>
+      <Dialog open={isOpenModal2} onClose={closeModal2}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Alert severity="warning">
+            <AlertTitle>Atencion!</AlertTitle>
+            ¿Esta seguro que quiere borrar esta solicitud de reserva?{" "}
+            <Button onClick={closeModal2} autoFocus>
+              No
+            </Button>
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                handleRequestDel(props.reservationRequest);
+                closeModal2();
+                openModal3();
+              }}
+              autoFocus
+            >
+              Si
+            </Button>
+          </Alert>
+        </Box>
+      </Dialog>
+      <Modal isOpen={isOpenModal3} closeModal={closeModal3}>
+        {loadingDel ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CircularProgress color="inherit" />
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <CheckCircleOutline color="success" sx={{ fontSize: 70 }} />
+            <Typography variant="h6">Se elimino con exito!!</Typography>
+
+            <Link to="/user/Borradores" style={{ textDecoration: "none" }}>
+              <Button variant="contained" color="primary">
+                Salir
+              </Button>
+            </Link>
+          </Box>
+        )}
+      </Modal>
     </div>
   );
 }

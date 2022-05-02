@@ -113,6 +113,7 @@ const apiSettings = {
   
   deleteReservationRequest: async (requestID)=>{
     const response = await axios.delete(`${API_URL}/draft/${requestID}`);
+    return response;
   }
 
 
