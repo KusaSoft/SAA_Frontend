@@ -12,6 +12,9 @@ import {
   TextField,
   CircularProgress,
   CardHeader,
+  Dialog,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 import React from "react";
 import { useReservationRequest } from "../../hooks/useReservationRequest.hooks";
@@ -30,7 +33,7 @@ import { Link } from "react-router-dom";
 import { Save, CleaningServices } from "@mui/icons-material";
 function Solicitud(props) {
   const { auth } = useAuth();
-  const [isOpenModal, setIsOpenModal] = useModal(false);
+  const [isOpenModal, openModal, closeModal] = useModal(false);
   const [isOpenModal1, openModal1, closeModal1] = useModal(false);
   const [
     loadingR,
@@ -91,13 +94,10 @@ function Solicitud(props) {
                 color="primary"
                 onClick={(e) => {
                   e.preventDefault();
-                  if(subjectSelected !== ""){
-                    openModal1();
+                  openModal();
+                  if (subjectSelected !== "") {
                     handleRequestR(handleSaveSubmit());
-                  }else{
-                    alert("Seleccione una materia antes de guardar");
-                  }
-
+                  } 
                 }}
               >
                 <Save />
@@ -288,6 +288,25 @@ function Solicitud(props) {
           ></AskReservationRequest>
         )}
       </Modal>
+      <Dialog open={isOpenModal} onClose={closeModal}>
+
+          {
+
+            subjectSelected === ""?( 
+            <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          Para guardar debe llenar minimamente el campo obligatorio de <strong>Materia</strong>
+        </Alert>):
+        <Alert severity="success">
+          <AlertTitle>Exito</AlertTitle>
+          Su solicitud se ha guardado con éxito!!
+        </Alert>
+        }
+
+        <Button onClick={closeModal} autoFocus>
+          Continuar
+        </Button>
+      </Dialog>
     </div>
   );
 }
