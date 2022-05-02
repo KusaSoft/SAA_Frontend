@@ -97,7 +97,7 @@ function Solicitud(props) {
                   openModal();
                   if (subjectSelected !== "") {
                     handleRequestR(handleSaveSubmit());
-                  } 
+                  }
                 }}
               >
                 <Save />
@@ -210,7 +210,7 @@ function Solicitud(props) {
                   <FormInputControl
                     myLabel="Fecha"
                     myType="date"
-                    onChange={handleChangeDate}
+                    setValue={handleChangeDate}
                     myInputProps={{
                       inputProps: { min: DateController.getToday() },
                     }}
@@ -289,19 +289,18 @@ function Solicitud(props) {
         )}
       </Modal>
       <Dialog open={isOpenModal} onClose={closeModal}>
-
-          {
-
-            subjectSelected === ""?( 
-            <Alert severity="error">
-          <AlertTitle>Error</AlertTitle>
-          Para guardar debe llenar minimamente el campo obligatorio de <strong>Materia</strong>
-        </Alert>):
-        <Alert severity="success">
-          <AlertTitle>Exito</AlertTitle>
-          Su solicitud se ha guardado con éxito!!
-        </Alert>
-        }
+        {subjectSelected === "" ? (
+          <Alert severity="error">
+            <AlertTitle>Error</AlertTitle>
+            Para guardar debe llenar minimamente el campo obligatorio de{" "}
+            <strong>Materia</strong>
+          </Alert>
+        ) : (
+          <Alert severity="success">
+            <AlertTitle>Exito</AlertTitle>
+            Su solicitud se ha guardado con éxito!!
+          </Alert>
+        )}
 
         <Button onClick={closeModal} autoFocus>
           Continuar

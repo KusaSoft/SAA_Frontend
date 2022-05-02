@@ -212,7 +212,8 @@ export const useReservationRequest = ({ request, user }) => {
   };
 
   const handleChangeDate = (e) => {
-    setDateReservation(e);
+    console.log(e.target.value, "date");
+    setDateReservation(e.target.value);
   };
 
   return {
