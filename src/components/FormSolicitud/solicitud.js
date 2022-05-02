@@ -30,7 +30,7 @@ import { MOTIVES } from "../../services/Constant";
 import useAuth from "../../hooks/useAuth";
 import { useRequest } from "../../hooks/useRequest.hooks";
 import { Link } from "react-router-dom";
-import { Save, CleaningServices } from "@mui/icons-material";
+import { Save, Delete } from "@mui/icons-material";
 function Solicitud(props) {
   const { auth } = useAuth();
   const [isOpenModal, openModal, closeModal] = useModal(false);
@@ -102,6 +102,17 @@ function Solicitud(props) {
               >
                 <Save />
               </Button>
+              {props.reservationRequest !== "new"?
+              <Button
+                variant="contained"
+                color="redDark"
+                onClick={(e) => {
+                  e.preventDefault();
+                  alert("Esta seguro que desea eliminar la solicitud?");
+                }}>
+                <Delete/>
+              </Button>
+              :null}
             </Stack>
           }
         />

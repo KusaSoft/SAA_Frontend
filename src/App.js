@@ -23,6 +23,10 @@ const theme = createTheme({
       main: "#64748B",
       contrastText: "#fff",
     },
+    redDark: {
+      main: "#c62828",
+      contrastText: "#fff",
+    },
   },
 });
 
