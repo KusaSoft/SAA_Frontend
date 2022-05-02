@@ -114,7 +114,7 @@ const apiSettings = {
     console.log(response);
     
     const list = response.data.map((id) => {
-      return { id: id.id, subject: id.subject, fecha: id.reservation_date, motivo:"no existe batty te olvidaste", state: id.state };
+      return { id: id.id, subject: id.subject, fecha: id.reservation_date, motivo: id.request_reason, state: id.state };
     });
     console.log(list);
     return list;

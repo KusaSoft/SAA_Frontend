@@ -5,6 +5,7 @@ import { mockListSent, mockListDraft } from "../services/Mock";
 import useAuth from "./useAuth";
 
 const useStatusList = ({ status }) => {
+  
   const { auth } = useAuth();
   const [statusList, setStatusList] = useState([]);
 
