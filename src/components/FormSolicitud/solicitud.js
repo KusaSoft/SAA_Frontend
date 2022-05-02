@@ -278,7 +278,17 @@ function Solicitud(props) {
       </Card>
       <Modal isOpen={isOpenModal1} closeModal={closeModal1}>
         {loadingR ? (
-          <CircularProgress color="inherit" />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+            }}
+          >
+
+            <CircularProgress color="inherit" />
+          </Box>
         ) : (
           <AskReservationRequest
             action={closeModal1}
@@ -289,22 +299,71 @@ function Solicitud(props) {
         )}
       </Modal>
       <Dialog open={isOpenModal} onClose={closeModal}>
-        {subjectSelected === "" ? (
-          <Alert severity="error">
-            <AlertTitle>Error</AlertTitle>
-            Para guardar debe llenar minimamente el campo obligatorio de{" "}
-            <strong>Materia</strong>
-          </Alert>
-        ) : (
-          <Alert severity="success">
-            <AlertTitle>Exito</AlertTitle>
-            Su solicitud se ha guardado con éxito!!
-          </Alert>
-        )}
+        {loadingR ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+            }}
+          >
 
-        <Button onClick={closeModal} autoFocus>
-          Continuar
-        </Button>
+            <CircularProgress color="inherit" />
+          </Box>
+        ) : (
+        subjectSelected === "" ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Alert severity="error">
+              <AlertTitle>Error</AlertTitle>
+              Para guardar debe llenar minimamente el campo obligatorio de{" "}
+              <strong>Materia</strong>
+              <Button onClick={closeModal} autoFocus>
+                Continuar
+              </Button>
+            </Alert>
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Alert severity="success">
+              <AlertTitle>Exito</AlertTitle>
+              Su solicitud se ha guardado con éxito!!
+              <Stack 
+              sx={{
+                paddingTop: "1rem",
+              }}
+              direction="row" spacing={2}>
+                <Link to="/user/Borradores" style={{ textDecoration: "none" }}>
+                  <Button>Salir</Button>
+                </Link>
+                <Link
+                  to={`/user/reservationRequest/${responseR.id}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <Button variant="contained" color="success"
+                    onClick={closeModal}
+                  >
+                    Continuar
+                  </Button>
+                </Link>
+              </Stack>
+            </Alert>
+          </Box>
+        ))}
       </Dialog>
     </div>
   );
