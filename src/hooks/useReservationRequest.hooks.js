@@ -66,17 +66,17 @@ export const useReservationRequest = ({ request, user }) => {
         subjectListMap,
         subjectListMapF
       );
-      setPeriodIniSelected(response.horario_ini);
-      setPeriodEndSelected(response.horario_end);
-      setMotiveRequest(response.request_reason);
-      setTotalStudents(response.total_students);
-      setSubjectSelected(response.subject);
-      setGroupList([
+      setPeriodIniSelected(response.horario_ini!==null?response.horario_ini:null);
+      setPeriodEndSelected(response.horario_end!==null?response.horario_end:null);
+      setMotiveRequest(response.request_reason!==null?response.request_reason:"");
+      setTotalStudents(response.total_students!==null?response.total_students:"");
+      setSubjectSelected(response.subject!==null?response.subject:"");
+      setGroupList(response.group_list!==""?[
         ...DataTransform.getGroupsById(response.group_list, subjectListMapF),
-      ]);
-      setOtherGroupList([
+      ]:[]);
+      setOtherGroupList(response.other_groups!==""?[
         ...DataTransform.getGroupsById(response.other_groups, subjectListMap),
-      ]);
+      ]:[]);
     }
   };
 
@@ -108,6 +108,28 @@ export const useReservationRequest = ({ request, user }) => {
     dateReservation,
   ]);
 
+  const handleSaveSubmit = () => {
+    setSent(true);
+    const idD = request !== "new" ? request : parseInt(request);
+    let reservationRequestP;
+    reservationRequestP = {
+      id: idD,
+      name: teacher.name,
+      subject: subjectSelected,
+      group_list: DataTransform.getOriginalTeachersList(myGroupList, subjectList),
+      total_students: totalStudents,
+      horario_ini: periodIniSelected,
+      horario_end: periodEndSelected,
+      request_reason: motiveRequest,
+      reservation_date: dateReservation,
+      other_group_list: DataTransform.getOriginalTeachersList(otherGroupList, teachers),
+      state: "draft",
+    };
+      console.log(reservationRequestP, "reservation request");
+
+    return reservationRequestP;
+
+  }
   const handleSubmit = () => {
     setSent(true);
     const id = request !== "new" ? request : "";
@@ -126,8 +148,8 @@ export const useReservationRequest = ({ request, user }) => {
         name: teacher.name,
         subject: subjectSelected,
         group_list: DataTransform.getOriginalTeachersList(
-          otherGroupList,
-          teachers
+          myGroupList,
+          subjectList
         ),
         total_students: totalStudents,
         horario_ini: periodIniSelected,
@@ -135,10 +157,10 @@ export const useReservationRequest = ({ request, user }) => {
         request_reason: motiveRequest,
         reservation_date: dateReservation,
         other_group_list: DataTransform.getOriginalTeachersList(
-          myGroupList,
-          subjectList
+          otherGroupList,
+          teachers
         ),
-        state: id === "" ? "sent" : "draft",
+        state: "sent",
       };
     } else {
       reservationRequestP = null;
@@ -219,5 +241,6 @@ export const useReservationRequest = ({ request, user }) => {
     handleChangeDate,
     allFilled,
     reservationRequest,
+    handleSaveSubmit,
   };
 };

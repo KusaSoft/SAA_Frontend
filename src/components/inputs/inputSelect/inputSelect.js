@@ -1,5 +1,5 @@
 import React from "react";
-import { InputLabel, Select, MenuItem } from "@mui/material";
+import { InputLabel, Select, MenuItem, FormHelperText } from "@mui/material";
 import { FormControlInput, Wrapper } from "./inputSelect.styles";
 export default function FormSelectControl(props) {
   return (
@@ -16,6 +16,7 @@ export default function FormSelectControl(props) {
             return <MenuItem value={e}>{e}</MenuItem>;
           })}
         </Select>
+        <FormHelperText>{props.helperText}</FormHelperText>
       </FormControlInput>
     </Wrapper>
   );

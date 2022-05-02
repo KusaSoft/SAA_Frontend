@@ -66,6 +66,7 @@ function Solicitud(props) {
     handleChangeDate,
     allFilled,
     reservationRequest,
+    handleSaveSubmit,
   } = useReservationRequest({
     request: `${props.reservationRequest}`,
     user: auth,
@@ -88,16 +89,18 @@ function Solicitud(props) {
               <Button
                 variant="contained"
                 color="primary"
-                // onClick={()}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if(subjectSelected !== ""){
+                    openModal1();
+                    handleRequestR(handleSaveSubmit());
+                  }else{
+                    alert("Seleccione una materia antes de guardar");
+                  }
+
+                }}
               >
                 <Save />
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                // onClick={()}
-              >
-                <CleaningServices />
               </Button>
             </Stack>
           }
@@ -122,6 +125,7 @@ function Solicitud(props) {
                     myLabel="Materia"
                     myValue={subjectSelected}
                     setValue={handleChangeSubject}
+                    helperText="Este campo es obligatorio para guardar la solicitud"
                     list={subjectList ? [...subjectList.keys()] : []}
                   />
                 </Grid>
@@ -260,7 +264,7 @@ function Solicitud(props) {
                     onClick={async (e) => {
                       e.preventDefault();
                       openModal1();
-                      handleRequestR(handleSubmit());
+                      handleRequestR(handleSubmit("sent"));
                     }}
                     disabled={!allFilled}
                   >
