@@ -32,6 +32,12 @@ const DateController = {
       return periodSelected > periodLimitSelected;
     }
   },
+
+  //transform string to date
+  stringToStringDate: (date) => {
+    const [year, month, day] = date.split("-");
+    return `${year}-${month}-${day}`;
+  },
 };
 
 export default DateController;

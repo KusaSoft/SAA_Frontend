@@ -237,8 +237,10 @@ function Solicitud(props) {
                     setValue={handleChangeDate}
                     myInputProps={{
                       inputProps: { min: DateController.getToday() },
+                      value: dateReservation,
                     }}
-                    myDefaultValue={DateController.getToday()}
+                    myDefaultValue={dateReservation}
+                    // value={dateReservation}
                   />
                 </Grid>
               </Grid>

@@ -22,7 +22,9 @@ export const useReservationRequest = ({ request, user }) => {
   const [motiveRequest, setMotiveRequest] = useState("");
   const [teachers, setTeachers] = useState(new Map());
   const [otherGroupList, setOtherGroupList] = useState([]);
-  const [dateReservation, setDateReservation] = useState(new Date());
+  const [dateReservation, setDateReservation] = useState(
+    DateController.getToday()
+  );
   const [reservationRequest, setReservationRequest] = useState({});
   const [allFilled, setAllFilled] = useState(false);
 
@@ -77,6 +79,10 @@ export const useReservationRequest = ({ request, user }) => {
       setOtherGroupList(response.other_groups!==""?[
         ...DataTransform.getGroupsById(response.other_groups, subjectListMap),
       ]:[]);
+      console.log(response.reservation_date, "reservation request");
+      setDateReservation(
+        response.reservation_date
+      );
     }
   };
 
@@ -212,7 +218,7 @@ export const useReservationRequest = ({ request, user }) => {
   };
 
   const handleChangeDate = (e) => {
-    setDateReservation(e);
+    setDateReservation(e.target.value);
   };
 
   return {
