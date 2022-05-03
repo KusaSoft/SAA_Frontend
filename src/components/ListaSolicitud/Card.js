@@ -5,7 +5,27 @@ import { Fab, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
 import apiSettings from "../../services/service";
 
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 300,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4
+};
+
+
 const Card = (props) => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <div
       style={{
@@ -83,8 +103,25 @@ const Card = (props) => {
                 },
               }}
             >
-              <Delete onClick={() => apiSettings.deleteReservationRequest(props.request.id)} 
-              />
+              <Delete onClick={ () =>{ 
+                handleOpen();
+              }}/>
+              <Modal open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description">
+                    <Box sx={style}>
+                      <Typography id="modal-modal-title" variant="h6" component="h2">
+                        ¿Esta seguro que desea eliminar este elemento?
+                      </Typography>
+                      <Button onClick={handleClose} >Cancelar</Button>
+                      <Button sx={{marginLeft:"82px"}} onClick={()=>{ apiSettings.deleteReservationRequest(props.request.id);
+                                            handleClose();
+                                            recargar();
+                                            //window.location.reload();
+                                            }} >Eliminar</Button>
+                    </Box> 
+              </Modal> 
             </Fab>
           </Stack>
         </div>
@@ -93,3 +130,7 @@ const Card = (props) => {
   );
 };
 export default Card;
+
+ function recargar(){
+     window.location.reload();
+ }
