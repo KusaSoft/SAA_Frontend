@@ -20,7 +20,12 @@ import LogoFCyT from "../assets/fcyt.png";
 import Footer from "../components/Footer/Footer";
 import { mockLogin } from "../services/Mock";
 import apiSettings from "../services/service";
+
+import Modal from "@mui/material/Modal";
+import { useModal } from "../hooks/useModal";
+
 function Login() {
+  const [isOpenModal, openModal, closeModal] = useModal(false);
   const location = useLocation();
   const { setAuth } = useContext(AuthContext);
   const { auth } = useAuth();
@@ -41,12 +46,18 @@ function Login() {
     onSubmit: async () => {
       const responseLogin = await apiSettings.login(formik.values);
       console.log(responseLogin, "responseLogin");
-      setAuth({
-        user: responseLogin.name,
-        id: responseLogin.id,
-        roles: [responseLogin.role],
-        token: responseLogin.token,
-      });
+      responseLogin.message=="no existe este usuario" ?
+      //(alert('Credenciales Incorrectas'))
+      (openModal())
+      :
+      ( 
+        setAuth({
+          user: responseLogin.name,
+          id: responseLogin.id,
+          roles: [responseLogin.role],
+          token: responseLogin.token,
+        })
+        )
     },
   });
   return auth.user === null ? (
@@ -181,6 +192,31 @@ function Login() {
         </Container>
       </Box>
       <Footer />
+
+      <Modal  open={isOpenModal}
+                    onClose={closeModal}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description">
+                    <Box sx={{position: "absolute",
+                              top: "50%",
+                              left: "50%",
+                              transform: "translate(-50%, -50%)",
+                              width: 300,
+                              bgcolor: "background.paper",
+                              border: "2px solid #000",
+                              boxShadow: 24,
+                               p: 4,
+                               display: "flex",
+                               flexDirection:"column",
+                               justifyContent: "center",
+                               alignItems: "center"}}>
+                      <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Credenciales Incorrectas
+                      </Typography>
+                      <Button sx={{}} onClick={closeModal} >Continuar </Button>
+                    </Box> 
+      </Modal>
+
     </>
   ) : (
     <Navigate to="/user/home" state={{ from: location }} replace />
@@ -188,3 +224,34 @@ function Login() {
 }
 
 export default Login;
+
+
+function Modalsito(){
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 300,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4
+  };
+  return(
+    <Modal open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description">
+                    <Box sx={style}>
+                      <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Credenciales Incorrectas!!!
+                      </Typography>
+                      <Button onClick={handleClose} >a OK</Button>
+                    </Box> 
+              </Modal>
+  );
+}
