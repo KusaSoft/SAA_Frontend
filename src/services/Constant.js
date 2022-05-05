@@ -33,7 +33,26 @@ export const STATUS = {
 };
 
 export const ROLES = {
-  REVIEWER: "operador",
-  TEACHER: "docente",
-  ADMIN: "admin",
+         REVIEWER: "operador",
+         TEACHER: "docente",
+         ADMIN: "admin",
 };
+
+export const PATHS = {
+  ROOT: "/",
+  LOGIN: "/login",
+  UNAUTHORIZED: "/unauthorized",
+  USER: "/user",
+  USERHOME: "home",
+  USERS: "users",
+  RESERVATION_REQUEST: "reservationRequest/:reservationRequest",
+  PENDING:"pendings",
+  DRAFTS:"drafts",
+  ARRIVAL: "firstServedOrder",
+  URGENCY: "urgency",
+  RESERVATION_REQUEST_DETAIL: "reservationRequest/:reservationRequest/detail",
+  RESERVATION_REQUEST_EDIT: "reservationRequest/:reservationRequest/edit",
+
+};
+
+

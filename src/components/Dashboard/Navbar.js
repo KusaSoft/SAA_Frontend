@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
-import { SidebarData } from "./SidebarData";
+import { SidebarData, HomeItem } from "./SidebarData";
 import useAuth from "../../hooks/useAuth";
 import { Box, Divider } from "@mui/material";
 import LogoFCyT from "../../assets/fcyt.png";
@@ -38,9 +38,38 @@ function Sidebar() {
             src={LogoFCyT}
           />
           <Divider />
-          <ul className="sidebar-items">
-            {SidebarData.map((sidebarItem) => {
-              return (
+          <ul className={"sidebar-items"}>
+            <li key={HomeItem.id} className={HomeItem.cName}>
+              <Link to={HomeItem.path}>
+                {HomeItem.icon}
+                <span>{HomeItem.title}</span>
+              </Link>
+            </li>
+            {SidebarData(auth.roles[0]).map((sidebarItem) => {
+              return sidebarItem.hasSubmenu ? (
+                <div>
+                  <Accordion sx={{ background: "#172B4D", color: "white" }}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Typography>{sidebarItem.title}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <ul>
+                        {sidebarItem.elements.map((element) => {
+                          return (
+                            <li className="sidebar-item">
+                              <Link to={element.path}>{element.title}</Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </AccordionDetails>
+                  </Accordion>
+                </div>
+              ) : (
                 <li key={sidebarItem.id} className={sidebarItem.cName}>
                   <Link to={sidebarItem.path}>
                     {sidebarItem.icon}
@@ -49,28 +78,6 @@ function Sidebar() {
                 </li>
               );
             })}
-
-            <div>
-              <Accordion sx={{ background: "#172B4D", color: "white" }}>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography>Solicitudes</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <ul>
-                    <li className="sidebar-item">
-                      <Link to={"/user/Pendientes"}>Pendientes</Link>
-                    </li>
-                    <li className="sidebar-item">
-                      <Link to={"/user/Borradores"}>Borradores</Link>
-                    </li>
-                  </ul>
-                </AccordionDetails>
-              </Accordion>
-            </div>
           </ul>
         </Box>
         <Box>
