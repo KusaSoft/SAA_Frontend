@@ -7,6 +7,7 @@ import {
 import { Wrapper } from "./askReservationRequest.styles";
 import { Link } from "react-router-dom";
 import { CheckCircleOutline, ErrorOutline } from "@mui/icons-material";
+import { PATHS } from "../../services/Constant";
 export default function AskReservationRequest(props) {
   return (
     <Wrapper>
@@ -74,7 +75,7 @@ export default function AskReservationRequest(props) {
             {props.reservation.horario_end}
           </Typography>
           <Box display="flex" justifyContent="flex-end" mt={2}>
-            <Link to="/user/Pendientes" style={{ textDecoration: "none" }}>
+            <Link to={`/user/${PATHS.PENDING}`} style={{ textDecoration: "none" }}>
               <Button variant="contained" color="primary">
                 Continuar
               </Button>

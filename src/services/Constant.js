@@ -46,6 +46,7 @@ export const PATHS = {
   USERHOME: "home",
   USERS: "users",
   RESERVATION_REQUEST: "reservationRequest/:reservationRequest",
+  RESERVATION_REQUESTS: "reservationRequest",
   PENDING:"pendings",
   DRAFTS:"drafts",
   ARRIVAL: "firstServedOrder",

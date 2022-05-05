@@ -26,7 +26,7 @@ import { useModal } from "../../hooks/useModal";
 import Modal from "../Modals/Modal";
 import AskReservationRequest from "../ask/askReservationRequest";
 import { PERIODSRANGE } from "../../services/Constant";
-import { MOTIVES } from "../../services/Constant";
+import { MOTIVES, PATHS } from "../../services/Constant";
 import useAuth from "../../hooks/useAuth";
 import { useRequest } from "../../hooks/useRequest.hooks";
 import { Link } from "react-router-dom";
@@ -278,7 +278,10 @@ function Solicitud(props) {
                     justifyContent: "flex-end",
                   }}
                 >
-                  <Link to="/user/home" style={{ textDecoration: "none" }}>
+                  <Link
+                    to={`/user/${PATHS.USERHOME}`}
+                    style={{ textDecoration: "none" }}
+                  >
                     <Button variant="outlined" color="error">
                       Cancelar
                     </Button>
@@ -372,11 +375,14 @@ function Solicitud(props) {
                 direction="row"
                 spacing={2}
               >
-                <Link to="/user/Borradores" style={{ textDecoration: "none" }}>
+                <Link
+                  to={`/user/${PATHS.DRAFTS}`}
+                  style={{ textDecoration: "none" }}
+                >
                   <Button>Salir</Button>
                 </Link>
                 <Link
-                  to={`/user/reservationRequest/${responseR.id}`}
+                  to={`/user/${PATHS.RESERVATION_REQUESTS}/${responseR.id}`}
                   style={{ textDecoration: "none" }}
                 >
                   <Button
@@ -444,7 +450,10 @@ function Solicitud(props) {
             <CheckCircleOutline color="success" sx={{ fontSize: 70 }} />
             <Typography variant="h6">Se elimino con exito!!</Typography>
 
-            <Link to="/user/Borradores" style={{ textDecoration: "none" }}>
+            <Link
+              to={`/user/${PATHS.DRAFTS}`}
+              style={{ textDecoration: "none" }}
+            >
               <Button variant="contained" color="primary">
                 Salir
               </Button>
