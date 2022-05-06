@@ -45,7 +45,7 @@ export const SidebarData = (role) => {
              title: "Solicitar Reserva",
              cName: "sidebar-item",
              icon: <Add sx={{ marginRight: "1rem" }} />,
-             path: `${PATHS.RESERVATION_REQUEST}`,
+             path: `${PATHS.RESERVATION_REQUESTS}/new`,
              hasSubmenu: false,
            },
            {
