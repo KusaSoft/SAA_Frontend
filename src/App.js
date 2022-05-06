@@ -15,6 +15,7 @@ import Borradores from "./pages/Borradores";
 import Arrival from "./pages/Arrival";
 import Urgency from "./pages/Urgency";
 import { ROLES, PATHS} from "./services/Constant";
+import Users from "./pages/Users";
 
 const theme = createTheme({
   palette: {
@@ -72,6 +73,9 @@ function App() {
           </Route>
           <Route element={<RequireAuth allowedRoles={[ROLES.REVIEWER]} />}>
             <Route path={PATHS.URGENCY} element={<Urgency />} />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
+            <Route path={PATHS.USERS} element={<Users />} />
           </Route>
         </Route>
       </Routes>
