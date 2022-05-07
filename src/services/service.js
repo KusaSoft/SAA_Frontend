@@ -1,6 +1,5 @@
 import axios from "axios";
-import AuthContext from "../contexts/AuthProvider";
-import { useRef, useState, useContext } from "react";
+import {users} from "./Mock";
 
 const API_URL = "https://tis-server2.herokuapp.com/api";
 const LOGIN_URL = "https://tis-server2.herokuapp.com/api";
@@ -114,10 +113,13 @@ const apiSettings = {
   deleteReservationRequest: async (requestID)=>{
     const response = await axios.delete(`${API_URL}/draft/${requestID}`);
     return response;
+  },
+
+  getUsers: async () => {
+    // const response = await axios.get(`${API_URL}/users`);
+    const response = users;
+    return response;
   }
-
-
-
 };
 
 export default apiSettings;
