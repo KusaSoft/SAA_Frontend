@@ -22,6 +22,7 @@ export const useReservationRequest = ({request, user}) => {
     {}
   );
   const [allFilled, setAllFilled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchDataTeachers = async () => {
     const responseF = await apiSettings.getSubjects(user.id);
@@ -92,7 +93,7 @@ export const useReservationRequest = ({request, user}) => {
       setGroupList(
         response.group_list !== ''
           ? [
-              ...DataTransform.getGroupsById(
+              ...DataTransform.getMyGroupById(
                 response.group_list,
                 subjectListMapF
               ),
@@ -115,9 +116,11 @@ export const useReservationRequest = ({request, user}) => {
       );
       setDateReservation(response.reservation_date);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
+    setIsLoading(true);
     fetchDataTeachers();
   }, []);
 
@@ -153,7 +156,7 @@ export const useReservationRequest = ({request, user}) => {
       id: idD,
       name: teacher.name,
       subject: subjectSelected,
-      group_list: DataTransform.getOriginalTeachersList(
+      group_list: DataTransform.getMyOriginalGroup(
         myGroupList,
         subjectList
       ),
@@ -189,7 +192,7 @@ export const useReservationRequest = ({request, user}) => {
         id: parseInt(id),
         name: teacher.name,
         subject: subjectSelected,
-        group_list: DataTransform.getOriginalTeachersList(
+        group_list: DataTransform.getMyOriginalGroup(
           myGroupList,
           subjectList
         ),
@@ -306,5 +309,6 @@ export const useReservationRequest = ({request, user}) => {
     allFilled,
     reservationRequest,
     handleSaveSubmit,
+    isLoading,
   };
 };

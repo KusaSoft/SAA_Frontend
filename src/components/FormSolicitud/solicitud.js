@@ -32,10 +32,6 @@ import {useRequest} from '../../hooks/useRequest.hooks';
 import {Link, useNavigate} from 'react-router-dom';
 import {Save, Delete} from '@mui/icons-material';
 import apiSettings from '../../services/service';
-import {
-  CheckCircleOutline,
-  ErrorOutline,
-} from '@mui/icons-material';
 import RequestMessage from '../Messages/RequestMessage';
 import ConfirmationMessage from '../Messages/ConfirmationMessage';
 function Solicitud(props) {
@@ -109,6 +105,7 @@ function Solicitud(props) {
     allFilled,
     reservationRequest,
     handleSaveSubmit,
+    isLoading,
   } = useReservationRequest({
     request: `${props.reservationRequest}`,
     user: auth,
@@ -124,233 +121,251 @@ function Solicitud(props) {
       >
         Solicitud de Reserva
       </Typography>
-      <Card style={{maxWidth: 900}}>
-        <CardHeader
-          avatar={
-            <Stack spacing={1} direction="row">
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={(e) => {
-                  e.preventDefault();
-                  openModal();
-                  if (subjectSelected !== '') {
-                    handleRequestR(handleSaveSubmit());
-                  }
-                }}
-              >
-                <Save />
-              </Button>
-              {props.reservationRequest !== 'new' ? (
+      {isLoading ? (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Card style={{maxWidth: 900}}>
+          <CardHeader
+            avatar={
+              <Stack spacing={1} direction="row">
                 <Button
                   variant="contained"
-                  color="redDark"
+                  color="primary"
                   onClick={(e) => {
                     e.preventDefault();
-                    openModal2();
+                    openModal();
+                    if (subjectSelected !== '') {
+                      handleRequestR(handleSaveSubmit());
+                    }
                   }}
                 >
-                  <Delete />
+                  <Save />
                 </Button>
-              ) : null}
-            </Stack>
-          }
-        />
+                {props.reservationRequest !== 'new' ? (
+                  <Button
+                    variant="contained"
+                    color="redDark"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      openModal2();
+                    }}
+                  >
+                    <Delete />
+                  </Button>
+                ) : null}
+              </Stack>
+            }
+          />
 
-        <CardContent style={{padding: '10px 2px'}}>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            component="p"
-            align="left"
-            padding="0 1rem"
-          >
-            La solicitud de la reserva se realizará en nombre de{' '}
-            <b>{teacher.name}</b>
-          </Typography>
-          <Divider />
-          <Typography
-            gutterBottom
-            variant="caption"
-            color="textSecondary"
-            align="left"
-            padding="0 1rem"
-          >
-            Todos los campos con * son obligatorios.
-          </Typography>
-          <form>
-            <List container spacing={1}>
-              {/* todos los campos en * son obligatorios */}
+          <CardContent style={{padding: '10px 2px'}}>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              align="left"
+              padding="0 1rem"
+            >
+              La solicitud de la reserva se realizará en nombre
+              de <b>{teacher.name}</b>
+            </Typography>
+            <Divider />
+            <Typography
+              gutterBottom
+              variant="caption"
+              color="textSecondary"
+              align="left"
+              padding="0 1rem"
+            >
+              Todos los campos con * son obligatorios.
+            </Typography>
+            <form>
+              <List container spacing={1}>
+                {/* todos los campos en * son obligatorios */}
 
-              <Grid container spacing={2} columns={12}>
-                <Grid item sm={6} xs={12}>
-                  <FormSelectControl
-                    myLabel="Materia *"
-                    myValue={subjectSelected}
-                    setValue={handleChangeSubject}
-                    list={
-                      subjectList ? [...subjectList.keys()] : []
-                    }
-                  />
+                <Grid container spacing={2} columns={12}>
+                  <Grid item sm={6} xs={12}>
+                    <FormSelectControl
+                      myLabel="Materia *"
+                      myValue={subjectSelected}
+                      setValue={handleChangeSubject}
+                      list={
+                        subjectList
+                          ? [...subjectList.keys()]
+                          : []
+                      }
+                    />
+                  </Grid>
+                  <Grid item sm={6} xs={12}>
+                    <FormMultiselectControl
+                      disabled={subjectSelected === ''}
+                      myLabel="Mis grupos *"
+                      value={myGroupList}
+                      setValue={handleChangeGroup}
+                      deleteT={handleDeleteMyGroup}
+                      list={
+                        subjectSelected !== ''
+                          ? subjectList
+                            ? [
+                                ...subjectList.get(
+                                  subjectSelected
+                                ),
+                              ]
+                            : []
+                          : []
+                      }
+                      stringJoin={false}
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item sm={6} xs={12}>
+                <Box>
                   <FormMultiselectControl
                     disabled={subjectSelected === ''}
-                    myLabel="Mis grupos *"
-                    value={myGroupList}
-                    setValue={handleChangeGroup}
-                    deleteT={handleDeleteMyGroup}
+                    myLabel="Agregar otro(s) grupo(s)"
+                    value={otherGroupList}
+                    setValue={handleTeachersSelected}
+                    deleteT={handleDeleteTeachersSelected}
                     list={
                       subjectSelected !== ''
-                        ? subjectList
-                          ? [...subjectList.get(subjectSelected)]
+                        ? teachers
+                          ? teachers.has(subjectSelected)
+                            ? [...teachers.get(subjectSelected)]
+                            : []
                           : []
                         : []
                     }
+                    stringJoin={true}
                   />
-                </Grid>
-              </Grid>
-              <Box>
-                <FormMultiselectControl
-                  disabled={subjectSelected === ''}
-                  myLabel="Agregar otro(s) grupo(s)"
-                  value={otherGroupList}
-                  setValue={handleTeachersSelected}
-                  deleteT={handleDeleteTeachersSelected}
-                  list={
-                    subjectSelected !== ''
-                      ? teachers
-                        ? teachers.has(subjectSelected)
-                          ? [...teachers.get(subjectSelected)]
-                          : []
-                        : []
-                      : []
-                  }
-                />
-              </Box>
+                </Box>
 
-              <Grid container spacing={2} columns={12}>
-                <Grid item sm={6} xs={12}>
-                  <Autocomplete
-                    freeSolo
-                    options={MOTIVES}
-                    value={motiveRequest}
-                    inputValue={motiveRequest}
-                    disableClearable={true}
-                    onInputChange={(e, newValue) => {
-                      handleMotiveRequest(newValue);
-                    }}
-                    onChange={(e, newValue) => {
-                      handleMotiveRequest(newValue);
-                    }}
-                    sx={{minWidth: '200px', padding: '1rem'}}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Motivo de Solicitud *"
-                      />
-                    )}
-                  />
+                <Grid container spacing={2} columns={12}>
+                  <Grid item sm={6} xs={12}>
+                    <Autocomplete
+                      freeSolo
+                      options={MOTIVES}
+                      value={motiveRequest}
+                      inputValue={motiveRequest}
+                      disableClearable={true}
+                      onInputChange={(e, newValue) => {
+                        handleMotiveRequest(newValue);
+                      }}
+                      onChange={(e, newValue) => {
+                        handleMotiveRequest(newValue);
+                      }}
+                      sx={{minWidth: '200px', padding: '1rem'}}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Motivo de Solicitud *"
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item sm={6} xs={12}>
+                    <FormInputControl
+                      myLabel="Total estudiantes *"
+                      myType="number"
+                      myVariant="outlined"
+                      value={totalStudents}
+                      myInputProps={{
+                        inputProps: {
+                          pattern: '[0-9]+',
+                          min: '1',
+                          max: '1500',
+                        },
+                      }}
+                      setValue={handleChangeTotalStudents}
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item sm={6} xs={12}>
-                  <FormInputControl
-                    myLabel="Total estudiantes *"
-                    myType="number"
-                    myVariant="outlined"
-                    value={totalStudents}
-                    myInputProps={{
-                      inputProps: {
-                        pattern: '[0-9]+',
-                        min: '1',
-                        max: '1500',
-                      },
-                    }}
-                    setValue={handleChangeTotalStudents}
-                  />
+                <Grid container spacing={2} columns={12}>
+                  <Grid item sm={6} xs={12}>
+                    <FormInputControl
+                      myLabel="Fecha *"
+                      myType="date"
+                      setValue={handleChangeDate}
+                      myInputProps={{
+                        inputProps: {
+                          min: DateController.getToday(),
+                        },
+                        value: dateReservation,
+                      }}
+                      myDefaultValue={dateReservation}
+                    />
+                  </Grid>
                 </Grid>
-              </Grid>
-              <Grid container spacing={2} columns={12}>
-                <Grid item sm={6} xs={12}>
-                  <FormInputControl
-                    myLabel="Fecha *"
-                    myType="date"
-                    setValue={handleChangeDate}
-                    myInputProps={{
-                      inputProps: {
-                        min: DateController.getToday(),
-                      },
-                      value: dateReservation,
-                    }}
-                    myDefaultValue={dateReservation}
-                  />
+                <Grid container spacing={2} columns={12}>
+                  <Grid item sm={6} xs={12}>
+                    <FormSelectControl
+                      myLabel="Hora Inicio *"
+                      myValue={periodIniSelected}
+                      setValue={handleChangePeriodIni}
+                      list={[
+                        ...PERIODSRANGE.slice(
+                          0,
+                          PERIODSRANGE.length - 1
+                        ),
+                      ]}
+                    />
+                  </Grid>
+                  <Grid item sm={6} xs={12}>
+                    <FormSelectControl
+                      myLabel="Hora Fin *"
+                      myValue={periodEndSelected}
+                      setValue={handleChangePeriodEnd}
+                      list={[...PERIODSRANGE.slice(1)]}
+                    />
+                  </Grid>
                 </Grid>
-              </Grid>
-              <Grid container spacing={2} columns={12}>
-                <Grid item sm={6} xs={12}>
-                  <FormSelectControl
-                    myLabel="Hora Inicio *"
-                    myValue={periodIniSelected}
-                    setValue={handleChangePeriodIni}
-                    list={[
-                      ...PERIODSRANGE.slice(
-                        0,
-                        PERIODSRANGE.length - 1
-                      ),
-                    ]}
-                  />
-                </Grid>
-                <Grid item sm={6} xs={12}>
-                  <FormSelectControl
-                    myLabel="Hora Fin *"
-                    myValue={periodEndSelected}
-                    setValue={handleChangePeriodEnd}
-                    list={[...PERIODSRANGE.slice(1)]}
-                  />
-                </Grid>
-              </Grid>
-              <Box
-                container
-                columns={12}
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                }}
-              >
-                <Stack
-                  spacing={2}
-                  direction="row"
+                <Box
+                  container
+                  columns={12}
                   sx={{
                     display: 'flex',
                     justifyContent: 'flex-end',
                   }}
                 >
-                  <Link
-                    to={`/user/${PATHS.USERHOME}`}
-                    style={{textDecoration: 'none'}}
-                  >
-                    <Button variant="outlined" color="error">
-                      Cancelar
-                    </Button>
-                  </Link>
-                  <Button
-                    color="primary"
-                    type="submit"
-                    variant="contained"
-                    onClick={async (e) => {
-                      e.preventDefault();
-                      openModal1();
-                      handleRequestR(handleSubmit('sent'));
+                  <Stack
+                    spacing={2}
+                    direction="row"
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'flex-end',
                     }}
-                    disabled={!allFilled}
                   >
-                    Enviar
-                  </Button>
-                </Stack>
-              </Box>
-            </List>
-          </form>
-        </CardContent>
-      </Card>
+                    <Link
+                      to={`/user/${PATHS.USERHOME}`}
+                      style={{textDecoration: 'none'}}
+                    >
+                      <Button variant="outlined" color="error">
+                        Cancelar
+                      </Button>
+                    </Link>
+                    <Button
+                      color="primary"
+                      type="submit"
+                      variant="contained"
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        openModal1();
+                        handleRequestR(handleSubmit('sent'));
+                      }}
+                      disabled={!allFilled}
+                    >
+                      Enviar
+                    </Button>
+                  </Stack>
+                </Box>
+              </List>
+            </form>
+          </CardContent>
+        </Card>
+      )}
       <Modal isOpen={isOpenModal1} closeModal={closeModal1}>
         {loadingR ? (
           <Box
