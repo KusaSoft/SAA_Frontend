@@ -1,3 +1,4 @@
+import {invalidDates} from "../../services/Constant";
 const DataTransform = {
   getOriginalTeachersList: (teachersSelected, originalTeachersList) => {
     let teachersList = [];
@@ -35,6 +36,14 @@ const DataTransform = {
   castStringToSrray: (list) => {
     return list.split(" ");
   },
+
+  isEnabledDate : (date) => {
+    let enabled = true;
+    if(date.getDay() === 0){
+      enabled = false;
+    }
+    return enabled;
+  }
 };
 
 export default DataTransform;

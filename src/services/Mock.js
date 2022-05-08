@@ -15,3 +15,9 @@ export const users = [
     role: 1,
   }
 ];
+
+export const invalidDates = {
+  from: new Date(),
+  to: new Date("06-30-2022"),
+  disable: [new Date("06-01-2022"), new Date("07-01-2022")],
+};
