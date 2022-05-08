@@ -22,7 +22,6 @@ export default function FormInputControl(props) {
           name={props.myName}
           onBlur={props.myOnBlur}
           fullWidth
-          required
         ></TextField>
       </FormControlInput>
     </Wrapper>

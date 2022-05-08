@@ -131,7 +131,6 @@ function Solicitud(props) {
         />
 
         <CardContent style={{ padding: "10px 2px" }}>
-          <form>
             <Typography
               variant="body2"
               color="textSecondary"
@@ -139,14 +138,23 @@ function Solicitud(props) {
               align="left"
               padding="0 1rem"
             >
-              La solicitud de la reserva se realizará en nombre de:{" "}
+              La solicitud de la reserva se realizará en nombre de {" "}
               <b>{teacher.name}</b>
             </Typography>
+          <Divider />
+          <Typography gutterBottom variant="caption" color="textSecondary" align="left"
+              padding="0 1rem">
+            Todos los campos con * son obligatorios.
+          </Typography>
+          <form>
+
             <List container spacing={1}>
+              {/* todos los campos en * son obligatorios */}
+
               <Grid container spacing={2} columns={12}>
                 <Grid item sm={6} xs={12}>
                   <FormSelectControl
-                    myLabel="Materia"
+                    myLabel="Materia *"
                     myValue={subjectSelected}
                     setValue={handleChangeSubject}
                     helperText="Este campo es obligatorio para guardar la solicitud"
@@ -156,7 +164,7 @@ function Solicitud(props) {
                 <Grid item sm={6} xs={12}>
                   <FormMultiselectControl
                     disabled={subjectSelected === ""}
-                    myLabel="Grupo"
+                    myLabel="Mis grupos *"
                     value={myGroupList}
                     setValue={handleChangeGroup}
                     deleteT={handleDeleteMyGroup}
@@ -170,16 +178,12 @@ function Solicitud(props) {
                   />
                 </Grid>
               </Grid>
-              <Grid
-                container
-                spacing={2}
-                columns={12}
-                justifyContent="flex-end"
+              <Box
               >
-                <Grid item sm={6} xs={12}>
+
                   <FormMultiselectControl
                     disabled={subjectSelected === ""}
-                    myLabel="Agregar otro grupo(s)"
+                    myLabel="Agregar otro(s) grupo(s)"
                     value={otherGroupList}
                     setValue={handleTeachersSelected}
                     deleteT={handleDeleteTeachersSelected}
@@ -193,8 +197,7 @@ function Solicitud(props) {
                         : []
                     }
                   />
-                </Grid>
-              </Grid>
+                    </Box>
 
               <Grid container spacing={2} columns={12}>
                 <Grid item sm={6} xs={12}>
@@ -212,13 +215,13 @@ function Solicitud(props) {
                     }}
                     sx={{ minWidth: "200px", padding: "1rem" }}
                     renderInput={(params) => (
-                      <TextField {...params} label="Motivo de Solicitud" />
+                      <TextField {...params} label="Motivo de Solicitud *" />
                     )}
                   />
                 </Grid>
                 <Grid item sm={6} xs={12}>
                   <FormInputControl
-                    myLabel="Total estudiantes"
+                    myLabel="Total estudiantes *"
                     myType="number"
                     myVariant="outlined"
                     value={totalStudents}
@@ -232,7 +235,7 @@ function Solicitud(props) {
               <Grid container spacing={2} columns={12}>
                 <Grid item sm={6} xs={12}>
                   <FormInputControl
-                    myLabel="Fecha"
+                    myLabel="Fecha *"
                     myType="date"
                     setValue={handleChangeDate}
                     myInputProps={{
@@ -240,14 +243,13 @@ function Solicitud(props) {
                       value: dateReservation,
                     }}
                     myDefaultValue={dateReservation}
-                    // value={dateReservation}
                   />
                 </Grid>
               </Grid>
               <Grid container spacing={2} columns={12}>
                 <Grid item sm={6} xs={12}>
                   <FormSelectControl
-                    myLabel="Hora Inicio"
+                    myLabel="Hora Inicio *"
                     myValue={periodIniSelected}
                     setValue={handleChangePeriodIni}
                     list={[...PERIODSRANGE.slice(0, PERIODSRANGE.length - 1)]}
@@ -255,7 +257,7 @@ function Solicitud(props) {
                 </Grid>
                 <Grid item sm={6} xs={12}>
                   <FormSelectControl
-                    myLabel="Hora Fin"
+                    myLabel="Hora Fin *"
                     myValue={periodEndSelected}
                     setValue={handleChangePeriodEnd}
                     list={[...PERIODSRANGE.slice(1)]}

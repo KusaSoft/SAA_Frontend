@@ -42,7 +42,7 @@ export default function FormMultiselectControl(props) {
           required
           value={props.value}
           onChange={props.setValue}
-          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+          input={<OutlinedInput id="select-multiple-chip" label={`${props.myLabel}`} />}
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
               {selected.map((value) => (
