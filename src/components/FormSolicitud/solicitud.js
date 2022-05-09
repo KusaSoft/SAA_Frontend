@@ -165,6 +165,15 @@ function Solicitud(props) {
 
           <CardContent style={{padding: '10px 2px'}}>
             <Typography
+              gutterBottom
+              variant="caption"
+              color="textSecondary"
+              align="left"
+              padding="0 1rem"
+            >
+              Todos los campos con * son obligatorios.
+            </Typography>
+            <Typography
               variant="body2"
               color="textSecondary"
               component="p"
@@ -173,16 +182,6 @@ function Solicitud(props) {
             >
               La solicitud de la reserva se realizará en nombre
               de <b>{teacher.name}</b>
-            </Typography>
-            <Divider />
-            <Typography
-              gutterBottom
-              variant="caption"
-              color="textSecondary"
-              align="left"
-              padding="0 1rem"
-            >
-              Todos los campos con * son obligatorios.
             </Typography>
             <form>
               <List container spacing={1}>

@@ -15,7 +15,7 @@ const Lista = (props) => {
       </div>
     );
   } else {
-    return <div>No tiene ninguna solicitud pendiente</div>;
+    return <div>{props.emptyMessage}</div>;
   }
 };
 export default Lista;

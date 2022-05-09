@@ -51,7 +51,11 @@ const RequestMessage = (
               <Typography variant="h6">
                 {errorMessage}
               </Typography>
-              <Button onClick={closeModal} autoFocus>
+              <Button
+                onClick={closeModal}
+                autoFocus
+                variant="contained"
+              >
                 Continuar
               </Button>
             </Alert>
