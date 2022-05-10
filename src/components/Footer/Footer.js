@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Box,
   Button,
@@ -10,41 +10,41 @@ import {
   Stack,
   TextField,
   Typography,
-} from "@mui/material";
-import LogoFCyT from "../../assets/fcyt.png";
-import LogoUMSS from "../../assets/umss.png";
-import LogoKusaSoft from "../../assets/kusasoft.png";
+} from '@mui/material';
+import LogoFCyT from '../../assets/fcyt.png';
+import LogoUMSS from '../../assets/umss.png';
+import LogoKusaSoft from '../../assets/kusasoft.png';
 function Footer() {
   return (
     <Box
       sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        textAlign: "center",
-        flexDirection: "column",
-        fontSize: "0.8rem",
-        color: "textSecondary",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        flexDirection: 'column',
+        fontSize: '0.8rem',
+        color: 'textSecondary',
         bottom: 1,
-        width: "100%",
-        backgroundColor: "#172B4D",
-        position: "fixed",
-        zIndex: "30",
+        width: '100%',
+        backgroundColor: '#172B4D',
+        position: 'fixed',
+        zIndex: '30',
       }}
     >
       <Divider
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          textAlign: "center",
-          flexDirection: "column",
-          fontSize: "0.8rem",
-          color: "white",
-          position: "absolute",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          textAlign: 'center',
+          flexDirection: 'column',
+          fontSize: '0.8rem',
+          color: 'white',
+          position: 'absolute',
           bottom: 1,
-          width: "100%",
-          backgroundColor: "#060B26",
+          width: '100%',
+          backgroundColor: '#060B26',
         }}
       />
       <Stack
@@ -59,7 +59,7 @@ function Footer() {
           component="img"
           sx={{
             width: 60,
-            maxWidth: { xs: 60, md: 60 },
+            maxWidth: {xs: 60, md: 60},
           }}
           alt="logo fcyt."
           src={LogoFCyT}
@@ -69,7 +69,7 @@ function Footer() {
           sx={{
             minWidth: 120,
             minHeight: 50,
-            maxWidth: { xs: 120, ys: 50 },
+            maxWidth: {xs: 120, ys: 50},
           }}
           alt="logo fcyt."
           src={LogoUMSS}
@@ -78,13 +78,19 @@ function Footer() {
           component="img"
           sx={{
             width: 60,
-            maxWidth: { xs: 60, md: 60 },
+            maxWidth: {xs: 60, md: 60},
           }}
           alt="logo fcyt."
           src={LogoKusaSoft}
         />
       </Stack>
-      <Box sx={{ fontSize: "0.8rem", paddingBottom: "1rem", color:"white"}}>
+      <Box
+        sx={{
+          fontSize: '0.8rem',
+          paddingBottom: '1rem',
+          color: 'white',
+        }}
+      >
         © {new Date().getFullYear()}, Desarrollado por kusaSoft.
       </Box>
     </Box>

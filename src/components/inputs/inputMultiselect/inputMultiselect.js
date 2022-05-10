@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Box,
   OutlinedInput,
@@ -6,9 +6,12 @@ import {
   Select,
   Chip,
   MenuItem,
-} from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import { FormControlInput, Wrapper } from "./inputMultiselect.styles";
+} from '@mui/material';
+import {useTheme} from '@mui/material/styles';
+import {
+  FormControlInput,
+  Wrapper,
+} from './inputMultiselect.styles';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -42,9 +45,16 @@ export default function FormMultiselectControl(props) {
           required
           value={props.value}
           onChange={props.setValue}
-          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+          input={
+            <OutlinedInput
+              id="select-multiple-chip"
+              label={`${props.myLabel}`}
+            />
+          }
           renderValue={(selected) => (
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+            <Box
+              sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}
+            >
               {selected.map((value) => (
                 <Chip
                   key={value}
@@ -62,15 +72,25 @@ export default function FormMultiselectControl(props) {
           )}
           MenuProps={MenuProps}
         >
-          {props.list.map((e) => (
-            <MenuItem
-              key={e.id}
-              value={`G${e.id} ${e.name}`}
-              style={getStyles(e, props.value, theme)}
-            >
-              {`G${e.id} ${e.name}`}
-            </MenuItem>
-          ))}
+          {props.stringJoin
+            ? props.list.map((e) => (
+                <MenuItem
+                  key={e.id}
+                  value={`G${e.id} ${e.name}`}
+                  style={getStyles(e, props.value, theme)}
+                >
+                  {`G${e.id} ${e.name}`}
+                </MenuItem>
+              ))
+            : props.list.map((e) => (
+                <MenuItem
+                  key={e.id}
+                  value={`G${e.id}`}
+                  style={getStyles(e, props.value, theme)}
+                >
+                  {`G${e.id}`}
+                </MenuItem>
+              ))}
         </Select>
       </FormControlInput>
     </Wrapper>

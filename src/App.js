@@ -16,19 +16,7 @@ import Arrival from "./pages/Arrival";
 import Urgency from "./pages/Urgency";
 import { ROLES, PATHS} from "./services/Constant";
 import Users from "./pages/Users";
-
-const theme = createTheme({
-  palette: {
-    neutral: {
-      main: "#64748B",
-      contrastText: "#fff",
-    },
-    redDark: {
-      main: "#c62828",
-      contrastText: "#fff",
-    },
-  },
-});
+import {theme} from './Theme';
 
 function App() {
   return (
