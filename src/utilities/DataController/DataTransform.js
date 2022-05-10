@@ -1,31 +1,65 @@
-import {invalidDates} from "../../services/Constant";
+import {invalidDates} from '../../services/Constant';
 const DataTransform = {
-  getOriginalTeachersList: (teachersSelected, originalTeachersList) => {
+  getOriginalTeachersList: (
+    teachersSelected,
+    originalTeachersList
+  ) => {
     let teachersList = [];
     const teachersOriginal = [...originalTeachersList.values()];
-    // console.log(teachersSelected, "teachersSelected");
-    // console.log(teachersOriginal, "teachersOriginal");
     teachersSelected.map((teacher) => {
       teachersOriginal.map((teacherOriginal) => {
         teacherOriginal.map((teacherO) => {
-          if (teacher === `G${teacherO.id} ${teacherO.name}`) {
+          if (
+            teacher === `G${teacherO.group} ${teacherO.name}`
+          ) {
             teachersList.push(teacherO.id);
           }
         });
       });
     });
-    // console.log(teachersList, "GOOOOOOOOOOOO");
+    return teachersList;
+  },
+  getMyOriginalGroup: (
+    teachersSelected,
+    originalTeachersList,
+    subject
+  ) => {
+    let teachersList = [];
+    originalTeachersList.get(subject).map((teacher) => {
+      teachersSelected.map((teacherSelected) => {
+        if (teacherSelected === `G${teacher.group}`) {
+          teachersList.push(teacher.id);
+        }
+      });
+    });
     return teachersList;
   },
 
   getGroupsById: (idList, groupList) => {
     let groupListId = [];
-    const newIdList = idList.split(" ");
+    const newIdList = idList.split(' ');
     newIdList.map((id) => {
       [...groupList.values()].map((group) => {
         group.map((specificGroup) => {
           if (id == specificGroup.id) {
-            groupListId.push(`G${specificGroup.id} ${specificGroup.name}`);
+            groupListId.push(
+              `G${specificGroup.group} ${specificGroup.name}`
+            );
+          }
+        });
+      });
+    });
+    return groupListId;
+  },
+
+  getMyGroupById: (idList, groupList) => {
+    let groupListId = [];
+    const newIdList = idList.split(' ');
+    newIdList.map((id) => {
+      [...groupList.values()].map((group) => {
+        group.map((specificGroup) => {
+          if (id == specificGroup.id) {
+            groupListId.push(`G${specificGroup.group}`);
           }
         });
       });
@@ -34,16 +68,23 @@ const DataTransform = {
   },
 
   castStringToSrray: (list) => {
-    return list.split(" ");
+    return list.split(' ');
   },
 
-  isEnabledDate : (date) => {
+  isEnabledDate: (date) => {
     let enabled = true;
-    if(date.getDay() === 0){
+    if (date.getDay() === 0) {
       enabled = false;
     }
     return enabled;
-  }
+  },
+
+  stringToList: (e) => {
+    const {
+      target: {value},
+    } = e;
+    return typeof value === 'string' ? value.split(',') : value;
+  },
 };
 
 export default DataTransform;

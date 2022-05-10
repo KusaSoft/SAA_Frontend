@@ -1,6 +1,11 @@
-import React from "react";
-import { InputLabel, Select, MenuItem, FormHelperText } from "@mui/material";
-import { FormControlInput, Wrapper } from "./inputSelect.styles";
+import React from 'react';
+import {
+  InputLabel,
+  Select,
+  MenuItem,
+  FormHelperText,
+} from '@mui/material';
+import {FormControlInput, Wrapper} from './inputSelect.styles';
 export default function FormSelectControl(props) {
   return (
     <Wrapper>
@@ -9,15 +14,18 @@ export default function FormSelectControl(props) {
         <Select
           value={props.myValue}
           label={props.myLabel}
-          onChange={props.setValue}
+          onChange={(e) => {
+            props.setValue(e, e.target.value, props.myName);
+          }}
+          name={props.myName}
           required
         >
           {props.list.map((e) => {
             return <MenuItem value={e}>{e}</MenuItem>;
           })}
         </Select>
-        <FormHelperText>{props.helperText}</FormHelperText>
       </FormControlInput>
+      {props.children}
     </Wrapper>
   );
 }

@@ -1,7 +1,7 @@
-import React from "react";
-import useInput from "../../../hooks/useInput.hooks";
-import { TextField } from "@mui/material";
-import { FormControlInput, Wrapper } from "./input.styles";
+import React from 'react';
+import useInput from '../../../hooks/useInput.hooks';
+import {TextField} from '@mui/material';
+import {FormControlInput, Wrapper} from './input.styles';
 export default function FormInputControl(props) {
   return (
     <Wrapper maxWidth={props.maxWidth}>
@@ -9,7 +9,9 @@ export default function FormInputControl(props) {
         <TextField
           hidden={props.hidden}
           value={props.value}
-          onChange={props.setValue}
+          onChange={(e) => {
+            props.setValue(e, e.target.value, props.myName);
+          }}
           label={props.myLabel}
           type={props.myType}
           variant={props.myVariant}
@@ -22,8 +24,21 @@ export default function FormInputControl(props) {
           name={props.myName}
           onBlur={props.myOnBlur}
           fullWidth
+          onInput={(event) => {
+            if (props.myName === 'totalStudents') {
+              if (
+                event.target.value.length > props.myMaxLength
+              ) {
+                event.target.value = event.target.value.substring(
+                  0,
+                  props.myMaxLength
+                );
+              }
+            }
+          }}
         ></TextField>
       </FormControlInput>
+      {props.children}
     </Wrapper>
   );
 }

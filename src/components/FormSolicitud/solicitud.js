@@ -17,7 +17,7 @@ import {
   AlertTitle,
 } from '@mui/material';
 import React from 'react';
-import {useReservationRequest} from '../../hooks/useReservationRequest.hooks';
+import {useReservationRequest} from '../../hooks/useReservationRequest';
 import FormInputControl from '../inputs/input/input.js';
 import DateController from '../../utilities/DateController';
 import FormSelectControl from '../inputs/inputSelect/inputSelect';
@@ -26,7 +26,7 @@ import {useModal} from '../../hooks/useModal';
 import Modal from '../Modals/Modal';
 import AskReservationRequest from '../ask/askReservationRequest';
 import {PERIODSRANGE} from '../../services/Constant';
-import {MOTIVES, PATHS} from '../../services/Constant';
+import {MOTIVES, PATHS, STATUS} from '../../services/Constant';
 import useAuth from '../../hooks/useAuth';
 import {useRequest} from '../../hooks/useRequest.hooks';
 import {Link, useNavigate} from 'react-router-dom';
@@ -34,6 +34,7 @@ import {Save, Delete} from '@mui/icons-material';
 import apiSettings from '../../services/service';
 import RequestMessage from '../Messages/RequestMessage';
 import ConfirmationMessage from '../Messages/ConfirmationMessage';
+import RedBar from '../Div/RedBar';
 function Solicitud(props) {
   const {auth} = useAuth();
   const navigate = useNavigate();
@@ -79,33 +80,17 @@ function Solicitud(props) {
   });
 
   const {
-    teacher,
-    subjectSelected,
-    myGroupList,
     subjectList,
-    sent,
-    handleSubmit,
-    handleChangeSubject,
-    handleChangeGroup,
-    totalStudents,
-    handleChangeTotalStudents,
-    periodIniSelected,
-    periodEndSelected,
-    handleChangePeriodIni,
-    handleChangePeriodEnd,
-    motiveRequest,
-    handleMotiveRequest,
-    otherGroupList,
-    handleTeachersSelected,
     teachers,
-    handleDeleteTeachersSelected,
-    handleDeleteMyGroup,
-    dateReservation,
-    handleChangeDate,
-    allFilled,
     reservationRequest,
-    handleSaveSubmit,
     isLoading,
+    errors,
+    handleReservationRequest,
+    deleteElementFromMyGroup,
+    deleteElementFromOtherGroup,
+    validateAllFilled,
+    validateSaveFilled,
+    getReservationRequest,
   } = useReservationRequest({
     request: `${props.reservationRequest}`,
     user: auth,
@@ -139,9 +124,12 @@ function Solicitud(props) {
                   color="primary"
                   onClick={(e) => {
                     e.preventDefault();
-                    openModal();
-                    if (subjectSelected !== '') {
-                      handleRequestR(handleSaveSubmit());
+                    if (validateSaveFilled()) {
+                      handleRequestR(
+                        getReservationRequest(STATUS.DRAFT)
+                      );
+                      openModal();
+                      console.log('save');
                     }
                   }}
                 >
@@ -181,38 +169,47 @@ function Solicitud(props) {
               padding="0 1rem"
             >
               La solicitud de la reserva se realizará en nombre
-              de <b>{teacher.name}</b>
+              de <b>{reservationRequest.teacher}</b>
             </Typography>
             <form>
               <List container spacing={1}>
-                {/* todos los campos en * son obligatorios */}
-
                 <Grid container spacing={2} columns={12}>
                   <Grid item sm={6} xs={12}>
                     <FormSelectControl
                       myLabel="Materia *"
-                      myValue={subjectSelected}
-                      setValue={handleChangeSubject}
+                      myValue={reservationRequest.subject}
+                      myName="subject"
+                      setValue={handleReservationRequest}
                       list={
                         subjectList
                           ? [...subjectList.keys()]
                           : []
                       }
-                    />
+                    >
+                      {errors.subject.isEmpty ? (
+                        <RedBar>{errors.emptyMessage}</RedBar>
+                      ) : errors.subject.isUnsaveable ? (
+                        <RedBar>{errors.saveMessage}</RedBar>
+                      ) : null}
+                    </FormSelectControl>
                   </Grid>
+
                   <Grid item sm={6} xs={12}>
                     <FormMultiselectControl
-                      disabled={subjectSelected === ''}
+                      disabled={
+                        reservationRequest.subject === ''
+                      }
                       myLabel="Mis grupos *"
-                      value={myGroupList}
-                      setValue={handleChangeGroup}
-                      deleteT={handleDeleteMyGroup}
+                      value={reservationRequest.myGroupList}
+                      myName="myGroupList"
+                      setValue={handleReservationRequest}
+                      deleteT={deleteElementFromMyGroup}
                       list={
-                        subjectSelected !== ''
+                        reservationRequest.subject !== ''
                           ? subjectList
                             ? [
                                 ...subjectList.get(
-                                  subjectSelected
+                                  reservationRequest.subject
                                 ),
                               ]
                             : []
@@ -222,18 +219,26 @@ function Solicitud(props) {
                     />
                   </Grid>
                 </Grid>
+
                 <Box>
                   <FormMultiselectControl
-                    disabled={subjectSelected === ''}
+                    disabled={reservationRequest.subject === ''}
                     myLabel="Agregar otro(s) grupo(s)"
-                    value={otherGroupList}
-                    setValue={handleTeachersSelected}
-                    deleteT={handleDeleteTeachersSelected}
+                    value={reservationRequest.otherGroupList}
+                    myName="otherGroupList"
+                    setValue={handleReservationRequest}
+                    deleteT={deleteElementFromOtherGroup}
                     list={
-                      subjectSelected !== ''
+                      reservationRequest.subject !== ''
                         ? teachers
-                          ? teachers.has(subjectSelected)
-                            ? [...teachers.get(subjectSelected)]
+                          ? teachers.has(
+                              reservationRequest.subject
+                            )
+                            ? [
+                                ...teachers.get(
+                                  reservationRequest.subject
+                                ),
+                              ]
                             : []
                           : []
                         : []
@@ -247,39 +252,58 @@ function Solicitud(props) {
                     <Autocomplete
                       freeSolo
                       options={MOTIVES}
-                      value={motiveRequest}
-                      inputValue={motiveRequest}
+                      value={reservationRequest.motiveRequest}
+                      inputValue={
+                        reservationRequest.motiveRequest
+                      }
                       disableClearable={true}
                       onInputChange={(e, newValue) => {
-                        handleMotiveRequest(newValue);
+                        handleReservationRequest(
+                          e,
+                          newValue,
+                          'motiveRequest'
+                        );
                       }}
-                      onChange={(e, newValue) => {
-                        handleMotiveRequest(newValue);
+                      name="motiveRequest"
+                      sx={{
+                        minWidth: '200px',
+                        padding: '1rem 1rem 0rem 1rem',
                       }}
-                      sx={{minWidth: '200px', padding: '1rem'}}
                       renderInput={(params) => (
                         <TextField
                           {...params}
+                          name="motiveRequest"
                           label="Motivo de Solicitud *"
                         />
                       )}
                     />
+                    {errors.motive.isEmpty ? (
+                      <RedBar>{errors.emptyMessage}</RedBar>
+                    ) : errors.motive.isUnsaveable ? (
+                      <RedBar>{errors.saveMessage}</RedBar>
+                    ) : null}
                   </Grid>
+
                   <Grid item sm={6} xs={12}>
                     <FormInputControl
-                      myLabel="Total estudiantes *"
+                      myLabel="Cantidad de estudiantes *"
                       myType="number"
                       myVariant="outlined"
-                      value={totalStudents}
+                      myName="totalStudents"
+                      value={reservationRequest.totalStudents}
                       myInputProps={{
                         inputProps: {
-                          pattern: '[0-9]+',
                           min: '1',
                           max: '1500',
                         },
                       }}
-                      setValue={handleChangeTotalStudents}
-                    />
+                      myMaxLength="4"
+                      setValue={handleReservationRequest}
+                    >
+                      {errors.totalStudents.isEmpty ? (
+                        <RedBar>{errors.emptyMessage}</RedBar>
+                      ) : null}
+                    </FormInputControl>
                   </Grid>
                 </Grid>
                 <Grid container spacing={2} columns={12}>
@@ -287,38 +311,71 @@ function Solicitud(props) {
                     <FormInputControl
                       myLabel="Fecha *"
                       myType="date"
-                      setValue={handleChangeDate}
+                      setValue={handleReservationRequest}
+                      myName="dateReservation"
                       myInputProps={{
                         inputProps: {
                           min: DateController.getToday(),
                         },
-                        value: dateReservation,
+                        value:
+                          reservationRequest.dateReservation,
                       }}
-                      myDefaultValue={dateReservation}
-                    />
+                      myDefaultValue={
+                        reservationRequest.dateReservation
+                      }
+                    >
+                      {errors.date.isEmpty ? (
+                        <RedBar>{errors.emptyMessage}</RedBar>
+                      ) : errors.date.isError ? (
+                        <RedBar>{errors.date.message}</RedBar>
+                      ) : null}
+                    </FormInputControl>
                   </Grid>
                 </Grid>
+
                 <Grid container spacing={2} columns={12}>
                   <Grid item sm={6} xs={12}>
                     <FormSelectControl
                       myLabel="Hora Inicio *"
-                      myValue={periodIniSelected}
-                      setValue={handleChangePeriodIni}
+                      myValue={
+                        reservationRequest.periodIniSelected
+                      }
+                      setValue={handleReservationRequest}
+                      myName="periodIniSelected"
                       list={[
                         ...PERIODSRANGE.slice(
                           0,
                           PERIODSRANGE.length - 1
                         ),
                       ]}
-                    />
+                    >
+                      {errors.iniPeriod.isEmpty ? (
+                        <RedBar>{errors.emptyMessage}</RedBar>
+                      ) : errors.iniPeriod.isError ? (
+                        <RedBar>
+                          {errors.iniPeriod.message}
+                        </RedBar>
+                      ) : null}
+                    </FormSelectControl>
                   </Grid>
                   <Grid item sm={6} xs={12}>
                     <FormSelectControl
                       myLabel="Hora Fin *"
-                      myValue={periodEndSelected}
-                      setValue={handleChangePeriodEnd}
+                      myValue={
+                        reservationRequest.periodEndSelected
+                      }
+                      myName="periodEndSelected"
+                      setValue={handleReservationRequest}
                       list={[...PERIODSRANGE.slice(1)]}
-                    />
+                    >
+                      {errors.endPeriod.isEmpty ? (
+                        <RedBar>{errors.emptyMessage}</RedBar>
+                      ) : errors.endPeriod.isError ? (
+                        <RedBar>
+                          {errors.endPeriod.message}
+                        </RedBar>
+                      ) : null}
+                    </FormSelectControl>
                   </Grid>
                 </Grid>
                 <Box
@@ -351,10 +408,12 @@ function Solicitud(props) {
                       variant="contained"
                       onClick={async (e) => {
                         e.preventDefault();
-                        openModal1();
-                        handleRequestR(handleSubmit('sent'));
+                        if (validateAllFilled()) {
+                          openModal1();
+                        }
+
+                        // handleRequestR(handleSubmit('sent'));
                       }}
-                      disabled={!allFilled}
                     >
                       Enviar
                     </Button>

@@ -45,3 +45,37 @@ export const PATHS = {
   RESERVATION_REQUEST_EDIT:
     'reservationRequest/:reservationRequest/edit',
 };
+
+export const ERRORFORM = {
+  emptyMessage: 'El campo es obligatorio',
+  saveMessage: 'Para guardar, este campo es obligatorio',
+  subject: {
+    isEmpty: false,
+    isUnsaveable: false,
+  },
+  mygroup: {
+    isEmpty: false,
+  },
+  totalStudents: {
+    isEmpty: false,
+  },
+  motive: {
+    isEmpty: false,
+    isUnsaveable: false,
+  },
+  date: {
+    isError: false,
+    isEmpty: false,
+    message: 'La fecha ingresada no esta permitida',
+  },
+  iniPeriod: {
+    isEmpty: false,
+    isError: false,
+    message: 'La hora de inicio debe ser menor a la hora de fin',
+  },
+  endPeriod: {
+    isEmpty: false,
+    isError: false,
+    message: 'La hora de fin debe ser mayor a la hora de inicio',
+  },
+};

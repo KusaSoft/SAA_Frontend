@@ -1,84 +1,153 @@
-import {invalidDates} from '../../services/Constant';
-const DataTransform = {
-  getOriginalTeachersList: (
-    teachersSelected,
-    originalTeachersList
-  ) => {
-    let teachersList = [];
-    const teachersOriginal = [...originalTeachersList.values()];
-    teachersSelected.map((teacher) => {
-      teachersOriginal.map((teacherOriginal) => {
-        teacherOriginal.map((teacherO) => {
-          if (teacher === `G${teacherO.id} ${teacherO.name}`) {
-            teachersList.push(teacherO.id);
-          }
-        });
-      });
-    });
-    return teachersList;
-  },
+import {
+  invalidDates,
+  PERIODSRANGE,
+} from '../../services/Constant';
 
-  getMyOriginalGroup: (
-    teachersSelected,
-    originalTeachersList
-  ) => {
-    let teachersList = [];
-    const teachersOriginal = [...originalTeachersList.values()];
-    teachersSelected.map((teacher) => {
-      teachersOriginal.map((teacherOriginal) => {
-        teacherOriginal.map((teacherO) => {
-          if (teacher === `G${teacherO.id}`) {
-            teachersList.push(teacherO.id);
-          }
-        });
-      });
-    });
-    return teachersList;
-  },
-
-  getGroupsById: (idList, groupList) => {
-    let groupListId = [];
-    const newIdList = idList.split(' ');
-    newIdList.map((id) => {
-      [...groupList.values()].map((group) => {
-        group.map((specificGroup) => {
-          if (id == specificGroup.id) {
-            groupListId.push(
-              `G${specificGroup.id} ${specificGroup.name}`
-            );
-          }
-        });
-      });
-    });
-    return groupListId;
-  },
-
-  getMyGroupById: (idList, groupList) => {
-    let groupListId = [];
-    const newIdList = idList.split(' ');
-    newIdList.map((id) => {
-      [...groupList.values()].map((group) => {
-        group.map((specificGroup) => {
-          if (id == specificGroup.id) {
-            groupListId.push(`G${specificGroup.id}`);
-          }
-        });
-      });
-    });
-    return groupListId;
-  },
-
-  castStringToSrray: (list) => {
-    return list.split(' ');
-  },
-
-  isEnabledDate: (date) => {
-    let enabled = true;
-    if (date.getDay() === 0) {
-      enabled = false;
+const dateValidation = (date, valid) => {
+  if (date !== '') {
+    const newDate = new Date(date);
+    if (newDate.getDay() === 6) {
+      return [false, false];
+    } else {
+      return [true, valid];
     }
-    return enabled;
+  } else {
+    return [true, valid];
+  }
+};
+
+const isValidRange = (ini, end, valid) => {
+  if (ini === '' || end === '') {
+    return [true, valid];
+  } else {
+    if (
+      PERIODSRANGE.indexOf(ini) !== PERIODSRANGE.indexOf(end) &&
+      PERIODSRANGE.indexOf(ini) < PERIODSRANGE.indexOf(end)
+    ) {
+      return [true, valid];
+    } else {
+      return [false, false];
+    }
+  }
+};
+
+const empty = (value, valid) => {
+  if (value === '') {
+    valid = false;
+    return [true, valid];
+  } else {
+    return [false, valid];
+  }
+};
+
+const DataValidation = {
+  validateStringField: () => {},
+  validateArrayField: () => {},
+  validateOnSave: (reservationRequest, errors) => {
+    let allFilled = true;
+
+    const formatInput = (method) => {
+      const [value, correctly] = method;
+      allFilled = correctly;
+      return value;
+    };
+
+    const newErrors = {
+      ...errors,
+      subject: {
+        isUnsaveable: formatInput(
+          empty(reservationRequest.subject, allFilled)
+        ),
+        isEmpty: false,
+      },
+      totalStudents: {
+        isEmpty: false,
+      },
+      motive: {
+        isUnsaveable: formatInput(
+          empty(reservationRequest.motiveRequest, allFilled)
+        ),
+        isEmpty: false,
+      },
+      date: {
+        ...errors.date,
+        isEmpty: false,
+        isError: !formatInput(
+          dateValidation(
+            reservationRequest.dateReservation,
+            allFilled
+          )
+        ),
+      },
+      iniPeriod: {
+        ...errors.iniPeriod,
+        isEmpty: false,
+        isError: !formatInput(
+          isValidRange(
+            reservationRequest.periodIniSelected,
+            reservationRequest.periodEndSelected,
+            allFilled
+          )
+        ),
+      },
+      endPeriod: {
+        ...errors.endPeriod,
+        isEmpty: false,
+        isError: !formatInput(
+          isValidRange(
+            reservationRequest.periodIniSelected,
+            reservationRequest.periodEndSelected,
+            allFilled
+          )
+        ),
+      },
+    };
+    return [allFilled, newErrors];
+  },
+
+  validateOnSubmit: (reservationRequest, errors) => {
+    let allFilled = true;
+    const empty = (value) => {
+      if (value === '') {
+        allFilled = false;
+        return true;
+      } else {
+        return false;
+      }
+    };
+    const newErrors = {
+      ...errors,
+      subject: {
+        isUnsaveable: false,
+        isEmpty: empty(reservationRequest.subject),
+      },
+      mygroup: {
+        isEmpty: empty(
+          reservationRequest.myGroupList.length.toString()
+        ),
+      },
+      totalStudents: {
+        isEmpty: empty(reservationRequest.totalStudents),
+      },
+      motive: {
+        isUnsaveable: false,
+        isEmpty: empty(reservationRequest.motiveRequest),
+      },
+      date: {
+        ...errors.date,
+        isEmpty: empty(reservationRequest.dateReservation),
+      },
+      iniPeriod: {
+        ...errors.iniPeriod,
+        isEmpty: empty(reservationRequest.periodIniSelected),
+      },
+      endPeriod: {
+        ...errors.endPeriod,
+        isEmpty: empty(reservationRequest.periodEndSelected),
+      },
+    };
+    return [allFilled, newErrors];
   },
 };
 
-export default DataTransform;
+export default DataValidation;
