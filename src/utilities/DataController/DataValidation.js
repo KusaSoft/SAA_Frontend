@@ -47,6 +47,7 @@ const DataValidation = {
     let allFilled = true;
 
     const formatInput = (method) => {
+      console.log(method);
       const [value, correctly] = method;
       allFilled = correctly;
       return value;
@@ -56,7 +57,7 @@ const DataValidation = {
       ...errors,
       subject: {
         isUnsaveable: formatInput(
-          empty(reservationRequest.subject)
+          empty(reservationRequest.subject, allFilled)
         ),
         isEmpty: false,
       },
@@ -65,7 +66,7 @@ const DataValidation = {
       },
       motive: {
         isUnsaveable: formatInput(
-          empty(reservationRequest.motiveRequest)
+          empty(reservationRequest.motiveRequest, allFilled)
         ),
         isEmpty: false,
       },
@@ -73,7 +74,10 @@ const DataValidation = {
         ...errors.date,
         isEmpty: false,
         isError: !formatInput(
-          dateValidation(reservationRequest.dateReservation)
+          dateValidation(
+            reservationRequest.dateReservation,
+            allFilled
+          )
         ),
       },
       iniPeriod: {
@@ -82,7 +86,8 @@ const DataValidation = {
         isError: !formatInput(
           isValidRange(
             reservationRequest.periodIniSelected,
-            reservationRequest.periodEndSelected
+            reservationRequest.periodEndSelected,
+            allFilled
           )
         ),
       },
@@ -92,7 +97,8 @@ const DataValidation = {
         isError: !formatInput(
           isValidRange(
             reservationRequest.periodIniSelected,
-            reservationRequest.periodEndSelected
+            reservationRequest.periodEndSelected,
+            allFilled
           )
         ),
       },

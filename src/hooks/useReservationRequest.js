@@ -135,7 +135,7 @@ export const useReservationRequest = ({request, user}) => {
   const getReservationRequest = (state) => {
     return {
       id: parseInt(request !== 'new' ? request : ''),
-      name: reservationRequest.teacher.name,
+      name: reservationRequest.teacher,
       subject: reservationRequest.subject,
       group_list: reservationRequest.myGroupList,
       total_students: reservationRequest.totalStudents,
@@ -204,5 +204,6 @@ export const useReservationRequest = ({request, user}) => {
     deleteElementFromMyGroup,
     validateAllFilled,
     validateSaveFilled,
+    getReservationRequest,
   };
 };

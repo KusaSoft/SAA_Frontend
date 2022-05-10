@@ -26,7 +26,7 @@ import {useModal} from '../../hooks/useModal';
 import Modal from '../Modals/Modal';
 import AskReservationRequest from '../ask/askReservationRequest';
 import {PERIODSRANGE} from '../../services/Constant';
-import {MOTIVES, PATHS} from '../../services/Constant';
+import {MOTIVES, PATHS, STATUS} from '../../services/Constant';
 import useAuth from '../../hooks/useAuth';
 import {useRequest} from '../../hooks/useRequest.hooks';
 import {Link, useNavigate} from 'react-router-dom';
@@ -89,6 +89,7 @@ function Solicitud(props) {
     deleteElementFromMyGroup,
     validateAllFilled,
     validateSaveFilled,
+    getReservationRequest,
   } = useReservationRequest({
     request: `${props.reservationRequest}`,
     user: auth,
@@ -123,9 +124,12 @@ function Solicitud(props) {
                   onClick={(e) => {
                     e.preventDefault();
                     if (validateSaveFilled()) {
+                      handleRequestR(
+                        getReservationRequest(STATUS.DRAFT)
+                      );
                       openModal();
+                      console.log('save');
                     }
-                    // handleRequestR(handleSaveSubmit());
                   }}
                 >
                   <Save />
