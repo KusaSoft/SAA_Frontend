@@ -138,7 +138,9 @@ export const useReservationRequest = ({request, user}) => {
       name: reservationRequest.teacher,
       subject: reservationRequest.subject,
       group_list: DataTransform.getMyOriginalGroup(
-        reservationRequest.myGroupList
+        reservationRequest.myGroupList,
+        subjectList,
+        reservationRequest.subject
       ),
       total_students: reservationRequest.totalStudents,
       horario_ini: reservationRequest.periodIniSelected,
@@ -146,7 +148,8 @@ export const useReservationRequest = ({request, user}) => {
       request_reason: reservationRequest.motiveRequest,
       reservation_date: reservationRequest.dateReservation,
       other_group_list: DataTransform.getOriginalTeachersList(
-        reservationRequest.otherGroupList
+        reservationRequest.otherGroupList,
+        teachers
       ),
       state: state,
     };

@@ -9,7 +9,9 @@ const DataTransform = {
     teachersSelected.map((teacher) => {
       teachersOriginal.map((teacherOriginal) => {
         teacherOriginal.map((teacherO) => {
-          if (teacher === `G${teacherO.id} ${teacherO.name}`) {
+          if (
+            teacher === `G${teacherO.group} ${teacherO.name}`
+          ) {
             teachersList.push(teacherO.id);
           }
         });
@@ -19,17 +21,15 @@ const DataTransform = {
   },
   getMyOriginalGroup: (
     teachersSelected,
-    originalTeachersList
+    originalTeachersList,
+    subject
   ) => {
     let teachersList = [];
-    const teachersOriginal = [...originalTeachersList.values()];
-    teachersSelected.map((teacher) => {
-      teachersOriginal.map((teacherOriginal) => {
-        teacherOriginal.map((teacherO) => {
-          if (teacher === `G${teacherO.id}`) {
-            teachersList.push(teacherO.id);
-          }
-        });
+    originalTeachersList.get(subject).map((teacher) => {
+      teachersSelected.map((teacherSelected) => {
+        if (teacherSelected === `G${teacher.group}`) {
+          teachersList.push(teacher.id);
+        }
       });
     });
     return teachersList;
@@ -43,7 +43,7 @@ const DataTransform = {
         group.map((specificGroup) => {
           if (id == specificGroup.id) {
             groupListId.push(
-              `G${specificGroup.id} ${specificGroup.name}`
+              `G${specificGroup.group} ${specificGroup.name}`
             );
           }
         });
@@ -59,7 +59,7 @@ const DataTransform = {
       [...groupList.values()].map((group) => {
         group.map((specificGroup) => {
           if (id == specificGroup.id) {
-            groupListId.push(`G${specificGroup.id}`);
+            groupListId.push(`G${specificGroup.group}`);
           }
         });
       });
