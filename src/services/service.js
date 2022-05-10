@@ -114,6 +114,17 @@ const apiSettings = {
     const response = await axios.delete(`${API_URL}/draft/${requestID}`);
     return response;
   },
+  getRequests: async () => {
+    const response = await axios.get(`${API_URL}/test/user_booking`);
+    console.log(response);
+    const list = response.data.map((id) => {
+      return { id: id.id, subject: id.subject, fecha: id.reservation_date, motivo: id.request_reason, state: id.state };
+    });
+    console.log(list);
+    return list;
+    // return response.data;
+    },
+
 
   getUsers: async () => {
     // const response = await axios.get(`${API_URL}/users`);
