@@ -12,7 +12,7 @@ export const useReservationRequest = ({request, user}) => {
   const [fillForm, setFillForm] = useState(false);
   const [reservationRequest, setReservationRequest] = useState({
     teacher: user.user,
-    subjectSelected: '',
+    subject: '',
     myGroupList: [],
     otherGroupList: [],
     periodIniSelected: '',
@@ -71,7 +71,7 @@ export const useReservationRequest = ({request, user}) => {
       );
       setReservationRequest({
         teacher: user.user,
-        subjectSelected:
+        subject:
           response.subject !== null ? response.subject : '',
         myGroupList:
           response.group_list !== ''
@@ -136,7 +136,7 @@ export const useReservationRequest = ({request, user}) => {
     return {
       id: parseInt(request !== 'new' ? request : ''),
       name: reservationRequest.teacher.name,
-      subject: reservationRequest.subjectSelected,
+      subject: reservationRequest.subject,
       group_list: reservationRequest.myGroupList,
       total_students: reservationRequest.totalStudents,
       horario_ini: reservationRequest.periodIniSelected,
@@ -177,39 +177,21 @@ export const useReservationRequest = ({request, user}) => {
   };
 
   const validateAllFilled = () => {
-    // const [filled, errors] = DataValidation.validateAllFilled(
-    //   reservationRequest,
-    //   errors
-    // );
-    // setErrors(errors);
-    // return filled;
-    if (reservationRequest.motiveRequest === '') {
-      setErrors({
-        ...errors,
-        motive: {
-          ...errors.motive,
-          isEmpty: true,
-        },
-      });
-      return false;
-    } else {
-      setFillForm(true);
-      return true;
-    }
+    const [filled, newError] = DataValidation.validateOnSubmit(
+      reservationRequest,
+      errors
+    );
+    setErrors(newError);
+    return filled;
   };
 
   const validateSaveFilled = () => {
-    if (reservationRequest.motiveRequest === '') {
-      setErrors({
-        ...errors,
-        motive: {
-          ...errors.motive,
-          isSaveable: true,
-        },
-      });
-      return false;
-    }
-    return false;
+    const [filled, newError] = DataValidation.validateOnSave(
+      reservationRequest,
+      errors
+    );
+    setErrors(newError);
+    return filled;
   };
 
   return {

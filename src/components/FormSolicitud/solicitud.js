@@ -168,19 +168,29 @@ function Solicitud(props) {
             </Typography>
             <form>
               <List container spacing={1}>
-                {/* <Grid container spacing={2} columns={12}>
+                <Grid container spacing={2} columns={12}>
                   <Grid item sm={6} xs={12}>
                     <FormSelectControl
                       myLabel="Materia *"
-                      myValue={subjectSelected}
-                      setValue={handleChangeSubject}
+                      myValue={
+                        reservationRequest.subjectSelected
+                      }
+                      myName="subject"
+                      setValue={handleReservationRequest}
                       list={
                         subjectList
                           ? [...subjectList.keys()]
                           : []
                       }
-                    />
+                    >
+                      {errors.subject.isEmpty ? (
+                        <RedBar>{errors.emptyMessage}</RedBar>
+                      ) : errors.subject.isUnsaveable ? (
+                        <RedBar>{errors.saveMessage}</RedBar>
+                      ) : null}
+                    </FormSelectControl>
                   </Grid>
+                  {/*
                   <Grid item sm={6} xs={12}>
                     <FormMultiselectControl
                       disabled={subjectSelected === ''}
@@ -201,8 +211,9 @@ function Solicitud(props) {
                       }
                       stringJoin={false}
                     />
-                  </Grid>
+                    </Grid>*/}
                 </Grid>
+                {/*
                 <Box>
                   <FormMultiselectControl
                     disabled={subjectSelected === ''}
@@ -255,7 +266,7 @@ function Solicitud(props) {
                     />
                     {errors.motive.isEmpty ? (
                       <RedBar>{errors.emptyMessage}</RedBar>
-                    ) : errors.motive.isSaveable ? (
+                    ) : errors.motive.isUnsaveable ? (
                       <RedBar>{errors.saveMessage}</RedBar>
                     ) : null}
                   </Grid>
@@ -268,57 +279,92 @@ function Solicitud(props) {
                       myName="totalStudents"
                       value={reservationRequest.totalStudents}
                       myInputProps={{
-                        min: '1',
-                        max: '1500',
+                        inputProps: {
+                          min: '1',
+                          max: '1500',
+                        },
                       }}
                       myMaxLength="4"
                       setValue={handleReservationRequest}
                     >
-                      {errors.motive.isEmpty ? (
+                      {errors.totalStudents.isEmpty ? (
                         <RedBar>{errors.emptyMessage}</RedBar>
                       ) : null}
                     </FormInputControl>
                   </Grid>
                 </Grid>
-                {/* <Grid container spacing={2} columns={12}>
+                <Grid container spacing={2} columns={12}>
                   <Grid item sm={6} xs={12}>
                     <FormInputControl
                       myLabel="Fecha *"
                       myType="date"
-                      setValue={handleChangeDate}
+                      setValue={handleReservationRequest}
+                      myName="dateReservation"
                       myInputProps={{
                         inputProps: {
                           min: DateController.getToday(),
                         },
-                        value: dateReservation,
+                        value:
+                          reservationRequest.dateReservation,
                       }}
-                      myDefaultValue={dateReservation}
-                    />
+                      myDefaultValue={
+                        reservationRequest.dateReservation
+                      }
+                    >
+                      {errors.date.isEmpty ? (
+                        <RedBar>{errors.emptyMessage}</RedBar>
+                      ) : errors.date.isError ? (
+                        <RedBar>{errors.date.message}</RedBar>
+                      ) : null}
+                    </FormInputControl>
                   </Grid>
                 </Grid>
+
                 <Grid container spacing={2} columns={12}>
                   <Grid item sm={6} xs={12}>
                     <FormSelectControl
                       myLabel="Hora Inicio *"
-                      myValue={periodIniSelected}
-                      setValue={handleChangePeriodIni}
+                      myValue={
+                        reservationRequest.periodIniSelected
+                      }
+                      setValue={handleReservationRequest}
+                      myName="periodIniSelected"
                       list={[
                         ...PERIODSRANGE.slice(
                           0,
                           PERIODSRANGE.length - 1
                         ),
                       ]}
-                    />
+                    >
+                      {errors.iniPeriod.isEmpty ? (
+                        <RedBar>{errors.emptyMessage}</RedBar>
+                      ) : errors.iniPeriod.isError ? (
+                        <RedBar>
+                          {errors.iniPeriod.message}
+                        </RedBar>
+                      ) : null}
+                    </FormSelectControl>
                   </Grid>
                   <Grid item sm={6} xs={12}>
                     <FormSelectControl
                       myLabel="Hora Fin *"
-                      myValue={periodEndSelected}
-                      setValue={handleChangePeriodEnd}
+                      myValue={
+                        reservationRequest.periodEndSelected
+                      }
+                      myName="periodEndSelected"
+                      setValue={handleReservationRequest}
                       list={[...PERIODSRANGE.slice(1)]}
-                    />
+                    >
+                      {errors.endPeriod.isEmpty ? (
+                        <RedBar>{errors.emptyMessage}</RedBar>
+                      ) : errors.endPeriod.isError ? (
+                        <RedBar>
+                          {errors.endPeriod.message}
+                        </RedBar>
+                      ) : null}
+                    </FormSelectControl>
                   </Grid>
-                </Grid> */}
+                </Grid>
                 <Box
                   container
                   columns={12}

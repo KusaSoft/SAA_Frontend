@@ -10,7 +10,6 @@ export default function FormInputControl(props) {
           hidden={props.hidden}
           value={props.value}
           onChange={(e) => {
-            console.log(e.target.value, props.myName);
             props.setValue(e, e.target.value, props.myName);
           }}
           label={props.myLabel}
@@ -19,18 +18,22 @@ export default function FormInputControl(props) {
           multiline={props.myMultiline}
           rows={props.myRows}
           defaultValue={props.myDefaultValue}
-          inputProps={props.myInputProps}
+          InputProps={props.myInputProps}
           error={props.myError}
           helperText={props.myHelperText}
           name={props.myName}
           onBlur={props.myOnBlur}
           fullWidth
           onInput={(event) => {
-            if (event.target.value.length > props.myMaxLength) {
-              event.target.value = event.target.value.substring(
-                0,
-                props.myMaxLength
-              );
+            if (props.myName === 'totalStudents') {
+              if (
+                event.target.value.length > props.myMaxLength
+              ) {
+                event.target.value = event.target.value.substring(
+                  0,
+                  props.myMaxLength
+                );
+              }
             }
           }}
         ></TextField>

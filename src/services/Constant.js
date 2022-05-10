@@ -51,7 +51,7 @@ export const ERRORFORM = {
   saveMessage: 'Para guardar, este campo es obligatorio',
   subject: {
     isEmpty: false,
-    isSaveable: false,
+    isUnsaveable: false,
   },
   mygroup: {
     isEmpty: false,
@@ -61,7 +61,7 @@ export const ERRORFORM = {
   },
   motive: {
     isEmpty: false,
-    isSaveable: false,
+    isUnsaveable: false,
   },
   date: {
     isError: false,
