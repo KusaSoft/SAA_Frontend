@@ -44,7 +44,10 @@ export default function FormMultiselectControl(props) {
           multiple
           required
           value={props.value}
-          onChange={props.setValue}
+          name={props.myName}
+          onChange={(e) => {
+            props.setValue(e, e.target.value, props.myName);
+          }}
           input={
             <OutlinedInput
               id="select-multiple-chip"
@@ -64,7 +67,7 @@ export default function FormMultiselectControl(props) {
                   }}
                   onDelete={(e) => {
                     e.stopPropagation();
-                    props.deleteT(value);
+                    props.deleteT(e, value);
                   }}
                 />
               ))}
@@ -76,19 +79,19 @@ export default function FormMultiselectControl(props) {
             ? props.list.map((e) => (
                 <MenuItem
                   key={e.id}
-                  value={`G${e.id} ${e.name}`}
+                  value={`G${e.group} ${e.name}`}
                   style={getStyles(e, props.value, theme)}
                 >
-                  {`G${e.id} ${e.name}`}
+                  {`G${e.group} ${e.name}`}
                 </MenuItem>
               ))
             : props.list.map((e) => (
                 <MenuItem
                   key={e.id}
-                  value={`G${e.id}`}
+                  value={`G${e.group}`}
                   style={getStyles(e, props.value, theme)}
                 >
-                  {`G${e.id}`}
+                  {`G${e.group}`}
                 </MenuItem>
               ))}
         </Select>

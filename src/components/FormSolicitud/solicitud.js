@@ -87,6 +87,7 @@ function Solicitud(props) {
     errors,
     handleReservationRequest,
     deleteElementFromMyGroup,
+    deleteElementFromOtherGroup,
     validateAllFilled,
     validateSaveFilled,
     getReservationRequest,
@@ -176,9 +177,7 @@ function Solicitud(props) {
                   <Grid item sm={6} xs={12}>
                     <FormSelectControl
                       myLabel="Materia *"
-                      myValue={
-                        reservationRequest.subjectSelected
-                      }
+                      myValue={reservationRequest.subject}
                       myName="subject"
                       setValue={handleReservationRequest}
                       list={
@@ -194,20 +193,23 @@ function Solicitud(props) {
                       ) : null}
                     </FormSelectControl>
                   </Grid>
-                  {/*
+
                   <Grid item sm={6} xs={12}>
                     <FormMultiselectControl
-                      disabled={subjectSelected === ''}
+                      disabled={
+                        reservationRequest.subject === ''
+                      }
                       myLabel="Mis grupos *"
-                      value={myGroupList}
-                      setValue={handleChangeGroup}
-                      deleteT={handleDeleteMyGroup}
+                      value={reservationRequest.myGroupList}
+                      myName="myGroupList"
+                      setValue={handleReservationRequest}
+                      deleteT={deleteElementFromMyGroup}
                       list={
-                        subjectSelected !== ''
+                        reservationRequest.subject !== ''
                           ? subjectList
                             ? [
                                 ...subjectList.get(
-                                  subjectSelected
+                                  reservationRequest.subject
                                 ),
                               ]
                             : []
@@ -215,28 +217,35 @@ function Solicitud(props) {
                       }
                       stringJoin={false}
                     />
-                    </Grid>*/}
+                  </Grid>
                 </Grid>
-                {/*
+
                 <Box>
                   <FormMultiselectControl
-                    disabled={subjectSelected === ''}
+                    disabled={reservationRequest.subject === ''}
                     myLabel="Agregar otro(s) grupo(s)"
-                    value={otherGroupList}
-                    setValue={handleTeachersSelected}
-                    deleteT={handleDeleteTeachersSelected}
+                    value={reservationRequest.otherGroupList}
+                    myName="otherGroupList"
+                    setValue={handleReservationRequest}
+                    deleteT={deleteElementFromOtherGroup}
                     list={
-                      subjectSelected !== ''
+                      reservationRequest.subject !== ''
                         ? teachers
-                          ? teachers.has(subjectSelected)
-                            ? [...teachers.get(subjectSelected)]
+                          ? teachers.has(
+                              reservationRequest.subject
+                            )
+                            ? [
+                                ...teachers.get(
+                                  reservationRequest.subject
+                                ),
+                              ]
                             : []
                           : []
                         : []
                     }
                     stringJoin={true}
                   />
-                </Box> */}
+                </Box>
 
                 <Grid container spacing={2} columns={12}>
                   <Grid item sm={6} xs={12}>

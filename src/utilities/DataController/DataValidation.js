@@ -47,7 +47,6 @@ const DataValidation = {
     let allFilled = true;
 
     const formatInput = (method) => {
-      console.log(method);
       const [value, correctly] = method;
       allFilled = correctly;
       return value;

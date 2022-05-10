@@ -137,43 +137,60 @@ export const useReservationRequest = ({request, user}) => {
       id: parseInt(request !== 'new' ? request : ''),
       name: reservationRequest.teacher,
       subject: reservationRequest.subject,
-      group_list: reservationRequest.myGroupList,
+      group_list: DataTransform.getMyOriginalGroup(
+        reservationRequest.myGroupList
+      ),
       total_students: reservationRequest.totalStudents,
       horario_ini: reservationRequest.periodIniSelected,
       horario_end: reservationRequest.periodEndSelected,
       request_reason: reservationRequest.motiveRequest,
       reservation_date: reservationRequest.dateReservation,
-      other_group_list: reservationRequest.otherGroupList,
+      other_group_list: DataTransform.getOriginalTeachersList(
+        reservationRequest.otherGroupList
+      ),
       state: state,
     };
   };
 
+  const getList = (value) => {
+    return typeof value === 'string' ? value.split(',') : value;
+  };
   const handleReservationRequest = (e, newValue, nameValue) => {
     e.preventDefault();
-    setReservationRequest({
+    const newResReq = {
       ...reservationRequest,
-      [nameValue]: newValue,
+      [nameValue]:
+        newValue === 'myGroupList' ||
+        newValue === 'otherGroupList'
+          ? getList(newValue)
+          : newValue,
+    };
+
+    setReservationRequest({
+      ...newResReq,
+      myGroupList:
+        nameValue === 'subject' ? [] : newResReq.myGroupList,
+      otherGroupList:
+        nameValue === 'subject' ? [] : newResReq.otherGroupList,
     });
   };
 
-  //   const handleChangeSubject = (e) => {
-  //     setSubjectSelected(e.target.value);
-  //     setGroupList([]);
-  //     setOtherGroupList([]);
-  //   };
+  const deleteElementFromMyGroup = (e, newValue) => {
+    setReservationRequest({
+      ...reservationRequest,
+      myGroupList: reservationRequest.myGroupList.filter(
+        (item) => item !== newValue
+      ),
+    });
+  };
 
-  //   const handleDeleteTeachersSelected = (e) => {
-  //     setOtherGroupList(
-  //       otherGroupList.filter((item) => item !== e)
-  //     );
-  //   };
-
-  const deleteElementFromMyGroup = (e) => {
-    // setReservationRequest({
-    //   ...reservationRequest,
-    //   [element.name]: element.value,
-    // });
-    // setGroupList(myGroupList.filter((item) => item !== e));
+  const deleteElementFromOtherGroup = (e, newValue) => {
+    setReservationRequest({
+      ...reservationRequest,
+      otherGroupList: reservationRequest.otherGroupList.filter(
+        (item) => item !== newValue
+      ),
+    });
   };
 
   const validateAllFilled = () => {
@@ -202,6 +219,7 @@ export const useReservationRequest = ({request, user}) => {
     errors,
     handleReservationRequest,
     deleteElementFromMyGroup,
+    deleteElementFromOtherGroup,
     validateAllFilled,
     validateSaveFilled,
     getReservationRequest,
