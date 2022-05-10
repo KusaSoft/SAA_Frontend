@@ -17,7 +17,7 @@ import {
   AlertTitle,
 } from '@mui/material';
 import React from 'react';
-import {useReservationRequest} from '../../hooks/useReservationRequest.hooks';
+import {useReservationRequest} from '../../hooks/useReservationRequest';
 import FormInputControl from '../inputs/input/input.js';
 import DateController from '../../utilities/DateController';
 import FormSelectControl from '../inputs/inputSelect/inputSelect';
@@ -34,6 +34,7 @@ import {Save, Delete} from '@mui/icons-material';
 import apiSettings from '../../services/service';
 import RequestMessage from '../Messages/RequestMessage';
 import ConfirmationMessage from '../Messages/ConfirmationMessage';
+import RedBar from '../Div/RedBar';
 function Solicitud(props) {
   const {auth} = useAuth();
   const navigate = useNavigate();
@@ -79,33 +80,15 @@ function Solicitud(props) {
   });
 
   const {
-    teacher,
-    subjectSelected,
-    myGroupList,
     subjectList,
-    sent,
-    handleSubmit,
-    handleChangeSubject,
-    handleChangeGroup,
-    totalStudents,
-    handleChangeTotalStudents,
-    periodIniSelected,
-    periodEndSelected,
-    handleChangePeriodIni,
-    handleChangePeriodEnd,
-    motiveRequest,
-    handleMotiveRequest,
-    otherGroupList,
-    handleTeachersSelected,
     teachers,
-    handleDeleteTeachersSelected,
-    handleDeleteMyGroup,
-    dateReservation,
-    handleChangeDate,
-    allFilled,
     reservationRequest,
-    handleSaveSubmit,
     isLoading,
+    errors,
+    handleReservationRequest,
+    deleteElementFromMyGroup,
+    validateAllFilled,
+    validateSaveFilled,
   } = useReservationRequest({
     request: `${props.reservationRequest}`,
     user: auth,
@@ -139,10 +122,10 @@ function Solicitud(props) {
                   color="primary"
                   onClick={(e) => {
                     e.preventDefault();
-                    openModal();
-                    if (subjectSelected !== '') {
-                      handleRequestR(handleSaveSubmit());
+                    if (validateSaveFilled()) {
+                      openModal();
                     }
+                    // handleRequestR(handleSaveSubmit());
                   }}
                 >
                   <Save />
@@ -181,13 +164,11 @@ function Solicitud(props) {
               padding="0 1rem"
             >
               La solicitud de la reserva se realizará en nombre
-              de <b>{teacher.name}</b>
+              de <b>{reservationRequest.teacher}</b>
             </Typography>
             <form>
               <List container spacing={1}>
-                {/* todos los campos en * son obligatorios */}
-
-                <Grid container spacing={2} columns={12}>
+                {/* <Grid container spacing={2} columns={12}>
                   <Grid item sm={6} xs={12}>
                     <FormSelectControl
                       myLabel="Materia *"
@@ -240,49 +221,66 @@ function Solicitud(props) {
                     }
                     stringJoin={true}
                   />
-                </Box>
+                </Box> */}
 
                 <Grid container spacing={2} columns={12}>
                   <Grid item sm={6} xs={12}>
                     <Autocomplete
                       freeSolo
                       options={MOTIVES}
-                      value={motiveRequest}
-                      inputValue={motiveRequest}
+                      value={reservationRequest.motiveRequest}
+                      inputValue={
+                        reservationRequest.motiveRequest
+                      }
                       disableClearable={true}
                       onInputChange={(e, newValue) => {
-                        handleMotiveRequest(newValue);
+                        handleReservationRequest(
+                          e,
+                          newValue,
+                          'motiveRequest'
+                        );
                       }}
-                      onChange={(e, newValue) => {
-                        handleMotiveRequest(newValue);
+                      name="motiveRequest"
+                      sx={{
+                        minWidth: '200px',
+                        padding: '1rem 1rem 0rem 1rem',
                       }}
-                      sx={{minWidth: '200px', padding: '1rem'}}
                       renderInput={(params) => (
                         <TextField
                           {...params}
+                          name="motiveRequest"
                           label="Motivo de Solicitud *"
                         />
                       )}
                     />
+                    {errors.motive.isEmpty ? (
+                      <RedBar>{errors.emptyMessage}</RedBar>
+                    ) : errors.motive.isSaveable ? (
+                      <RedBar>{errors.saveMessage}</RedBar>
+                    ) : null}
                   </Grid>
+
                   <Grid item sm={6} xs={12}>
                     <FormInputControl
-                      myLabel="Total estudiantes *"
+                      myLabel="Cantidad de estudiantes *"
                       myType="number"
                       myVariant="outlined"
-                      value={totalStudents}
+                      myName="totalStudents"
+                      value={reservationRequest.totalStudents}
                       myInputProps={{
-                        inputProps: {
-                          pattern: '[0-9]+',
-                          min: '1',
-                          max: '1500',
-                        },
+                        min: '1',
+                        max: '1500',
                       }}
-                      setValue={handleChangeTotalStudents}
-                    />
+                      myMaxLength="4"
+                      setValue={handleReservationRequest}
+                    >
+                      {errors.motive.isEmpty ? (
+                        <RedBar>{errors.emptyMessage}</RedBar>
+                      ) : null}
+                    </FormInputControl>
                   </Grid>
                 </Grid>
-                <Grid container spacing={2} columns={12}>
+                {/* <Grid container spacing={2} columns={12}>
                   <Grid item sm={6} xs={12}>
                     <FormInputControl
                       myLabel="Fecha *"
@@ -320,7 +318,7 @@ function Solicitud(props) {
                       list={[...PERIODSRANGE.slice(1)]}
                     />
                   </Grid>
-                </Grid>
+                </Grid> */}
                 <Box
                   container
                   columns={12}
@@ -351,10 +349,12 @@ function Solicitud(props) {
                       variant="contained"
                       onClick={async (e) => {
                         e.preventDefault();
-                        openModal1();
-                        handleRequestR(handleSubmit('sent'));
+                        if (validateAllFilled()) {
+                          openModal1();
+                        }
+
+                        // handleRequestR(handleSubmit('sent'));
                       }}
-                      disabled={!allFilled}
                     >
                       Enviar
                     </Button>

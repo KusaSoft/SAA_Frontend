@@ -1,84 +1,45 @@
 import {invalidDates} from '../../services/Constant';
-const DataTransform = {
-  getOriginalTeachersList: (
-    teachersSelected,
-    originalTeachersList
-  ) => {
-    let teachersList = [];
-    const teachersOriginal = [...originalTeachersList.values()];
-    teachersSelected.map((teacher) => {
-      teachersOriginal.map((teacherOriginal) => {
-        teacherOriginal.map((teacherO) => {
-          if (teacher === `G${teacherO.id} ${teacherO.name}`) {
-            teachersList.push(teacherO.id);
-          }
-        });
-      });
+const DataValidation = {
+  validateStringField: () => {},
+  validateArrayField: () => {},
+  validateOnSubmit: (reservationRequest, errors) => {
+    const newErrors = {
+      ...errors,
+      subject: {
+        isEmpty: reservationRequest.subjectSelected === '',
+        ...errors.subject,
+      },
+      mygroup: {
+        isEmpty: reservationRequest.myGroupList.length === 0,
+      },
+      totalStudents: {
+        isEmpty: reservationRequest.totalStudents === '',
+      },
+      motive: {
+        isEmpty: reservationRequest.motiveRequest === '',
+        ...errors.motive,
+      },
+      date: {
+        isEmpty: reservationRequest.dateSelected === '',
+        ...errors.date,
+      },
+      iniPeriod: {
+        isEmpty: reservationRequest.periodIniSelected === '',
+        ...errors.iniPeriod,
+      },
+      endPeriod: {
+        isEmpty: reservationRequest.periodEndSelected === '',
+        ...errors.endPeriod,
+      },
+    };
+    let allFilled = true;
+    errors.map((error) => {
+      if (error.isEmpty) {
+        allFilled = false;
+      }
     });
-    return teachersList;
-  },
-
-  getMyOriginalGroup: (
-    teachersSelected,
-    originalTeachersList
-  ) => {
-    let teachersList = [];
-    const teachersOriginal = [...originalTeachersList.values()];
-    teachersSelected.map((teacher) => {
-      teachersOriginal.map((teacherOriginal) => {
-        teacherOriginal.map((teacherO) => {
-          if (teacher === `G${teacherO.id}`) {
-            teachersList.push(teacherO.id);
-          }
-        });
-      });
-    });
-    return teachersList;
-  },
-
-  getGroupsById: (idList, groupList) => {
-    let groupListId = [];
-    const newIdList = idList.split(' ');
-    newIdList.map((id) => {
-      [...groupList.values()].map((group) => {
-        group.map((specificGroup) => {
-          if (id == specificGroup.id) {
-            groupListId.push(
-              `G${specificGroup.id} ${specificGroup.name}`
-            );
-          }
-        });
-      });
-    });
-    return groupListId;
-  },
-
-  getMyGroupById: (idList, groupList) => {
-    let groupListId = [];
-    const newIdList = idList.split(' ');
-    newIdList.map((id) => {
-      [...groupList.values()].map((group) => {
-        group.map((specificGroup) => {
-          if (id == specificGroup.id) {
-            groupListId.push(`G${specificGroup.id}`);
-          }
-        });
-      });
-    });
-    return groupListId;
-  },
-
-  castStringToSrray: (list) => {
-    return list.split(' ');
-  },
-
-  isEnabledDate: (date) => {
-    let enabled = true;
-    if (date.getDay() === 0) {
-      enabled = false;
-    }
-    return enabled;
+    return [allFilled, newErrors];
   },
 };
 
-export default DataTransform;
+export default DataValidation;
