@@ -11,7 +11,7 @@ export default function useBreadBrumbs(initialValue) {
           ...prevState,
           {
             name: item,
-            route: `/${pathname
+            route: `${pathname
               .split('/')
               .slice(0, index + 1)
               .join('/')}`,

@@ -1,6 +1,12 @@
 import React, {useState} from 'react';
 import {Outlet} from 'react-router-dom';
-import {Box, Button, IconButton} from '@mui/material';
+import {
+  Box,
+  Button,
+  Chip,
+  IconButton,
+  Typography,
+} from '@mui/material';
 import {
   ClearAll,
   Menu,
@@ -56,7 +62,26 @@ function MainLayout() {
                 justifyContent: 'flex-end',
               }}
             >
-              {auth.user}{' '}
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
+                <Typography variant="body1">
+                  {auth.user}
+                </Typography>
+                <Chip
+                  label={auth.roles[0]}
+                  sx={{
+                    size: '0.4rem',
+                    height: '0.9rem',
+                  }}
+                  color="neutral"
+                />
+              </div>
+
               <AccountCircle
                 size="large"
                 sx={{

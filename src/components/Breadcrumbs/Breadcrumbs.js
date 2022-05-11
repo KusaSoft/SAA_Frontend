@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import {Typography, Breadcrumbs} from '@mui/material/';
 import {Link} from 'react-router-dom';
-import useBreadBrumbs from '../../hooks/useBreanCrumbs';
+import {Home} from '@mui/icons-material';
 export default function BasicBreadcrumbs(props) {
-  const [breadcrumbs] = useBreadBrumbs();
-
   return (
     <div
       style={{
@@ -12,7 +10,6 @@ export default function BasicBreadcrumbs(props) {
         background: '#FAFBFC',
         height: '100%',
         justifyContent: 'space-between',
-        alignItems: 'center',
         flexDirection: 'row',
         padding: '0.8rem',
         borderBottom: '3px solid #E0E0E0',
@@ -27,14 +24,26 @@ export default function BasicBreadcrumbs(props) {
       >
         <Typography
           color="text.primary"
-          variant="h4"
+          variant="h5"
           gutterBottom
           component="div"
         >
           {props.title}
         </Typography>
         <Breadcrumbs aria-label="breadcrumb">
-          {breadcrumbs.map((breadcrumb, index) => {
+          <Link
+            key={'999'}
+            to={'/user/home'}
+            style={{
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <Home />
+            Inicio
+          </Link>
+          {props.breadcrumbs.map((breadcrumb, index) => {
             return breadcrumb.link ? (
               <Link key={index} to={breadcrumb.route}>
                 {breadcrumb.name}
@@ -49,7 +58,9 @@ export default function BasicBreadcrumbs(props) {
       </div>
       <div
         style={{
-          background: '#FAFBCC',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
         }}
       >
         {props.children}

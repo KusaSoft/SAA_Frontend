@@ -1,3 +1,6 @@
+import React from 'react';
+import {Home} from '@mui/icons-material';
+
 export const PERIODSRANGE = [
   '06:45',
   '08:15',
@@ -44,6 +47,84 @@ export const PATHS = {
     'reservationRequest/:reservationRequest/detail',
   RESERVATION_REQUEST_EDIT:
     'reservationRequest/:reservationRequest/edit',
+};
+
+export const BREAD_CRUB_PATHS = {
+  RESERVATION_REQUEST: [
+    {
+      name: 'Solicitudes de reserva',
+      route: `${PATHS.RESERVATION_REQUESTS}/new`,
+      link: false,
+    },
+  ],
+  DRAFTS: [
+    {
+      name: 'Solicitudes',
+      route: PATHS.DRAFTS,
+      link: false,
+    },
+    {
+      name: 'Borradores',
+      route: PATHS.DRAFTS,
+      link: false,
+    },
+  ],
+  PENDING: [
+    {
+      name: 'Solicitudes',
+      route: PATHS.PENDING,
+      link: false,
+    },
+    {
+      name: 'Pendientes',
+      route: PATHS.PENDING,
+      link: false,
+    },
+  ],
+
+  ARRIVAL: [
+    {
+      name: 'Solicitudes',
+      route: PATHS.ARRIVAL,
+      link: false,
+    },
+    {
+      name: 'Por orden de llegada',
+      route: PATHS.ARRIVAL,
+      link: false,
+    },
+  ],
+  URGENCY: [
+    {
+      name: 'Solicitudes',
+      route: PATHS.URGENCY,
+      link: false,
+    },
+    {
+      name: 'Por urgencia',
+      route: PATHS.URGENCY,
+      link: false,
+    },
+  ],
+  USERS: [
+    {
+      name: 'Usuarios',
+      route: PATHS.USERS,
+      link: false,
+    },
+  ],
+  NEW_USER: [
+    {
+      name: 'Usuarios',
+      route: PATHS.USER,
+      link: true,
+    },
+    {
+      name: 'Nuevo usuario',
+      route: PATHS.USER,
+      link: false,
+    },
+  ],
 };
 
 export const ERRORFORM = {
