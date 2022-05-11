@@ -443,7 +443,21 @@ function Solicitud(props) {
         ) : (
           <AskReservationRequest
             action={closeModal1}
-            reservation={responseR}
+            reservation={
+              responseR
+                ? {
+                    ...responseR,
+                    group_list: [
+                      ...reservationRequest.myGroupList.map(
+                        (group) => {
+                          return `${group}  ${reservationRequest.teacher}`;
+                        }
+                      ),
+                      ...reservationRequest.otherGroupList,
+                    ],
+                  }
+                : null
+            }
             error={errorR}
             message={messageR}
           ></AskReservationRequest>
