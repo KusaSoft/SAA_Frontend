@@ -97,23 +97,15 @@ function Solicitud(props) {
   });
 
   return (
-    <div style={{backgroundColor: '#fafbfc'}}>
-      <Typography
-        gutterBottom
-        variant="h3"
-        align="center"
-        sx={{paddingTop: '5px'}}
-      >
-        Solicitud de Reserva
-      </Typography>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      padding={2}
+      style={{backgroundColor: '#fafbfc'}}
+    >
       {isLoading ? (
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <CircularProgress />
-        </Box>
+        <CircularProgress />
       ) : (
         <Card style={{maxWidth: 900}}>
           <CardHeader
@@ -506,7 +498,7 @@ function Solicitud(props) {
           }}
         ></RequestMessage>
       </Dialog>
-    </div>
+    </Box>
   );
 }
 

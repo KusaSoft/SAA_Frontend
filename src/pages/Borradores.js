@@ -1,4 +1,5 @@
 import React from 'react';
+import BasicBreadcrumbs from '../components/Breadcrumbs/Breadcrumbs';
 import Lista from '../components/ListaSolicitud/Lista';
 import useStatusList from '../hooks/useStatusList';
 import {STATUS} from '../services/Constant';
@@ -23,15 +24,7 @@ function Borradores() {
         minHeight: '95vh',
       }}
     >
-      <h1
-        style={{
-          color: '#172B4D',
-          textAlign: 'center',
-          fontFamily: 'roboto',
-        }}
-      >
-        Borradores
-      </h1>
+      <BasicBreadcrumbs title="Solicitudes en borrador"></BasicBreadcrumbs>
       <div style={{paddingLeft: '30px', paddingRight: '30px'}}>
         <Lista
           list={draftList ? draftList : []}

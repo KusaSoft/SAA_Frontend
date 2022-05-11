@@ -1,5 +1,6 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
+import BasicBreadcrumbs from '../components/Breadcrumbs/Breadcrumbs';
 import Solicitud from '../components/FormSolicitud/solicitud';
 
 export default function ReservationRequest() {
@@ -7,16 +8,14 @@ export default function ReservationRequest() {
   return (
     <div
       style={{
-        flex: '1',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
         background: '#FAFBFC',
-        height: '100%',
+        flex: '1',
         width: '100%',
-        minHeight: '90vh',
+        height: '100%',
+        minHeight: '95vh',
       }}
     >
+      <BasicBreadcrumbs title="Solicitud de reserva"></BasicBreadcrumbs>
       <Solicitud reservationRequest={reservationRequest} />
     </div>
   );

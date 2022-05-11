@@ -1,36 +1,33 @@
-import React from "react";
-import Lista from "../components/ListaSolicitud/Lista";
-import useStatusList from "../hooks/useStatusList";
-import { STATUS } from "../services/Constant";
-function Pendientes(){
-    const [value, setValue] = React.useState(0);
-    const [sentList] = useStatusList({ status: STATUS.SENT });
-    const [draftList] = useStatusList({ status: STATUS.DRAFT });
-    const handleChange = (event, newValue) => {
+import React from 'react';
+import BasicBreadcrumbs from '../components/Breadcrumbs/Breadcrumbs';
+import Lista from '../components/ListaSolicitud/Lista';
+import useStatusList from '../hooks/useStatusList';
+import {STATUS} from '../services/Constant';
+function Pendientes() {
+  const [value, setValue] = React.useState(0);
+  const [sentList] = useStatusList({status: STATUS.SENT});
+  const [draftList] = useStatusList({status: STATUS.DRAFT});
+  const handleChange = (event, newValue) => {
     setValue(newValue);
-    };
-    return (
-      <div
-        style={{
-          background: '#FAFBFC',
-          flex: '1',
-          width: '100%',
-          height: '100%',
-          minHeight: '95vh',
-        }}
-      >
-        <h1
-          style={{
-            color: '#172B4D',
-            textAlign: 'center',
-            fontFamily: 'roboto',
-          }}
-        >
-          Solicitudes Pendientes
-        </h1>
-        <div style={{paddingLeft: '30px', paddingRight: '30px'}}>
-          <Lista list={sentList ? sentList : []} emptyMessage={"No tiene ninguna solicitud pendiente"} />
-        </div>
+  };
+  return (
+    <div
+      style={{
+        background: '#FAFBFC',
+        flex: '1',
+        width: '100%',
+        height: '100%',
+        minHeight: '95vh',
+      }}
+    >
+      <BasicBreadcrumbs title="Solicitudes pendientes"></BasicBreadcrumbs>
+      <div style={{paddingLeft: '30px', paddingRight: '30px'}}>
+        <Lista
+          list={sentList ? sentList : []}
+          emptyMessage={'No tiene ninguna solicitud pendiente'}
+        />
       </div>
-    );
-}export default Pendientes
+    </div>
+  );
+}
+export default Pendientes;

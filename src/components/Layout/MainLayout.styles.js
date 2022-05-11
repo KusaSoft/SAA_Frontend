@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 export const ContentSite = styled.div`
   flex: 1;
@@ -11,14 +11,14 @@ export const ContentSite = styled.div`
 `;
 
 export const Dashboard = styled.div`
-  display: ${(props) => (props.open ? "flex" : "none")};
+  display: ${(props) => (props.open ? 'flex' : 'none')};
   flex: 1;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  width: ${(props) => (props.open ? "300px" : "0px")};
-  min-width: ${(props) => (props.open ? "300px" : "0px")};
+  width: ${(props) => (props.open ? '300px' : '0px')};
+  min-width: ${(props) => (props.open ? '300px' : '0px')};
   z-index: 11;
 `;
 
@@ -40,6 +40,6 @@ export const Header = styled.div`
   height: 40px;
   max-height: 40px;
   fontsize: 0.9rem;
-  background: #172b4d;
+  background: #fff;
   justify-content: space-between;
 `;
