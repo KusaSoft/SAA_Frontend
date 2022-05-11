@@ -107,45 +107,80 @@ const DataValidation = {
 
   validateOnSubmit: (reservationRequest, errors) => {
     let allFilled = true;
-    const empty = (value) => {
-      if (value === '') {
-        allFilled = false;
-        return true;
-      } else {
-        return false;
-      }
+    const formatInput = (method) => {
+      console.log(method);
+      const [value, correctly] = method;
+      allFilled = correctly;
+      return value;
     };
+
     const newErrors = {
       ...errors,
       subject: {
         isUnsaveable: false,
-        isEmpty: empty(reservationRequest.subject),
+        isEmpty: formatInput(
+          empty(reservationRequest.subject, allFilled)
+        ),
       },
       mygroup: {
-        isEmpty: empty(
-          reservationRequest.myGroupList.length.toString()
+        isEmpty: formatInput(
+          empty(
+            reservationRequest.myGroupList.toString(),
+            allFilled
+          )
         ),
       },
       totalStudents: {
-        isEmpty: empty(reservationRequest.totalStudents),
+        isEmpty: formatInput(
+          empty(reservationRequest.totalStudents, allFilled)
+        ),
       },
       motive: {
         isUnsaveable: false,
-        isEmpty: empty(reservationRequest.motiveRequest),
+        isEmpty: formatInput(
+          empty(reservationRequest.motiveRequest, allFilled)
+        ),
       },
       date: {
         ...errors.date,
-        isEmpty: empty(reservationRequest.dateReservation),
+        isError: !formatInput(
+          dateValidation(
+            reservationRequest.dateReservation,
+            allFilled
+          )
+        ),
+        isEmpty: formatInput(
+          empty(reservationRequest.dateReservation, allFilled)
+        ),
       },
       iniPeriod: {
         ...errors.iniPeriod,
-        isEmpty: empty(reservationRequest.periodIniSelected),
+        isError: !formatInput(
+          isValidRange(
+            reservationRequest.periodIniSelected,
+            reservationRequest.periodEndSelected,
+            allFilled
+          )
+        ),
+        isEmpty: formatInput(
+          empty(reservationRequest.periodIniSelected, allFilled)
+        ),
       },
       endPeriod: {
         ...errors.endPeriod,
-        isEmpty: empty(reservationRequest.periodEndSelected),
+        isError: !formatInput(
+          isValidRange(
+            reservationRequest.periodIniSelected,
+            reservationRequest.periodEndSelected,
+            allFilled
+          )
+        ),
+        isEmpty: formatInput(
+          empty(reservationRequest.periodEndSelected, allFilled)
+        ),
       },
     };
+    console.log(allFilled);
     return [allFilled, newErrors];
   },
 };

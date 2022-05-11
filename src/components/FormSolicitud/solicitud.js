@@ -129,7 +129,6 @@ function Solicitud(props) {
                         getReservationRequest(STATUS.DRAFT)
                       );
                       openModal();
-                      console.log('save');
                     }
                   }}
                 >
@@ -216,7 +215,11 @@ function Solicitud(props) {
                           : []
                       }
                       stringJoin={false}
-                    />
+                    >
+                      {errors.mygroup.isEmpty ? (
+                        <RedBar>{errors.emptyMessage}</RedBar>
+                      ) : null}
+                    </FormMultiselectControl>
                   </Grid>
                 </Grid>
 
@@ -244,7 +247,7 @@ function Solicitud(props) {
                         : []
                     }
                     stringJoin={true}
-                  />
+                  ></FormMultiselectControl>
                 </Box>
 
                 <Grid container spacing={2} columns={12}>
@@ -406,13 +409,14 @@ function Solicitud(props) {
                       color="primary"
                       type="submit"
                       variant="contained"
-                      onClick={async (e) => {
+                      onClick={(e) => {
                         e.preventDefault();
                         if (validateAllFilled()) {
+                          handleRequestR(
+                            getReservationRequest(STATUS.SENT)
+                          );
                           openModal1();
                         }
-
-                        // handleRequestR(handleSubmit('sent'));
                       }}
                     >
                       Enviar

@@ -96,6 +96,7 @@ export default function FormMultiselectControl(props) {
               ))}
         </Select>
       </FormControlInput>
+      {props.children}
     </Wrapper>
   );
 }
