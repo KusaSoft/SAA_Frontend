@@ -1,6 +1,3 @@
-import React from 'react';
-import {Home} from '@mui/icons-material';
-
 export const PERIODSRANGE = [
   '06:45',
   '08:15',

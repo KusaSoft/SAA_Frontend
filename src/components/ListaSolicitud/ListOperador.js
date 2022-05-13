@@ -12,9 +12,18 @@ import {Box} from '@mui/system';
 import React from 'react';
 import {Link} from 'react-router-dom';
 import CardOperador from './CardOperador';
-
+import useFilter from '../../hooks/useFilter';
 const ListOperador = (props) => {
-  if (props.list.length !== 0) {
+  const [
+    list,
+    filteredList,
+    checkedList,
+    date_registration,
+    date_reservation,
+    handleChangeMotive,
+  ] = useFilter({requestType: props.requestType});
+
+  if (list.length !== 0) {
     return (
       <div
         style={{
@@ -24,7 +33,7 @@ const ListOperador = (props) => {
         }}
       >
         <div style={{width: '75%'}}>
-          {props.list.map((element) => {
+          {filteredList.map((element) => {
             return (
               <div key={element[0]}>
                 <CardOperador request={element} />
@@ -60,7 +69,20 @@ const ListOperador = (props) => {
               ml: 3,
             }}
           >
-            <FormControlLabel
+            {checkedList.map((checked) => {
+              return (
+                <FormControlLabel
+                  label={checked.label}
+                  control={
+                    <Checkbox
+                      checked={checked.value}
+                      onChange={handleChangeMotive}
+                    />
+                  }
+                />
+              );
+            })}
+            {/* <FormControlLabel
               label="Examen"
               control={
                 <Checkbox
@@ -77,7 +99,7 @@ const ListOperador = (props) => {
                 // onChange={handleChange3}
                 />
               }
-            />
+            /> */}
           </Box>
           <Divider />
           <Typography variant="h6">Fecha de envio</Typography>
@@ -98,9 +120,7 @@ const ListOperador = (props) => {
             />
           </RadioGroup>
           <Divider />
-          <Typography variant="h6">
-            Fecha para la reserva
-          </Typography>
+          <Typography variant="h6">Fecha para la reserva</Typography>
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
             defaultValue="female"
