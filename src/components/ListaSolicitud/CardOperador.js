@@ -1,95 +1,86 @@
-import React from "react";
-import { Delete, Edit } from "@mui/icons-material";
+import React from 'react';
 import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch';
-import { STATUS } from "../../services/Constant";
-import { Fab, Stack } from "@mui/material";
-import { Link } from "react-router-dom";
-import apiSettings from "../../services/service";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 300,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4
-};
+import {
+  Card,
+  CardActions,
+  CardContent,
+  Fab,
+  Stack,
+} from '@mui/material';
+import {Link} from 'react-router-dom';
 
 
 const CardOperador = (props) => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   return (
-    <div
+    <Card
       style={{
-        color: "white",
-        display: "flex",
-        justifyContent: "space-between",
-        flexDirection: "column",
-        marginTop: "20px",
+        marginTop: '20px',
       }}
     >
-      <div
-        style={{
-          padding: "10px",
-          display: "flex",
-          justifyContent: "space-between",
-          background: "#172B4D",
-        }}
-      >
-        <div>
-          <b style={{ fontWeight: "bold" }}>Materia: </b>{" "}
-          {props.request.subject}
-        </div>
-        <div style={{}}>
-          <b style={{ fontWeight: "bold" }}>Fecha: </b> {props.request.fecha}
-        </div>
-      </div>
-      <div>
-        <div style={{ background: "#EBECF0", color: "black", padding: "10px" }}>
-          <b style={{ fontWeight: "bold" }}>Motivo: </b> {props.request.motivo}
-        </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-end",
-          background: "linear-gradient(180deg, #EBECF0 50%, #FAFBFC 50%)",
-          color: "black",
-        }}
-      >
+      <CardContent>
         <div
           style={{
-            minWidth: "100px",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end",
+            display: 'flex',
+            justifyContent: 'flex-end',
+            borderBottom: '1px solid #e0e0e0',
           }}
         >
-          <Stack direction="row" spacing={1}>
-            
-            <Fab
-              color="neutral"
-              size="small"
-              sx={{
-                "&:hover": {
-                  backgroundColor: "#DFE1E6",
-                  color: "black",
-                },
-              }}
-            >
-                <ContentPasteSearchIcon onClick={()=>{alert("redirect Request: "+props.request.id)}}/>
-                {/* <Delete onClick={ () =>{ }}/> */}
-            </Fab>
-          </Stack>
+          <div>
+            <b style={{fontWeight: 'bold'}}>Enviado:</b>{' '}
+            {props.request.register_date}
+          </div>
         </div>
-      </div>
-    </div>
+        <div>
+          <b style={{fontWeight: 'bold'}}>Motivo: </b>
+          {props.request.request_reason}
+        </div>
+        <div>
+          <b style={{fontWeight: 'bold'}}>
+            Fecha para la reserva:{' '}
+          </b>
+          {props.request.request_reason}
+        </div>
+        <div>
+          <b style={{fontWeight: 'bold'}}>Desde: </b>{' '}
+          {props.request.horario_ini}
+          <b style={{fontWeight: 'bold'}}> - Hasta: </b>{' '}
+          {props.request.horario_end}
+        </div>
+      </CardContent>
+      <CardActions
+        disableSpacing
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+        }}
+      >
+        <Stack
+          direction="row"
+          spacing={1}
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Fab
+            color="neutral"
+            size="small"
+            sx={{
+              '&:hover': {
+                backgroundColor: '#DFE1E6',
+                color: 'black',
+              },
+            }}
+          >
+            <ContentPasteSearchIcon
+              onClick={() => {
+                alert('redirect Request: ' + props.request.id);
+              }}
+            />
+          </Fab>
+        </Stack>
+      </CardActions>
+    </Card>
   );
 };
 export default CardOperador;

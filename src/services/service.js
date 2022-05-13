@@ -1,52 +1,71 @@
-import axios from "axios";
-import {users} from "./Mock";
+import axios from 'axios';
+import {users} from './Mock';
 
-const API_URL = "https://tis-server2.herokuapp.com/api";
-const LOGIN_URL = "https://tis-server2.herokuapp.com/api";
+const API_URL = 'https://tis-server2.herokuapp.com/api';
+const LOGIN_URL = 'https://tis-server2.herokuapp.com/api';
 const apiSettings = {
   getSubjects: async (userID) => {
-    const response = await axios.get(`${API_URL}/subjects/${userID}`);
+    const response = await axios.get(
+      `${API_URL}/subjects/${userID}`
+    );
     const subjects = response.data.map((subject) => {
-      return { name_subject: subject.subject_name, id: subject.id };
+      return {
+        name_subject: subject.subject_name,
+        id: subject.id,
+      };
     });
 
     let promises = [];
     subjects.forEach((subject) => {
-      let promise = axios.get(`${API_URL}/groups/${subject.id}/${userID}`);
+      let promise = axios.get(
+        `${API_URL}/groups/${subject.id}/${userID}`
+      );
       promises.push(promise);
     });
     const subjectList = await Promise.all(promises);
     const newSubjects = subjects.map((subject, index) => {
       return {
         name_subject: subject.name_subject,
-        group_list: subjectList[index].data.map((group) => group),
+        group_list: subjectList[index].data.map(
+          (group) => group
+        ),
       };
     });
     return newSubjects;
   },
   getTeachers: async (userID) => {
-    const response = await axios.get(`${API_URL}/subjects/${userID}`);
+    const response = await axios.get(
+      `${API_URL}/subjects/${userID}`
+    );
     const subjects = response.data.map((subject) => {
-      return { name_subject: subject.subject_name, id: subject.id };
+      return {
+        name_subject: subject.subject_name,
+        id: subject.id,
+      };
     });
 
     let promises = [];
     subjects.forEach((subject) => {
-      let promise = axios.get(`${API_URL}/groupsExc/${subject.id}/${userID}`);
+      let promise = axios.get(
+        `${API_URL}/groupsExc/${subject.id}/${userID}`
+      );
       promises.push(promise);
     });
     const subjectList = await Promise.all(promises);
     let newSubjects = [];
     subjects.filter((subject, index) => {
-      if (subjectList[index].data.message !== "no hay grupos registrados") {
+      if (
+        subjectList[index].data.message !==
+        'no hay grupos registrados'
+      ) {
         const newSubject = {
           name_subject: subject.name_subject,
-          group_list: { ...subjectList[index].data[0] },
+          group_list: {...subjectList[index].data[0]},
         };
         newSubjects.push(newSubject);
       }
     });
-    console.log(newSubjects, "siiiiiiiiiiiiiiiiiii");
+    console.log(newSubjects, 'siiiiiiiiiiiiiiiiiii');
     return newSubjects;
   },
 
@@ -69,13 +88,15 @@ const apiSettings = {
     );
     console.log(response);
     response = {
-      error: "Lo sentimos, no se pudo realizar la solicitud de reserva!! :(",
-      message: "Lamentalbemente usted tiene una reserva mal planeada",
+      error:
+        'Lo sentimos, no se pudo realizar la solicitud de reserva!! :(',
+      message:
+        'Lamentalbemente usted tiene una reserva mal planeada',
       data: reservationRequest,
     };
     response = {
-      error: "",
-      message: "Reserva fue actualizada correctamente",
+      error: '',
+      message: 'Reserva fue actualizada correctamente',
       data: reservationRequest,
     };
     return response;
@@ -94,43 +115,55 @@ const apiSettings = {
   },
 
   login: async (user) => {
-    const response = await axios.post(`${LOGIN_URL}/login`, user);
+    const response = await axios.post(
+      `${LOGIN_URL}/login`,
+      user
+    );
     return response.data;
   },
 
   getRequestStatus: async (userID, status) => {
-    const response = await axios.get(`${API_URL}/reservation/${userID}/${status}`);
+    const response = await axios.get(
+      `${API_URL}/reservation/${userID}/${status}`
+    );
     console.log(response);
-    
+
     const list = response.data.map((id) => {
-      return { id: id.id, subject: id.subject, fecha: id.reservation_date, motivo: id.request_reason, state: id.state };
+      return {
+        id: id.id,
+        subject: id.subject,
+        fecha: id.reservation_date,
+        motivo: id.request_reason,
+        state: id.state,
+      };
     });
     console.log(list);
     return list;
     // return response.data;
-    },
-  
-  deleteReservationRequest: async (requestID)=>{
-    const response = await axios.delete(`${API_URL}/draft/${requestID}`);
+  },
+
+  deleteReservationRequest: async (requestID) => {
+    const response = await axios.delete(
+      `${API_URL}/draft/${requestID}`
+    );
     return response;
   },
   getRequests: async () => {
-    const response = await axios.get(`${API_URL}/test/user_booking`);
+    const response = await axios.get(
+      `${API_URL}/test/user_booking`
+    );
     console.log(response);
     const list = response.data.map((id) => {
-      return { id: id.id, subject: id.subject, fecha: id.reservation_date, motivo: id.request_reason, state: id.state };
+      return {...id};
     });
-    console.log(list);
     return list;
-    // return response.data;
-    },
-
+  },
 
   getUsers: async () => {
     // const response = await axios.get(`${API_URL}/users`);
     const response = users;
     return response;
-  }
+  },
 };
 
 export default apiSettings;

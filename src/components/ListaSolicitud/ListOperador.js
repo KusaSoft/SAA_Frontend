@@ -1,14 +1,14 @@
-import React from "react";
-import CardOperador from "./CardOperador";
+import React from 'react';
+import CardOperador from './CardOperador';
 
 const ListOperador = (props) => {
   if (props.list.length !== 0) {
     return (
-      <div style={{ width: "99%" }}>
+      <div style={{width: '80%'}}>
         {props.list.map((element) => {
           return (
             <div key={element[0]}>
-              <CardOperador request={element}/>
+              <CardOperador request={element} />
             </div>
           );
         })}
