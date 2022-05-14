@@ -18,8 +18,7 @@ const ListOperador = (props) => {
     list,
     filteredList,
     checkedList,
-    date_registration,
-    date_reservation,
+    date,
     handleChangeMotive,
   ] = useFilter({requestType: props.requestType});
 
@@ -54,11 +53,14 @@ const ListOperador = (props) => {
           <Typography variant="h6">Motivo</Typography>
           <FormControlLabel
             label="Todos"
+            name="Todos"
             control={
               <Checkbox
-              // checked={checked[0] && checked[1]}
-              // indeterminate={checked[0] !== checked[1]}
-              // onChange={handleChange1}
+                checked={checkedList.every(
+                  (element) => element.checked === true
+                )}
+                // indeterminate={checked[0] !== checked[1]}
+                onChange={handleChangeMotive}
               />
             }
           />
@@ -73,33 +75,16 @@ const ListOperador = (props) => {
               return (
                 <FormControlLabel
                   label={checked.label}
+                  name={checked.label}
                   control={
                     <Checkbox
-                      checked={checked.value}
+                      checked={checked.checked}
                       onChange={handleChangeMotive}
                     />
                   }
                 />
               );
             })}
-            {/* <FormControlLabel
-              label="Examen"
-              control={
-                <Checkbox
-                // checked={checked[0]}
-                // onChange={handleChange2}
-                />
-              }
-            />
-            <FormControlLabel
-              label="Capacitacion"
-              control={
-                <Checkbox
-                // checked={checked[1]}
-                // onChange={handleChange3}
-                />
-              }
-            /> */}
           </Box>
           <Divider />
           <Typography variant="h6">Fecha de envio</Typography>
@@ -120,23 +105,6 @@ const ListOperador = (props) => {
             />
           </RadioGroup>
           <Divider />
-          <Typography variant="h6">Fecha para la reserva</Typography>
-          <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="female"
-            name="radio-buttons-group"
-          >
-            <FormControlLabel
-              value="Antiguos"
-              control={<Radio />}
-              label="Antiguos"
-            />
-            <FormControlLabel
-              value="Nuevos"
-              control={<Radio />}
-              label="Nuevos"
-            />
-          </RadioGroup>
         </Box>
       </div>
     );

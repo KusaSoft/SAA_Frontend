@@ -1,14 +1,7 @@
 import React from 'react';
 import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch';
-import {
-  Card,
-  CardActions,
-  CardContent,
-  Fab,
-  Stack,
-} from '@mui/material';
+import {Card, CardActions, CardContent, Fab, Stack} from '@mui/material';
 import {Link} from 'react-router-dom';
-
 
 const CardOperador = (props) => {
   return (
@@ -35,10 +28,8 @@ const CardOperador = (props) => {
           {props.request.request_reason}
         </div>
         <div>
-          <b style={{fontWeight: 'bold'}}>
-            Fecha para la reserva:{' '}
-          </b>
-          {props.request.request_reason}
+          <b style={{fontWeight: 'bold'}}>Fecha para la reserva: </b>
+          {props.request.reservation_date}
         </div>
         <div>
           <b style={{fontWeight: 'bold'}}>Desde: </b>{' '}

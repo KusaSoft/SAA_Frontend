@@ -7,24 +7,14 @@ export default function useFilter({requestType}) {
     ...MOTIVES.map((element) => {
       return {
         label: element,
-        checked: false,
+        checked: true,
       };
     }),
   ]);
-  const [date_registration, setDateRegistration] = useState([
+  const [date, setDate] = useState([
     {
       label: 'Antiguos',
-      value: false,
-    },
-    {
-      label: 'Nuevos',
-      value: false,
-    },
-  ]);
-  const [date_reservation, setDateReservation] = useState([
-    {
-      label: 'Antiguos',
-      value: false,
+      value: true,
     },
     {
       label: 'Nuevos',
@@ -42,11 +32,12 @@ export default function useFilter({requestType}) {
     fetchList();
   }, []);
   const handleChangeMotive = (event) => {
-    const {checked, value} = event.target;
+    const {checked, value, name} = event.target;
+    console.log(checked, value, name);
     let newCheckedList = checkedList;
-    if (value !== 'Todos') {
+    if (name !== 'Todos') {
       newCheckedList = checkedList.map((element) => {
-        if (element.label === value) {
+        if (element.label === name) {
           element.checked = checked;
         }
         return element;
@@ -54,16 +45,19 @@ export default function useFilter({requestType}) {
     } else {
       newCheckedList = checkedList.map((element) => {
         return {
-          label: element,
+          label: element.label,
           checked: checked,
         };
       });
     }
+    console.log(newCheckedList);
     setCheckedList(newCheckedList);
     setFilteredList(
       list.filter((element) => {
         return newCheckedList.some((element2) => {
-          return element2.checked && element.motive === element2.label;
+          return (
+            element2.checked && element.request_reason === element2.label
+          );
         });
       })
     );
@@ -74,12 +68,5 @@ export default function useFilter({requestType}) {
       return element.label === motive ? element.checked : false;
     });
   };
-  return [
-    list,
-    filteredList,
-    checkedList,
-    date_registration,
-    date_reservation,
-    handleChangeMotive,
-  ];
+  return [list, filteredList, checkedList, date, handleChangeMotive];
 }
