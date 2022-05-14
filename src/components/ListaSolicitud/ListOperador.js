@@ -29,6 +29,7 @@ const ListOperador = (props) => {
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
+          color: 'black',
         }}
       >
         <div style={{width: '75%'}}>

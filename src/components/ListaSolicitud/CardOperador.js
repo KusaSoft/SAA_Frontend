@@ -8,6 +8,7 @@ const CardOperador = (props) => {
     <Card
       style={{
         marginTop: '20px',
+        color: 'black',
       }}
     >
       <CardContent>
