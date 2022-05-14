@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const WrapperLayout = styled.div`
-  background: #f7f9fc;
+  background: ${({theme}) => theme.palette.fondo.main};
   flex: 1;
   width: 100%;
   height: 100%;

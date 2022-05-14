@@ -30,10 +30,9 @@ function MainLayout() {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        margin: 0,
+        // margin: 0,
         minHeight: '100%',
         height: '100%',
-        background: '#172b4d',
       }}
     >
       <ContentSite>
