@@ -1,23 +1,22 @@
 import React, {useState} from 'react';
-import {Typography, Breadcrumbs} from '@mui/material/';
+import {Typography, Breadcrumbs, Box} from '@mui/material/';
 import {Link} from 'react-router-dom';
 import {Home} from '@mui/icons-material';
 export default function BasicBreadcrumbs(props) {
   return (
-    <div
+    <Box
       style={{
         display: 'flex',
-        background: '#FAFBFC',
         height: '100%',
         justifyContent: 'space-between',
         flexDirection: 'row',
         padding: '0.8rem',
         borderBottom: '3px solid #E0E0E0',
       }}
+      sx={{backgroundColor: 'breadCrumbs.main'}}
     >
       <div
         style={{
-          background: '#FAFBFC',
           display: 'flex',
           flexDirection: 'column',
         }}
@@ -65,6 +64,6 @@ export default function BasicBreadcrumbs(props) {
       >
         {props.children}
       </div>
-    </div>
+    </Box>
   );
 }

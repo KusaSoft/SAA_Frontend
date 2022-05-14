@@ -102,12 +102,13 @@ function Solicitud(props) {
       justifyContent="center"
       alignItems="center"
       padding={2}
-      style={{backgroundColor: '#fafbfc'}}
     >
       {isLoading ? (
         <CircularProgress />
       ) : (
-        <Card style={{maxWidth: 900}}>
+        <Card
+          sx={{backgroundColor: 'forms.main', maxWidth: 900}}
+        >
           <CardHeader
             avatar={
               <Stack spacing={1} direction="row">

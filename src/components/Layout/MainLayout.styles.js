@@ -8,6 +8,8 @@ export const ContentSite = styled.div`
   align-items: flex-start;
   height: 100%;
   width: 100%;
+  background: ${({theme}) => theme.palette.navBar.main};
+  color: ${({theme}) => theme.palette.navBar.contrastText};
 `;
 
 export const Dashboard = styled.div`
@@ -40,6 +42,6 @@ export const Header = styled.div`
   height: 40px;
   max-height: 40px;
   fontsize: 0.9rem;
-  background: #fff;
+  background: ${({theme}) => theme.palette.forms.main};
   justify-content: space-between;
 `;
