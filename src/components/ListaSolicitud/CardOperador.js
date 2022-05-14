@@ -55,12 +55,12 @@ const CardOperador = (props) => {
           }}
         >
           <Fab
-            color="neutral"
+            color="success"
             size="small"
             sx={{
               '&:hover': {
-                backgroundColor: '#DFE1E6',
-                color: 'black',
+                backgroundColor: 'hover.main',
+                color: 'hover.contrastText',
               },
             }}
           >

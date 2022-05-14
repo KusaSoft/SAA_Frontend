@@ -41,6 +41,6 @@ export const Header = styled.div`
   height: 40px;
   max-height: 40px;
   fontsize: 0.9rem;
-  background: ${({theme}) => theme.palette.forms.main};
+  background: ${({theme}) => theme.palette.header.main};
   justify-content: space-between;
 `;

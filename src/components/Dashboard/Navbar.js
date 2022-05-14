@@ -105,6 +105,7 @@ function Sidebar() {
               });
             }}
             color="navBar"
+            sx={{boxShadow: 'none'}}
           >
             <Logout
               sx={{

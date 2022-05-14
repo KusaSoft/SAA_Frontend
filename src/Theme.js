@@ -21,15 +21,38 @@ export const theme = createTheme({
       main: 'red',
     },
     fondo: {
-      main: '#F7F9FC',
+      main: '#EBF6DF',
     },
     breadCrumbs: {
       main: '#FAFBFC',
     },
     navBar: {
-      main: '#172B4D',
-      dark: '#425474',
+      main: '#060b26',
+      dark: '#52536E',
       contrastText: '#FFFFFF',
+    },
+    // navBarOperador: {
+    //   main: '#707070',
+    //   dark: '#52536E',
+    //   contrastText: '#FFFFFF',
+    // },
+    // navBarAdmin: {
+    //   main: '#060b26',
+    //   dark: '#52536E',
+    //   contrastText: '#FFFFFF',
+    // },
+    header: {
+      main: '#FFFFFF',
+    },
+    cardContent: {
+      main: '#FFFFFF',
+    },
+    cardContentHead: {
+      main: '#52536E',
+    },
+    hover: {
+      main: '#DFE1E6',
+      contrastText: '#000000',
     },
   },
 });

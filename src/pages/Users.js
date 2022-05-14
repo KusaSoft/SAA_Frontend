@@ -10,10 +10,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import BasicBreadcrumbs from '../components/Breadcrumbs/Breadcrumbs';
-import {
-  WrapperLayout,
-  WrapperPage,
-} from '../emotion/GlobalComponents';
+import {WrapperLayout, WrapperPage} from '../emotion/GlobalComponents';
 import {BREAD_CRUB_PATHS} from '../services/Constant';
 
 function Users() {
@@ -27,20 +24,27 @@ function Users() {
           <Button
             variant="contained"
             color="primary"
+            sx={{
+              backgroundColor: 'navBar.main',
+              '&:hover': {
+                backgroundColor: 'hover.main',
+                color: 'hover.contrastText',
+              },
+            }}
             style={{
-              background: '#172B4D',
-              color: '#FAFBFC',
+              // background: '#172B4D',
+              // color: '#FAFBFC',
               fontFamily: 'roboto',
               fontSize: '0.8rem',
               borderRadius: '0.5rem',
               border: 'none',
               boxShadow: 'none',
-              '&:hover': {
-                background: '#FAFBFC',
-                color: '#172B4D',
-                boxShadow: 'none',
-                border: 'none',
-              },
+              // '&:hover': {
+              //   background: '#FAFBFC',
+              //   color: '#172B4D',
+              //   boxShadow: 'none',
+              //   border: 'none',
+              // },
             }}
           >
             <Add />

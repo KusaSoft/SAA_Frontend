@@ -1,17 +1,7 @@
 import React, {useState} from 'react';
 import {Outlet} from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Chip,
-  IconButton,
-  Typography,
-} from '@mui/material';
-import {
-  ClearAll,
-  Menu,
-  AccountCircle,
-} from '@mui/icons-material';
+import {Box, Button, Chip, IconButton, Typography} from '@mui/material';
+import {ClearAll, Menu, AccountCircle} from '@mui/icons-material';
 import {
   ContentSite,
   Dashboard,
@@ -68,16 +58,14 @@ function MainLayout() {
                   alignItems: 'center',
                 }}
               >
-                <Typography variant="body1">
-                  {auth.user}
-                </Typography>
+                <Typography variant="body1">{auth.user}</Typography>
                 <Chip
                   label={auth.roles[0]}
                   sx={{
                     size: '0.4rem',
                     height: '0.9rem',
                   }}
-                  color="neutral"
+                  color="navBar"
                 />
               </div>
 

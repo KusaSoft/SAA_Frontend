@@ -13,7 +13,9 @@ export default function BasicBreadcrumbs(props) {
         padding: '0.8rem',
         borderBottom: '3px solid #E0E0E0',
       }}
-      sx={{backgroundColor: 'breadCrumbs.main'}}
+      sx={{
+        backgroundColor: 'breadCrumbs.main',
+      }}
     >
       <div
         style={{
