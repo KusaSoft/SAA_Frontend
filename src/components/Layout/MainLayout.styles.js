@@ -8,8 +8,6 @@ export const ContentSite = styled.div`
   align-items: flex-start;
   height: 100%;
   width: 100%;
-  background: ${({theme}) => theme.palette.navBar.main};
-  color: ${({theme}) => theme.palette.navBar.contrastText};
 `;
 
 export const Dashboard = styled.div`
@@ -22,6 +20,7 @@ export const Dashboard = styled.div`
   width: ${(props) => (props.open ? '300px' : '0px')};
   min-width: ${(props) => (props.open ? '300px' : '0px')};
   z-index: 11;
+  background: ${({theme}) => theme.palette.navBar.main};
 `;
 
 export const LayoutSite = styled.div`

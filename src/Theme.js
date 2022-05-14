@@ -28,6 +28,7 @@ export const theme = createTheme({
     },
     navBar: {
       main: '#172B4D',
+      dark: '#425474',
       contrastText: '#FFFFFF',
     },
   },

@@ -56,15 +56,11 @@ function Sidebar() {
                     }}
                   >
                     <AccordionSummary
-                      expandIcon={
-                        <ExpandMoreIcon sx={{color: 'white'}} />
-                      }
+                      expandIcon={<ExpandMoreIcon sx={{color: 'white'}} />}
                       aria-controls="panel1a-content"
                       id="panel1a-header"
                     >
-                      <Typography>
-                        {sidebarItem.title}
-                      </Typography>
+                      <Typography>{sidebarItem.title}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                       <ul>
@@ -82,10 +78,7 @@ function Sidebar() {
                   </Accordion>
                 </Box>
               ) : (
-                <li
-                  key={sidebarItem.id}
-                  className={sidebarItem.cName}
-                >
+                <li key={sidebarItem.id} className={sidebarItem.cName}>
                   <Link to={sidebarItem.path}>
                     {sidebarItem.icon}
                     <span>{sidebarItem.title}</span>
@@ -111,10 +104,6 @@ function Sidebar() {
                 id: null,
               });
             }}
-            // hoverBackground="#DFE1E6"
-            // hoverColor="#000000"
-            // color="#fff"
-            // background="navBar.main"
             color="navBar"
           >
             <Logout
