@@ -1,7 +1,7 @@
 import React from 'react';
 import {Delete, Edit} from '@mui/icons-material';
 import {STATUS} from '../../services/Constant';
-import {Fab, Stack} from '@mui/material';
+import {Card, CardContent, Fab, Stack} from '@mui/material';
 import {Link} from 'react-router-dom';
 import apiSettings from '../../services/service';
 
@@ -21,40 +21,41 @@ const style = {
   p: 4,
 };
 
-const Card = (props) => {
+const SimpleCard = (props) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
-    <div
+    <Card
       style={{
-        color: 'white',
-        display: 'flex',
-        justifyContent: 'space-between',
-        flexDirection: 'column',
         marginTop: '20px',
+        color: 'black',
       }}
     >
-      <Box sx={{backgroundColor: 'cardContentHead.main'}}>
+      <CardContent>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <b style={{fontWeight: 'bold'}}>
+            {props.request.state === STATUS.DRAFT
+              ? 'Ultima modificacon'
+              : 'Fecha de solicitud'}
+          </b>
+          {': '}
+          {props.request.fecha}
+        </div>
         <div
           style={{
             padding: '10px',
             display: 'flex',
-            justifyContent: 'space-between',
-            // background: '#172B4D',
           }}
         >
-          <div>
-            <b style={{fontWeight: 'bold'}}>Materia: </b>{' '}
-            {props.request.subject}
-          </div>
-          <div style={{}}>
-            <b style={{fontWeight: 'bold'}}>Fecha: </b>{' '}
-            {props.request.fecha}
-          </div>
+          <b style={{fontWeight: 'bold'}}>Materia: </b>{' '}
+          {props.request.subject}
         </div>
-      </Box>
-      <Box sx={{backgroundColor: 'cardContent.main'}}>
         <div>
           <div
             style={{
@@ -66,6 +67,8 @@ const Card = (props) => {
             {props.request.motivo}
           </div>
         </div>
+      </CardContent>
+      <Box sx={{backgroundColor: 'cardContent.main'}}>
         <div
           style={{
             display: 'flex',
@@ -153,10 +156,10 @@ const Card = (props) => {
           </div>
         </div>
       </Box>
-    </div>
+    </Card>
   );
 };
-export default Card;
+export default SimpleCard;
 
 function recargar() {
   window.location.reload();

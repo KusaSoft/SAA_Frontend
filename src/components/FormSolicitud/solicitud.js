@@ -249,11 +249,17 @@ function Solicitud(props) {
                         />
                       )}
                     />
-                    {errors.motive.isEmpty ? (
-                      <RedBar>{errors.emptyMessage}</RedBar>
-                    ) : errors.motive.isUnsaveable ? (
-                      <RedBar>{errors.saveMessage}</RedBar>
-                    ) : null}
+                    <div
+                      style={{
+                        padding: '0rem 1rem 0rem 1rem',
+                      }}
+                    >
+                      {errors.motive.isEmpty ? (
+                        <RedBar>{errors.emptyMessage}</RedBar>
+                      ) : errors.motive.isUnsaveable ? (
+                        <RedBar>{errors.saveMessage}</RedBar>
+                      ) : null}
+                    </div>
                   </Grid>
 
                   <Grid item sm={6} xs={12}>

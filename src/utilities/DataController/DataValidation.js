@@ -1,7 +1,4 @@
-import {
-  invalidDates,
-  PERIODSRANGE,
-} from '../../services/Constant';
+import {invalidDates, PERIODSRANGE} from '../../services/Constant';
 
 const dateValidation = (date, valid) => {
   if (date !== '') {
@@ -69,14 +66,14 @@ const DataValidation = {
         ),
         isEmpty: false,
       },
+      mygroup: {
+        isEmpty: false,
+      },
       date: {
         ...errors.date,
         isEmpty: false,
         isError: !formatInput(
-          dateValidation(
-            reservationRequest.dateReservation,
-            allFilled
-          )
+          dateValidation(reservationRequest.dateReservation, allFilled)
         ),
       },
       iniPeriod: {
@@ -118,16 +115,11 @@ const DataValidation = {
       ...errors,
       subject: {
         isUnsaveable: false,
-        isEmpty: formatInput(
-          empty(reservationRequest.subject, allFilled)
-        ),
+        isEmpty: formatInput(empty(reservationRequest.subject, allFilled)),
       },
       mygroup: {
         isEmpty: formatInput(
-          empty(
-            reservationRequest.myGroupList.toString(),
-            allFilled
-          )
+          empty(reservationRequest.myGroupList.toString(), allFilled)
         ),
       },
       totalStudents: {
@@ -144,10 +136,7 @@ const DataValidation = {
       date: {
         ...errors.date,
         isError: !formatInput(
-          dateValidation(
-            reservationRequest.dateReservation,
-            allFilled
-          )
+          dateValidation(reservationRequest.dateReservation, allFilled)
         ),
         isEmpty: formatInput(
           empty(reservationRequest.dateReservation, allFilled)
