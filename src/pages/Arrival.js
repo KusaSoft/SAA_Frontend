@@ -16,8 +16,8 @@ function Arrival() {
           style={{
             padding: '20px',
           }}
-        > 
-          <ListOperador requestType={apiSettings.getRequests} />
+        >
+          <ListOperador dataTypeS={"Fecha de envio"} requestType={apiSettings.getRequests} />
         </div>
       </WrapperPage>
     </WrapperLayout>

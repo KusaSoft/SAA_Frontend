@@ -93,10 +93,10 @@ const ListOperador = (props) => {
             })}
           </Box>
           <Divider />
-          <Typography variant="h6">Fecha de envio</Typography>
+          <Typography variant="h6">{props.dataTypeS}</Typography>
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="Antiguos"
+            defaultValue="Nuevos"
             name="radio-buttons-group"
             onChange={handleChangeDateByRegister}
           >

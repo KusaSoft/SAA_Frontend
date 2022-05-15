@@ -47,11 +47,7 @@ export default function useFilter({requestType, dateType}) {
     let newCheckedList = checkedList;
     if (name !== 'Todos') {
       newCheckedList = checkedList.map((element) => {
-        if (name !== 'Otros') {
-          if (element.label === name) {
-            element.checked = checked;
-          }
-        } else {
+        if (element.label === name) {
           element.checked = checked;
         }
         return element;
@@ -68,9 +64,15 @@ export default function useFilter({requestType, dateType}) {
     setFilteredList(
       list.filter((element) => {
         return newCheckedList.some((element2) => {
-          return (
-            element2.checked && element.request_reason === element2.label
-          );
+          const res =
+            element2.checked === true
+              ? element.request_reason === element2.label
+                ? true
+                : element2.label === 'Otros' &&
+                  !MOTIVES.includes(element.request_reason)
+              : false;
+          console.log(res, element2, element.request_reason);
+          return res;
         });
       })
     );

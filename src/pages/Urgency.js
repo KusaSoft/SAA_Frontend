@@ -16,7 +16,10 @@ function Urgency() {
           breadcrumbs={BREAD_CRUB_PATHS.URGENCY}
         />
         <div style={{padding: '20px'}}>
-          <ListOperador requestType={apiSettings.getRequests} />
+          <ListOperador
+            dataTypeS={'Fecha para la reserva'}
+            requestType={apiSettings.getRequests}
+          />
         </div>
       </WrapperPage>
     </WrapperLayout>
