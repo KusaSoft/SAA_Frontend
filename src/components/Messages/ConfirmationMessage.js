@@ -1,24 +1,12 @@
-import {
-  Alert,
-  AlertTitle,
-  Box,
-  Button,
-  Typography,
-} from '@mui/material';
+import {Alert, AlertTitle, Box, Button, Typography} from '@mui/material';
 import React from 'react';
+import {BoxColumn} from '../../emotion/GlobalComponents';
 const ConfirmationMessage = (
   {actions, closeModal, questionMessage},
   props
 ) => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
-      }}
-    >
+    <BoxColumn>
       <Alert severity="warning">
         <AlertTitle>Atencion!</AlertTitle>
         <Typography variant="h6">{questionMessage}</Typography>
@@ -29,7 +17,7 @@ const ConfirmationMessage = (
           Si
         </Button>
       </Alert>
-    </Box>
+    </BoxColumn>
   );
 };
 

@@ -1,56 +1,29 @@
 import React from 'react';
-import {
-  Box,
-  Button,
-  List,
-  Typography,
-  ListItem,
-} from '@mui/material';
+import {Box, Button, List, Typography, ListItem} from '@mui/material';
 import {Wrapper} from './askReservationRequest.styles';
 import {Link} from 'react-router-dom';
-import {
-  CheckCircleOutline,
-  ErrorOutline,
-} from '@mui/icons-material';
+import {CheckCircleOutline, ErrorOutline} from '@mui/icons-material';
 import {PATHS} from '../../services/Constant';
+import {BoxColumn} from '../../emotion/GlobalComponents';
 export default function AskReservationRequest(props) {
   return (
     <Wrapper>
       {props.error !== '' ? (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'column',
-            marginTop: '1rem',
-          }}
-        >
+        <BoxColumn>
           <Typography variant="h6" color="error">
             {props.message}
             {props.error}
           </Typography>
           <ErrorOutline color="error" sx={{fontSize: 70}} />
-        </Box>
+        </BoxColumn>
       ) : props.reservation ? (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'column',
-            marginTop: '1rem',
-          }}
-        >
+        <BoxColumn>
           <Typography variant="h3">Acuse de recibo</Typography>
           <Box>
             <Typography variant="h6" color="primary">
               {props.message}
             </Typography>
-            <CheckCircleOutline
-              color="success"
-              sx={{fontSize: 70}}
-            />
+            <CheckCircleOutline color="success" sx={{fontSize: 70}} />
           </Box>
           <Typography
             variant="body1"
@@ -59,14 +32,9 @@ export default function AskReservationRequest(props) {
             }}
           >
             La solicitud de reserva se recibio con exito en fecha{' '}
-            <b>
-              {props.reservation.register_date.split(' ')[0]}{' '}
-            </b>
-            a horas{' '}
-            <b>
-              {props.reservation.register_date.split(' ')[1]}
-            </b>{' '}
-            a nombre de <b>{props.reservation.name}</b>.
+            <b>{props.reservation.register_date.split(' ')[0]} </b>a horas{' '}
+            <b>{props.reservation.register_date.split(' ')[1]}</b> a nombre
+            de <b>{props.reservation.name}</b>.
           </Typography>
           <Typography variant="body1">
             Materia: {props.reservation.subject}
@@ -74,9 +42,7 @@ export default function AskReservationRequest(props) {
             <br />
             Grupo(s): <br />
             <List>
-              <ListItem>
-                {` ${props.reservation.group_list[0]}`}
-              </ListItem>
+              <ListItem>{` ${props.reservation.group_list[0]}`}</ListItem>
               {props.reservation.group_list
                 .slice(1, props.reservation.group_list.length)
                 .map((group) => {
@@ -86,8 +52,8 @@ export default function AskReservationRequest(props) {
             <br />
             <br />
             Fecha solicitada para la reserva{' '}
-            {props.reservation.reservation_date.split('T')[0]} a
-            horas {props.reservation.horario_ini} hasta{' '}
+            {props.reservation.reservation_date.split('T')[0]} a horas{' '}
+            {props.reservation.horario_ini} hasta{' '}
             {props.reservation.horario_end}
           </Typography>
           <Box display="flex" justifyContent="flex-end" mt={2}>
@@ -100,7 +66,7 @@ export default function AskReservationRequest(props) {
               </Button>
             </Link>
           </Box>
-        </Box>
+        </BoxColumn>
       ) : null}
     </Wrapper>
   );

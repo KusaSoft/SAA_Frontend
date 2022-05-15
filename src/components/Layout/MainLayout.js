@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Outlet} from 'react-router-dom';
-import {Box, Button, Chip, IconButton, Typography} from '@mui/material';
+import {Button, Chip, Typography} from '@mui/material';
 import {ClearAll, Menu, AccountCircle} from '@mui/icons-material';
 import {
   ContentSite,
@@ -10,21 +10,14 @@ import {
 } from './MainLayout.styles';
 import useAuth from '../../hooks/useAuth';
 import Sidebar from '../Dashboard/Navbar';
+import {BoxCenterToEnd, BoxColumn} from '../../emotion/GlobalComponents';
 
 function MainLayout() {
   const {auth} = useAuth();
   const [open, setOpen] = useState(true);
 
   return (
-    <body
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        // margin: 0,
-        minHeight: '100%',
-        height: '100%',
-      }}
-    >
+    <BoxColumn>
       <ContentSite>
         <Dashboard open={open}>
           <Sidebar />
@@ -38,26 +31,12 @@ function MainLayout() {
                 marginLeft: '1rem',
               }}
               variant="outlined"
-              startIcon={open ? <ClearAll /> : <Menu />}
               onClick={() => setOpen(!open)}
-            />
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                height: '100%',
-                color: 'black',
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-              }}
             >
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}
-              >
+              {open ? <ClearAll /> : <Menu />}
+            </Button>
+            <BoxCenterToEnd>
+              <BoxColumn>
                 <Typography variant="body1">{auth.user}</Typography>
                 <Chip
                   label={auth.roles[0]}
@@ -67,21 +46,20 @@ function MainLayout() {
                   }}
                   color="footer"
                 />
-              </div>
+              </BoxColumn>
 
               <AccountCircle
-                size="large"
                 sx={{
-                  marginLeft: '1rem',
-                  marginRight: '1rem',
+                  fontSize: 35,
+                  margin: '0rem 1rem 0rem 1rem',
                 }}
               />
-            </Box>
+            </BoxCenterToEnd>
           </Header>
           <Outlet />
         </LayoutSite>
       </ContentSite>
-    </body>
+    </BoxColumn>
   );
 }
 

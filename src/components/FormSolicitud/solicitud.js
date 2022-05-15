@@ -95,6 +95,7 @@ function Solicitud(props) {
       display="flex"
       justifyContent="center"
       alignItems="center"
+      width="75%"
       padding={2}
     >
       {isLoading ? (

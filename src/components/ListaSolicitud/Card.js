@@ -1,7 +1,7 @@
 import React from 'react';
 import {Delete, Edit} from '@mui/icons-material';
 import {STATUS} from '../../services/Constant';
-import {Card, CardContent, Fab, Stack} from '@mui/material';
+import {Card, CardActions, CardContent, Fab, Stack} from '@mui/material';
 import {Link} from 'react-router-dom';
 import apiSettings from '../../services/service';
 import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch';
@@ -41,6 +41,7 @@ const SimpleCard = (props) => {
           style={{
             display: 'flex',
             justifyContent: 'flex-end',
+            borderBottom: '1px solid #e0e0e0',
           }}
         >
           <b style={{fontWeight: 'bold'}}>
@@ -72,28 +73,40 @@ const SimpleCard = (props) => {
           </div>
         </div>
       </CardContent>
-      <Box sx={{backgroundColor: 'cardContent.main'}}>
-        <div
+      <CardActions
+        disableSpacing
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+        }}
+      >
+        <Stack
+          direction="row"
+          spacing={1}
           style={{
             display: 'flex',
-            flexDirection: 'row',
             justifyContent: 'flex-end',
-            // background:
-            //   'linear-gradient(180deg, #FFFFFF 50%, #EBF6DF 50%)',
-            color: 'black',
           }}
         >
-          <div
-            style={{
-              minWidth: '100px',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
+          <Fab
+            color="success"
+            size="small"
+            sx={{
+              '&:hover': {
+                backgroundColor: 'hover.main',
+                color: 'hover.contrastText',
+              },
             }}
           >
-            <Stack direction="row" spacing={1}>
+            <ContentPasteSearchIcon onClick={openModal} />
+            <Modal open={isOpenModal} onClose={closeModal}>
+              <ContentDetail request={props.request} />
+            </Modal>
+          </Fab>
+          {props.request.state == STATUS.DRAFT ? (
+            <Link to={`/user/reservationRequest/${props.request.id}`}>
               <Fab
-                color="success"
+                color="primary"
                 size="small"
                 sx={{
                   '&:hover': {
@@ -102,79 +115,58 @@ const SimpleCard = (props) => {
                   },
                 }}
               >
-                <ContentPasteSearchIcon onClick={openModal} />
-                <Modal open={isOpenModal} onClose={closeModal}>
-                  <ContentDetail request={props.request} />
-                </Modal>
+                <Edit />
               </Fab>
-              {props.request.state == STATUS.DRAFT ? (
-                <Link to={`/user/reservationRequest/${props.request.id}`}>
-                  <Fab
-                    color="primary"
-                    size="small"
-                    sx={{
-                      '&:hover': {
-                        backgroundColor: 'hover.main',
-                        color: 'hover.contrastText',
-                      },
-                    }}
-                  >
-                    <Edit />
-                  </Fab>
-                </Link>
-              ) : (
-                <></>
-              )}
-              <Fab
-                color="error"
-                size="small"
-                sx={{
-                  '&:hover': {
-                    backgroundColor: 'hover.main',
-                    color: 'hover.contrastText',
-                  },
-                }}
-              >
-                <Delete
-                  onClick={() => {
-                    handleOpen();
-                  }}
-                />
-                <Modal
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
+            </Link>
+          ) : (
+            <></>
+          )}
+          <Fab
+            color="error"
+            size="small"
+            sx={{
+              '&:hover': {
+                backgroundColor: 'hover.main',
+                color: 'hover.contrastText',
+              },
+            }}
+          >
+            <Delete
+              onClick={() => {
+                handleOpen();
+              }}
+            />
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <Typography
+                  id="modal-modal-title"
+                  variant="h6"
+                  component="h2"
                 >
-                  <Box sx={style}>
-                    <Typography
-                      id="modal-modal-title"
-                      variant="h6"
-                      component="h2"
-                    >
-                      ¿Esta seguro que desea eliminar este elemento?
-                    </Typography>
-                    <Button onClick={handleClose}>Cancelar</Button>
-                    <Button
-                      sx={{marginLeft: '82px'}}
-                      onClick={() => {
-                        apiSettings.deleteReservationRequest(
-                          props.request.id
-                        );
-                        handleClose();
-                        recargar();
-                        //window.location.reload();
-                      }}
-                    >
-                      Eliminar
-                    </Button>
-                  </Box>
-                </Modal>
-              </Fab>
-            </Stack>
-          </div>
-        </div>
-      </Box>
+                  ¿Esta seguro que desea eliminar este elemento?
+                </Typography>
+                <Button onClick={handleClose}>Cancelar</Button>
+                <Button
+                  sx={{marginLeft: '82px'}}
+                  onClick={() => {
+                    apiSettings.deleteReservationRequest(props.request.id);
+                    handleClose();
+                    recargar();
+                    //window.location.reload();
+                  }}
+                >
+                  Eliminar
+                </Button>
+              </Box>
+            </Modal>
+          </Fab>
+        </Stack>
+      </CardActions>
     </Card>
   );
 };

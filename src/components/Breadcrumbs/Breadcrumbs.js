@@ -39,6 +39,7 @@ export default function BasicBreadcrumbs(props) {
               textDecoration: 'none',
               display: 'flex',
               alignItems: 'center',
+              color: 'black',
             }}
           >
             <Home />
