@@ -1,9 +1,38 @@
 import React from 'react';
 import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch';
-import {Card, CardActions, CardContent, Fab, Stack} from '@mui/material';
+import {
+  Card,
+  CardActions,
+  CardContent,
+  Fab,
+  Stack,
+  Box,
+  List,
+  Divider,
+  ListItem,
+} from '@mui/material';
 import {Link} from 'react-router-dom';
+import Modal from '@mui/material/Modal';
+// import Modal from '../Modals/Modal';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import {Wrapper} from '../ask/askReservationRequest.styles';
+import {useModal} from '../../hooks/useModal';
+import ContentDetail from '../details/ContentDetail';
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+};
 const CardOperador = (props) => {
+  const [isOpenModal, openModal, closeModal] = useModal(false);
+
   return (
     <Card
       style={{
@@ -64,14 +93,13 @@ const CardOperador = (props) => {
               },
             }}
           >
-            <ContentPasteSearchIcon
-              onClick={() => {
-                alert('redirect Request: ' + props.request.id);
-              }}
-            />
+            <ContentPasteSearchIcon onClick={openModal} />
           </Fab>
         </Stack>
       </CardActions>
+      <Modal open={isOpenModal} onClose={closeModal}>
+        <ContentDetail />
+      </Modal>
     </Card>
   );
 };

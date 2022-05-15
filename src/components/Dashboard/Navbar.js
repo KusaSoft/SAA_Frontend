@@ -56,7 +56,9 @@ function Sidebar() {
                     }}
                   >
                     <AccordionSummary
-                      expandIcon={<ExpandMoreIcon sx={{color: 'white'}} />}
+                      expandIcon={
+                        <ExpandMoreIcon sx={{color: 'footer'}} />
+                      }
                       aria-controls="panel1a-content"
                       id="panel1a-header"
                     >

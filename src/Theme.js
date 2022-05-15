@@ -21,16 +21,21 @@ export const theme = createTheme({
       main: 'red',
     },
     fondo: {
-      main: '#EBF6DF',
+      main: '#FAFBFC',
     },
     breadCrumbs: {
       main: '#FAFBFC',
     },
     navBar: {
-      main: '#060b26',
-      dark: '#52536E',
-      contrastText: '#FFFFFF',
+      main: '#FFFFFF',
+      dark: '#EBF6DF',
+      contrastText: '#000000',
     },
+    // navBar: {
+    //   main: '#060b26',
+    //   dark: '#52536E',
+    //   contrastText: '#FFFFFF',
+    // },
     // navBarOperador: {
     //   main: '#707070',
     //   dark: '#52536E',
