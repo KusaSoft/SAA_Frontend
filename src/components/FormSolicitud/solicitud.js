@@ -225,7 +225,7 @@ function Solicitud(props) {
                   <Grid item sm={6} xs={12}>
                     <Autocomplete
                       freeSolo
-                      options={MOTIVES}
+                      options={MOTIVES.slice(0)}
                       value={reservationRequest.motiveRequest}
                       inputValue={reservationRequest.motiveRequest}
                       disableClearable={true}

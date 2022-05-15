@@ -20,7 +20,12 @@ const ListOperador = (props) => {
     checkedList,
     date,
     handleChangeMotive,
-  ] = useFilter({requestType: props.requestType});
+    handleChangeDateByRegister,
+    handleChangeDateByReservation,
+  ] = useFilter({
+    requestType: props.requestType,
+    dateType: 'register_date',
+  });
 
   if (list.length !== 0) {
     return (
@@ -91,8 +96,9 @@ const ListOperador = (props) => {
           <Typography variant="h6">Fecha de envio</Typography>
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="female"
+            defaultValue="Antiguos"
             name="radio-buttons-group"
+            onChange={handleChangeDateByRegister}
           >
             <FormControlLabel
               value="Antiguos"

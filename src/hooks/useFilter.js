@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {MOTIVES} from '../services/Constant';
-export default function useFilter({requestType}) {
+export default function useFilter({requestType, dateType}) {
   const [list, setList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
   const [checkedList, setCheckedList] = useState([
@@ -24,6 +24,16 @@ export default function useFilter({requestType}) {
 
   const fetchList = async () => {
     const data = await requestType();
+    if (dateType === 'register_date') {
+      data.sort((a, b) => {
+        return new Date(a.register_date) - new Date(b.register_date);
+      });
+    } else {
+      data.sort((a, b) => {
+        return new Date(a.reservation_date) - new Date(b.reservation_date);
+      });
+    }
+    data.reverse();
     setList(data);
     setFilteredList(data);
   };
@@ -37,7 +47,11 @@ export default function useFilter({requestType}) {
     let newCheckedList = checkedList;
     if (name !== 'Todos') {
       newCheckedList = checkedList.map((element) => {
-        if (element.label === name) {
+        if (name !== 'Otros') {
+          if (element.label === name) {
+            element.checked = checked;
+          }
+        } else {
           element.checked = checked;
         }
         return element;
@@ -50,7 +64,6 @@ export default function useFilter({requestType}) {
         };
       });
     }
-    console.log(newCheckedList);
     setCheckedList(newCheckedList);
     setFilteredList(
       list.filter((element) => {
@@ -63,10 +76,42 @@ export default function useFilter({requestType}) {
     );
   };
 
-  const findMotiveValue = (motive, checkedList) => {
-    return checkedList.some((element) => {
-      return element.label === motive ? element.checked : false;
-    });
+  const handleChangeDateByRegister = (event) => {
+    const {value, name} = event.target;
+    const newFilteredList = filteredList;
+    newFilteredList.sort(
+      (a, b) => new Date(a.register_date) - new Date(b.register_date)
+    );
+
+    if (value === 'Antiguos') {
+      setFilteredList([...newFilteredList]);
+    } else {
+      newFilteredList.reverse();
+      setFilteredList([...newFilteredList]);
+    }
   };
-  return [list, filteredList, checkedList, date, handleChangeMotive];
+  const handleChangeDateByReservation = (event) => {
+    const {value, name} = event.target;
+    const newFilteredList = filteredList;
+    newFilteredList.sort(
+      (a, b) => new Date(a.reservation_date) - new Date(b.reservation_date)
+    );
+
+    if (value === 'Antiguos') {
+      setFilteredList([...newFilteredList]);
+    } else {
+      newFilteredList.reverse();
+      setFilteredList([...newFilteredList]);
+    }
+  };
+
+  return [
+    list,
+    filteredList,
+    checkedList,
+    date,
+    handleChangeMotive,
+    handleChangeDateByRegister,
+    handleChangeDateByReservation,
+  ];
 }

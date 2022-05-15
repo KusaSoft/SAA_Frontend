@@ -16,7 +16,7 @@ function Arrival() {
           style={{
             padding: '20px',
           }}
-        >
+        > 
           <ListOperador requestType={apiSettings.getRequests} />
         </div>
       </WrapperPage>

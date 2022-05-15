@@ -12,7 +12,7 @@ export const PERIODSRANGE = [
   '21:45',
 ];
 
-export const MOTIVES = ['Examen', 'Exposición', 'Capacitación'];
+export const MOTIVES = ['Examen', 'Exposición', 'Capacitación', 'Otros'];
 
 export const STATUS = {
   SENT: 'sent',
@@ -42,8 +42,7 @@ export const PATHS = {
   URGENCY: 'urgency',
   RESERVATION_REQUEST_DETAIL:
     'reservationRequest/:reservationRequest/detail',
-  RESERVATION_REQUEST_EDIT:
-    'reservationRequest/:reservationRequest/edit',
+  RESERVATION_REQUEST_EDIT: 'reservationRequest/:reservationRequest/edit',
 };
 
 export const BREAD_CRUB_PATHS = {
