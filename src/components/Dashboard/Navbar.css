@@ -12,6 +12,7 @@
   align-content: center;
   height: 100%;
   /* background-color: #172b4d; */
+  /* background-color: #060b26; */
 }
 
 .nav_content {
@@ -33,7 +34,7 @@
 
 .sidebar-item a {
   text-decoration: none;
-  color: white;
+  color: black;
   font-size: 1rem;
   height: 100%;
   width: 90%;
@@ -43,7 +44,7 @@
 }
 
 .sidebar-item a:hover {
-  background-color: #52536e;
+  background-color: #ebf6df;
 }
 
 .sidebar-items {

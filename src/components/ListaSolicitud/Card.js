@@ -4,11 +4,14 @@ import {STATUS} from '../../services/Constant';
 import {Card, CardContent, Fab, Stack} from '@mui/material';
 import {Link} from 'react-router-dom';
 import apiSettings from '../../services/service';
-
+import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import {useModal} from '../../hooks/useModal';
+import ContentDetail from '../details/ContentDetail';
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -25,6 +28,7 @@ const SimpleCard = (props) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [isOpenModal, openModal, closeModal] = useModal(false);
   return (
     <Card
       style={{
@@ -74,8 +78,8 @@ const SimpleCard = (props) => {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'flex-end',
-            background:
-              'linear-gradient(180deg, #FFFFFF 50%, #EBF6DF 50%)',
+            // background:
+            //   'linear-gradient(180deg, #FFFFFF 50%, #EBF6DF 50%)',
             color: 'black',
           }}
         >
@@ -88,6 +92,21 @@ const SimpleCard = (props) => {
             }}
           >
             <Stack direction="row" spacing={1}>
+              <Fab
+                color="success"
+                size="small"
+                sx={{
+                  '&:hover': {
+                    backgroundColor: 'hover.main',
+                    color: 'hover.contrastText',
+                  },
+                }}
+              >
+                <ContentPasteSearchIcon onClick={openModal} />
+                <Modal open={isOpenModal} onClose={closeModal}>
+                  <ContentDetail request={props.request} />
+                </Modal>
+              </Fab>
               {props.request.state == STATUS.DRAFT ? (
                 <Link to={`/user/reservationRequest/${props.request.id}`}>
                   <Fab

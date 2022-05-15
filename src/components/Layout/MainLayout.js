@@ -65,7 +65,7 @@ function MainLayout() {
                     size: '0.4rem',
                     height: '0.9rem',
                   }}
-                  color="navBar"
+                  color="footer"
                 />
               </div>
 
