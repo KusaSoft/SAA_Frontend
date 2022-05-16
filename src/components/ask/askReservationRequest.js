@@ -25,6 +25,9 @@ export default function AskReservationRequest(props) {
             </Typography>
             <CheckCircleOutline color="success" sx={{fontSize: 70}} />
           </Box>
+          <Typography variant="h5" color="primary">
+            <b>{props.reservation.request_reason}</b>
+          </Typography>
           <Typography
             variant="body1"
             sx={{

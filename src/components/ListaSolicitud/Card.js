@@ -66,10 +66,9 @@ const SimpleCard = (props) => {
         <div
           style={{
             padding: '10px',
-            display: 'flex',
           }}
         >
-          <b style={{fontWeight: 'bold'}}>Materia: </b>{' '}
+          <b style={{fontWeight: 'bold'}}>Materia: </b>
           {props.request.subject}
         </div>
         <div>

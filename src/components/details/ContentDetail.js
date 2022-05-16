@@ -1,4 +1,5 @@
 import {Box, List, Divider, ListItem, Typography} from '@mui/material';
+import DataTransform from '../../utilities/DataController/DataTransform';
 import React from 'react';
 const style = {
   position: 'absolute',
@@ -17,7 +18,8 @@ export default function ContentDetail(props) {
         Solicitud de reserva
       </Typography>
       <Typography variant="body1">
-        Realizada en nombre de: {props.request.name}
+        <b>Realizada en nombre de: </b>
+        {props.request.user}
         <br />
         <b>Motivo de la solicitud:</b> {props.request.request_reason}
         <br />
@@ -48,13 +50,20 @@ export default function ContentDetail(props) {
           }}
         />
         <br />
-        Fecha para la reserva: {props.request.reservation_date} <br />
+        <b>Fecha para la reserva: </b>
+        {props.request.reservation_date} <br />
         <br />
-        <b>Hora Inicio:</b>
-        {props.request.horario_ini}
+        <b>
+          Cantidad de periodos:{' '}
+          {DataTransform.getQuantityPeriod(
+            props.request.horario_ini,
+            props.request.horario_end
+          )}
+        </b>
         <br />
-        <b>Hora Fin:</b>
-        {props.request.horario_end}
+        <b>Hora Inicio:</b> {props.request.horario_ini}
+        <br />
+        <b>Hora Fin:</b> {props.request.horario_end}
       </Typography>
     </Box>
   );
