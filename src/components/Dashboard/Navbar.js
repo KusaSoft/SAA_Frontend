@@ -5,6 +5,7 @@ import {SidebarData, HomeItem} from './SidebarData';
 import useAuth from '../../hooks/useAuth';
 import {Box, Divider, Button} from '@mui/material';
 import LogoFCyT from '../../assets/fcyt.png';
+import Logo from '../../assets/logo.png';
 import {Logout} from '@mui/icons-material';
 // import Button from '../../components/Button/Button';
 import Accordion from '@mui/material/Accordion';
@@ -35,7 +36,7 @@ function Sidebar() {
               display: 'flex',
             }}
             alt="logo fcyt."
-            src={LogoFCyT}
+            src={Logo}
           />
           <Divider />
           <ul className={'sidebar-items'}>
@@ -57,7 +58,9 @@ function Sidebar() {
                   >
                     <AccordionSummary
                       expandIcon={
-                        <ExpandMoreIcon sx={{color: 'footer'}} />
+                        <ExpandMoreIcon
+                          sx={{color: 'navBar.contrastText'}}
+                        />
                       }
                       aria-controls="panel1a-content"
                       id="panel1a-header"
