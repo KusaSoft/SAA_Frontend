@@ -136,21 +136,20 @@ function Solicitud(props) {
 
           <CardContent style={{padding: '10px 2px'}}>
             <Typography
-              gutterBottom
-              variant="caption"
-              color="textSecondary"
-              align="left"
-              padding="0 1rem"
-            >
-              Todos los campos con * son obligatorios.
-            </Typography>
-            <Typography
               variant="body2"
               color="textSecondary"
               component="p"
               align="left"
               padding="0 1rem"
             >
+              <Typography
+                gutterBottom
+                variant="caption"
+                color="textSecondary"
+              >
+                Todos los campos con * son obligatorios.
+              </Typography>
+              <br />
               La solicitud de la reserva se realizará en nombre de{' '}
               <b>{reservationRequest.teacher}</b>
             </Typography>
@@ -226,7 +225,7 @@ function Solicitud(props) {
                   <Grid item sm={6} xs={12}>
                     <Autocomplete
                       freeSolo
-                      options={MOTIVES.slice(0)}
+                      options={MOTIVES.slice(0, MOTIVES.length - 1)}
                       value={reservationRequest.motiveRequest}
                       inputValue={reservationRequest.motiveRequest}
                       disableClearable={true}

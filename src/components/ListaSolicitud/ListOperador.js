@@ -50,6 +50,7 @@ const ListOperador = (props) => {
           style={{
             display: 'flex',
             width: '20%',
+            height: '400px',
             marginTop: '20px',
             backgroundColor: 'white',
             flexDirection: 'column',

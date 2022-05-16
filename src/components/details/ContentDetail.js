@@ -17,7 +17,7 @@ export default function ContentDetail(props) {
         Solicitud de reserva
       </Typography>
       <Typography variant="body1">
-        Realizada en nombre de:
+        Realizada en nombre de: {props.request.name}
         <br />
         <b>Motivo de la solicitud:</b> {props.request.request_reason}
         <br />

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Typography, Breadcrumbs, Box} from '@mui/material/';
 import {Link} from 'react-router-dom';
 import {Home} from '@mui/icons-material';
+import {LinkStyled} from '../../emotion/GlobalComponents';
 export default function BasicBreadcrumbs(props) {
   return (
     <Box
@@ -14,7 +15,7 @@ export default function BasicBreadcrumbs(props) {
         borderBottom: '3px solid #E0E0E0',
       }}
       sx={{
-        backgroundColor: 'breadCrumbs.main',
+        backgroundColor: 'fondo.main',
       }}
     >
       <div
@@ -32,19 +33,18 @@ export default function BasicBreadcrumbs(props) {
           {props.title}
         </Typography>
         <Breadcrumbs aria-label="breadcrumb">
-          <Link
+          <LinkStyled
             key={'999'}
             to={'/user/home'}
             style={{
               textDecoration: 'none',
               display: 'flex',
               alignItems: 'center',
-              color: 'black',
             }}
           >
             <Home />
             Inicio
-          </Link>
+          </LinkStyled>
           {props.breadcrumbs.map((breadcrumb, index) => {
             return breadcrumb.link ? (
               <Link key={index} to={breadcrumb.route}>

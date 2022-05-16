@@ -21,10 +21,10 @@ export const theme = createTheme({
       main: 'red',
     },
     fondo: {
-      main: '#FAFBFC',
+      main: '#f5f8fd',
     },
     breadCrumbs: {
-      main: '#FAFBFC',
+      main: '#C2D2E9',
     },
     navBar: {
       main: '#263752',

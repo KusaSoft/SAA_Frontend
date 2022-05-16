@@ -13,7 +13,6 @@ import Modal from '@mui/material/Modal';
 import {useModal} from '../../hooks/useModal';
 import ContentDetail from '../details/ContentDetail';
 import {useRequest} from '../../hooks/useRequest.hooks';
-import {useRequestDetail} from '../../hooks/useDetail';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -38,7 +37,9 @@ const SimpleCard = (props) => {
     responseUpd,
     statusUpd,
     handleRequestUpd,
-  ] = useRequestDetail();
+  ] = useRequest({
+    methodRequest: apiSettings.getReservationRequestD,
+  });
   return (
     <Card
       style={{
@@ -107,12 +108,13 @@ const SimpleCard = (props) => {
                 color: 'hover.contrastText',
               },
             }}
-            onClick={() => {
-              openModal();
-              handleRequestUpd(props.request.id);
-            }}
           >
-            <ContentPasteSearchIcon />
+            <ContentPasteSearchIcon
+              onClick={() => {
+                openModal();
+                handleRequestUpd(props.request.id);
+              }}
+            />
           </Fab>
           {props.request.state == STATUS.DRAFT ? (
             <Link to={`/user/reservationRequest/${props.request.id}`}>
