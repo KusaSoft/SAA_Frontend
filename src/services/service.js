@@ -96,8 +96,13 @@ const apiSettings = {
     const response = await axios.get(
       `${API_URL}/reservation/${reservationRequest}`
     );
-    console.log(response.data);
     return response.data;
+  },
+  getReservationRequestD: async (reservationRequest) => {
+    const response = await axios.get(
+      `${API_URL}/reservation/${reservationRequest}`
+    );
+    return response;
   },
 
   getStatusList: async (status) => {

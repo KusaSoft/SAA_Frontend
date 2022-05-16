@@ -21,20 +21,25 @@ export default function ContentDetail(props) {
         <br />
         <b>Motivo de la solicitud:</b> {props.request.request_reason}
         <br />
-        Materia: {/* {props.reservation.subject} */}
+        <b>Materia:</b> {props.request.subject}
         <br />
-        Cantidad de estudiantes: {/* {props.reservation.subject} */}
+        <b>Cantidad de estudiantes:</b> {props.request.total_students}
         <br />
-        Grupo(s): <br />
+        <b>Grupo(s):</b> <br />
         <List>
-          <ListItem>
-            {/* {` ${props.reservation.group_list[0]}`} */}
-          </ListItem>
-          {/* {props.reservation.group_list
-                      .slice(1, props.reservation.group_list.length)
-                      .map((group) => {
-                        return <ListItem>{group}</ListItem>;
-                      })} */}
+          {/* {response.group_list.split(' ').map((group) => (
+            <ListItem>
+              {...DataTransform.getMyGroupById(
+                response.group_list,
+                subjectListMapF
+              )}
+            </ListItem>
+          ))} */}
+          {/* {props.request.group_list
+            .slice(1, props.request.group_list.length)
+            .map((group) => {
+              return <ListItem>{group}</ListItem>;
+            })} */}
         </List>
         <br />
         <Divider
@@ -43,8 +48,7 @@ export default function ContentDetail(props) {
           }}
         />
         <br />
-        Fecha para la reserva:{' '}
-        {/* {props.reservation.reservation_date.split('T')[0]} <br /> */}
+        Fecha para la reserva: {props.request.reservation_date} <br />
         <br />
         <b>Hora Inicio:</b>
         {props.request.horario_ini}

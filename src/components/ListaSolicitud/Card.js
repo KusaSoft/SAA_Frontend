@@ -1,5 +1,6 @@
 import React from 'react';
 import {Delete, Edit} from '@mui/icons-material';
+import {CircularProgress} from '@mui/material';
 import {STATUS} from '../../services/Constant';
 import {Card, CardActions, CardContent, Fab, Stack} from '@mui/material';
 import {Link} from 'react-router-dom';
@@ -11,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import {useModal} from '../../hooks/useModal';
 import ContentDetail from '../details/ContentDetail';
-
+import {useRequest} from '../../hooks/useRequest.hooks';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -29,6 +30,16 @@ const SimpleCard = (props) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [isOpenModal, openModal, closeModal] = useModal(false);
+  const [
+    loadingUpd,
+    errorUpd,
+    messageUpd,
+    responseUpd,
+    statusUpd,
+    handleRequestUpd,
+  ] = useRequest({
+    methodRequest: apiSettings.getReservationRequestD,
+  });
   return (
     <Card
       style={{
@@ -98,10 +109,12 @@ const SimpleCard = (props) => {
               },
             }}
           >
-            <ContentPasteSearchIcon onClick={openModal} />
-            <Modal open={isOpenModal} onClose={closeModal}>
-              <ContentDetail request={props.request} />
-            </Modal>
+            <ContentPasteSearchIcon
+              onClick={() => {
+                openModal();
+                handleRequestUpd(props.request.id);
+              }}
+            />
           </Fab>
           {props.request.state == STATUS.DRAFT ? (
             <Link to={`/user/reservationRequest/${props.request.id}`}>
@@ -167,6 +180,22 @@ const SimpleCard = (props) => {
           </Fab>
         </Stack>
       </CardActions>
+      <Modal open={isOpenModal} onClose={closeModal}>
+        {loadingUpd ? (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100%',
+            }}
+          >
+            <CircularProgress color="inherit" />
+          </Box>
+        ) : (
+          <ContentDetail request={responseUpd} />
+        )}
+      </Modal>
     </Card>
   );
 };
