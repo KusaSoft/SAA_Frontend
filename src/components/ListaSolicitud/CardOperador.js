@@ -10,6 +10,7 @@ import {
   List,
   Divider,
   ListItem,
+  CircularProgress,
 } from '@mui/material';
 import {Link} from 'react-router-dom';
 import Modal from '@mui/material/Modal';
@@ -19,6 +20,7 @@ import Typography from '@mui/material/Typography';
 import {Wrapper} from '../ask/askReservationRequest.styles';
 import {useModal} from '../../hooks/useModal';
 import ContentDetail from '../details/ContentDetail';
+import {useRequestDetail} from '../../hooks/useDetail';
 
 const style = {
   position: 'absolute',
@@ -32,6 +34,14 @@ const style = {
 };
 const CardOperador = (props) => {
   const [isOpenModal, openModal, closeModal] = useModal(false);
+  const [
+    loadingUpd,
+    errorUpd,
+    messageUpd,
+    responseUpd,
+    statusUpd,
+    handleRequestUpd,
+  ] = useRequestDetail();
 
   return (
     <Card
@@ -92,13 +102,36 @@ const CardOperador = (props) => {
                 color: 'hover.contrastText',
               },
             }}
+            onClick={() => {
+              openModal();
+              handleRequestUpd(props.request.id);
+            }}
           >
-            <ContentPasteSearchIcon onClick={openModal} />
+            <ContentPasteSearchIcon />
           </Fab>
         </Stack>
       </CardActions>
       <Modal open={isOpenModal} onClose={closeModal}>
-        <ContentDetail />
+        {loadingUpd ? (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100%',
+            }}
+          >
+            <CircularProgress
+              onClick={() => {
+                openModal();
+                handleRequestUpd(props.request.id);
+              }}
+              color="inherit"
+            />
+          </Box>
+        ) : (
+          <ContentDetail request={responseUpd} />
+        )}
       </Modal>
     </Card>
   );

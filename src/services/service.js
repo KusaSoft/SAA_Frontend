@@ -162,6 +162,19 @@ const apiSettings = {
     const response = await axios.get(`${API_URL}/reservations/urgent`);
     return response.data;
   },
+
+  getGroups: async (subjectIDs) => {
+    let promises = [];
+    subjectIDs.forEach((subjectID) => {
+      let promise = axios.get(`${API_URL}/group/${subjectID}`);
+      promises.push(promise);
+    });
+    const response = await Promise.all(promises);
+    const groups = response.map((group) => {
+      return group.data;
+    });
+    return groups;
+  },
 };
 
 export default apiSettings;
