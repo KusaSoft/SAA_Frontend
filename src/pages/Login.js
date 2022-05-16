@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {useFormik} from 'formik';
 import {useLocation, Navigate, Outlet} from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
@@ -26,6 +26,7 @@ import {useModal} from '../hooks/useModal';
 
 function Login() {
   const [isOpenModal, openModal, closeModal] = useModal(false);
+  const [messageError, setMessageError] = useState('');
   const location = useLocation();
   const {setAuth} = useContext(AuthContext);
   const {auth} = useAuth();
@@ -44,13 +45,12 @@ function Login() {
         .required('La contraseña es requerida'),
     }),
     onSubmit: async () => {
-      const responseLogin = await apiSettings.login(
-        formik.values
-      );
-      console.log(responseLogin, 'responseLogin');
-      responseLogin.message == 'no existe este usuario'
-        ? //(alert('Credenciales Incorrectas'))
-          openModal()
+      const responseLogin = await apiSettings.login(formik.values);
+
+      setMessageError(responseLogin.message);
+
+      responseLogin.successful === false
+        ? openModal()
         : setAuth({
             user: responseLogin.name,
             id: responseLogin.id,
@@ -95,11 +95,7 @@ function Login() {
                 alt="logo fcyt."
                 src={LogoFCyT}
               />
-              <Typography
-                color="textPrimary"
-                variant="h4"
-                padding="1rem"
-              >
+              <Typography color="textPrimary" variant="h4" padding="1rem">
                 Sistema de Asignación de Aulas
               </Typography>
             </Box>
@@ -131,9 +127,7 @@ function Login() {
                   formik.touched.email && formik.errors.email
                 )}
                 fullWidth
-                helperText={
-                  formik.touched.email && formik.errors.email
-                }
+                helperText={formik.touched.email && formik.errors.email}
                 label="Correo electrónico"
                 margin="normal"
                 name="email"
@@ -159,16 +153,14 @@ function Login() {
                   mb: 1,
                   fontSize: '34px',
                   alignSelf:
-                    formik.touched.password &&
-                    formik.errors.password
+                    formik.touched.password && formik.errors.password
                       ? 'center'
                       : 'flex-end',
                 }}
               />
               <TextField
                 error={Boolean(
-                  formik.touched.password &&
-                    formik.errors.password
+                  formik.touched.password && formik.errors.password
                 )}
                 variant="filled"
                 fullWidth
@@ -177,8 +169,7 @@ function Login() {
                   maxWidth: '300px',
                 }}
                 helperText={
-                  formik.touched.password &&
-                  formik.errors.password
+                  formik.touched.password && formik.errors.password
                 }
                 label="Contraseña"
                 margin="normal"
@@ -228,12 +219,8 @@ function Login() {
             alignItems: 'center',
           }}
         >
-          <Typography
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-          >
-            Credenciales Incorrectas
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            {messageError}
           </Typography>
           <Button sx={{}} onClick={closeModal}>
             Continuar{' '}
@@ -247,39 +234,3 @@ function Login() {
 }
 
 export default Login;
-
-function Modalsito() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 300,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
-  return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-        <Typography
-          id="modal-modal-title"
-          variant="h6"
-          component="h2"
-        >
-          Credenciales Incorrectas!!!
-        </Typography>
-        <Button onClick={handleClose}>a OK</Button>
-      </Box>
-    </Modal>
-  );
-}

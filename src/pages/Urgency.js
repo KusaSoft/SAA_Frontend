@@ -18,7 +18,7 @@ function Urgency() {
         <div style={{padding: '20px'}}>
           <ListOperador
             dataTypeS={'Fecha para la reserva'}
-            requestType={apiSettings.getRequests}
+            requestType={apiSettings.getUrgentReservations}
           />
         </div>
       </WrapperPage>

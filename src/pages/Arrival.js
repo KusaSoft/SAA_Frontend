@@ -17,7 +17,10 @@ function Arrival() {
             padding: '20px',
           }}
         >
-          <ListOperador dataTypeS={"Fecha de envio"} requestType={apiSettings.getRequests} />
+          <ListOperador
+            dataTypeS={'Fecha de envio'}
+            requestType={apiSettings.getAllReservations}
+          />
         </div>
       </WrapperPage>
     </WrapperLayout>
