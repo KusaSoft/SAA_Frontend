@@ -24,7 +24,7 @@ const ListOperador = (props) => {
     handleChangeDateByReservation,
   ] = useFilter({
     requestType: props.requestType,
-    dateType: 'register_date',
+    dateType: props.orderDate,
   });
 
   if (list.length !== 0) {
@@ -97,19 +97,19 @@ const ListOperador = (props) => {
           <Typography variant="h6">{props.dataTypeS}</Typography>
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="Nuevos"
+            defaultValue={props.orderDate}
             name="radio-buttons-group"
             onChange={handleChangeDateByRegister}
           >
             <FormControlLabel
-              value="Antiguos"
+              value={date[0].label}
               control={<Radio />}
-              label="Antiguos"
+              label={date[0].label}
             />
             <FormControlLabel
-              value="Nuevos"
+              value={date[1].label}
               control={<Radio />}
-              label="Nuevos"
+              label={date[1].label}
             />
           </RadioGroup>
           <Divider />

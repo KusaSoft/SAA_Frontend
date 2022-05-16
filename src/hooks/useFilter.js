@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {MOTIVES} from '../services/Constant';
+import {MOTIVES, ORDER_DATE} from '../services/Constant';
 export default function useFilter({requestType, dateType}) {
   const [list, setList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
@@ -13,18 +13,18 @@ export default function useFilter({requestType, dateType}) {
   ]);
   const [date, setDate] = useState([
     {
-      label: 'Antiguos',
+      label: ORDER_DATE.PROXIMOS,
       value: true,
     },
     {
-      label: 'Nuevos',
+      label: ORDER_DATE.LEJANOS,
       value: false,
     },
   ]);
 
   const fetchList = async () => {
     const data = await requestType();
-    if (dateType === 'register_date') {
+    if (dateType === ORDER_DATE.LEJANOS) {
       data.sort((a, b) => {
         return new Date(a.register_date) - new Date(b.register_date);
       });
@@ -32,8 +32,8 @@ export default function useFilter({requestType, dateType}) {
       data.sort((a, b) => {
         return new Date(a.reservation_date) - new Date(b.reservation_date);
       });
+      data.reverse();
     }
-    data.reverse();
     setList(data);
     setFilteredList(data);
   };
@@ -85,7 +85,7 @@ export default function useFilter({requestType, dateType}) {
       (a, b) => new Date(a.register_date) - new Date(b.register_date)
     );
 
-    if (value === 'Antiguos') {
+    if (value === ORDER_DATE.LEJANOS) {
       setFilteredList([...newFilteredList]);
     } else {
       newFilteredList.reverse();
@@ -99,7 +99,7 @@ export default function useFilter({requestType, dateType}) {
       (a, b) => new Date(a.reservation_date) - new Date(b.reservation_date)
     );
 
-    if (value === 'Antiguos') {
+    if (value === ORDER_DATE.PROXIMOS) {
       setFilteredList([...newFilteredList]);
     } else {
       newFilteredList.reverse();

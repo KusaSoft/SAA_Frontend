@@ -12,7 +12,14 @@ export const PERIODSRANGE = [
   '21:45',
 ];
 
-export const MOTIVES = ['Examen', 'Exposición', 'Capacitación', 'Otros'];
+export const MOTIVES = [
+  'Examen',
+  'Exposición',
+  'Capacitación',
+  'Laboratorio',
+  'Simulacro',
+  'Otros',
+];
 
 export const STATUS = {
   SENT: 'sent',
@@ -155,4 +162,9 @@ export const ERRORFORM = {
     isError: false,
     message: 'La hora de fin debe ser mayor a la hora de inicio',
   },
+};
+
+export const ORDER_DATE = {
+  PROXIMOS: 'Proximos-Lejanos',
+  LEJANOS: 'Lejanos-Proximos',
 };
