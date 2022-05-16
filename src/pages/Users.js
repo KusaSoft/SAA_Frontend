@@ -27,8 +27,8 @@ function Users() {
             sx={{
               backgroundColor: 'navBar.main',
               '&:hover': {
-                backgroundColor: 'hover.main',
-                color: 'hover.contrastText',
+                backgroundColor: 'navBar.dark',
+                color: 'navBar.contrastText',
               },
             }}
             style={{
