@@ -148,10 +148,22 @@ const apiSettings = {
   },
 
   getUsers: async () => {
-    // const response = await axios.get(`${API_URL}/users`);
-    const response = users;
-    // return response.data;
-    return response;
+
+    const response = await axios.get(`${API_URL}/users`);
+    const list = response.data.map((id) => {
+      return {...id};
+    });
+    //const response = users; mock
+    return list;
+  },
+
+  register: async (user) => {
+    const response = await axios.post(
+      `${LOGIN_URL}/users`,
+      user
+    );
+    return response.data;
+
   },
 
   getAllReservations: async () => {
