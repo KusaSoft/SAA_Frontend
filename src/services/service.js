@@ -49,9 +49,10 @@ const apiSettings = {
       if (
         subjectList[index].data.message !== 'no hay grupos registrados'
       ) {
+        console.log(subject.name_subject, '.......');
         const newSubject = {
           name_subject: subject.name_subject,
-          group_list: {...subjectList[index].data[0]},
+          group_list: [...subjectList[index].data],
         };
         newSubjects.push(newSubject);
       }
@@ -148,7 +149,6 @@ const apiSettings = {
   },
 
   getUsers: async () => {
-
     const response = await axios.get(`${API_URL}/users`);
     const list = response.data.map((id) => {
       return {...id};
@@ -158,12 +158,8 @@ const apiSettings = {
   },
 
   register: async (user) => {
-    const response = await axios.post(
-      `${LOGIN_URL}/users`,
-      user
-    );
+    const response = await axios.post(`${LOGIN_URL}/users`, user);
     return response.data;
-
   },
 
   getAllReservations: async () => {
