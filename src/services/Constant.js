@@ -27,7 +27,7 @@ export const STATUS = {
 export const ROLES = {
   REVIEWER: 'operador',
   TEACHER: 'docente',
-  ADMIN: 'admin',
+  ADMIN: 'administrador',
 };
 
 export const PATHS = {
@@ -35,6 +35,7 @@ export const PATHS = {
   LOGIN: '/login',
   UNAUTHORIZED: '/unauthorized',
   USER: '/user',
+  NEW_USER: '/user/users/newUser',
   USERHOME: 'home',
   USERS: 'users',
   RESERVATION_REQUEST: 'reservationRequest/:reservationRequest',
@@ -116,12 +117,12 @@ export const BREAD_CRUB_PATHS = {
   NEW_USER: [
     {
       name: 'Usuarios',
-      route: PATHS.USER,
+      route: `${PATHS.USER}/${PATHS.USERS}`,
       link: true,
     },
     {
       name: 'Nuevo usuario',
-      route: PATHS.USER,
+      route: PATHS.NEW_USER,
       link: false,
     },
   ],
@@ -160,3 +161,18 @@ export const ERRORFORM = {
     message: 'La hora de fin debe ser mayor a la hora de inicio',
   },
 };
+
+export const ROLS = [
+  {
+    value: 'Docente',
+    label: 'Docente',
+  },
+  {
+    value: 'Operador',
+    label: 'Operador',
+  },
+  {
+    value: 'Administrador',
+    label: 'Administrador',
+  },
+];

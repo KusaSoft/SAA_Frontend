@@ -14,9 +14,13 @@ import {
   WrapperLayout,
   WrapperPage,
 } from '../emotion/GlobalComponents';
-import {BREAD_CRUB_PATHS} from '../services/Constant';
-
+import {BREAD_CRUB_PATHS, PATHS} from '../services/Constant';
+import useListUsers from '../hooks/useListUsers';
+import CardUser from '../components/User/cardUser';
+import {Link} from 'react-router-dom';
 function Users() {
+  const [listUsers] = useListUsers();
+  console.log(listUsers);
   return (
     <WrapperLayout>
       <WrapperPage>
@@ -24,28 +28,33 @@ function Users() {
           title="Usuarios"
           breadcrumbs={BREAD_CRUB_PATHS.USERS}
         >
-          <Button
-            variant="contained"
-            color="primary"
-            style={{
-              background: '#172B4D',
-              color: '#FAFBFC',
-              fontFamily: 'roboto',
-              fontSize: '0.8rem',
-              borderRadius: '0.5rem',
-              border: 'none',
-              boxShadow: 'none',
-              '&:hover': {
-                background: '#FAFBFC',
-                color: '#172B4D',
-                boxShadow: 'none',
-                border: 'none',
-              },
-            }}
+          <Link
+            to={PATHS.NEW_USER}
+            style={{textDecoration: 'none'}}
           >
-            <Add />
-            Nuevo usuario
-          </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              style={{
+                background: '#172B4D',
+                color: '#FAFBFC',
+                fontFamily: 'roboto',
+                fontSize: '0.8rem',
+                borderRadius: '0.5rem',
+                border: 'none',
+                boxShadow: 'none',
+                '&:hover': {
+                  background: '#FAFBFC',
+                  color: '#172B4D',
+                  boxShadow: 'none',
+                  border: 'none',
+                },
+              }}
+            >
+              <Add />
+              Nuevo usuario
+            </Button>
+          </Link>
         </BasicBreadcrumbs>
         <Box
           sx={{
@@ -59,50 +68,15 @@ function Users() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Nombre</TableCell>
-                <TableCell>Apellido</TableCell>
+                <TableCell>Nombre y Apellido</TableCell>
+                {/* <TableCell>Apellido</TableCell> */}
                 <TableCell>Email</TableCell>
                 <TableCell>Rol</TableCell>
                 <TableCell>Habilitado</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell>Juan</TableCell>
-                <TableCell>Perez</TableCell>
-                <TableCell>juan@gmail.com</TableCell>
-                <TableCell>Operador</TableCell>
-                <TableCell>
-                  <input type="checkbox" />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Juan</TableCell>
-                <TableCell>Perez</TableCell>
-                <TableCell>corina@gmail.com</TableCell>
-                <TableCell>Docente</TableCell>
-                <TableCell>
-                  <input type="checkbox" />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Juan</TableCell>
-                <TableCell>Perez</TableCell>
-                <TableCell>leticia@gmail.com</TableCell>
-                <TableCell>Docente</TableCell>
-                <TableCell>
-                  <input type="checkbox" />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Juan</TableCell>
-                <TableCell>Perez</TableCell>
-                <TableCell>alfredo@gmail.com</TableCell>
-                <TableCell>Administrador</TableCell>
-                <TableCell>
-                  <input type="checkbox" />
-                </TableCell>
-              </TableRow>
+              {List(listUsers ? listUsers : [])}
             </TableBody>
           </Table>
         </Box>
@@ -111,3 +85,13 @@ function Users() {
   );
 }
 export default Users;
+
+const List = (list) => {
+  if (list.length !== 0) {
+    return list.map((element) => {
+      //console.log('aaaaaaaaaa', element);
+      return <CardUser request={element} />;
+    });
+  } else {
+  }
+};
