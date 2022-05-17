@@ -29,11 +29,16 @@ const apiSettings = {
   },
   getTeachers: async (userID) => {
     const response = await axios.get(`${API_URL}/subjects/${userID}`);
-    const subjects = response.data.map((subject) => {
+    const subjectsF = response.data.map((subject) => {
       return {
         name_subject: subject.subject_name,
         id: subject.id,
       };
+    });
+    const subjects = subjectsF.filter((obj, index, subjectsF) => {
+      return (
+        subjectsF.map((mapObj) => mapObj.id).indexOf(obj.id) === index
+      );
     });
 
     let promises = [];

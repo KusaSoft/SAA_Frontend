@@ -21,8 +21,10 @@ export default function useFilter({requestType, dateType}) {
       value: false,
     },
   ]);
+  const [loading, setLoading] = useState(false);
 
   const fetchList = async () => {
+    setLoading(true);
     const data = await requestType();
     if (dateType === ORDER_DATE.LEJANOS) {
       data.sort((a, b) => {
@@ -36,6 +38,7 @@ export default function useFilter({requestType, dateType}) {
     }
     setList(data);
     setFilteredList(data);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -115,5 +118,6 @@ export default function useFilter({requestType, dateType}) {
     handleChangeMotive,
     handleChangeDateByRegister,
     handleChangeDateByReservation,
+    loading,
   ];
 }

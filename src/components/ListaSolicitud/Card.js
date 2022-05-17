@@ -165,8 +165,10 @@ const SimpleCard = (props) => {
                 <Button onClick={handleClose}>Cancelar</Button>
                 <Button
                   sx={{marginLeft: '82px'}}
-                  onClick={() => {
-                    apiSettings.deleteReservationRequest(props.request.id);
+                  onClick={async () => {
+                    await apiSettings.deleteReservationRequest(
+                      props.request.id
+                    );
                     handleClose();
                     recargar();
                     //window.location.reload();
