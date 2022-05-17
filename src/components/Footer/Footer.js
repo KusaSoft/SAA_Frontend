@@ -24,10 +24,10 @@ function Footer() {
         textAlign: 'center',
         flexDirection: 'column',
         fontSize: '0.8rem',
-        color: 'textSecondary',
         bottom: 1,
         width: '100%',
-        backgroundColor: '#172B4D',
+        backgroundColor: 'footer.main',
+        color: 'footer.contrastText',
         position: 'fixed',
         zIndex: '30',
       }}
@@ -40,11 +40,9 @@ function Footer() {
           textAlign: 'center',
           flexDirection: 'column',
           fontSize: '0.8rem',
-          color: 'white',
           position: 'absolute',
           bottom: 1,
           width: '100%',
-          backgroundColor: '#060B26',
         }}
       />
       <Stack
@@ -88,7 +86,6 @@ function Footer() {
         sx={{
           fontSize: '0.8rem',
           paddingBottom: '1rem',
-          color: 'white',
         }}
       >
         © {new Date().getFullYear()}, Desarrollado por kusaSoft.

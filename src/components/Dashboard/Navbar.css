@@ -11,13 +11,17 @@
   display: flex;
   align-content: center;
   height: 100%;
+  /* background-color: #172b4d; */
+  /* background-color: #060b26; */
+  background-color: #263752;
 }
 
 .nav_content {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
   flex-direction: column;
+  min-width: 200px;
   padding: 70px 50px 40px 50px;
 }
 
@@ -42,8 +46,7 @@
 }
 
 .sidebar-item a:hover {
-  background-color: #DFE1E6;
-  color: #172B4D;
+  background-color: #436280;
 }
 
 .sidebar-items {

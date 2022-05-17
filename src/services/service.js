@@ -5,9 +5,7 @@ const API_URL = 'https://tis-server2.herokuapp.com/api';
 const LOGIN_URL = 'https://tis-server2.herokuapp.com/api';
 const apiSettings = {
   getSubjects: async (userID) => {
-    const response = await axios.get(
-      `${API_URL}/subjects/${userID}`
-    );
+    const response = await axios.get(`${API_URL}/subjects/${userID}`);
     const subjects = response.data.map((subject) => {
       return {
         name_subject: subject.subject_name,
@@ -17,26 +15,20 @@ const apiSettings = {
 
     let promises = [];
     subjects.forEach((subject) => {
-      let promise = axios.get(
-        `${API_URL}/groups/${subject.id}/${userID}`
-      );
+      let promise = axios.get(`${API_URL}/groups/${subject.id}/${userID}`);
       promises.push(promise);
     });
     const subjectList = await Promise.all(promises);
     const newSubjects = subjects.map((subject, index) => {
       return {
         name_subject: subject.name_subject,
-        group_list: subjectList[index].data.map(
-          (group) => group
-        ),
+        group_list: subjectList[index].data.map((group) => group),
       };
     });
     return newSubjects;
   },
   getTeachers: async (userID) => {
-    const response = await axios.get(
-      `${API_URL}/subjects/${userID}`
-    );
+    const response = await axios.get(`${API_URL}/subjects/${userID}`);
     const subjects = response.data.map((subject) => {
       return {
         name_subject: subject.subject_name,
@@ -55,8 +47,7 @@ const apiSettings = {
     let newSubjects = [];
     subjects.filter((subject, index) => {
       if (
-        subjectList[index].data.message !==
-        'no hay grupos registrados'
+        subjectList[index].data.message !== 'no hay grupos registrados'
       ) {
         const newSubject = {
           name_subject: subject.name_subject,
@@ -90,8 +81,7 @@ const apiSettings = {
     response = {
       error:
         'Lo sentimos, no se pudo realizar la solicitud de reserva!! :(',
-      message:
-        'Lamentalbemente usted tiene una reserva mal planeada',
+      message: 'Lamentalbemente usted tiene una reserva mal planeada',
       data: reservationRequest,
     };
     response = {
@@ -106,8 +96,13 @@ const apiSettings = {
     const response = await axios.get(
       `${API_URL}/reservation/${reservationRequest}`
     );
-    console.log(response.data);
     return response.data;
+  },
+  getReservationRequestD: async (reservationRequest) => {
+    const response = await axios.get(
+      `${API_URL}/reservation/${reservationRequest}`
+    );
+    return response;
   },
 
   getStatusList: async (status) => {
@@ -115,10 +110,7 @@ const apiSettings = {
   },
 
   login: async (user) => {
-    const response = await axios.post(
-      `${LOGIN_URL}/login`,
-      user
-    );
+    const response = await axios.post(`${LOGIN_URL}/login`, user);
     return response.data;
   },
 
@@ -143,15 +135,11 @@ const apiSettings = {
   },
 
   deleteReservationRequest: async (requestID) => {
-    const response = await axios.delete(
-      `${API_URL}/draft/${requestID}`
-    );
+    const response = await axios.delete(`${API_URL}/draft/${requestID}`);
     return response;
   },
   getRequests: async () => {
-    const response = await axios.get(
-      `${API_URL}/test/user_booking`
-    );
+    const response = await axios.get(`${API_URL}/test/user_booking`);
     console.log(response);
     const list = response.data.map((id) => {
       return {...id};
@@ -160,6 +148,7 @@ const apiSettings = {
   },
 
   getUsers: async () => {
+
     const response = await axios.get(`${API_URL}/users`);
     const list = response.data.map((id) => {
       return {...id};
@@ -174,6 +163,29 @@ const apiSettings = {
       user
     );
     return response.data;
+
+  },
+
+  getAllReservations: async () => {
+    const response = await axios.get(`${API_URL}/reservations`);
+    return response.data;
+  },
+  getUrgentReservations: async () => {
+    const response = await axios.get(`${API_URL}/reservations/urgent`);
+    return response.data;
+  },
+
+  getGroups: async (subjectIDs) => {
+    let promises = [];
+    subjectIDs.forEach((subjectID) => {
+      let promise = axios.get(`${API_URL}/group/${subjectID}`);
+      promises.push(promise);
+    });
+    const response = await Promise.all(promises);
+    const groups = response.map((group) => {
+      return group.data;
+    });
+    return groups;
   },
 };
 

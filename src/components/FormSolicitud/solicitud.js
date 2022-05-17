@@ -39,15 +39,9 @@ function Solicitud(props) {
   const {auth} = useAuth();
   const navigate = useNavigate();
   const [isOpenModal, openModal, closeModal] = useModal(false);
-  const [isOpenModal1, openModal1, closeModal1] = useModal(
-    false
-  );
-  const [isOpenModal2, openModal2, closeModal2] = useModal(
-    false
-  );
-  const [isOpenModal3, openModal3, closeModal3] = useModal(
-    false
-  );
+  const [isOpenModal1, openModal1, closeModal1] = useModal(false);
+  const [isOpenModal2, openModal2, closeModal2] = useModal(false);
+  const [isOpenModal3, openModal3, closeModal3] = useModal(false);
   const [
     loadingR,
     errorR,
@@ -101,13 +95,13 @@ function Solicitud(props) {
       display="flex"
       justifyContent="center"
       alignItems="center"
+      width="75%"
       padding={2}
-      style={{backgroundColor: '#fafbfc'}}
     >
       {isLoading ? (
         <CircularProgress />
       ) : (
-        <Card style={{maxWidth: 900}}>
+        <Card sx={{backgroundColor: 'forms.main', maxWidth: 900}}>
           <CardHeader
             avatar={
               <Stack spacing={1} direction="row">
@@ -117,9 +111,7 @@ function Solicitud(props) {
                   onClick={(e) => {
                     e.preventDefault();
                     if (validateSaveFilled()) {
-                      handleRequestR(
-                        getReservationRequest(STATUS.DRAFT)
-                      );
+                      handleRequestR(getReservationRequest(STATUS.DRAFT));
                       openModal();
                     }
                   }}
@@ -144,23 +136,22 @@ function Solicitud(props) {
 
           <CardContent style={{padding: '10px 2px'}}>
             <Typography
-              gutterBottom
-              variant="caption"
-              color="textSecondary"
-              align="left"
-              padding="0 1rem"
-            >
-              Todos los campos con * son obligatorios.
-            </Typography>
-            <Typography
               variant="body2"
               color="textSecondary"
               component="p"
               align="left"
               padding="0 1rem"
             >
-              La solicitud de la reserva se realizará en nombre
-              de <b>{reservationRequest.teacher}</b>
+              <Typography
+                gutterBottom
+                variant="caption"
+                color="textSecondary"
+              >
+                Todos los campos con * son obligatorios.
+              </Typography>
+              <br />
+              La solicitud de la reserva se realizará en nombre de{' '}
+              <b>{reservationRequest.teacher}</b>
             </Typography>
             <form>
               <List container spacing={1}>
@@ -171,11 +162,7 @@ function Solicitud(props) {
                       myValue={reservationRequest.subject}
                       myName="subject"
                       setValue={handleReservationRequest}
-                      list={
-                        subjectList
-                          ? [...subjectList.keys()]
-                          : []
-                      }
+                      list={subjectList ? [...subjectList.keys()] : []}
                     >
                       {errors.subject.isEmpty ? (
                         <RedBar>{errors.emptyMessage}</RedBar>
@@ -187,9 +174,7 @@ function Solicitud(props) {
 
                   <Grid item sm={6} xs={12}>
                     <FormMultiselectControl
-                      disabled={
-                        reservationRequest.subject === ''
-                      }
+                      disabled={reservationRequest.subject === ''}
                       myLabel="Mis grupos *"
                       value={reservationRequest.myGroupList}
                       myName="myGroupList"
@@ -226,14 +211,8 @@ function Solicitud(props) {
                     list={
                       reservationRequest.subject !== ''
                         ? teachers
-                          ? teachers.has(
-                              reservationRequest.subject
-                            )
-                            ? [
-                                ...teachers.get(
-                                  reservationRequest.subject
-                                ),
-                              ]
+                          ? teachers.has(reservationRequest.subject)
+                            ? [...teachers.get(reservationRequest.subject)]
                             : []
                           : []
                         : []
@@ -246,11 +225,9 @@ function Solicitud(props) {
                   <Grid item sm={6} xs={12}>
                     <Autocomplete
                       freeSolo
-                      options={MOTIVES}
+                      options={MOTIVES.slice(0, MOTIVES.length - 1)}
                       value={reservationRequest.motiveRequest}
-                      inputValue={
-                        reservationRequest.motiveRequest
-                      }
+                      inputValue={reservationRequest.motiveRequest}
                       disableClearable={true}
                       onInputChange={(e, newValue) => {
                         handleReservationRequest(
@@ -272,11 +249,17 @@ function Solicitud(props) {
                         />
                       )}
                     />
-                    {errors.motive.isEmpty ? (
-                      <RedBar>{errors.emptyMessage}</RedBar>
-                    ) : errors.motive.isUnsaveable ? (
-                      <RedBar>{errors.saveMessage}</RedBar>
-                    ) : null}
+                    <div
+                      style={{
+                        padding: '0rem 1rem 0rem 1rem',
+                      }}
+                    >
+                      {errors.motive.isEmpty ? (
+                        <RedBar>{errors.emptyMessage}</RedBar>
+                      ) : errors.motive.isUnsaveable ? (
+                        <RedBar>{errors.saveMessage}</RedBar>
+                      ) : null}
+                    </div>
                   </Grid>
 
                   <Grid item sm={6} xs={12}>
@@ -312,12 +295,9 @@ function Solicitud(props) {
                         inputProps: {
                           min: DateController.getToday(),
                         },
-                        value:
-                          reservationRequest.dateReservation,
+                        value: reservationRequest.dateReservation,
                       }}
-                      myDefaultValue={
-                        reservationRequest.dateReservation
-                      }
+                      myDefaultValue={reservationRequest.dateReservation}
                     >
                       {errors.date.isEmpty ? (
                         <RedBar>{errors.emptyMessage}</RedBar>
@@ -332,33 +312,24 @@ function Solicitud(props) {
                   <Grid item sm={6} xs={12}>
                     <FormSelectControl
                       myLabel="Hora Inicio *"
-                      myValue={
-                        reservationRequest.periodIniSelected
-                      }
+                      myValue={reservationRequest.periodIniSelected}
                       setValue={handleReservationRequest}
                       myName="periodIniSelected"
                       list={[
-                        ...PERIODSRANGE.slice(
-                          0,
-                          PERIODSRANGE.length - 1
-                        ),
+                        ...PERIODSRANGE.slice(0, PERIODSRANGE.length - 1),
                       ]}
                     >
                       {errors.iniPeriod.isEmpty ? (
                         <RedBar>{errors.emptyMessage}</RedBar>
                       ) : errors.iniPeriod.isError ? (
-                        <RedBar>
-                          {errors.iniPeriod.message}
-                        </RedBar>
+                        <RedBar>{errors.iniPeriod.message}</RedBar>
                       ) : null}
                     </FormSelectControl>
                   </Grid>
                   <Grid item sm={6} xs={12}>
                     <FormSelectControl
                       myLabel="Hora Fin *"
-                      myValue={
-                        reservationRequest.periodEndSelected
-                      }
+                      myValue={reservationRequest.periodEndSelected}
                       myName="periodEndSelected"
                       setValue={handleReservationRequest}
                       list={[...PERIODSRANGE.slice(1)]}
@@ -366,9 +337,7 @@ function Solicitud(props) {
                       {errors.endPeriod.isEmpty ? (
                         <RedBar>{errors.emptyMessage}</RedBar>
                       ) : errors.endPeriod.isError ? (
-                        <RedBar>
-                          {errors.endPeriod.message}
-                        </RedBar>
+                        <RedBar>{errors.endPeriod.message}</RedBar>
                       ) : null}
                     </FormSelectControl>
                   </Grid>
@@ -379,6 +348,7 @@ function Solicitud(props) {
                   sx={{
                     display: 'flex',
                     justifyContent: 'flex-end',
+                    padding: '0 1rem',
                   }}
                 >
                   <Stack
@@ -440,11 +410,9 @@ function Solicitud(props) {
                 ? {
                     ...responseR,
                     group_list: [
-                      ...reservationRequest.myGroupList.map(
-                        (group) => {
-                          return `${group}  ${reservationRequest.teacher}`;
-                        }
-                      ),
+                      ...reservationRequest.myGroupList.map((group) => {
+                        return `${group}  ${reservationRequest.teacher}`;
+                      }),
                       ...reservationRequest.otherGroupList,
                     ],
                   }
@@ -458,12 +426,8 @@ function Solicitud(props) {
       <Dialog open={isOpenModal} onClose={closeModal}>
         <RequestMessage
           loading={loadingR}
-          successMessage={
-            'Su solicitud se ha guardado con éxito!!'
-          }
-          errorMessage={
-            'Ha ocurrido un error al guardar su solicitud'
-          }
+          successMessage={'Su solicitud se ha guardado con éxito!!'}
+          errorMessage={'Ha ocurrido un error al guardar su solicitud'}
           error={errorR}
           closeModal={closeModal}
           linkExit={`/user/${PATHS.DRAFTS}`}

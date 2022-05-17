@@ -1,17 +1,12 @@
-import {invalidDates} from '../../services/Constant';
+import {invalidDates, PERIODSRANGE} from '../../services/Constant';
 const DataTransform = {
-  getOriginalTeachersList: (
-    teachersSelected,
-    originalTeachersList
-  ) => {
+  getOriginalTeachersList: (teachersSelected, originalTeachersList) => {
     let teachersList = [];
     const teachersOriginal = [...originalTeachersList.values()];
     teachersSelected.map((teacher) => {
       teachersOriginal.map((teacherOriginal) => {
         teacherOriginal.map((teacherO) => {
-          if (
-            teacher === `G${teacherO.group} ${teacherO.name}`
-          ) {
+          if (teacher === `G${teacherO.group} ${teacherO.name}`) {
             teachersList.push(teacherO.id);
           }
         });
@@ -84,6 +79,12 @@ const DataTransform = {
       target: {value},
     } = e;
     return typeof value === 'string' ? value.split(',') : value;
+  },
+
+  getQuantityPeriod: (periodIni, periodEnd) => {
+    const period =
+      PERIODSRANGE.indexOf(periodEnd) - PERIODSRANGE.indexOf(periodIni);
+    return period;
   },
 };
 

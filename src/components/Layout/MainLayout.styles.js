@@ -20,6 +20,7 @@ export const Dashboard = styled.div`
   width: ${(props) => (props.open ? '300px' : '0px')};
   min-width: ${(props) => (props.open ? '300px' : '0px')};
   z-index: 11;
+  background: ${({theme}) => theme.palette.navBar.main};
 `;
 
 export const LayoutSite = styled.div`
@@ -40,6 +41,6 @@ export const Header = styled.div`
   height: 40px;
   max-height: 40px;
   fontsize: 0.9rem;
-  background: #fff;
+  background: ${({theme}) => theme.palette.header.main};
   justify-content: space-between;
 `;

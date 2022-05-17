@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import apiSettings from '../services/service';
 
-export const useRequest = ({methodRequest}) => {
+export const useRequestDetail = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -12,10 +12,19 @@ export const useRequest = ({methodRequest}) => {
     setError('');
     setSuccess('');
     try {
-      const response = await methodRequest(request);
+      const response = await apiSettings.getReservationRequestD(request);
       const data = response;
+      //   const myGroups = await apiSettings.getGroups([data.data.group_list]);
+      //   const otherGroups = await apiSettings.getGroups([
+      //     data.data.other_groups,
+      //   ]);
+      setResponse({...data.data});
+      //   setResponse({
+      //     ...data.data,
+      //     group_list: myGroups,
+      //     other_groups: otherGroups,
+      //   });
       setLoading(false);
-      setResponse(data.data);
     } catch (error) {
       setLoading(false);
       setError(error.message);

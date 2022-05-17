@@ -1,6 +1,3 @@
-import React from 'react';
-import {Home} from '@mui/icons-material';
-
 export const PERIODSRANGE = [
   '06:45',
   '08:15',
@@ -15,7 +12,14 @@ export const PERIODSRANGE = [
   '21:45',
 ];
 
-export const MOTIVES = ['Examen', 'Exposición', 'Capacitación'];
+export const MOTIVES = [
+  'Examen',
+  'Exposición',
+  'Capacitación',
+  'Laboratorio',
+  'Simulacro',
+  'Otros',
+];
 
 export const STATUS = {
   SENT: 'sent',
@@ -46,8 +50,7 @@ export const PATHS = {
   URGENCY: 'urgency',
   RESERVATION_REQUEST_DETAIL:
     'reservationRequest/:reservationRequest/detail',
-  RESERVATION_REQUEST_EDIT:
-    'reservationRequest/:reservationRequest/edit',
+  RESERVATION_REQUEST_EDIT: 'reservationRequest/:reservationRequest/edit',
 };
 
 export const BREAD_CRUB_PATHS = {
@@ -162,6 +165,7 @@ export const ERRORFORM = {
   },
 };
 
+
 export const ROLS = [
   {
     value: 'Docente',
@@ -176,3 +180,9 @@ export const ROLS = [
     label: 'Administrador',
   },
 ];
+
+export const ORDER_DATE = {
+  PROXIMOS: 'Proximos-Lejanos',
+  LEJANOS: 'Lejanos-Proximos',
+};
+

@@ -1,4 +1,6 @@
-import React, {useContext} from 'react';
+
+import React, {useContext, useState} from 'react';
+
 import {useFormik} from 'formik';
 import {useLocation, Navigate, Outlet} from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
@@ -23,9 +25,14 @@ import apiSettings from '../services/service';
 
 import Modal from '@mui/material/Modal';
 import {useModal} from '../hooks/useModal';
+
+
+
+
 var Message;
 function Login() {
   const [isOpenModal, openModal, closeModal] = useModal(false);
+  const [messageError, setMessageError] = useState('');
   const location = useLocation();
   const {setAuth} = useContext(AuthContext);
   const {auth} = useAuth();
@@ -45,15 +52,17 @@ function Login() {
         .required('La contraseña es requerida'),
     }),
     onSubmit: async () => {
+
       const responseLogin = await apiSettings.login(
         formik.values
       );
 
       console.log(responseLogin, 'responseLogin');
       Message = responseLogin.message;
-      responseLogin.successful == false
+      responseLogin.successful === false
         ? //cambiarAqui cuando actulizen endPoint responseLogin.succesful==false?
           openModal()
+
         : setAuth({
             user: responseLogin.name,
             id: responseLogin.id,
@@ -74,13 +83,17 @@ function Login() {
           flexGrow: 1,
           minHeight: '100%',
           height: '100vh',
-          backgroundColor: '#FAFBFC',
+
+          backgroundColor: 'fondo.main',
+
         }}
       >
         <Container
           maxWidth="xs"
           sx={{
-            backgroundColor: '#FFFFFF',
+
+            backgroundColor: 'forms.main',
+
             borderRadius: '10px',
             boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
             marginBottom: '150px',
@@ -162,8 +175,9 @@ function Login() {
                   mb: 1,
                   fontSize: '34px',
                   alignSelf:
-                    formik.touched.password &&
-                    formik.errors.password
+
+                    formik.touched.password && formik.errors.password
+
                       ? 'center'
                       : 'flex-end',
                 }}
@@ -180,8 +194,9 @@ function Login() {
                   maxWidth: '300px',
                 }}
                 helperText={
-                  formik.touched.password &&
-                  formik.errors.password
+
+                  formik.touched.password && formik.errors.password
+
                 }
                 label="Contraseña"
                 margin="normal"
@@ -231,6 +246,7 @@ function Login() {
             alignItems: 'center',
           }}
         >
+
           <Typography
             id="modal-modal-title"
             variant="h6"
@@ -250,6 +266,7 @@ function Login() {
 }
 
 export default Login;
+
 
 function Modalsito() {
   const [open, setOpen] = React.useState(false);
@@ -286,3 +303,5 @@ function Modalsito() {
     </Modal>
   );
 }
+
+

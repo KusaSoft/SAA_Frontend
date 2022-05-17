@@ -1,15 +1,10 @@
 import React from 'react';
 import BasicBreadcrumbs from '../components/Breadcrumbs/Breadcrumbs';
 import ListOperador from '../components/ListaSolicitud/ListOperador';
-import {
-  WrapperLayout,
-  WrapperPage,
-} from '../emotion/GlobalComponents';
-import useUrgencyList from '../hooks/useUrgencyList';
-import {BREAD_CRUB_PATHS, STATUS} from '../services/Constant';
+import {WrapperLayout, WrapperPage} from '../emotion/GlobalComponents';
+import {BREAD_CRUB_PATHS, ORDER_DATE, STATUS} from '../services/Constant';
+import apiSettings from '../services/service';
 function Arrival() {
-  const [sentList] = useUrgencyList({status: STATUS.SENT});
-
   return (
     <WrapperLayout>
       <WrapperPage>
@@ -22,7 +17,11 @@ function Arrival() {
             padding: '20px',
           }}
         >
-          <ListOperador list={sentList ? sentList : []} />
+          <ListOperador
+            dataTypeS={'Fecha de envio'}
+            requestType={apiSettings.getAllReservations}
+            orderDate={ORDER_DATE.LEJANOS}
+          />
         </div>
       </WrapperPage>
     </WrapperLayout>
