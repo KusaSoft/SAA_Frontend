@@ -188,6 +188,14 @@ const apiSettings = {
     });
     return groups;
   },
+
+  enable: async (idUser, cosas) => {
+    const response = await axios.put(
+      `${LOGIN_URL}/users/${idUser}`,
+      cosas
+    );
+    return response.data;
+  },
 };
 
 export default apiSettings;

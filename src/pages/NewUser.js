@@ -1,9 +1,6 @@
 import React from 'react';
 import BasicBreadcrumbs from '../components/Breadcrumbs/Breadcrumbs';
-import {
-  WrapperLayout,
-  WrapperPage,
-} from '../emotion/GlobalComponents';
+import {WrapperLayout, WrapperPage} from '../emotion/GlobalComponents';
 import {BREAD_CRUB_PATHS, PATHS} from '../services/Constant';
 import {
   MenuItem,
@@ -43,11 +40,11 @@ function NewUser() {
     validationSchema: Yup.object({
       firstName: Yup.string()
         .min(3, 'Mínimo 3 caracteres')
-        .max(30, 'Nombre demasiado largo')
+        .max(30, 'Nombre demasiado largo, máximo 30 caracteres')
         .required('El nombre es requerido'),
       lastName: Yup.string()
         .min(3, 'Mínimo 3 caracteres')
-        .max(30, 'Apellido demasiado largo')
+        .max(30, 'Apellido demasiado largo, máximo 30 caracteres')
         .required('El apellido es requerido'),
       email: Yup.string()
         .email('Debe ser un email valido')
@@ -60,22 +57,20 @@ function NewUser() {
       confirmPassword: Yup.string()
         .max(255)
         .required('La confirmacion de contraseña es requerida')
-        .oneOf(
-          [Yup.ref('password'), null],
-          'La contraseña no coincide'
-        ),
+        .oneOf([Yup.ref('password'), null], 'La contraseña no coincide'),
       role: Yup.string()
         .max(255)
         .required('El Rol es requerido'),
     }),
     onSubmit: async () => {
-      const responseLogin = await apiSettings.register({
+      const responseRegister = await apiSettings.register({
         ...formik.values,
         name: `${formik.values.firstName} ${formik.values.lastName}`,
         role: formik.values.role.toLowerCase(),
       });
-
-      openModal();
+      responseRegister.successful === true
+        ? openModal()
+        : alert('email no valido');
     },
   });
 
@@ -97,7 +92,13 @@ function NewUser() {
               }}
             >
               <CardContent>
-                <Typography gutterBottom variant="h5">
+                <Typography
+                  sx={{
+                    textAlign: 'center',
+                  }}
+                  gutterBottom
+                  variant="h5"
+                >
                   Registro
                 </Typography>
 
@@ -131,12 +132,10 @@ function NewUser() {
                         label="Apellidos"
                         variant="outlined"
                         error={Boolean(
-                          formik.touched.lastName &&
-                            formik.errors.lastName
+                          formik.touched.lastName && formik.errors.lastName
                         )}
                         helperText={
-                          formik.touched.lastName &&
-                          formik.errors.lastName
+                          formik.touched.lastName && formik.errors.lastName
                         }
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
@@ -153,12 +152,10 @@ function NewUser() {
                         label="Correo Electrónico"
                         variant="outlined"
                         error={Boolean(
-                          formik.touched.email &&
-                            formik.errors.email
+                          formik.touched.email && formik.errors.email
                         )}
                         helperText={
-                          formik.touched.email &&
-                          formik.errors.email
+                          formik.touched.email && formik.errors.email
                         }
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
@@ -175,12 +172,10 @@ function NewUser() {
                         label="Contraseña"
                         variant="outlined"
                         error={Boolean(
-                          formik.touched.password &&
-                            formik.errors.password
+                          formik.touched.password && formik.errors.password
                         )}
                         helperText={
-                          formik.touched.password &&
-                          formik.errors.password
+                          formik.touched.password && formik.errors.password
                         }
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
@@ -222,12 +217,10 @@ function NewUser() {
                         label="Rol"
                         variant="outlined"
                         error={Boolean(
-                          formik.touched.role &&
-                            formik.errors.role
+                          formik.touched.role && formik.errors.role
                         )}
                         helperText={
-                          formik.touched.role &&
-                          formik.errors.role
+                          formik.touched.role && formik.errors.role
                         }
                         onBlur={formik.handleBlur}
                         fullWidth
@@ -246,11 +239,11 @@ function NewUser() {
                     <Grid item xs={12}>
                       <Button
                         sx={{
-                          background: '#172B4D',
+                          backgroundColor: 'navBar.main',
                           color: 'white',
                           boxShadow: 'none',
                           '&:hover': {
-                            background: '#172B4D',
+                            backgroundColor: 'navBar.dark',
                             color: 'white',
                             boxShadow: 'none',
                             border: 'solid 1px',
@@ -267,6 +260,28 @@ function NewUser() {
                     </Grid>
                   </Grid>
                 </form>
+                <Link to={'../users'} style={{textDecoration: 'none'}}>
+                  <Button
+                    sx={{
+                      backgroundColor: '#D52020',
+                      color: 'white',
+                      boxShadow: 'none',
+                      marginTop: '10px',
+                      '&:hover': {
+                        background: '#D52020',
+                        color: 'white',
+                        boxShadow: 'none',
+                        border: 'solid 1px',
+                      },
+                    }}
+                    type="submit"
+                    variant="contained"
+                    //color="primary"
+                    fullWidth
+                  >
+                    Cancelar
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
           </Grid>
@@ -296,11 +311,7 @@ function NewUser() {
             alignItems: 'center',
           }}
         >
-          <Typography
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-          >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
             Registro completado con éxito.
           </Typography>
           <Link to={'../users'} style={{textDecoration: 'none'}}>
