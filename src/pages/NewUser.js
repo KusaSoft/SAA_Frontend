@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import BasicBreadcrumbs from '../components/Breadcrumbs/Breadcrumbs';
 import {WrapperLayout, WrapperPage} from '../emotion/GlobalComponents';
 import {BREAD_CRUB_PATHS, PATHS} from '../services/Constant';
@@ -23,6 +23,7 @@ import {ROLS} from '../services/Constant';
 import {Link} from 'react-router-dom';
 import apiSettings from '../services/service';
 function NewUser() {
+  const [messageError, setMessageError] = useState('');
   const [currency, setCurrency] = React.useState('');
   const handleChange = (event) => {
     setCurrency(event.target.value);
@@ -68,9 +69,8 @@ function NewUser() {
         name: `${formik.values.firstName} ${formik.values.lastName}`,
         role: formik.values.role.toLowerCase(),
       });
-      responseRegister.successful === true
-        ? openModal()
-        : alert('email no valido');
+      setMessageError(responseRegister.message);
+      responseRegister.successful === true ? openModal() : openModal();
     },
   });
 
@@ -102,7 +102,7 @@ function NewUser() {
                   Registro
                 </Typography>
 
-                <form onSubmit={formik.handleSubmit}>
+                <form onSubmit={formik.handleSubmit} autoComplete="off">
                   <Grid container spacing={1}>
                     <Grid item xs={12}>
                       <TextField
@@ -149,6 +149,7 @@ function NewUser() {
                         name="email"
                         //type="email"
                         placeholder=""
+                        autoComplete="new-password"
                         label="Correo Electrónico"
                         variant="outlined"
                         error={Boolean(
@@ -169,6 +170,7 @@ function NewUser() {
                         name="password"
                         type="password"
                         placeholder=""
+                        autoComplete="new-password"
                         label="Contraseña"
                         variant="outlined"
                         error={Boolean(
@@ -312,9 +314,16 @@ function NewUser() {
           }}
         >
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Registro completado con éxito.
+            {messageError}
+            {messageError === 'Enviado exitosamente'
+              ? ''
+              : //: `${(<br />)}Correo no valido`}
+                ',\n correo no válido'}
           </Typography>
-          <Link to={'../users'} style={{textDecoration: 'none'}}>
+          <Link
+            to={messageError === 'Enviado exitosamente' ? '../users' : ''}
+            style={{textDecoration: 'none'}}
+          >
             <Button sx={{}} onClick={closeModal}>
               Continuar
             </Button>
