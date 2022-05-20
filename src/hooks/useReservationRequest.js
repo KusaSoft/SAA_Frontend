@@ -71,27 +71,34 @@ export const useReservationRequest = ({request, user}) => {
         subjectListMap,
         subjectListMapF
       );
+      console.log(...response.group_list.map((group) => group.id));
       setReservationRequest({
         teacher: user.user,
         subject: response.subject !== null ? response.subject : '',
-        myGroupList:
-          response.group_list !== ''
-            ? [
-                ...DataTransform.getMyGroupById(
-                  response.group_list,
-                  subjectListMapF
-                ),
-              ]
-            : [],
-        otherGroupList:
-          response.other_groups !== ''
-            ? [
-                ...DataTransform.getGroupsById(
-                  response.other_groups,
-                  subjectListMap
-                ),
-              ]
-            : [],
+        myGroupList: response.group_list
+          ? [
+              ...DataTransform.getMyGroupById(
+                [
+                  ...response.group_list.map((group) => {
+                    return `${group.id} `;
+                  }),
+                ].join(' '),
+                subjectListMapF
+              ),
+            ]
+          : [],
+        otherGroupList: response.other_groups
+          ? [
+              ...DataTransform.getGroupsById(
+                [
+                  ...response.other_groups.map((group) => {
+                    return `${group.id} `;
+                  }),
+                ].join(' '),
+                subjectListMap
+              ),
+            ]
+          : [],
         periodIniSelected:
           response.horario_ini !== null ? response.horario_ini : '',
         periodEndSelected:
