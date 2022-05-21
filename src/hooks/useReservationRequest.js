@@ -31,10 +31,7 @@ export const useReservationRequest = ({request, user}) => {
     const responseF = await apiSettings.getSubjects(user.id);
     const subjectListMapF = new Map();
     responseF.map((subject) => {
-      subjectListMapF.set(
-        subject.name_subject,
-        subject.group_list
-      );
+      subjectListMapF.set(subject.name_subject, subject.group_list);
     });
     setSubjectList(subjectListMapF);
     const response = await apiSettings.getTeachers(user.id);
@@ -53,69 +50,69 @@ export const useReservationRequest = ({request, user}) => {
           ]);
         }
       } else {
-        subjectListMap.set(subject.name_subject, [
-          subject.group_list,
-        ]);
+        subjectListMap.set(subject.name_subject, [...subject.group_list]);
       }
     });
+    console.log(subjectListMap, 'subjectListMap');
+    console.log(
+      subjectListMap
+        ? subjectListMap.has('Introduccion a la programacion')
+          ? [...subjectListMap.get('Introduccion a la programacion')]
+          : []
+        : [],
+      '=========='
+    );
     setTeachers(subjectListMap);
     if (request !== 'new' && request !== null) {
-      const response = await apiSettings.getReservationRequest(
-        request
-      );
+      const response = await apiSettings.getReservationRequest(request);
       console.log(
         response,
         'reservation request',
         subjectListMap,
         subjectListMapF
       );
+      console.log(...response.group_list.map((group) => group.id));
       setReservationRequest({
         teacher: user.user,
-        subject:
-          response.subject !== null ? response.subject : '',
-        myGroupList:
-          response.group_list !== ''
-            ? [
-                ...DataTransform.getMyGroupById(
-                  response.group_list,
-                  subjectListMapF
-                ),
-              ]
-            : [],
-        otherGroupList:
-          response.other_groups !== ''
-            ? [
-                ...DataTransform.getGroupsById(
-                  response.other_groups,
-                  subjectListMap
-                ),
-              ]
-            : [],
+        subject: response.subject !== null ? response.subject : '',
+        myGroupList: response.group_list
+          ? [
+              ...DataTransform.getMyGroupById(
+                [
+                  ...response.group_list.map((group) => {
+                    return `${group.id} `;
+                  }),
+                ].join(' '),
+                subjectListMapF
+              ),
+            ]
+          : [],
+        otherGroupList: response.other_groups
+          ? [
+              ...DataTransform.getGroupsById(
+                [
+                  ...response.other_groups.map((group) => {
+                    return `${group.id} `;
+                  }),
+                ].join(' '),
+                subjectListMap
+              ),
+            ]
+          : [],
         periodIniSelected:
-          response.horario_ini !== null
-            ? response.horario_ini
-            : '',
+          response.horario_ini !== null ? response.horario_ini : '',
         periodEndSelected:
-          response.horario_end !== null
-            ? response.horario_end
-            : '',
+          response.horario_end !== null ? response.horario_end : '',
         motiveRequest:
-          response.request_reason !== null
-            ? response.request_reason
-            : '',
+          response.request_reason !== null ? response.request_reason : '',
         totalStudents:
-          response.total_students !== null
-            ? response.total_students
-            : '',
+          response.total_students !== null ? response.total_students : '',
         dateReservation: response.reservation_date
           ? response.reservation_date
           : DateController.getToday(),
         status: STATUS.DRAFT,
       });
-      console.log(
-        response.reservation_date,
-        'reservation request'
-      );
+      console.log(response.reservation_date, 'reservation request');
     }
     setIsLoading(false);
   };
@@ -163,16 +160,14 @@ export const useReservationRequest = ({request, user}) => {
     const newResReq = {
       ...reservationRequest,
       [nameValue]:
-        newValue === 'myGroupList' ||
-        newValue === 'otherGroupList'
+        newValue === 'myGroupList' || newValue === 'otherGroupList'
           ? getList(newValue)
           : newValue,
     };
 
     setReservationRequest({
       ...newResReq,
-      myGroupList:
-        nameValue === 'subject' ? [] : newResReq.myGroupList,
+      myGroupList: nameValue === 'subject' ? [] : newResReq.myGroupList,
       otherGroupList:
         nameValue === 'subject' ? [] : newResReq.otherGroupList,
     });

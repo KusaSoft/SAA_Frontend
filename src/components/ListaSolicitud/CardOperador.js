@@ -7,17 +7,9 @@ import {
   Fab,
   Stack,
   Box,
-  List,
-  Divider,
-  ListItem,
   CircularProgress,
 } from '@mui/material';
-import {Link} from 'react-router-dom';
 import Modal from '@mui/material/Modal';
-// import Modal from '../Modals/Modal';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import {Wrapper} from '../ask/askReservationRequest.styles';
 import {useModal} from '../../hooks/useModal';
 import ContentDetail from '../details/ContentDetail';
 import {useRequestDetail} from '../../hooks/useDetail';

@@ -84,7 +84,7 @@ function Login() {
             padding: '20px',
           }}
         >
-          <form onSubmit={formik.handleSubmit}>
+          <form onSubmit={formik.handleSubmit} autoComplete="off">
             <Box sx={{textAlign: 'center'}}>
               <Box
                 component="img"
@@ -131,6 +131,7 @@ function Login() {
                 label="Correo electrónico"
                 margin="normal"
                 name="email"
+                autoComplete="new-password"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 type="email"
@@ -174,6 +175,7 @@ function Login() {
                 label="Contraseña"
                 margin="normal"
                 name="password"
+                autoComplete="new-password"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 type="password"
