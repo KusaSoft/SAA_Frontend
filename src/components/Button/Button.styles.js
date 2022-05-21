@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "@emotion/styled";
-// import { Button } from "@mui/material";
 
 export const StyledButton = styled.button`
   background: ${(props) => props.background};

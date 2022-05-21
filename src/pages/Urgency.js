@@ -2,7 +2,6 @@ import React from 'react';
 import BasicBreadcrumbs from '../components/Breadcrumbs/Breadcrumbs';
 import ListOperador from '../components/ListaSolicitud/ListOperador';
 import {WrapperLayout, WrapperPage} from '../emotion/GlobalComponents';
-import useUrgencyList from '../hooks/useUrgencyList';
 import {BREAD_CRUB_PATHS, ORDER_DATE} from '../services/Constant';
 import apiSettings from '../services/service';
 function Urgency() {

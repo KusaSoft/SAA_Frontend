@@ -7,7 +7,6 @@ import {Box, Divider, Button} from '@mui/material';
 import LogoFCyT from '../../assets/fcyt.png';
 import Logo from '../../assets/logo.png';
 import {Logout} from '@mui/icons-material';
-// import Button from '../../components/Button/Button';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';

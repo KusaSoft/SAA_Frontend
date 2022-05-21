@@ -1,8 +1,6 @@
 import axios from 'axios';
-import {users} from './Mock';
 
 const API_URL = 'https://tis-server2.herokuapp.com/api';
-const LOGIN_URL = 'https://tis-server2.herokuapp.com/api';
 const apiSettings = {
   getSubjects: async (userID) => {
     const response = await axios.get(`${API_URL}/subjects/${userID}`);
@@ -116,7 +114,7 @@ const apiSettings = {
   },
 
   login: async (user) => {
-    const response = await axios.post(`${LOGIN_URL}/login`, user);
+    const response = await axios.post(`${API_URL}/login`, user);
     return response.data;
   },
 
@@ -163,7 +161,7 @@ const apiSettings = {
   },
 
   register: async (user) => {
-    const response = await axios.post(`${LOGIN_URL}/users`, user);
+    const response = await axios.post(`${API_URL}/users`, user);
     return response.data;
   },
 
@@ -190,10 +188,7 @@ const apiSettings = {
   },
 
   enable: async (idUser, cosas) => {
-    const response = await axios.put(
-      `${LOGIN_URL}/users/${idUser}`,
-      cosas
-    );
+    const response = await axios.put(`${API_URL}/users/${idUser}`, cosas);
     return response.data;
   },
 };
