@@ -29,19 +29,19 @@ export default function ContentDetail(props) {
         <br />
         <b>Grupo(s):</b> <br />
         <List>
-          {/* {response.group_list.split(' ').map((group) => (
-            <ListItem>
-              {...DataTransform.getMyGroupById(
-                response.group_list,
-                subjectListMapF
-              )}
-            </ListItem>
-          ))} */}
-          {/* {props.request.group_list
-            .slice(1, props.request.group_list.length)
-            .map((group) => {
-              return <ListItem>{group}</ListItem>;
-            })} */}
+          {props.request.group_list &&
+            props.request.group_list.map((group) => (
+              <ListItem>
+                G{group.group} {group.teacher}
+              </ListItem>
+            ))}
+
+          {props.request.other_groups &&
+            props.request.other_groups.map((group) => (
+              <ListItem>
+                G{group.group} {group.teacher}
+              </ListItem>
+            ))}
         </List>
         <br />
         <Divider
