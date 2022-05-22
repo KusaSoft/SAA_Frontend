@@ -54,6 +54,7 @@ export const PATHS = {
   RESERVATION_REQUEST_DETAIL:
     'reservationRequest/:reservationRequest/detail',
   RESERVATION_REQUEST_EDIT: 'reservationRequest/:reservationRequest/edit',
+  CLASSROOM_ASSIGNATION: 'reservationRequest/:reservationRequest/classroomAssignation',
 };
 
 export const BREAD_CRUB_PATHS = {
@@ -153,6 +154,18 @@ export const BREAD_CRUB_PATHS = {
     {
       name: 'Nuevo usuario',
       route: PATHS.NEW_USER,
+      link: false,
+    },
+  ],
+  CLASSROOM_ASSIGNATION: [
+    {
+      name: 'Solicitudes',
+      route: PATHS.CLASSROOM_ASSIGNATION,
+      link: false,
+    },
+    {
+      name: 'Asignación de aula',
+      route: PATHS.CLASSROOM_ASSIGNATION,
       link: false,
     },
   ],

@@ -21,6 +21,8 @@ import NewUser from './pages/NewUser';
 import Assigned from './pages/Assigned';
 import Rejected from './pages/Rejected';
 
+import ClassroomAssigntaion from './pages/ClassroomAssignation';
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -70,6 +72,12 @@ function App() {
           </Route>
           <Route element={<RequireAuth allowedRoles={[ROLES.REVIEWER]} />}>
             <Route path={PATHS.REJECTED} element={<Rejected />} />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[ROLES.REVIEWER]} />}>
+            <Route
+              path={PATHS.CLASSROOM_ASSIGNATION}
+              element={<ClassroomAssigntaion />}
+            />
           </Route>
           <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
             <Route path={PATHS.USERS} element={<Users />} />

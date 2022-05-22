@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import {availableClassrooms} from './Mock';
 const API_URL = 'https://tis-server2.herokuapp.com/api';
 const apiSettings = {
   getSubjects: async (userID) => {
@@ -189,6 +189,15 @@ const apiSettings = {
 
   enable: async (idUser, cosas) => {
     const response = await axios.put(`${API_URL}/users/${idUser}`, cosas);
+    return response.data;
+  },
+
+  getClassrooms: async (horario_ini, horario_end, reservation_date) => {
+    // const response = await axios.get(
+    //   `${API_URL}/classrooms/${reservation_date}/${horario_ini}/${horario_end}`
+    // );
+    const response = availableClassrooms;
+
     return response.data;
   },
 };
