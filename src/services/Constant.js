@@ -25,6 +25,7 @@ export const STATUS = {
   SENT: 'sent',
   DRAFT: 'draft',
   REJECTED: 'rejected',
+  ASSIGNED: 'assigned',
   APPROVED: 'approved',
 };
 
@@ -48,6 +49,8 @@ export const PATHS = {
   DRAFTS: 'drafts',
   ARRIVAL: 'firstServedOrder',
   URGENCY: 'urgency',
+  ASSIGNED: 'assigned',
+  REJECTED: 'rejected',
   RESERVATION_REQUEST_DETAIL:
     'reservationRequest/:reservationRequest/detail',
   RESERVATION_REQUEST_EDIT: 'reservationRequest/:reservationRequest/edit',
@@ -95,6 +98,30 @@ export const BREAD_CRUB_PATHS = {
     {
       name: 'Por orden de llegada',
       route: PATHS.ARRIVAL,
+      link: false,
+    },
+  ],
+  REJECTED: [
+    {
+      name: 'Solicitudes',
+      route: PATHS.REJECTED,
+      link: false,
+    },
+    {
+      name: 'Rechazados',
+      route: PATHS.REJECTED,
+      link: false,
+    },
+  ],
+  ASSIGNED: [
+    {
+      name: 'Solicitudes',
+      route: PATHS.ASSIGNED,
+      link: false,
+    },
+    {
+      name: 'Asignados',
+      route: PATHS.ASSIGNED,
       link: false,
     },
   ],
@@ -165,7 +192,6 @@ export const ERRORFORM = {
   },
 };
 
-
 export const ROLS = [
   {
     value: 'Docente',
@@ -185,4 +211,3 @@ export const ORDER_DATE = {
   PROXIMOS: 'Proximos-Lejanos',
   LEJANOS: 'Lejanos-Proximos',
 };
-
