@@ -22,6 +22,9 @@ import Assigned from './pages/Assigned';
 import Rejected from './pages/Rejected';
 
 import ClassroomAssigntaion from './pages/ClassroomAssignation';
+import Calendar from './pages/Calendar';
+import Subjects from './pages/Subjects';
+import Groups from './pages/Groups';
 
 function App() {
   return (
@@ -84,6 +87,18 @@ function App() {
           </Route>
           <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
             <Route path={PATHS.NEW_USER} element={<NewUser />} />
+          </Route>
+
+          <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
+            <Route path={PATHS.CALENDAR} element={<Calendar />} />
+          </Route>
+
+          <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
+            <Route path={PATHS.SUBJECTS} element={<Subjects />} />
+          </Route>
+
+          <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
+            <Route path={PATHS.GROUPS} element={<Groups />} />
           </Route>
         </Route>
       </Routes>

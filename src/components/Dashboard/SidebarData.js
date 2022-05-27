@@ -1,5 +1,8 @@
 import React from 'react';
 import {Home, Add, Book, Group} from '@mui/icons-material';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import SubjectIcon from '@mui/icons-material/Subject';
+import GroupsIcon from '@mui/icons-material/Groups';
 import {ROLES, PATHS} from '../../services/Constant';
 
 export const SidebarData = (role) => {
@@ -12,6 +15,30 @@ export const SidebarData = (role) => {
         cName: 'sidebar-item',
         hasSubmenu: false,
         path: `${PATHS.USERS}`,
+      },
+      {
+        id: 3,
+        title: 'Calendario',
+        icon: <CalendarTodayIcon sx={{marginRight: '1rem'}} />,
+        cName: 'sidebar-item',
+        hasSubmenu: false,
+        path: `${PATHS.CALENDAR}`,
+      },
+      {
+        id: 4,
+        title: 'Materias',
+        icon: <SubjectIcon sx={{marginRight: '1rem'}} />,
+        cName: 'sidebar-item',
+        hasSubmenu: false,
+        path: `${PATHS.SUBJECTS}`,
+      },
+      {
+        id: 5,
+        title: 'Grupos',
+        icon: <GroupsIcon sx={{marginRight: '1rem'}} />,
+        cName: 'sidebar-item',
+        hasSubmenu: false,
+        path: `${PATHS.GROUPS}`,
       },
     ];
   } else if (role === ROLES.REVIEWER) {

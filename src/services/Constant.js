@@ -54,7 +54,11 @@ export const PATHS = {
   RESERVATION_REQUEST_DETAIL:
     'reservationRequest/:reservationRequest/detail',
   RESERVATION_REQUEST_EDIT: 'reservationRequest/:reservationRequest/edit',
-  CLASSROOM_ASSIGNATION: 'reservationRequest/:reservationRequest/classroomAssignation',
+  CLASSROOM_ASSIGNATION:
+    'reservationRequest/:reservationRequest/classroomAssignation',
+  CALENDAR: 'calendar',
+  SUBJECTS: 'subjects',
+  GROUPS: 'groups',
 };
 
 export const BREAD_CRUB_PATHS = {
@@ -166,6 +170,27 @@ export const BREAD_CRUB_PATHS = {
     {
       name: 'Asignación de aula',
       route: PATHS.CLASSROOM_ASSIGNATION,
+      link: false,
+    },
+  ],
+  CALENDAR: [
+    {
+      name: 'Calendario Académico',
+      route: PATHS.CALENDAR,
+      link: false,
+    },
+  ],
+  SUBJECTS: [
+    {
+      name: 'Materias',
+      route: PATHS.SUBJECTS,
+      link: false,
+    },
+  ],
+  GROUPS: [
+    {
+      name: 'Grupos',
+      route: PATHS.GROUPS,
       link: false,
     },
   ],
