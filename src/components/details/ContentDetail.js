@@ -91,7 +91,7 @@ export default function ContentDetail(props) {
             }}
           >
             <Button variant="contained" color="primary">
-              Asignar a un grupo
+              Asignar aula(s)
             </Button>
           </Link>
         </Box>
