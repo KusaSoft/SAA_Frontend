@@ -200,6 +200,15 @@ const apiSettings = {
 
     return response.data;
   },
+
+  getSubjectsAll: async () => {
+    const response = await axios.get(`${API_URL}/subjects`);
+    const list = response.data.map((id) => {
+      return {...id};
+    });
+    //const response = users; mock
+    return list;
+  },
 };
 
 export default apiSettings;

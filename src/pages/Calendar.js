@@ -17,15 +17,15 @@ import useListUsers from '../hooks/useListUsers';
 import CardUser from '../components/User/cardUser';
 import {Link} from 'react-router-dom';
 
-function Users() {
+function Calendar() {
   const [listUsers] = useListUsers();
   console.log(listUsers);
   return (
     <WrapperLayout>
       <WrapperPage>
         <BasicBreadcrumbs
-          title="Usuarios"
-          breadcrumbs={BREAD_CRUB_PATHS.USERS}
+          title="Calendario Académico"
+          breadcrumbs={BREAD_CRUB_PATHS.CALENDAR}
         >
           <Link to={PATHS.NEW_USER} style={{textDecoration: 'none'}}>
             <Button
@@ -55,7 +55,7 @@ function Users() {
               }}
             >
               <Add />
-              Nuevo usuario
+              XD
             </Button>
           </Link>
         </BasicBreadcrumbs>
@@ -66,34 +66,19 @@ function Users() {
             borderRadius: '0.5rem',
             padding: '0.5rem',
           }}
-        >
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{fontWeight: 'bold'}}>
-                  Nombre y Apellido
-                </TableCell>
-                {/* <TableCell>Apellido</TableCell> */}
-                <TableCell sx={{fontWeight: 'bold'}}>Email</TableCell>
-                <TableCell sx={{fontWeight: 'bold'}}>Rol</TableCell>
-                <TableCell sx={{fontWeight: 'bold'}}>Habilitado</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>{List(listUsers ? listUsers : [])}</TableBody>
-          </Table>
-        </Box>
+        ></Box>
       </WrapperPage>
     </WrapperLayout>
   );
 }
-export default Users;
+export default Calendar;
 
-const List = (list) => {
-  if (list.length !== 0) {
-    return list.map((element) => {
-      //console.log('aaaaaaaaaa', element);
-      return <CardUser request={element} />;
-    });
-  } else {
-  }
-};
+// const List = (list) => {
+//   if (list.length !== 0) {
+//     return list.map((element) => {
+//       //console.log('aaaaaaaaaa', element);
+//       return <CardUser request={element} />;
+//     });
+//   } else {
+//   }
+// };
