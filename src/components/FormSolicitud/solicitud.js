@@ -92,14 +92,20 @@ function Solicitud(props) {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      width="75%"
+      width="80%"
       padding={2}
     >
       {isLoading ? (
         <CircularProgress />
       ) : (
-        <Card sx={{backgroundColor: 'forms.main', maxWidth: 900}}>
-          <CardHeader
+        <Card
+          sx={{
+            backgroundColor: 'forms.main',
+            maxWidth: 1400,
+            width: '100%',
+          }}
+        >
+          {/* <CardHeader
             avatar={
               <Stack spacing={1} direction="row">
                 <Button
@@ -129,7 +135,7 @@ function Solicitud(props) {
                 ) : null}
               </Stack>
             }
-          />
+          /> */}
 
           <CardContent style={{padding: '10px 2px'}}>
             <Typography
@@ -344,18 +350,42 @@ function Solicitud(props) {
                   columns={12}
                   sx={{
                     display: 'flex',
-                    justifyContent: 'flex-end',
+                    justifyContent: 'space-between',
                     padding: '0 1rem',
                   }}
                 >
-                  <Stack
-                    spacing={2}
-                    direction="row"
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'flex-end',
-                    }}
-                  >
+                  <Stack spacing={1} direction="row">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (validateSaveFilled()) {
+                          handleRequestR(
+                            getReservationRequest(STATUS.DRAFT)
+                          );
+                          openModal();
+                        }
+                      }}
+                      startIcon={<Save />}
+                    >
+                      Guardar borrador
+                    </Button>
+                    {props.reservationRequest !== 'new' ? (
+                      <Button
+                        variant="contained"
+                        color="redDark"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          openModal2();
+                        }}
+                        startIcon={<Delete />}
+                      >
+                        Eliminar
+                      </Button>
+                    ) : null}
+                  </Stack>
+                  <Stack spacing={1} direction="row">
                     <Link
                       to={`/user/${PATHS.USERHOME}`}
                       style={{textDecoration: 'none'}}
