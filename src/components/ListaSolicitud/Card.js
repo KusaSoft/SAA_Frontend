@@ -55,13 +55,19 @@ const SimpleCard = (props) => {
             borderBottom: '1px solid #e0e0e0',
           }}
         >
-          <b style={{fontWeight: 'bold'}}>
-            {props.request.state === STATUS.DRAFT
-              ? 'Ultima modificación: '
-              : 'Fecha de solicitud'}
-          </b>
-          {': '}
-          {props.request.register_date}
+          {props.request.state === STATUS.DRAFT ? (
+            <div>
+              <b style={{fontWeight: 'bold'}}>Ultima modificación: </b>
+              {': '}
+              {props.request.register_date}
+            </div>
+          ) : (
+            <div>
+              <b style={{fontWeight: 'bold'}}>Fecha de solicitud: </b>
+              {': '}
+              {props.request.reservation_date}
+            </div>
+          )}
         </div>
         <div
           style={{
