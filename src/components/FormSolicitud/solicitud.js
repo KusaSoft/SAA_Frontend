@@ -31,7 +31,9 @@ import {Save, Delete} from '@mui/icons-material';
 import apiSettings from '../../services/service';
 import RequestMessage from '../Messages/RequestMessage';
 import ConfirmationMessage from '../Messages/ConfirmationMessage';
+import DataTransform from '../../utilities/DataController/DataTransform';
 import RedBar from '../Div/RedBar';
+import AlertMessage from '../Messages/AlertMessage';
 function Solicitud(props) {
   const {auth} = useAuth();
   const navigate = useNavigate();
@@ -39,6 +41,7 @@ function Solicitud(props) {
   const [isOpenModal1, openModal1, closeModal1] = useModal(false);
   const [isOpenModal2, openModal2, closeModal2] = useModal(false);
   const [isOpenModal3, openModal3, closeModal3] = useModal(false);
+  const [isOpenAlert, openAlert, closeAlert] = useModal(false);
   const [
     loadingR,
     errorR,
@@ -401,10 +404,19 @@ function Solicitud(props) {
                       onClick={(e) => {
                         e.preventDefault();
                         if (validateAllFilled()) {
-                          handleRequestR(
-                            getReservationRequest(STATUS.SENT)
-                          );
-                          openModal1();
+                          if (
+                            DataTransform.getQuantityPeriod(
+                              reservationRequest.periodIniSelected,
+                              reservationRequest.periodEndSelected
+                            ) > 3
+                          ) {
+                            openAlert();
+                          } else {
+                            handleRequestR(
+                              getReservationRequest(STATUS.SENT)
+                            );
+                            openModal1();
+                          }
                         }
                       }}
                     >
@@ -417,6 +429,19 @@ function Solicitud(props) {
           </CardContent>
         </Card>
       )}
+      <Dialog open={isOpenAlert} onClose={closeAlert}>
+        <AlertMessage
+          message={
+            'Esta seguro que quiere realizar la reserva con mas de 3 periodos?'
+          }
+          closeModal={closeAlert}
+          onNext={() => {
+            closeAlert();
+            handleRequestR(getReservationRequest(STATUS.SENT));
+            openModal1();
+          }}
+        ></AlertMessage>
+      </Dialog>
       <Modal isOpen={isOpenModal1} closeModal={closeModal1}>
         {loadingR ? (
           <Box
