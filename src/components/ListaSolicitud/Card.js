@@ -57,11 +57,11 @@ const SimpleCard = (props) => {
         >
           <b style={{fontWeight: 'bold'}}>
             {props.request.state === STATUS.DRAFT
-              ? 'Ultima modificacon'
+              ? 'Ultima modificación: '
               : 'Fecha de solicitud'}
           </b>
           {': '}
-          {props.request.fecha}
+          {props.request.register_date}
         </div>
         <div
           style={{
@@ -79,7 +79,7 @@ const SimpleCard = (props) => {
             }}
           >
             <b style={{fontWeight: 'bold'}}>Motivo: </b>{' '}
-            {props.request.motivo}
+            {props.request.request_reason}
           </div>
         </div>
       </CardContent>

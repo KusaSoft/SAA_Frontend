@@ -124,17 +124,17 @@ const apiSettings = {
     );
     console.log(response);
 
-    const list = response.data.map((id) => {
-      return {
-        id: id.id,
-        subject: id.subject,
-        fecha: id.reservation_date,
-        motivo: id.request_reason,
-        state: id.state,
-      };
-    });
-    console.log(list);
-    return list;
+    // const list = response.data.map((id) => {
+    //   return {
+    //     id: id.id,
+    //     subject: id.subject,
+    //     fecha: id.reservation_date,
+    //     motivo: id.request_reason,
+    //     state: id.state,
+    //   };
+    // });
+    // console.log(list);
+    return response.data;
     // return response.data;
   },
 
