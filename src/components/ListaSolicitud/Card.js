@@ -93,9 +93,22 @@ const SimpleCard = (props) => {
         disableSpacing
         style={{
           display: 'flex',
-          justifyContent: 'flex-end',
+          justifyContent: 'space-between',
         }}
       >
+        <Box
+          sx={{
+            padding: '14px',
+          }}
+        >
+          {props.request.state === STATUS.SENT && (
+            <div>
+              <b style={{fontWeight: 'bold'}}>Registrado el: </b>
+              {': '}
+              {props.request.register_date}
+            </div>
+          )}
+        </Box>
         <Stack
           direction="row"
           spacing={1}

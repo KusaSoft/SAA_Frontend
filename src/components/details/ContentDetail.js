@@ -29,6 +29,9 @@ export default function ContentDetail(props) {
         Solicitud de reserva
       </Typography>
       <Typography variant="body1">
+        <b>Registrado el: </b>
+        {props.request.register_date}
+        <br />
         <b>Realizada en nombre de: </b>
         {props.request.user}
         <br />
