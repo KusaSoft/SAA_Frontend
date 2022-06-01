@@ -58,13 +58,11 @@ const SimpleCard = (props) => {
           {props.request.state === STATUS.DRAFT ? (
             <div>
               <b style={{fontWeight: 'bold'}}>Ultima modificación: </b>
-              {': '}
               {props.request.register_date}
             </div>
           ) : (
             <div>
               <b style={{fontWeight: 'bold'}}>Fecha de solicitud: </b>
-              {': '}
               {props.request.reservation_date}
             </div>
           )}
@@ -104,7 +102,6 @@ const SimpleCard = (props) => {
           {props.request.state === STATUS.SENT && (
             <div>
               <b style={{fontWeight: 'bold'}}>Registrado el: </b>
-              {': '}
               {props.request.register_date}
             </div>
           )}

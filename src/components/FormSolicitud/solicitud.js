@@ -89,7 +89,6 @@ function Solicitud(props) {
     request: `${props.reservationRequest}`,
     user: auth,
   });
-
   return (
     <Box
       display="flex"
@@ -108,38 +107,6 @@ function Solicitud(props) {
             width: '100%',
           }}
         >
-          {/* <CardHeader
-            avatar={
-              <Stack spacing={1} direction="row">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (validateSaveFilled()) {
-                      handleRequestR(getReservationRequest(STATUS.DRAFT));
-                      openModal();
-                    }
-                  }}
-                >
-                  <Save />
-                </Button>
-                {props.reservationRequest !== 'new' ? (
-                  <Button
-                    variant="contained"
-                    color="redDark"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      openModal2();
-                    }}
-                  >
-                    <Delete />
-                  </Button>
-                ) : null}
-              </Stack>
-            }
-          /> */}
-
           <CardContent style={{padding: '10px 2px'}}>
             <Typography
               variant="body2"
@@ -270,7 +237,7 @@ function Solicitud(props) {
 
                   <Grid item sm={6} xs={12}>
                     <FormInputControl
-                      myLabel="Cantidad de estudiantes *"
+                      myLabel="Cantidad de estudiantes 1-500*"
                       myType="number"
                       myVariant="outlined"
                       myName="totalStudents"
@@ -278,10 +245,10 @@ function Solicitud(props) {
                       myInputProps={{
                         inputProps: {
                           min: '1',
-                          max: '1500',
+                          max: '500',
                         },
                       }}
-                      myMaxLength="4"
+                      myMaxLength="3"
                       setValue={handleReservationRequest}
                     >
                       {errors.totalStudents.isEmpty ? (
@@ -389,14 +356,13 @@ function Solicitud(props) {
                     ) : null}
                   </Stack>
                   <Stack spacing={1} direction="row">
-                    <Link
-                      to={`/user/${PATHS.USERHOME}`}
-                      style={{textDecoration: 'none'}}
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      onClick={() => navigate(-1)}
                     >
-                      <Button variant="outlined" color="error">
-                        Cancelar
-                      </Button>
-                    </Link>
+                      Cancelar
+                    </Button>
                     <Button
                       color="primary"
                       type="submit"
