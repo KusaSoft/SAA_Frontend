@@ -1,5 +1,13 @@
 import React from 'react';
-import {Box, Button, List, Typography, ListItem} from '@mui/material';
+import {
+  Box,
+  Button,
+  List,
+  Typography,
+  ListItem,
+  Alert,
+  AlertTitle,
+} from '@mui/material';
 import {Wrapper} from './askReservationRequest.styles';
 import {Link} from 'react-router-dom';
 import {CheckCircleOutline, ErrorOutline} from '@mui/icons-material';
@@ -9,13 +17,16 @@ export default function AskReservationRequest(props) {
   return (
     <Wrapper>
       {props.error !== '' ? (
-        <BoxColumn>
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          <ErrorOutline color="error" sx={{fontSize: 70}} />
           <Typography variant="h6" color="error">
             {props.message}
-            {props.error}
           </Typography>
-          <ErrorOutline color="error" sx={{fontSize: 70}} />
-        </BoxColumn>
+          <Button onClick={props.action} autoFocus variant="contained">
+            Continuar
+          </Button>
+        </Alert>
       ) : props.reservation ? (
         <BoxColumn>
           <Typography variant="h3">Acuse de recibo</Typography>
