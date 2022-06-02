@@ -55,7 +55,7 @@ const AccordionSummary = styled((props) => (
 function ClassroomsAssignation(props) {
   const {auth} = useAuth();
   const [isOpenModal, openModal, closeModal] = useModal(false);
-
+  const navigate = useNavigate();
   const [
     loading,
     error,
@@ -210,18 +210,13 @@ function ClassroomsAssignation(props) {
                 justifyContent: 'space-between',
               }}
             >
-              <Box>
-                <Link
-                  to={`/user/home`}
-                  style={{
-                    textDecoration: 'none',
-                  }}
-                >
-                  <Button variant="outlined" color="error">
-                    Cancelar
-                  </Button>
-                </Link>
-              </Box>
+              <Button
+                variant="outlined"
+                color="error"
+                onClick={() => navigate(-1)}
+              >
+                Cancelar
+              </Button>
               <Box>
                 <Button variant="contained" color="error">
                   Rechazar

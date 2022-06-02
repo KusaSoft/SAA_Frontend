@@ -38,6 +38,10 @@ export default function FormInputControl(props) {
               if (event.target.value > 500) {
                 event.target.value = 500;
               }
+              if (event.target.value.charAt(0) === '0') {
+                event.target.value = event.target.value.substring(1);
+              }
+
               if (event.target.value.match(/^[0-9]+$/) === null) {
                 event.target.value = event.target.value.substring(
                   0,
