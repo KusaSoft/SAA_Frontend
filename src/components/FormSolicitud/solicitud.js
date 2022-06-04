@@ -326,7 +326,7 @@ function Solicitud(props) {
                 >
                   <Stack spacing={1} direction="row">
                     <Button
-                      variant="contained"
+                      variant="outlined"
                       color="primary"
                       onClick={(e) => {
                         e.preventDefault();
@@ -343,7 +343,7 @@ function Solicitud(props) {
                     </Button>
                     {props.reservationRequest !== 'new' ? (
                       <Button
-                        variant="contained"
+                        variant="outlined"
                         color="redDark"
                         onClick={(e) => {
                           e.preventDefault();
@@ -357,9 +357,13 @@ function Solicitud(props) {
                   </Stack>
                   <Stack spacing={1} direction="row">
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       color="error"
-                      onClick={() => navigate(-1)}
+                      onClick={() =>
+                        props.reservationRequest === 'new'
+                          ? navigate(-1)
+                          : navigate('/user/drafts')
+                      }
                     >
                       Cancelar
                     </Button>
@@ -400,6 +404,7 @@ function Solicitud(props) {
           message={
             'Esta seguro que quiere realizar la reserva con mas de 3 periodos?'
           }
+          alertTitle={'Cuidado'}
           closeModal={closeAlert}
           onNext={() => {
             closeAlert();
@@ -441,7 +446,7 @@ function Solicitud(props) {
           ></AskReservationRequest>
         )}
       </Modal>
-      <Dialog open={isOpenModal} onClose={closeModal}>
+      <Modal isOpen={isOpenModal} closeModal={closeModal}>
         <RequestMessage
           loading={loadingR}
           successMessage={'Su solicitud se ha guardado con éxito!!'}
@@ -451,7 +456,7 @@ function Solicitud(props) {
           linkExit={`/user/${PATHS.DRAFTS}`}
           linkNext={`/user/${PATHS.RESERVATION_REQUESTS}/${responseR.id}`}
         />
-      </Dialog>
+      </Modal>
       <Dialog open={isOpenModal2} onClose={closeModal2}>
         <ConfirmationMessage
           actions={(e) => {

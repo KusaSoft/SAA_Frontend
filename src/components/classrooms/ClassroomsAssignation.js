@@ -21,7 +21,7 @@ import {
 import {styled} from '@mui/material/styles';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordion from '@mui/material/AccordionSummary';
-import React from 'react';
+import React, {useState} from 'react';
 import {useModal} from '../../hooks/useModal';
 import Modal from '../Modals/Modal';
 import useAuth from '../../hooks/useAuth';
@@ -55,6 +55,7 @@ const AccordionSummary = styled((props) => (
 function ClassroomsAssignation(props) {
   const {auth} = useAuth();
   const [isOpenModal, openModal, closeModal] = useModal(false);
+  const [oculto, setOculto] = useState(false);
   const navigate = useNavigate();
   const [
     loading,
@@ -145,8 +146,9 @@ function ClassroomsAssignation(props) {
                       pointerEvents: 'auto',
                       fontSize: '0.6rem',
                     }}
+                    onClick={() => setOculto(!oculto)}
                   >
-                    Ver detalles
+                    {oculto ? 'Ocultar detalles' : 'Ver detalles'}
                   </Button>
                 }
               ></AccordionSummary>

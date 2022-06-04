@@ -11,7 +11,10 @@ import {
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-const AlertMessage = ({closeModal, message, onNext}, props) => {
+const AlertMessage = (
+  {alertTitle, closeModal, message, onNext},
+  props
+) => {
   return (
     <div>
       <Box
@@ -23,7 +26,7 @@ const AlertMessage = ({closeModal, message, onNext}, props) => {
         }}
       >
         <Alert severity="warning">
-          <AlertTitle>Exito</AlertTitle>
+          <AlertTitle>{alertTitle}</AlertTitle>
           {message}
           <Stack
             sx={{
