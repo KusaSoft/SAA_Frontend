@@ -219,9 +219,10 @@ function ClassroomsAssignation(props) {
                 </Box>
                 <TabPanel value="1">
                   <Box>
-                      <TableClassrooms
-                        classrooms={classrooms}
-                      />
+                    <TableClassrooms
+                      classrooms={classrooms}
+                      numberOfStudents={response.total_students}
+                    />
                   </Box>
                 </TabPanel>
                 <TabPanel value="2">
