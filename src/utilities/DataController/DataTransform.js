@@ -97,6 +97,10 @@ const DataTransform = {
     });
     return classroomsGroupByEdifice;
   },
+  getClassroomsGroupByFloor: (classrooms) => {
+    
+
+  }
 };
 
 export default DataTransform;

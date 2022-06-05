@@ -21,6 +21,14 @@ export const MOTIVES = [
   'Otros',
 ];
 
+export const FLOORS = {
+  CERO: 'Planta baja',
+  ONE: 'Primera planta',
+  SECOND:'Segunda planta',
+  THIRD: 'Tercera planta',
+  FOURTH: 'Cuarta planta',
+}
+
 export const STATUS = {
   SENT: 'sent',
   DRAFT: 'draft',
