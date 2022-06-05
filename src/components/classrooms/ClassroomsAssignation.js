@@ -42,6 +42,7 @@ import {
 } from '@mui/icons-material';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import TableClassrooms from './TableClassrooms';
+import GroupOfClassrooms from './GroupsOfClassrooms';
 
 const AccordionSummary = styled((props) => (
   <MuiAccordionSummary
@@ -219,14 +220,20 @@ function ClassroomsAssignation(props) {
                 </Box>
                 <TabPanel value="1">
                   <Box>
+                    <GroupOfClassrooms
+                      classrooms={DataTransform.getClassroomsGroupByEdifice(
+                        classrooms ? classrooms : []
+                      )}
+                    />
+                  </Box>
+                </TabPanel>
+                <TabPanel value="2">
+                  <Box>
                     <TableClassrooms
                       classrooms={classrooms}
                       numberOfStudents={response.total_students}
                     />
                   </Box>
-                </TabPanel>
-                <TabPanel value="2">
-                  <Box></Box>
                 </TabPanel>
               </TabContext>
             </Box>

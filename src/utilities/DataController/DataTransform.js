@@ -86,6 +86,17 @@ const DataTransform = {
       PERIODSRANGE.indexOf(periodEnd) - PERIODSRANGE.indexOf(periodIni);
     return period;
   },
+
+  getClassroomsGroupByEdifice: (classrooms) => {
+    let classroomsGroupByEdifice = new Map();
+    classrooms.map((classroom) => {
+      if (!classroomsGroupByEdifice.has(classroom.edifice)) {
+        classroomsGroupByEdifice.set(classroom.edifice, []);
+      }
+      classroomsGroupByEdifice.get(classroom.edifice).push(classroom);
+    });
+    return classroomsGroupByEdifice;
+  },
 };
 
 export default DataTransform;
