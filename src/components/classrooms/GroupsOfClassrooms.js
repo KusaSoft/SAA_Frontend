@@ -46,44 +46,60 @@ export default function GroupOfClassrooms(props) {
                   </AccordionSummary>
                   <AccordionDetails>
                     <Box>
-                      {/* {value[1].map((classroom) => (
-                        <ListItem key={classroom.id}>
-                          <Checkbox></Checkbox>
-                          <Typography
-                            sx={{
-                              paddingRight: '1rem',
-                            }}
-                          >
-                            {classroom.name_classroom}{' '}
-                          </Typography>{' '}
-                          <Typography>
-                            <b>Capacidad: </b>
-                            {classroom.amount}
+                      {/* {value[1].some(
+                        (classroom) => FLOORS.CERO === classroom.floor
+                      ) ? (
+                        <List>
+                          <Typography variant="h6">
+                            {FLOORS.CERO}
                           </Typography>
-                        </ListItem>
-                      ))} */}
-
-                      {value[1].some((classroom) =>
-                        FLOORS.CERO === classroom.floor ? (
+                          {value[1].map((classroom) => {
+                            return classroom.floor === FLOORS.CERO ? (
+                              <ListItem key={classroom.id}>
+                                <Checkbox></Checkbox>
+                                <Typography
+                                  sx={{
+                                    paddingRight: '1rem',
+                                  }}
+                                >
+                                  {classroom.name_classroom}{' '}
+                                </Typography>{' '}
+                                <Typography>
+                                  <b>Capacidad: </b>
+                                  {classroom.amount}
+                                </Typography>
+                              </ListItem>
+                            ) : null;
+                          })}
+                        </List>
+                      ) : null} */}
+                      {[...Object.values(FLOORS)].map((floor) => {
+                        return value[1].some(
+                          (classroom) => floor === classroom.floor
+                        ) ? (
                           <List>
-                            <Typography>{FLOORS.CERO}</Typography>
-                            <ListItem key={classroom.id}>
-                              <Checkbox></Checkbox>
-                              <Typography
-                                sx={{
-                                  paddingRight: '1rem',
-                                }}
-                              >
-                                {classroom.name_classroom}{' '}
-                              </Typography>{' '}
-                              <Typography>
-                                <b>Capacidad: </b>
-                                {classroom.amount}
-                              </Typography>
-                            </ListItem>
+                            <Typography variant="h6">{floor}</Typography>
+                            {value[1].map((classroom) => {
+                              return classroom.floor === floor ? (
+                                <ListItem key={classroom.id}>
+                                  <Checkbox></Checkbox>
+                                  <Typography
+                                    sx={{
+                                      paddingRight: '1rem',
+                                    }}
+                                  >
+                                    {classroom.name_classroom}{' '}
+                                  </Typography>{' '}
+                                  <Typography>
+                                    <b>Capacidad: </b>
+                                    {classroom.amount}
+                                  </Typography>
+                                </ListItem>
+                              ) : null;
+                            })}
                           </List>
-                        ) : null
-                      )}
+                        ) : null;
+                      })}
                     </Box>
                   </AccordionDetails>
                 </Accordion>
