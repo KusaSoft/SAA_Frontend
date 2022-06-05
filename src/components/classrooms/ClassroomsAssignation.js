@@ -17,7 +17,11 @@ import {
   AccordionDetails,
   Accordion,
   Divider,
+  Tab,
 } from '@mui/material';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 import {styled} from '@mui/material/styles';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordion from '@mui/material/AccordionSummary';
@@ -37,6 +41,7 @@ import {
   ExpandMore,
 } from '@mui/icons-material';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
+import TableClassrooms from './TableClassrooms';
 
 const AccordionSummary = styled((props) => (
   <MuiAccordionSummary
@@ -53,6 +58,8 @@ const AccordionSummary = styled((props) => (
   },
 }));
 function ClassroomsAssignation(props) {
+  const [value, setValue] = useState('1');
+
   const {auth} = useAuth();
   const [isOpenModal, openModal, closeModal] = useModal(false);
   const [oculto, setOculto] = useState(false);
@@ -64,16 +71,20 @@ function ClassroomsAssignation(props) {
     response,
     status,
     handleRequest,
+    classrooms,
   ] = useClassrooms({
     requestID: props.request,
   });
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
     <Box
       display="flex"
       justifyContent="center"
       alignItems="center"
-      width="90%"
+      width="95%"
       padding={2}
     >
       {loading ? (
@@ -191,10 +202,32 @@ function ClassroomsAssignation(props) {
               </AccordionDetails>
             </Accordion>
             <Divider />
-            <Box>
-              <Typography variant="caption">
-                Las aulas estan agrupadas por contiguidad
-              </Typography>
+            <Box
+              sx={{
+                backgroundColor: '#f5f5f5',
+              }}
+            >
+              <TabContext value={value}>
+                <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+                  <TabList
+                    onChange={handleChange}
+                    aria-label="lab API tabs example"
+                  >
+                    <Tab label="Por capacidad" value="1" />
+                    <Tab label="Por contigüidad" value="2" />
+                  </TabList>
+                </Box>
+                <TabPanel value="1">
+                  <Box>
+                      <TableClassrooms
+                        classrooms={classrooms}
+                      />
+                  </Box>
+                </TabPanel>
+                <TabPanel value="2">
+                  <Box></Box>
+                </TabPanel>
+              </TabContext>
             </Box>
           </CardContent>
           <CardActions

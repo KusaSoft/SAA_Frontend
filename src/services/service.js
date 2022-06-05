@@ -192,13 +192,13 @@ const apiSettings = {
     return response.data;
   },
 
-  getClassrooms: async (horario_ini, horario_end, reservation_date) => {
+  getClassrooms: async (id) => {
     // const response = await axios.get(
     //   `${API_URL}/classrooms/${reservation_date}/${horario_ini}/${horario_end}`
     // );
     const response = availableClassrooms;
-
-    return response.data;
+    console.log(response);
+    return response;
   },
 
   getSubjectsAll: async () => {

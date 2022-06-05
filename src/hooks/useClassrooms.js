@@ -6,6 +6,7 @@ export const useClassrooms = ({requestID}) => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [response, setResponse] = useState('');
+  const [classrooms, setClassrooms] = useState([]);
   const [status, setStatus] = useState('');
   const handleRequest = async (request) => {
     setLoading(true);
@@ -15,7 +16,8 @@ export const useClassrooms = ({requestID}) => {
       const response = await apiSettings.getReservationRequestD(request);
       const data = response;
       setResponse({...data.data});
-
+      const classrooms = await apiSettings.getClassrooms(request);
+      setClassrooms(classrooms);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -26,5 +28,13 @@ export const useClassrooms = ({requestID}) => {
     handleRequest(requestID);
   }, []);
 
-  return [loading, error, success, response, status, handleRequest];
+  return [
+    loading,
+    error,
+    success,
+    response,
+    status,
+    handleRequest,
+    classrooms,
+  ];
 };
