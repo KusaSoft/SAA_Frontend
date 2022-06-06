@@ -46,33 +46,6 @@ export default function GroupOfClassrooms(props) {
                   </AccordionSummary>
                   <AccordionDetails>
                     <Box>
-                      {/* {value[1].some(
-                        (classroom) => FLOORS.CERO === classroom.floor
-                      ) ? (
-                        <List>
-                          <Typography variant="h6">
-                            {FLOORS.CERO}
-                          </Typography>
-                          {value[1].map((classroom) => {
-                            return classroom.floor === FLOORS.CERO ? (
-                              <ListItem key={classroom.id}>
-                                <Checkbox></Checkbox>
-                                <Typography
-                                  sx={{
-                                    paddingRight: '1rem',
-                                  }}
-                                >
-                                  {classroom.name_classroom}{' '}
-                                </Typography>{' '}
-                                <Typography>
-                                  <b>Capacidad: </b>
-                                  {classroom.amount}
-                                </Typography>
-                              </ListItem>
-                            ) : null;
-                          })}
-                        </List>
-                      ) : null} */}
                       {[...Object.values(FLOORS)].map((floor) => {
                         return value[1].some(
                           (classroom) => floor === classroom.floor
@@ -82,7 +55,15 @@ export default function GroupOfClassrooms(props) {
                             {value[1].map((classroom) => {
                               return classroom.floor === floor ? (
                                 <ListItem key={classroom.id}>
-                                  <Checkbox></Checkbox>
+                                  <Checkbox
+                                    onChange={(e) =>
+                                      props.setClassroomsSelected([
+                                        ...props.classroomsSelected.concat(
+                                          [classroom]
+                                        ),
+                                      ])
+                                    }
+                                  />
                                   <Typography
                                     sx={{
                                       paddingRight: '1rem',

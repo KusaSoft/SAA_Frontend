@@ -283,6 +283,7 @@ function ClassroomsAssignation(props) {
                       classrooms={DataTransform.getClassroomsGroupByEdifice(
                         classrooms ? classrooms : []
                       )}
+                      classroomsSelected={classroomsSelected}
                       setClassroomsSelected={setClassroomsSelected}
                     />
                   </Box>
