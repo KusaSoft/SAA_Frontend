@@ -38,6 +38,8 @@ const DateController = {
     const [year, month, day] = date.split("-");
     return `${year}-${month}-${day}`;
   },
+
+  
 };
 
 export default DateController;

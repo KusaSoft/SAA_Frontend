@@ -34,7 +34,6 @@ export const STATUS = {
   DRAFT: 'draft',
   REJECTED: 'rejected',
   ASSIGNED: 'assigned',
-  APPROVED: 'approved',
 };
 
 export const ROLES = {

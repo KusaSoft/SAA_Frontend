@@ -453,6 +453,7 @@ function Solicitud(props) {
           errorMessage={'Ha ocurrido un error al guardar su solicitud'}
           error={errorR}
           closeModal={closeModal}
+          justLeave={true}
           linkExit={`/user/${PATHS.DRAFTS}`}
           linkNext={`/user/${PATHS.RESERVATION_REQUESTS}/${responseR.id}`}
         />

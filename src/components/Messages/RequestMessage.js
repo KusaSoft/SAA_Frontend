@@ -21,6 +21,7 @@ const RequestMessage = (
     errorMessage,
     successMessage,
     onNext,
+    justLeave,
   },
   props
 ) => {
@@ -48,14 +49,8 @@ const RequestMessage = (
           {error ? (
             <Alert severity="error">
               <AlertTitle>Error</AlertTitle>
-              <Typography variant="h6">
-                {errorMessage}
-              </Typography>
-              <Button
-                onClick={closeModal}
-                autoFocus
-                variant="contained"
-              >
+              <Typography variant="h6">{errorMessage}</Typography>
+              <Button onClick={closeModal} autoFocus variant="contained">
                 Continuar
               </Button>
             </Alert>
@@ -70,34 +65,30 @@ const RequestMessage = (
                 direction="row"
                 spacing={2}
               >
-                <Link
-                  to={linkExit}
-                  style={{textDecoration: 'none'}}
-                >
+                <Link to={linkExit} style={{textDecoration: 'none'}}>
                   <Button>Salir</Button>
                 </Link>
-                {linkNext ? (
-                  <Link
-                    to={linkNext}
-                    style={{textDecoration: 'none'}}
-                  >
+                {justLeave ? (
+                  linkNext ? (
+                    <Link to={linkNext} style={{textDecoration: 'none'}}>
+                      <Button
+                        variant="contained"
+                        color="success"
+                        onClick={closeModal}
+                      >
+                        Continuar
+                      </Button>
+                    </Link>
+                  ) : (
                     <Button
                       variant="contained"
                       color="success"
-                      onClick={closeModal}
+                      onClick={onNext}
                     >
                       Continuar
                     </Button>
-                  </Link>
-                ) : (
-                  <Button
-                    variant="contained"
-                    color="success"
-                    onClick={onNext}
-                  >
-                    Continuar
-                  </Button>
-                )}
+                  )
+                ) : null}
               </Stack>
             </Alert>
           )}

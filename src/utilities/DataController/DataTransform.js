@@ -97,10 +97,13 @@ const DataTransform = {
     });
     return classroomsGroupByEdifice;
   },
-  getClassroomsGroupByFloor: (classrooms) => {
-    
-
-  }
+  isValidCapacity: (listClassrooms, capacity) => {
+    let quantity = 0;
+    listClassrooms.map((classroom) => {
+      quantity += classroom.amount;
+    });
+    return quantity >= capacity;
+  },
 };
 
 export default DataTransform;

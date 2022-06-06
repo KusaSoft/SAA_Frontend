@@ -18,6 +18,8 @@ import {
   Accordion,
   Divider,
   Tab,
+  FormControl,
+  FormLabel,
 } from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -43,6 +45,8 @@ import {
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import TableClassrooms from './TableClassrooms';
 import GroupOfClassrooms from './GroupsOfClassrooms';
+import {STATUS} from '../../services/Constant';
+import RequestMessage from '../Messages/RequestMessage';
 
 const AccordionSummary = styled((props) => (
   <MuiAccordionSummary
@@ -60,9 +64,25 @@ const AccordionSummary = styled((props) => (
 }));
 function ClassroomsAssignation(props) {
   const [value, setValue] = useState('1');
-
   const {auth} = useAuth();
   const [isOpenModal, openModal, closeModal] = useModal(false);
+  const [rejection_reason, setRejection_reason] = useState('');
+  const [
+    isOpenModalRejected,
+    openModalRejected,
+    closeModalRejected,
+  ] = useModal(false);
+  const [classroomsSelected, setClassroomsSelected] = useState([]);
+  const [
+    loadingR,
+    errorR,
+    messageR,
+    responseR,
+    statusR,
+    handleRequestR,
+  ] = useRequest({
+    methodRequest: apiSettings.postReservationRequest,
+  });
   const [oculto, setOculto] = useState(false);
   const navigate = useNavigate();
   const [
@@ -78,6 +98,27 @@ function ClassroomsAssignation(props) {
   });
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setClassroomsSelected([]);
+  };
+
+  const handleSumbitReservation = async (e) => {
+    e.preventDefault();
+    const newReservationStatus = {
+      ...response,
+      status: STATUS.ASSIGNED,
+      classrooms: classroomsSelected.map((classroom) => classroom.id),
+    };
+  };
+
+  const handleSumbitRejection = async (e) => {
+    e.preventDefault();
+    closeModalRejected();
+    const newReservationStatus = {
+      ...response,
+      status: STATUS.REJECTED,
+      rejection_reason: rejection_reason,
+    };
+    handleRequestR(newReservationStatus);
   };
 
   return (
@@ -220,10 +261,20 @@ function ClassroomsAssignation(props) {
                 </Box>
                 <TabPanel value="1">
                   <Box>
-                    <TableClassrooms
-                      classrooms={classrooms}
-                      numberOfStudents={response.total_students}
-                    />
+                    {classrooms.filter((row) => {
+                      return row.amount >= response.total_students;
+                    }).length > 0 ? (
+                      <TableClassrooms
+                        classrooms={classrooms}
+                        numberOfStudents={response.total_students}
+                        setClassroomsSelected={setClassroomsSelected}
+                      />
+                    ) : (
+                      <Typography>
+                        No hay aulas disponibles para esta capacidad, por
+                        favor intente con contigüas.
+                      </Typography>
+                    )}
                   </Box>
                 </TabPanel>
                 <TabPanel value="2">
@@ -232,6 +283,7 @@ function ClassroomsAssignation(props) {
                       classrooms={DataTransform.getClassroomsGroupByEdifice(
                         classrooms ? classrooms : []
                       )}
+                      setClassroomsSelected={setClassroomsSelected}
                     />
                   </Box>
                 </TabPanel>
@@ -261,7 +313,11 @@ function ClassroomsAssignation(props) {
                 Cancelar
               </Button>
               <Box>
-                <Button variant="contained" color="error">
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => openModalRejected()}
+                >
                   Rechazar
                 </Button>
                 <Button
@@ -269,14 +325,85 @@ function ClassroomsAssignation(props) {
                   style={{
                     marginLeft: '1rem',
                   }}
+                  onClick={(e) => {
+                    if (
+                      DataTransform.isValidCapacity(
+                        classroomsSelected,
+                        response.total_students
+                      )
+                    ) {
+                      // handleSumbitReservation(e);
+                      openModal();
+                    } else {
+                    }
+                  }}
                 >
-                  Aceptar
+                  Asignar
                 </Button>
               </Box>
             </Stack>
           </CardActions>
         </Card>
       )}
+      <Modal isOpen={isOpenModal} closeModal={closeModal}>
+        <RequestMessage
+          loading={responseR}
+          successMessage={'Operacion realizada con exito!!'}
+          error={errorR}
+          closeModal={closeModal}
+          linkExit={
+            rejection_reason === '' ? '/user/rejected' : `/user/assigned`
+          }
+          justLeave={false}
+        ></RequestMessage>
+      </Modal>
+      <Modal isOpen={isOpenModalRejected} closeModal={closeModalRejected}>
+        <FormControl
+          sx={{
+            width: '100%',
+          }}
+        >
+          <FormLabel>Motivo de rechazo</FormLabel>
+          <TextField
+            multiline
+            rows={3}
+            type="text"
+            variant="outlined"
+            value={rejection_reason}
+            onChange={(e) => setRejection_reason(e.target.value)}
+            sx={{
+              width: '85%',
+              padding: '1rem',
+            }}
+          />
+        </FormControl>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => {
+              setRejection_reason('');
+              closeModalRejected();
+            }}
+          >
+            Cancelar
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={(e) => {
+              handleSumbitRejection(e);
+            }}
+          >
+            Enviar
+          </Button>
+        </Box>
+      </Modal>
     </Box>
   );
 }

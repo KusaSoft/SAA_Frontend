@@ -198,7 +198,12 @@ export default function TableClassrooms(props) {
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
-
+    //search by name
+    props.classrooms.forEach((classroom) => {
+      if (classroom.name_classroom === name) {
+        props.setClassroomsSelected([classroom]);
+      }
+    });
     if (selectedIndex === -1) {
       newSelected = [name];
     } else if (selectedIndex === 0) {
