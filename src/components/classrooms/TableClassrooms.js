@@ -66,7 +66,7 @@ const headCells = [
     sortable: false,
   },
   {
-    id: 'edifice',
+    id: 'building',
     numeric: true,
     disablePadding: false,
     label: 'Edificio',
@@ -297,7 +297,9 @@ export default function TableClassrooms(props) {
                             {row.name_classroom}
                           </TableCell>
                           <TableCell align="left">{row.amount}</TableCell>
-                          <TableCell align="left">{row.edifice}</TableCell>
+                          <TableCell align="left">
+                            {row.building}
+                          </TableCell>
                           <TableCell align="left">{row.floor}</TableCell>
                         </TableRow>
                       );

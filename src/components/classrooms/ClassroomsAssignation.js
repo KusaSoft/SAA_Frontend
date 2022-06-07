@@ -371,7 +371,7 @@ function ClassroomsAssignation(props) {
           error={errorR}
           closeModal={closeModal}
           linkExit={
-            rejection_reason === '' ? '/user/rejected' : `/user/assigned`
+            rejection_reason !== '' ? '/user/rejected' : `/user/assigned`
           }
           justLeave={false}
         ></RequestMessage>
