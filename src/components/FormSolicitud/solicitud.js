@@ -405,13 +405,22 @@ function Solicitud(props) {
             'Esta seguro que quiere realizar la reserva con mas de 3 periodos?'
           }
           alertTitle={'Cuidado'}
-          closeModal={closeAlert}
-          onNext={() => {
-            closeAlert();
-            handleRequestR(getReservationRequest(STATUS.SENT));
-            openModal1();
-          }}
-        ></AlertMessage>
+        >
+          <Box>
+            <Button onClick={closeAlert}>Cancelar</Button>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => {
+                closeAlert();
+                handleRequestR(getReservationRequest(STATUS.SENT));
+                openModal1();
+              }}
+            >
+              Continuar
+            </Button>
+          </Box>
+        </AlertMessage>
       </Dialog>
       <Modal isOpen={isOpenModal1} closeModal={closeModal1}>
         {loadingR ? (
