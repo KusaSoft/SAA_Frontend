@@ -47,6 +47,7 @@ import TableClassrooms from './TableClassrooms';
 import GroupOfClassrooms from './GroupsOfClassrooms';
 import {STATUS} from '../../services/Constant';
 import RequestMessage from '../Messages/RequestMessage';
+import AlertMessage from '../Messages/AlertMessage';
 
 const AccordionSummary = styled((props) => (
   <MuiAccordionSummary
@@ -66,12 +67,14 @@ function ClassroomsAssignation(props) {
   const [value, setValue] = useState('1');
   const {auth} = useAuth();
   const [isOpenModal, openModal, closeModal] = useModal(false);
+  const [isOpenAlert, openAlert, closeAlert] = useModal(false);
   const [rejection_reason, setRejection_reason] = useState('');
   const [
     isOpenModalRejected,
     openModalRejected,
     closeModalRejected,
   ] = useModal(false);
+
   const [classroomsSelected, setClassroomsSelected] = useState([]);
   const [
     loadingR,
@@ -336,6 +339,7 @@ function ClassroomsAssignation(props) {
                       // handleSumbitReservation(e);
                       openModal();
                     } else {
+                      openAlert();
                     }
                   }}
                 >
@@ -346,6 +350,18 @@ function ClassroomsAssignation(props) {
           </CardActions>
         </Card>
       )}
+      <Dialog open={isOpenAlert} onClose={closeAlert}>
+        <AlertMessage
+          message={
+            'La cantidad de estudiantes no coincide con la capacidad de las aulas seleccionadas'
+          }
+          alertTitle={'Alerta!'}
+        >
+          <Button variant="contained" color="success" onClick={closeAlert}>
+            Regresar
+          </Button>
+        </AlertMessage>
+      </Dialog>
       <Modal isOpen={isOpenModal} closeModal={closeModal}>
         <RequestMessage
           loading={responseR}

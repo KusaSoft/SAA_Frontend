@@ -11,10 +11,7 @@ import {
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-const AlertMessage = (
-  {alertTitle, closeModal, message, onNext},
-  props
-) => {
+const AlertMessage = (props) => {
   return (
     <div>
       <Box
@@ -26,8 +23,8 @@ const AlertMessage = (
         }}
       >
         <Alert severity="warning">
-          <AlertTitle>{alertTitle}</AlertTitle>
-          {message}
+          <AlertTitle>{props.alertTitle}</AlertTitle>
+          {props.message}
           <Stack
             sx={{
               paddingTop: '1rem',
@@ -35,16 +32,7 @@ const AlertMessage = (
             direction="row"
             spacing={2}
           >
-            <Button onClick={closeModal}>Cancelar</Button>
-            <Button
-              variant="contained"
-              color="success"
-              onClick={() => {
-                onNext();
-              }}
-            >
-              Continuar
-            </Button>
+            {props.children}
           </Stack>
         </Alert>
       </Box>
