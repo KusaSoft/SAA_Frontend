@@ -36,14 +36,14 @@ export const availableClassrooms = [
   {
     id: 5,
     name_classroom: '593',
-    building: 'Trensito',
+    building: 'Trencito',
     floor: 'Planta baja',
     amount: 120,
   },
   {
     id: 6,
     name_classroom: '592A',
-    building: 'Trensito',
+    building: 'Trencito',
     floor: 'Primera planta',
     amount: 100,
   },
