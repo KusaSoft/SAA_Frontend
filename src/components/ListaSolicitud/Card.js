@@ -176,7 +176,7 @@ const SimpleCard = (props) => {
                   variant="h6"
                   component="h2"
                 >
-                  ¿Esta seguro que desea eliminar este elemento?
+                  ¿Está seguro que desea eliminar esta solicitud?
                 </Typography>
                 <Button onClick={handleClose}>Cancelar</Button>
                 <Button

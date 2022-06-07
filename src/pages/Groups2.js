@@ -124,22 +124,22 @@ function Groups2() {
               <TableHead>
                 <TableRow>
                   <TableCell
-                    sx={{fontWeight: 'bold', backgroundColor: '#bdbdbc'}}
+                    sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
                   >
                     Materia
                   </TableCell>
                   <TableCell
-                    sx={{fontWeight: 'bold', backgroundColor: '#bdbdbc'}}
+                    sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
                   >
                     Docente
                   </TableCell>
                   <TableCell
-                    sx={{fontWeight: 'bold', backgroundColor: '#bdbdbc'}}
+                    sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
                   >
                     N° de grupo
                   </TableCell>
                   <TableCell
-                    sx={{fontWeight: 'bold', backgroundColor: '#bdbdbc'}}
+                    sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
                   >
                     Eliminar
                   </TableCell>
@@ -152,7 +152,10 @@ function Groups2() {
       </WrapperLayout>
       <Modal
         open={isOpenModal}
-        onClose={closeModal}
+        onClose={() => {
+          formik.resetForm();
+          closeModal();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -280,6 +283,7 @@ function Groups2() {
                     },
                   }}
                   onClick={async () => {
+                    formik.resetForm();
                     closeModal();
                   }}
                   fullWidth
