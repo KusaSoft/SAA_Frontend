@@ -8,7 +8,7 @@ const useListTeachers = () => {
   };
 
   const fechListTeachers = async () => {
-    const data = await apiSettings.getTeachers();
+    const data = await apiSettings.getTeachersS();
     setListTeachersData(data);
   };
   useEffect(() => {

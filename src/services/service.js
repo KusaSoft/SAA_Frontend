@@ -144,7 +144,6 @@ const apiSettings = {
   },
   getRequests: async () => {
     const response = await axios.get(`${API_URL}/test/user_booking`);
-    console.log(response);
     const list = response.data.map((id) => {
       return {...id};
     });
@@ -154,7 +153,7 @@ const apiSettings = {
   getUsers: async () => {
     const response = await axios.get(`${API_URL}/users`);
     const list = response.data.map((id) => {
-      return {label: id.name, ...id};
+      return {...id, label: id.name};
       //return {label: id.name, role: id.role_id===1?(id.role_id):()};
     });
     //const response = users; mock
@@ -222,7 +221,7 @@ const apiSettings = {
     const response = await axios.get(`${API_URL}/subjects`);
     const list = response.data.map((id) => {
       //return {...id};
-      return {label: id.name_subject, value: id.name_subject, ...id};
+      return {...id, label: id.name_subject, value: id.name_subject};
     });
     //const response = users; mock
     return list;
@@ -250,7 +249,7 @@ const apiSettings = {
     );
     return response;
   },
-  getTeachers: async () => {
+  getTeachersS: async () => {
     const response = await axios.get(`${API_URL}/roles/users/docente`);
     const list = response.data.map((id) => {
       return {label: id.name, ...id};
