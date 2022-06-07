@@ -126,7 +126,10 @@ function Subjects() {
       </WrapperLayout>
       <Modal
         open={isOpenModal}
-        onClose={closeModal}
+        onClose={() => {
+          formik.resetForm();
+          closeModal();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -189,7 +192,7 @@ function Subjects() {
                 >
                   Registrar
                 </Button>
-                {/* <Button
+                <Button
                   sx={{
                     backgroundColor: '#D52020',
                     color: 'white',
@@ -203,12 +206,13 @@ function Subjects() {
                     },
                   }}
                   onClick={async () => {
+                    formik.resetForm();
                     closeModal();
                   }}
                   fullWidth
                 >
                   Cancelar
-                </Button> */}
+                </Button>
               </Grid>
             </Grid>
           </form>
