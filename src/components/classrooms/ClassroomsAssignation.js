@@ -104,7 +104,7 @@ function ClassroomsAssignation(props) {
     setClassroomsSelected([]);
   };
 
-  const handleSumbitReservation = async (e) => {
+  const handleSumbitReservation = (e) => {
     e.preventDefault();
     openModal();
     const newReservationStatus = {
@@ -112,10 +112,10 @@ function ClassroomsAssignation(props) {
       state: STATUS.ASSIGNED,
       classrooms: classroomsSelected.map((classroom) => classroom.id),
     };
-    await handleRequestR(newReservationStatus);
+    handleRequestR(newReservationStatus);
   };
 
-  const handleSumbitRejection = async (e) => {
+  const handleSumbitRejection = (e) => {
     e.preventDefault();
     closeModalRejected();
     openModal();
@@ -124,7 +124,7 @@ function ClassroomsAssignation(props) {
       state: STATUS.REJECTED,
       rejection_reason: rejection_reason,
     };
-    await handleRequestR(newReservationStatus);
+    handleRequestR(newReservationStatus);
   };
 
   return (
@@ -366,7 +366,7 @@ function ClassroomsAssignation(props) {
       </Dialog>
       <Modal isOpen={isOpenModal} closeModal={closeModal}>
         <RequestMessage
-          loading={responseR}
+          loading={loadingR}
           successMessage={'Operacion realizada con exito!!'}
           error={errorR}
           closeModal={closeModal}

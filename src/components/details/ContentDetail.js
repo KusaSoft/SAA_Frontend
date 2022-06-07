@@ -9,7 +9,7 @@ import {
 import DataTransform from '../../utilities/DataController/DataTransform';
 import React from 'react';
 import useAuth from '../../hooks/useAuth';
-import {ROLES, PATHS} from '../../services/Constant';
+import {ROLES, PATHS, STATUS} from '../../services/Constant';
 import {Link} from 'react-router-dom';
 const style = {
   position: 'absolute',
@@ -79,26 +79,28 @@ export default function ContentDetail(props) {
         <br />
         <b>Hora Fin:</b> {props.request.horario_end}
       </Typography>
-      {auth.roles.includes(ROLES.REVIEWER) && (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            mt: 3,
-          }}
-        >
-          <Link
-            to={`/user/reservationRequest/${props.request.id}/classroomAssignation`}
-            style={{
-              textDecoration: 'none',
+      {auth.roles.includes(ROLES.REVIEWER) &&
+        props.request.state !== STATUS.ASSIGNED &&
+        props.request.state !== STATUS.REJECTED && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              mt: 3,
             }}
           >
-            <Button variant="contained" color="primary">
-              Asignar aula(s)
-            </Button>
-          </Link>
-        </Box>
-      )}
+            <Link
+              to={`/user/reservationRequest/${props.request.id}/classroomAssignation`}
+              style={{
+                textDecoration: 'none',
+              }}
+            >
+              <Button variant="contained" color="primary">
+                Asignar aula(s)
+              </Button>
+            </Link>
+          </Box>
+        )}
     </Box>
   );
 }
