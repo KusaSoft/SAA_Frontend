@@ -24,7 +24,7 @@ import Rejected from './pages/Rejected';
 import ClassroomAssigntaion from './pages/ClassroomAssignation';
 import Calendar from './pages/Calendar';
 import Subjects from './pages/Subjects';
-import Groups from './pages/Groups';
+import Groups2 from './pages/Groups2';
 
 function App() {
   return (
@@ -98,7 +98,7 @@ function App() {
           </Route>
 
           <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
-            <Route path={PATHS.GROUPS} element={<Groups />} />
+            <Route path={PATHS.GROUPS} element={<Groups2 />} />
           </Route>
         </Route>
       </Routes>

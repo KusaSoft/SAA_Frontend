@@ -12,24 +12,30 @@ import {
   TextField,
   Grid,
   Autocomplete,
+  Fab,
+  MenuItem,
 } from '@mui/material';
+import {Delete} from '@mui/icons-material';
 import React from 'react';
 import BasicBreadcrumbs from '../components/Breadcrumbs/Breadcrumbs';
 
 import {WrapperLayout, WrapperPage} from '../emotion/GlobalComponents';
 import {BREAD_CRUB_PATHS, PATHS} from '../services/Constant';
 import useListSubjects from '../hooks/useListSubjects';
-import useListUsers from '../hooks/useListUsers';
+import useListTeachers from '../hooks/useListTeachers';
+import useListGroups from '../hooks/useListGroups';
 //import CardUser from '../components/User/cardUser';
 import {Link} from 'react-router-dom';
 import {useModal} from '../hooks/useModal';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
-function Subjects() {
+import {Formik, Form} from 'formik';
+import apiSettings from '../services/service';
+function Groups2() {
   const [listSubjects] = useListSubjects();
-  const [listUsers] = useListUsers();
+  const [listTeachers] = useListTeachers();
+  const [listGroups] = useListGroups();
   const [isOpenModal, openModal, closeModal] = useModal(false);
-  //console.log(listUsers);
   const formik = useFormik({
     initialValues: {
       nameSubject: '',
@@ -43,20 +49,27 @@ function Subjects() {
       nameTeacher: Yup.string().required(
         'Se requiere seleccionar un docente'
       ),
-      numberGroup: Yup.string()
-        .min(1, 'Mínimo 1 caracter')
-        .max(2, 'Máximo 2 caracteres')
-        .required('Se requiere el numero para crear el nuevo grupo'),
+      numberGroup: Yup.number()
+        .positive()
+        .min(1, 'Debe ser número positivo')
+        .max(99, 'Máximo un número de 2 cifras')
+        .required('Se requiere el numero de grupo'),
     }),
     onSubmit: async () => {
-      // const responseRegister = await apiSettings.register({
-      //   ...formik.values,
-      //   name: `${formik.values.firstName} ${formik.values.lastName}`,
-      //   role: formik.values.role.toLowerCase(),
-      // });
+      const responseRegister = await apiSettings.registerGroup({
+        ...formik.values,
+        subject: formik.values.nameSubject,
+        teacher: formik.values.nameTeacher,
+        number_group: Number(formik.values.numberGroup),
+      });
       // setMessageError(responseRegister.message);
-      // responseRegister.successful === true ? openModal() : openModal();
-      alert('funciona');
+      // responseRegister.successful === true ?  : openModal();
+      //alert('funciona');
+      window.location.reload();
+      // console.log({
+      //   ...formik.values,
+      //   number_group: Number(formik.values.numberGroup),
+      // });
     },
   });
   return (
@@ -104,33 +117,35 @@ function Subjects() {
               alignItems: 'center',
               borderRadius: '0.5rem',
               padding: '0.5rem',
+              boxShadow: 1,
             }}
           >
             <Table>
               <TableHead>
                 <TableRow>
                   <TableCell
-                    sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
+                    sx={{fontWeight: 'bold', backgroundColor: '#bdbdbc'}}
                   >
                     Materia
                   </TableCell>
                   <TableCell
-                    sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
+                    sx={{fontWeight: 'bold', backgroundColor: '#bdbdbc'}}
                   >
                     Docente
                   </TableCell>
                   <TableCell
-                    sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
+                    sx={{fontWeight: 'bold', backgroundColor: '#bdbdbc'}}
                   >
-                    Número de grupo
+                    N° de grupo
                   </TableCell>
-                  {/* <TableCell>Rol</TableCell>
-                <TableCell>Habilitado</TableCell> */}
+                  <TableCell
+                    sx={{fontWeight: 'bold', backgroundColor: '#bdbdbc'}}
+                  >
+                    Eliminar
+                  </TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
-                {List(listSubjects ? listSubjects : [])}
-              </TableBody>
+              <TableBody>{List(listGroups ? listGroups : [])}</TableBody>
             </Table>
           </Box>
         </WrapperPage>
@@ -161,74 +176,62 @@ function Subjects() {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Registro de nuevo grupo
           </Typography>
-
+          {/*-------------------------------------------------------------------- */}
           <br />
           <form onSubmit={formik.handleSubmit}>
             <Grid item xs={12}>
-              <Autocomplete
-                //disablePortal
-                id="combo-box-demo"
-                //
-                //onChange={(event, value) => console.log(value)}
-                //
-                options={listSubjects}
-                sx={{width: 350}}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Materia"
-                    name="nameSubject"
-                    error={Boolean(
-                      formik.touched.nameSubject &&
-                        formik.errors.nameSubject
-                    )}
-                    helperText={
-                      formik.touched.nameSubject &&
-                      formik.errors.nameSubject
-                    }
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.nameSubject}
-                  />
+              <TextField
+                name="nameSubject"
+                select
+                value={formik.values.nameSubject}
+                onChange={formik.handleChange}
+                placeholder=""
+                label="Materia"
+                variant="outlined"
+                error={Boolean(
+                  formik.touched.nameSubject && formik.errors.nameSubject
                 )}
-              />
-              {/*-------------------------------------------------*/}
-              <Autocomplete
-                //disablePortal
-                id="combo-box-demo"
-                options={listUsers}
-                /*
-                getOptionLabel={(user) => `${user?.name}`}
-                onChange={(e, value) =>
-                  setFieldValue('listUsers', value?.id || '')
+                helperText={
+                  formik.touched.nameSubject && formik.errors.nameSubject
                 }
-                onOpen={handleBlur}
-                includeInputInList
-                */
-                sx={{width: 350, marginTop: '1rem'}}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Docente"
-                    name="nameTeacher"
-                    error={Boolean(
-                      formik.touched.nameTeacher &&
-                        formik.errors.nameTeacher
-                    )}
-                    helperText={
-                      formik.touched.nameTeacher &&
-                      formik.errors.nameTeacher
-                    }
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.nameTeacher}
-                  />
-                )}
+                onBlur={formik.handleBlur}
                 fullWidth
-              />
-              {/*-------------------------------------------------*/}
+                sx={{marginTop: '1rem', maxWidth: 400}}
+              >
+                {listSubjects.map((option) => (
+                  <MenuItem key={option.label} value={option.label}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+              {/**/}
+              <TextField
+                name="nameTeacher"
+                select
+                value={formik.values.nameTeacher}
+                onChange={formik.handleChange}
+                placeholder=""
+                label="Docente"
+                variant="outlined"
+                error={Boolean(
+                  formik.touched.nameTeacher && formik.errors.nameTeacher
+                )}
+                helperText={
+                  formik.touched.nameTeacher && formik.errors.nameTeacher
+                }
+                onBlur={formik.handleBlur}
+                fullWidth
+                sx={{marginTop: '1rem', maxWidth: 400}}
+              >
+                {listTeachers.map((option) => (
+                  <MenuItem key={option.label} value={option.label}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
               <TextField
                 name="numberGroup"
+                type="number"
                 placeholder=""
                 label="Numero del grupo"
                 variant="outlined"
@@ -291,7 +294,7 @@ function Subjects() {
     </>
   );
 }
-export default Subjects;
+export default Groups2;
 
 const List = (list) => {
   if (list.length !== 0) {
@@ -303,11 +306,76 @@ const List = (list) => {
   }
 };
 const CardGroup = (props) => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <TableRow>
-      <TableCell>{props.request.name_subject}</TableCell>
-      <TableCell>{props.request.name_subject}</TableCell>
-      <TableCell>{props.request.id}</TableCell>
+      <TableCell>{props.request.subject}</TableCell>
+      <TableCell>{props.request.teacher}</TableCell>
+      <TableCell sx={{paddingLeft: '40px'}}>
+        {props.request.number_group}
+      </TableCell>
+      <TableCell>
+        <Fab
+          color="error"
+          size="small"
+          sx={{
+            '&:hover': {
+              backgroundColor: 'hover.main',
+              color: 'hover.contrastText',
+            },
+          }}
+        >
+          <Delete
+            onClick={() => {
+              handleOpen();
+            }}
+          />
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box
+              sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: 300,
+                bgcolor: 'background.paper',
+                border: '2px solid #000',
+                boxShadow: 24,
+                p: 4,
+              }}
+            >
+              <Typography
+                id="modal-modal-title"
+                variant="h6"
+                component="h2"
+              >
+                ¿Desea eliminar este grupo?
+              </Typography>
+              <Button onClick={handleClose}>Cancelar</Button>
+              <Button
+                sx={{marginLeft: '82px'}}
+                onClick={async () => {
+                  //alert('eliminar grupo n°: ' + props.request.id);
+
+                  const responseDelete = await apiSettings.deleteGroup(
+                    props.request.id
+                  );
+                  window.location.reload();
+                }}
+              >
+                Eliminar
+              </Button>
+            </Box>
+          </Modal>
+        </Fab>
+      </TableCell>
     </TableRow>
   );
 };
