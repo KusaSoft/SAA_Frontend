@@ -170,8 +170,24 @@ const apiSettings = {
     const response = await axios.get(`${API_URL}/reservations`);
     return response.data;
   },
+
   getUrgentReservations: async () => {
     const response = await axios.get(`${API_URL}/reservations/urgent`);
+    return response.data;
+  },
+
+  getAssignedReservations: async () => {
+    const response = await axios.get(`${API_URL}/reservations/assigned`);
+    return response.data;
+  },
+
+  getRejectedReservations: async () => {
+    const response = await axios.get(`${API_URL}/reservations/rejected`);
+    return response.data;
+  },
+
+  getSentReservations: async () => {
+    const response = await axios.get(`${API_URL}/reservations/sent`);
     return response.data;
   },
 
@@ -242,6 +258,13 @@ const apiSettings = {
     });
     //const response = users; mock
     return list;
+  },
+  putReservationRequest: async (reservationRequest) => {
+    const response = await axios.put(
+      `${API_URL}/reservations`,
+      reservationRequest
+    );
+    return response;
   },
 };
 

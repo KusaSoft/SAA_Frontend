@@ -19,7 +19,7 @@ function Assigned() {
         >
           <ListOperador
             dataTypeS={'Fecha para la reserva'}
-            requestType={apiSettings.getAllReservations}
+            requestType={apiSettings.getAssignedReservations}
             orderDate={ORDER_DATE.LEJANOS}
           />
         </div>

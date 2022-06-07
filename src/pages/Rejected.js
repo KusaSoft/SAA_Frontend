@@ -19,7 +19,7 @@ function Rejected() {
         >
           <ListOperador
             dataTypeS={'Fecha para la reserva'}
-            requestType={apiSettings.getAllReservations}
+            requestType={apiSettings.getRejectedReservations}
             orderDate={ORDER_DATE.LEJANOS}
           />
         </div>

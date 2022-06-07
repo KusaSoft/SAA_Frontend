@@ -19,7 +19,7 @@ function Arrival() {
         >
           <ListOperador
             dataTypeS={'Fecha de envio'}
-            requestType={apiSettings.getAllReservations}
+            requestType={apiSettings.getSentReservations}
             orderDate={ORDER_DATE.LEJANOS}
           />
         </div>

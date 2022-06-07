@@ -84,7 +84,7 @@ function ClassroomsAssignation(props) {
     statusR,
     handleRequestR,
   ] = useRequest({
-    methodRequest: apiSettings.postReservationRequest,
+    methodRequest: apiSettings.putReservationRequest,
   });
   const [oculto, setOculto] = useState(false);
   const navigate = useNavigate();
@@ -108,20 +108,22 @@ function ClassroomsAssignation(props) {
     e.preventDefault();
     const newReservationStatus = {
       ...response,
-      status: STATUS.ASSIGNED,
+      state: STATUS.ASSIGNED,
       classrooms: classroomsSelected.map((classroom) => classroom.id),
     };
+    await handleRequestR(newReservationStatus);
+    openModal();
   };
 
   const handleSumbitRejection = async (e) => {
     e.preventDefault();
-    closeModalRejected();
     const newReservationStatus = {
       ...response,
-      status: STATUS.REJECTED,
+      state: STATUS.REJECTED,
       rejection_reason: rejection_reason,
     };
-    handleRequestR(newReservationStatus);
+    await handleRequestR(newReservationStatus);
+    closeModalRejected();
   };
 
   return (
@@ -336,8 +338,7 @@ function ClassroomsAssignation(props) {
                         response.total_students
                       )
                     ) {
-                      // handleSumbitReservation(e);
-                      openModal();
+                      handleSumbitReservation(e);
                     } else {
                       openAlert();
                     }

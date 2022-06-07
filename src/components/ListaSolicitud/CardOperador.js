@@ -89,7 +89,7 @@ const CardOperador = (props) => {
             </div>
             <div>
               <b style={{fontWeight: 'bold'}}>Motivo de rechazo: </b>
-              {props.request.request_reason}
+              {props.request.rejection_reason}
             </div>
             <div>
               <b style={{fontWeight: 'bold'}}>Motivo de solicitud: </b>
@@ -128,10 +128,10 @@ const CardOperador = (props) => {
               <b style={{fontWeight: 'bold'}}> - Hasta: </b>{' '}
               {props.request.horario_end}
             </div>
-            <div>
+            {/* <div>
               <b style={{fontWeight: 'bold'}}>Aula(s): </b>
-              {props.request.reservation_date}
-            </div>
+              {props.request.assigned_classrooms}
+            </div> */}
           </CardContent>
         ) : (
           <CardContent></CardContent>
