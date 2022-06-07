@@ -53,24 +53,9 @@ export const useReservationRequest = ({request, user}) => {
         subjectListMap.set(subject.name_subject, [...subject.group_list]);
       }
     });
-    console.log(subjectListMap, 'subjectListMap');
-    console.log(
-      subjectListMap
-        ? subjectListMap.has('Introduccion a la programacion')
-          ? [...subjectListMap.get('Introduccion a la programacion')]
-          : []
-        : [],
-      '=========='
-    );
     setTeachers(subjectListMap);
     if (request !== 'new' && request !== null) {
       const response = await apiSettings.getReservationRequest(request);
-      console.log(
-        response,
-        'reservation request',
-        subjectListMap,
-        subjectListMapF
-      );
       console.log(...response.group_list.map((group) => group.id));
       setReservationRequest({
         teacher: user.user,
@@ -146,7 +131,8 @@ export const useReservationRequest = ({request, user}) => {
       reservation_date: reservationRequest.dateReservation,
       other_group_list: DataTransform.getOriginalTeachersList(
         reservationRequest.otherGroupList,
-        teachers
+        teachers,
+        reservationRequest.subject
       ),
       state: state,
     };

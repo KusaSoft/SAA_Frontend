@@ -106,24 +106,25 @@ function ClassroomsAssignation(props) {
 
   const handleSumbitReservation = async (e) => {
     e.preventDefault();
+    openModal();
     const newReservationStatus = {
       ...response,
       state: STATUS.ASSIGNED,
       classrooms: classroomsSelected.map((classroom) => classroom.id),
     };
     await handleRequestR(newReservationStatus);
-    openModal();
   };
 
   const handleSumbitRejection = async (e) => {
     e.preventDefault();
+    closeModalRejected();
+    openModal();
     const newReservationStatus = {
       ...response,
       state: STATUS.REJECTED,
       rejection_reason: rejection_reason,
     };
     await handleRequestR(newReservationStatus);
-    closeModalRejected();
   };
 
   return (

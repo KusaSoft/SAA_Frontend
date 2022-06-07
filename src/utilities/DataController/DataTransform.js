@@ -1,12 +1,19 @@
 import {invalidDates, PERIODSRANGE} from '../../services/Constant';
 const DataTransform = {
-  getOriginalTeachersList: (teachersSelected, originalTeachersList) => {
+  getOriginalTeachersList: (
+    teachersSelected,
+    originalTeachersList,
+    subjectSelected
+  ) => {
     let teachersList = [];
     const teachersOriginal = [...originalTeachersList.values()];
     teachersSelected.map((teacher) => {
       teachersOriginal.map((teacherOriginal) => {
         teacherOriginal.map((teacherO) => {
-          if (teacher === `G${teacherO.group} ${teacherO.name}`) {
+          if (
+            teacher === `G${teacherO.group} ${teacherO.name}` &&
+            teacherO.subject === subjectSelected
+          ) {
             teachersList.push(teacherO.id);
           }
         });
