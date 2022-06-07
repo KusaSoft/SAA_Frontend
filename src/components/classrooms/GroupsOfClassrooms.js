@@ -56,13 +56,26 @@ export default function GroupOfClassrooms(props) {
                               return classroom.floor === floor ? (
                                 <ListItem key={classroom.id}>
                                   <Checkbox
-                                    onChange={(e) =>
-                                      props.setClassroomsSelected([
-                                        ...props.classroomsSelected.concat(
-                                          [classroom]
-                                        ),
-                                      ])
-                                    }
+                                    onChange={(e) => {
+                                      if (e.target.checked) {
+                                        props.setClassroomsSelected([
+                                          ...props.classroomsSelected.concat(
+                                            [classroom]
+                                          ),
+                                        ]);
+                                      } else {
+                                        props.setClassroomsSelected([
+                                          ...props.classroomsSelected.filter(
+                                            (myClassroom) => {
+                                              return (
+                                                myClassroom.id !==
+                                                classroom.id
+                                              );
+                                            }
+                                          ),
+                                        ]);
+                                      }
+                                    }}
                                   />
                                   <Typography
                                     sx={{
