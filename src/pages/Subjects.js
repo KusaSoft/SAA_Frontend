@@ -23,6 +23,7 @@ import {Link} from 'react-router-dom';
 import {useModal} from '../hooks/useModal';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
+import apiSettings from '../services/service';
 function Subjects() {
   const [listSubjects] = useListSubjects();
   const [isOpenModal, openModal, closeModal] = useModal(false);
@@ -38,14 +39,13 @@ function Subjects() {
         .required('Se requiere el nombre de la materia'),
     }),
     onSubmit: async () => {
-      // const responseRegister = await apiSettings.register({
-      //   ...formik.values,
-      //   name: `${formik.values.firstName} ${formik.values.lastName}`,
-      //   role: formik.values.role.toLowerCase(),
-      // });
+      const responseRegister = await apiSettings.registerSubject({
+        ...formik.values,
+        name_subject: `${formik.values.nameSubject}`,
+      });
       // setMessageError(responseRegister.message);
       // responseRegister.successful === true ? openModal() : openModal();
-      alert('funciona');
+      //alert('funciona');
       window.location.reload();
     },
   });
@@ -94,6 +94,9 @@ function Subjects() {
               alignItems: 'center',
               borderRadius: '0.5rem',
               padding: '0.5rem',
+              //marginLeft: '10rem',
+              boxShadow: 1,
+              maxWidth: '600px',
             }}
           >
             <Table>
@@ -186,7 +189,7 @@ function Subjects() {
                 >
                   Registrar
                 </Button>
-                <Button
+                {/* <Button
                   sx={{
                     backgroundColor: '#D52020',
                     color: 'white',
@@ -205,7 +208,7 @@ function Subjects() {
                   fullWidth
                 >
                   Cancelar
-                </Button>
+                </Button> */}
               </Grid>
             </Grid>
           </form>

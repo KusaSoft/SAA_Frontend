@@ -154,7 +154,8 @@ const apiSettings = {
   getUsers: async () => {
     const response = await axios.get(`${API_URL}/users`);
     const list = response.data.map((id) => {
-      return {...id};
+      return {label: id.name, ...id};
+      //return {label: id.name, role: id.role_id===1?(id.role_id):()};
     });
     //const response = users; mock
     return list;
@@ -204,7 +205,40 @@ const apiSettings = {
   getSubjectsAll: async () => {
     const response = await axios.get(`${API_URL}/subjects`);
     const list = response.data.map((id) => {
+      //return {...id};
+      return {label: id.name_subject, value: id.name_subject, ...id};
+    });
+    //const response = users; mock
+    return list;
+  },
+  getAllGroups: async () => {
+    const response = await axios.get(`${API_URL}/subject_user`);
+    const list = response.data.map((id) => {
       return {...id};
+    });
+    //const response = users; mock
+    return list;
+  },
+  registerSubject: async (subject) => {
+    const response = await axios.post(`${API_URL}/subjects`, subject);
+    return response.data;
+  },
+
+  registerGroup: async (group) => {
+    const response = await axios.post(`${API_URL}/subject_user`, group);
+    return response.data;
+  },
+  deleteGroup: async (groupID) => {
+    const response = await axios.delete(
+      `${API_URL}/subject_user/${groupID}`
+    );
+    return response;
+  },
+  getTeachers: async () => {
+    const response = await axios.get(`${API_URL}/roles/users/docente`);
+    const list = response.data.map((id) => {
+      return {label: id.name, ...id};
+      //return {label: id.name, role: id.role_id===1?(id.role_id):()};
     });
     //const response = users; mock
     return list;

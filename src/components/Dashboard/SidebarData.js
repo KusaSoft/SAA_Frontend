@@ -16,14 +16,14 @@ export const SidebarData = (role) => {
         hasSubmenu: false,
         path: `${PATHS.USERS}`,
       },
-      {
-        id: 3,
-        title: 'Calendario',
-        icon: <CalendarTodayIcon sx={{marginRight: '1rem'}} />,
-        cName: 'sidebar-item',
-        hasSubmenu: false,
-        path: `${PATHS.CALENDAR}`,
-      },
+      // {
+      //   id: 3,
+      //   title: 'Calendario',
+      //   icon: <CalendarTodayIcon sx={{marginRight: '1rem'}} />,
+      //   cName: 'sidebar-item',
+      //   hasSubmenu: false,
+      //   path: `${PATHS.CALENDAR}`,
+      // },
       {
         id: 4,
         title: 'Materias',
