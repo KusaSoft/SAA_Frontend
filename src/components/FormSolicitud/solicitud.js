@@ -31,7 +31,9 @@ import {Save, Delete} from '@mui/icons-material';
 import apiSettings from '../../services/service';
 import RequestMessage from '../Messages/RequestMessage';
 import ConfirmationMessage from '../Messages/ConfirmationMessage';
+import DataTransform from '../../utilities/DataController/DataTransform';
 import RedBar from '../Div/RedBar';
+import AlertMessage from '../Messages/AlertMessage';
 function Solicitud(props) {
   const {auth} = useAuth();
   const navigate = useNavigate();
@@ -39,6 +41,7 @@ function Solicitud(props) {
   const [isOpenModal1, openModal1, closeModal1] = useModal(false);
   const [isOpenModal2, openModal2, closeModal2] = useModal(false);
   const [isOpenModal3, openModal3, closeModal3] = useModal(false);
+  const [isOpenAlert, openAlert, closeAlert] = useModal(false);
   const [
     loadingR,
     errorR,
@@ -86,51 +89,24 @@ function Solicitud(props) {
     request: `${props.reservationRequest}`,
     user: auth,
   });
-
   return (
     <Box
       display="flex"
       justifyContent="center"
       alignItems="center"
-      width="75%"
+      width="80%"
       padding={2}
     >
       {isLoading ? (
         <CircularProgress />
       ) : (
-        <Card sx={{backgroundColor: 'forms.main', maxWidth: 900}}>
-          <CardHeader
-            avatar={
-              <Stack spacing={1} direction="row">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (validateSaveFilled()) {
-                      handleRequestR(getReservationRequest(STATUS.DRAFT));
-                      openModal();
-                    }
-                  }}
-                >
-                  <Save />
-                </Button>
-                {props.reservationRequest !== 'new' ? (
-                  <Button
-                    variant="contained"
-                    color="redDark"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      openModal2();
-                    }}
-                  >
-                    <Delete />
-                  </Button>
-                ) : null}
-              </Stack>
-            }
-          />
-
+        <Card
+          sx={{
+            backgroundColor: 'forms.main',
+            maxWidth: 1400,
+            width: '100%',
+          }}
+        >
           <CardContent style={{padding: '10px 2px'}}>
             <Typography
               variant="body2"
@@ -261,7 +237,7 @@ function Solicitud(props) {
 
                   <Grid item sm={6} xs={12}>
                     <FormInputControl
-                      myLabel="Cantidad de estudiantes *"
+                      myLabel="Cantidad de estudiantes 1-500*"
                       myType="number"
                       myVariant="outlined"
                       myName="totalStudents"
@@ -269,10 +245,10 @@ function Solicitud(props) {
                       myInputProps={{
                         inputProps: {
                           min: '1',
-                          max: '1500',
+                          max: '500',
                         },
                       }}
-                      myMaxLength="4"
+                      myMaxLength="3"
                       setValue={handleReservationRequest}
                     >
                       {errors.totalStudents.isEmpty ? (
@@ -344,26 +320,53 @@ function Solicitud(props) {
                   columns={12}
                   sx={{
                     display: 'flex',
-                    justifyContent: 'flex-end',
+                    justifyContent: 'space-between',
                     padding: '0 1rem',
                   }}
                 >
-                  <Stack
-                    spacing={2}
-                    direction="row"
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'flex-end',
-                    }}
-                  >
-                    <Link
-                      to={`/user/${PATHS.USERHOME}`}
-                      style={{textDecoration: 'none'}}
+                  <Stack spacing={1} direction="row">
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (validateSaveFilled()) {
+                          handleRequestR(
+                            getReservationRequest(STATUS.DRAFT)
+                          );
+                          openModal();
+                        }
+                      }}
+                      startIcon={<Save />}
                     >
-                      <Button variant="outlined" color="error">
-                        Cancelar
+                      Guardar borrador
+                    </Button>
+                    {props.reservationRequest !== 'new' ? (
+                      <Button
+                        variant="outlined"
+                        color="redDark"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          openModal2();
+                        }}
+                        startIcon={<Delete />}
+                      >
+                        Eliminar
                       </Button>
-                    </Link>
+                    ) : null}
+                  </Stack>
+                  <Stack spacing={1} direction="row">
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={() =>
+                        props.reservationRequest === 'new'
+                          ? navigate(-1)
+                          : navigate('/user/drafts')
+                      }
+                    >
+                      Cancelar
+                    </Button>
                     <Button
                       color="primary"
                       type="submit"
@@ -371,10 +374,19 @@ function Solicitud(props) {
                       onClick={(e) => {
                         e.preventDefault();
                         if (validateAllFilled()) {
-                          handleRequestR(
-                            getReservationRequest(STATUS.SENT)
-                          );
-                          openModal1();
+                          if (
+                            DataTransform.getQuantityPeriod(
+                              reservationRequest.periodIniSelected,
+                              reservationRequest.periodEndSelected
+                            ) > 3
+                          ) {
+                            openAlert();
+                          } else {
+                            handleRequestR(
+                              getReservationRequest(STATUS.SENT)
+                            );
+                            openModal1();
+                          }
                         }
                       }}
                     >
@@ -387,6 +399,29 @@ function Solicitud(props) {
           </CardContent>
         </Card>
       )}
+      <Dialog open={isOpenAlert} onClose={closeAlert}>
+        <AlertMessage
+          message={
+            'Esta seguro que quiere realizar la reserva con mas de 3 periodos?'
+          }
+          alertTitle={'Cuidado'}
+        >
+          <Box>
+            <Button onClick={closeAlert}>Cancelar</Button>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => {
+                closeAlert();
+                handleRequestR(getReservationRequest(STATUS.SENT));
+                openModal1();
+              }}
+            >
+              Continuar
+            </Button>
+          </Box>
+        </AlertMessage>
+      </Dialog>
       <Modal isOpen={isOpenModal1} closeModal={closeModal1}>
         {loadingR ? (
           <Box
@@ -420,17 +455,18 @@ function Solicitud(props) {
           ></AskReservationRequest>
         )}
       </Modal>
-      <Dialog open={isOpenModal} onClose={closeModal}>
+      <Modal isOpen={isOpenModal} closeModal={closeModal}>
         <RequestMessage
           loading={loadingR}
           successMessage={'Su solicitud se ha guardado con éxito!!'}
           errorMessage={'Ha ocurrido un error al guardar su solicitud'}
           error={errorR}
           closeModal={closeModal}
+          justLeave={true}
           linkExit={`/user/${PATHS.DRAFTS}`}
           linkNext={`/user/${PATHS.RESERVATION_REQUESTS}/${responseR.id}`}
         />
-      </Dialog>
+      </Modal>
       <Dialog open={isOpenModal2} onClose={closeModal2}>
         <ConfirmationMessage
           actions={(e) => {

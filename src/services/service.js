@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import {availableClassrooms} from './Mock';
 const API_URL = 'https://tis-server2.herokuapp.com/api';
 const apiSettings = {
   getSubjects: async (userID) => {
@@ -124,17 +124,17 @@ const apiSettings = {
     );
     console.log(response);
 
-    const list = response.data.map((id) => {
-      return {
-        id: id.id,
-        subject: id.subject,
-        fecha: id.reservation_date,
-        motivo: id.request_reason,
-        state: id.state,
-      };
-    });
-    console.log(list);
-    return list;
+    // const list = response.data.map((id) => {
+    //   return {
+    //     id: id.id,
+    //     subject: id.subject,
+    //     fecha: id.reservation_date,
+    //     motivo: id.request_reason,
+    //     state: id.state,
+    //   };
+    // });
+    // console.log(list);
+    return response.data;
     // return response.data;
   },
 
@@ -144,7 +144,6 @@ const apiSettings = {
   },
   getRequests: async () => {
     const response = await axios.get(`${API_URL}/test/user_booking`);
-    console.log(response);
     const list = response.data.map((id) => {
       return {...id};
     });
@@ -154,7 +153,8 @@ const apiSettings = {
   getUsers: async () => {
     const response = await axios.get(`${API_URL}/users`);
     const list = response.data.map((id) => {
-      return {...id};
+      return {...id, label: id.name};
+      //return {label: id.name, role: id.role_id===1?(id.role_id):()};
     });
     //const response = users; mock
     return list;
@@ -169,8 +169,24 @@ const apiSettings = {
     const response = await axios.get(`${API_URL}/reservations`);
     return response.data;
   },
+
   getUrgentReservations: async () => {
     const response = await axios.get(`${API_URL}/reservations/urgent`);
+    return response.data;
+  },
+
+  getAssignedReservations: async () => {
+    const response = await axios.get(`${API_URL}/reservations/assigned`);
+    return response.data;
+  },
+
+  getRejectedReservations: async () => {
+    const response = await axios.get(`${API_URL}/reservations/rejected`);
+    return response.data;
+  },
+
+  getSentReservations: async () => {
+    const response = await axios.get(`${API_URL}/reservations/sent`);
     return response.data;
   },
 
@@ -190,6 +206,64 @@ const apiSettings = {
   enable: async (idUser, cosas) => {
     const response = await axios.put(`${API_URL}/users/${idUser}`, cosas);
     return response.data;
+  },
+
+  getClassrooms: async (id) => {
+    // const response = await axios.get(
+    //   `${API_URL}/classrooms/${reservation_date}/${horario_ini}/${horario_end}`
+    // );
+    const response = availableClassrooms;
+    console.log(response);
+    return response;
+  },
+
+  getSubjectsAll: async () => {
+    const response = await axios.get(`${API_URL}/subjects`);
+    const list = response.data.map((id) => {
+      //return {...id};
+      return {...id, label: id.name_subject, value: id.name_subject};
+    });
+    //const response = users; mock
+    return list;
+  },
+  getAllGroups: async () => {
+    const response = await axios.get(`${API_URL}/subject_user`);
+    const list = response.data.map((id) => {
+      return {...id};
+    });
+    //const response = users; mock
+    return list;
+  },
+  registerSubject: async (subject) => {
+    const response = await axios.post(`${API_URL}/subjects`, subject);
+    return response.data;
+  },
+
+  registerGroup: async (group) => {
+    const response = await axios.post(`${API_URL}/subject_user`, group);
+    return response.data;
+  },
+  deleteGroup: async (groupID) => {
+    const response = await axios.delete(
+      `${API_URL}/subject_user/${groupID}`
+    );
+    return response;
+  },
+  getTeachersS: async () => {
+    const response = await axios.get(`${API_URL}/roles/users/docente`);
+    const list = response.data.map((id) => {
+      return {label: id.name, ...id};
+      //return {label: id.name, role: id.role_id===1?(id.role_id):()};
+    });
+    //const response = users; mock
+    return list;
+  },
+  putReservationRequest: async (reservationRequest) => {
+    const response = await axios.put(
+      `${API_URL}/reservations`,
+      reservationRequest
+    );
+    return response;
   },
 };
 

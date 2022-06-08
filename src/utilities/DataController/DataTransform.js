@@ -1,12 +1,19 @@
 import {invalidDates, PERIODSRANGE} from '../../services/Constant';
 const DataTransform = {
-  getOriginalTeachersList: (teachersSelected, originalTeachersList) => {
+  getOriginalTeachersList: (
+    teachersSelected,
+    originalTeachersList,
+    subjectSelected
+  ) => {
     let teachersList = [];
     const teachersOriginal = [...originalTeachersList.values()];
     teachersSelected.map((teacher) => {
       teachersOriginal.map((teacherOriginal) => {
         teacherOriginal.map((teacherO) => {
-          if (teacher === `G${teacherO.group} ${teacherO.name}`) {
+          if (
+            teacher === `G${teacherO.group} ${teacherO.name}` &&
+            teacherO.subject === subjectSelected
+          ) {
             teachersList.push(teacherO.id);
           }
         });
@@ -85,6 +92,24 @@ const DataTransform = {
     const period =
       PERIODSRANGE.indexOf(periodEnd) - PERIODSRANGE.indexOf(periodIni);
     return period;
+  },
+
+  getClassroomsGroupByEdifice: (classrooms) => {
+    let classroomsGroupByEdifice = new Map();
+    classrooms.map((classroom) => {
+      if (!classroomsGroupByEdifice.has(classroom.building)) {
+        classroomsGroupByEdifice.set(classroom.building, []);
+      }
+      classroomsGroupByEdifice.get(classroom.building).push(classroom);
+    });
+    return classroomsGroupByEdifice;
+  },
+  isValidCapacity: (listClassrooms, capacity) => {
+    let quantity = 0;
+    listClassrooms.map((classroom) => {
+      quantity += classroom.amount;
+    });
+    return quantity >= capacity;
   },
 };
 

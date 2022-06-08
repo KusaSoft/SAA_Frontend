@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Outlet} from 'react-router-dom';
 import {Button, Chip, Typography} from '@mui/material';
-import {ClearAll, Menu, AccountCircle} from '@mui/icons-material';
+import {ClearAll, Menu, AccountCircle, Logout} from '@mui/icons-material';
 import {
   ContentSite,
   Dashboard,
@@ -11,8 +11,10 @@ import {
 import useAuth from '../../hooks/useAuth';
 import Sidebar from '../Dashboard/Navbar';
 import {BoxCenterToEnd, BoxColumn} from '../../emotion/GlobalComponents';
+import MenuButton from '../Button/ManuButton';
 
 function MainLayout() {
+  const {setAuth} = useAuth();
   const {auth} = useAuth();
   const [open, setOpen] = useState(true);
 
@@ -47,13 +49,31 @@ function MainLayout() {
                   color="footer"
                 />
               </BoxColumn>
-
-              <AccountCircle
-                sx={{
-                  fontSize: 35,
-                  margin: '0rem 1rem 0rem 1rem',
-                }}
-              />
+              <MenuButton
+                buttoms={[
+                  {
+                    id: '1',
+                    onClick: () => {
+                      setAuth({
+                        user: null,
+                        roles: [],
+                        token: null,
+                        id: null,
+                      });
+                    },
+                    icon: (
+                      <Logout
+                        sx={{
+                          marginRight: '1rem',
+                        }}
+                      />
+                    ),
+                    label: 'Cerrar Sesión',
+                  },
+                ]}
+              >
+                
+              </MenuButton>
             </BoxCenterToEnd>
           </Header>
           <Outlet />

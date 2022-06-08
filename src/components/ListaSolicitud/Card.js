@@ -55,13 +55,17 @@ const SimpleCard = (props) => {
             borderBottom: '1px solid #e0e0e0',
           }}
         >
-          <b style={{fontWeight: 'bold'}}>
-            {props.request.state === STATUS.DRAFT
-              ? 'Ultima modificacon'
-              : 'Fecha de solicitud'}
-          </b>
-          {': '}
-          {props.request.fecha}
+          {props.request.state === STATUS.DRAFT ? (
+            <div>
+              <b style={{fontWeight: 'bold'}}>Ultima modificación: </b>
+              {props.request.register_date}
+            </div>
+          ) : (
+            <div>
+              <b style={{fontWeight: 'bold'}}>Fecha de solicitud: </b>
+              {props.request.reservation_date}
+            </div>
+          )}
         </div>
         <div
           style={{
@@ -79,7 +83,7 @@ const SimpleCard = (props) => {
             }}
           >
             <b style={{fontWeight: 'bold'}}>Motivo: </b>{' '}
-            {props.request.motivo}
+            {props.request.request_reason}
           </div>
         </div>
       </CardContent>
@@ -87,9 +91,21 @@ const SimpleCard = (props) => {
         disableSpacing
         style={{
           display: 'flex',
-          justifyContent: 'flex-end',
+          justifyContent: 'space-between',
         }}
       >
+        <Box
+          sx={{
+            padding: '14px',
+          }}
+        >
+          {props.request.state === STATUS.SENT && (
+            <div>
+              <b style={{fontWeight: 'bold'}}>Registrado el: </b>
+              {props.request.register_date}
+            </div>
+          )}
+        </Box>
         <Stack
           direction="row"
           spacing={1}
@@ -160,7 +176,7 @@ const SimpleCard = (props) => {
                   variant="h6"
                   component="h2"
                 >
-                  ¿Esta seguro que desea eliminar este elemento?
+                  ¿Está seguro que desea eliminar esta solicitud?
                 </Typography>
                 <Button onClick={handleClose}>Cancelar</Button>
                 <Button

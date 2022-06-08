@@ -13,6 +13,7 @@ import Modal from '@mui/material/Modal';
 import {useModal} from '../../hooks/useModal';
 import ContentDetail from '../details/ContentDetail';
 import {useRequestDetail} from '../../hooks/useDetail';
+import {STATUS} from '../../services/Constant';
 
 const style = {
   position: 'absolute',
@@ -42,34 +43,100 @@ const CardOperador = (props) => {
         color: 'black',
       }}
     >
-      <CardContent>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            borderBottom: '1px solid #e0e0e0',
-          }}
-        >
-          <div>
-            <b style={{fontWeight: 'bold'}}>Enviado:</b>{' '}
-            {props.request.register_date}
-          </div>
-        </div>
-        <div>
-          <b style={{fontWeight: 'bold'}}>Motivo: </b>
-          {props.request.request_reason}
-        </div>
-        <div>
-          <b style={{fontWeight: 'bold'}}>Fecha para la reserva: </b>
-          {props.request.reservation_date}
-        </div>
-        <div>
-          <b style={{fontWeight: 'bold'}}>Desde: </b>{' '}
-          {props.request.horario_ini}
-          <b style={{fontWeight: 'bold'}}> - Hasta: </b>{' '}
-          {props.request.horario_end}
-        </div>
-      </CardContent>
+      <div>
+        {props.request.state === STATUS.SENT ? (
+          <CardContent>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                borderBottom: '1px solid #e0e0e0',
+              }}
+            >
+              <div>
+                <b style={{fontWeight: 'bold'}}>Enviado:</b>{' '}
+                {props.request.register_date}
+              </div>
+            </div>
+            <div>
+              <b style={{fontWeight: 'bold'}}>Motivo: </b>
+              {props.request.request_reason}
+            </div>
+            <div>
+              <b style={{fontWeight: 'bold'}}>Fecha para la reserva: </b>
+              {props.request.reservation_date}
+            </div>
+            <div>
+              <b style={{fontWeight: 'bold'}}>Desde: </b>{' '}
+              {props.request.horario_ini}
+              <b style={{fontWeight: 'bold'}}> - Hasta: </b>{' '}
+              {props.request.horario_end}
+            </div>
+          </CardContent>
+        ) : props.request.state === STATUS.REJECTED ? (
+          <CardContent>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                borderBottom: '1px solid #e0e0e0',
+              }}
+            >
+              <div>
+                <b style={{fontWeight: 'bold'}}>Enviado el:</b>{' '}
+                {props.request.register_date}
+              </div>
+            </div>
+            <div>
+              <b style={{fontWeight: 'bold'}}>Motivo de rechazo: </b>
+              {props.request.rejection_reason}
+            </div>
+            <div>
+              <b style={{fontWeight: 'bold'}}>Motivo de solicitud: </b>
+              {props.request.request_reason}
+            </div>
+            <div>
+              <b style={{fontWeight: 'bold'}}>Fecha para la reserva: </b>
+              {props.request.reservation_date}
+            </div>
+          </CardContent>
+        ) : props.request.state === STATUS.ASSIGNED ? (
+          <CardContent>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                borderBottom: '1px solid #e0e0e0',
+              }}
+            >
+              <div>
+                <b style={{fontWeight: 'bold'}}>Enviado el:</b>{' '}
+                {props.request.register_date}
+              </div>
+            </div>
+            <div>
+              <b style={{fontWeight: 'bold'}}>Motivo de solicitud: </b>
+              {props.request.request_reason}
+            </div>
+            <div>
+              <b style={{fontWeight: 'bold'}}>Fecha para la reserva: </b>
+              {props.request.reservation_date}
+            </div>
+            <div>
+              <b style={{fontWeight: 'bold'}}>Desde: </b>{' '}
+              {props.request.horario_ini}
+              <b style={{fontWeight: 'bold'}}> - Hasta: </b>{' '}
+              {props.request.horario_end}
+            </div>
+            {/* <div>
+              <b style={{fontWeight: 'bold'}}>Aula(s): </b>
+              {props.request.assigned_classrooms}
+            </div> */}
+          </CardContent>
+        ) : (
+          <CardContent></CardContent>
+        )}
+      </div>
       <CardActions
         disableSpacing
         style={{

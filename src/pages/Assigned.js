@@ -4,13 +4,13 @@ import ListOperador from '../components/ListaSolicitud/ListOperador';
 import {WrapperLayout, WrapperPage} from '../emotion/GlobalComponents';
 import {BREAD_CRUB_PATHS, ORDER_DATE, STATUS} from '../services/Constant';
 import apiSettings from '../services/service';
-function Arrival() {
+function Assigned() {
   return (
     <WrapperLayout>
       <WrapperPage>
         <BasicBreadcrumbs
-          title="Solicitudes por orden de llegada"
-          breadcrumbs={BREAD_CRUB_PATHS.ARRIVAL}
+          title="Solicitudes asignadas"
+          breadcrumbs={BREAD_CRUB_PATHS.ASSIGNED}
         />
         <div
           style={{
@@ -18,8 +18,8 @@ function Arrival() {
           }}
         >
           <ListOperador
-            dataTypeS={'Fecha de envio'}
-            requestType={apiSettings.getSentReservations}
+            dataTypeS={'Fecha para la reserva'}
+            requestType={apiSettings.getAssignedReservations}
             orderDate={ORDER_DATE.LEJANOS}
           />
         </div>
@@ -27,4 +27,4 @@ function Arrival() {
     </WrapperLayout>
   );
 }
-export default Arrival;
+export default Assigned;

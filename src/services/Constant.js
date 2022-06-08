@@ -21,11 +21,19 @@ export const MOTIVES = [
   'Otros',
 ];
 
+export const FLOORS = {
+  CERO: 'Planta baja',
+  ONE: 'Primera planta',
+  SECOND:'Segunda planta',
+  THIRD: 'Tercera planta',
+  FOURTH: 'Cuarta planta',
+}
+
 export const STATUS = {
   SENT: 'sent',
   DRAFT: 'draft',
   REJECTED: 'rejected',
-  APPROVED: 'approved',
+  ASSIGNED: 'assigned',
 };
 
 export const ROLES = {
@@ -48,9 +56,16 @@ export const PATHS = {
   DRAFTS: 'drafts',
   ARRIVAL: 'firstServedOrder',
   URGENCY: 'urgency',
+  ASSIGNED: 'assigned',
+  REJECTED: 'rejected',
   RESERVATION_REQUEST_DETAIL:
     'reservationRequest/:reservationRequest/detail',
   RESERVATION_REQUEST_EDIT: 'reservationRequest/:reservationRequest/edit',
+  CLASSROOM_ASSIGNATION:
+    'reservationRequest/:reservationRequest/classroomAssignation',
+  CALENDAR: 'calendar',
+  SUBJECTS: 'subjects',
+  GROUPS: 'groups',
 };
 
 export const BREAD_CRUB_PATHS = {
@@ -98,6 +113,30 @@ export const BREAD_CRUB_PATHS = {
       link: false,
     },
   ],
+  REJECTED: [
+    {
+      name: 'Solicitudes',
+      route: PATHS.REJECTED,
+      link: false,
+    },
+    {
+      name: 'Rechazados',
+      route: PATHS.REJECTED,
+      link: false,
+    },
+  ],
+  ASSIGNED: [
+    {
+      name: 'Solicitudes',
+      route: PATHS.ASSIGNED,
+      link: false,
+    },
+    {
+      name: 'Asignados',
+      route: PATHS.ASSIGNED,
+      link: false,
+    },
+  ],
   URGENCY: [
     {
       name: 'Solicitudes',
@@ -126,6 +165,39 @@ export const BREAD_CRUB_PATHS = {
     {
       name: 'Nuevo usuario',
       route: PATHS.NEW_USER,
+      link: false,
+    },
+  ],
+  CLASSROOM_ASSIGNATION: [
+    {
+      name: 'Solicitudes',
+      route: PATHS.CLASSROOM_ASSIGNATION,
+      link: false,
+    },
+    {
+      name: 'Asignación de aula',
+      route: PATHS.CLASSROOM_ASSIGNATION,
+      link: false,
+    },
+  ],
+  CALENDAR: [
+    {
+      name: 'Calendario Académico',
+      route: PATHS.CALENDAR,
+      link: false,
+    },
+  ],
+  SUBJECTS: [
+    {
+      name: 'Materias',
+      route: PATHS.SUBJECTS,
+      link: false,
+    },
+  ],
+  GROUPS: [
+    {
+      name: 'Grupos',
+      route: PATHS.GROUPS,
       link: false,
     },
   ],
@@ -165,7 +237,6 @@ export const ERRORFORM = {
   },
 };
 
-
 export const ROLS = [
   {
     value: 'Docente',
@@ -185,4 +256,3 @@ export const ORDER_DATE = {
   PROXIMOS: 'Proximos-Lejanos',
   LEJANOS: 'Lejanos-Proximos',
 };
-

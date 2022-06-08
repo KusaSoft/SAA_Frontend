@@ -1,6 +1,16 @@
-import {Box, List, Divider, ListItem, Typography} from '@mui/material';
+import {
+  Box,
+  List,
+  Divider,
+  ListItem,
+  Typography,
+  Button,
+} from '@mui/material';
 import DataTransform from '../../utilities/DataController/DataTransform';
 import React from 'react';
+import useAuth from '../../hooks/useAuth';
+import {ROLES, PATHS, STATUS} from '../../services/Constant';
+import {Link} from 'react-router-dom';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -12,12 +22,16 @@ const style = {
   p: 4,
 };
 export default function ContentDetail(props) {
+  const {auth} = useAuth();
   return (
     <Box sx={style}>
       <Typography variant="h4" align="center">
         Solicitud de reserva
       </Typography>
       <Typography variant="body1">
+        <b>Registrado el: </b>
+        {props.request.register_date}
+        <br />
         <b>Realizada en nombre de: </b>
         {props.request.user}
         <br />
@@ -65,6 +79,28 @@ export default function ContentDetail(props) {
         <br />
         <b>Hora Fin:</b> {props.request.horario_end}
       </Typography>
+      {auth.roles.includes(ROLES.REVIEWER) &&
+        props.request.state !== STATUS.ASSIGNED &&
+        props.request.state !== STATUS.REJECTED && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              mt: 3,
+            }}
+          >
+            <Link
+              to={`/user/reservationRequest/${props.request.id}/classroomAssignation`}
+              style={{
+                textDecoration: 'none',
+              }}
+            >
+              <Button variant="contained" color="primary">
+                Asignar aula(s)
+              </Button>
+            </Link>
+          </Box>
+        )}
     </Box>
   );
 }

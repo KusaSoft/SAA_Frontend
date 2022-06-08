@@ -98,26 +98,6 @@ function Sidebar() {
               color: 'white',
             }}
           />
-          <Button
-            variant="contained"
-            onClick={() => {
-              setAuth({
-                user: null,
-                roles: [],
-                token: null,
-                id: null,
-              });
-            }}
-            color="navBar"
-            sx={{boxShadow: 'none'}}
-          >
-            <Logout
-              sx={{
-                marginRight: '1rem',
-              }}
-            />
-            Cerrar Sesión
-          </Button>
         </Box>
       </div>
     </div>

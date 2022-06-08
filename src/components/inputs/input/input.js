@@ -26,12 +26,26 @@ export default function FormInputControl(props) {
           fullWidth
           onInput={(event) => {
             if (props.myName === 'totalStudents') {
-              if (
-                event.target.value.length > props.myMaxLength
-              ) {
+              if (event.target.value.length > props.myMaxLength) {
                 event.target.value = event.target.value.substring(
                   0,
                   props.myMaxLength
+                );
+              }
+              if (event.target.value === '0') {
+                event.target.value = '';
+              }
+              if (event.target.value > 500) {
+                event.target.value = 500;
+              }
+              if (event.target.value.charAt(0) === '0') {
+                event.target.value = event.target.value.substring(1);
+              }
+
+              if (event.target.value.match(/^[0-9]+$/) === null) {
+                event.target.value = event.target.value.substring(
+                  0,
+                  event.target.value.length - 1
                 );
               }
             }
