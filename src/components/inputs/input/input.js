@@ -24,6 +24,7 @@ export default function FormInputControl(props) {
           name={props.myName}
           onBlur={props.myOnBlur}
           fullWidth
+          disabled={props.myDisabled}
           onInput={(event) => {
             if (props.myName === 'totalStudents') {
               if (event.target.value.length > props.myMaxLength) {

@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  InputLabel,
-  Select,
-  MenuItem,
-  FormHelperText,
-} from '@mui/material';
+import {InputLabel, Select, MenuItem, FormHelperText} from '@mui/material';
 import {FormControlInput, Wrapper} from './inputSelect.styles';
 export default function FormSelectControl(props) {
   return (
@@ -12,6 +7,7 @@ export default function FormSelectControl(props) {
       <FormControlInput disabled={props.disabled}>
         <InputLabel>{props.myLabel}</InputLabel>
         <Select
+          disabled={props.myDisabled}
           value={props.myValue}
           label={props.myLabel}
           onChange={(e) => {

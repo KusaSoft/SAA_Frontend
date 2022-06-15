@@ -24,10 +24,10 @@ export const MOTIVES = [
 export const FLOORS = {
   CERO: 'Planta baja',
   ONE: 'Primera planta',
-  SECOND:'Segunda planta',
+  SECOND: 'Segunda planta',
   THIRD: 'Tercera planta',
   FOURTH: 'Cuarta planta',
-}
+};
 
 export const STATUS = {
   SENT: 'sent',
@@ -51,7 +51,9 @@ export const PATHS = {
   USERHOME: 'home',
   USERS: 'users',
   RESERVATION_REQUEST: 'reservationRequest/:reservationRequest',
+  RESERVATION_FORWARD: 'reservationForward/:reservationRequest',
   RESERVATION_REQUESTS: 'reservationRequest',
+  RESERVATION_FORWARDS: 'reservationForward',
   PENDING: 'pendings',
   DRAFTS: 'drafts',
   ARRIVAL: 'firstServedOrder',
@@ -72,6 +74,23 @@ export const BREAD_CRUB_PATHS = {
   RESERVATION_REQUEST: [
     {
       name: 'Solicitudes de reserva',
+      route: `${PATHS.RESERVATION_REQUESTS}/new`,
+      link: false,
+    },
+  ],
+  RESERVATION_FORWARD: [
+    {
+      name: 'Solicitudes',
+      route: PATHS.REJECTED,
+      link: false,
+    },
+    {
+      name: 'Rechazados',
+      route: PATHS.REJECTED,
+      link: true,
+    },
+    {
+      name: 'Reenvio de solicitud de reserva',
       route: `${PATHS.RESERVATION_REQUESTS}/new`,
       link: false,
     },

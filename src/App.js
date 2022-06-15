@@ -25,6 +25,7 @@ import ClassroomAssigntaion from './pages/ClassroomAssignation';
 import Calendar from './pages/Calendar';
 import Subjects from './pages/Subjects';
 import Groups2 from './pages/Groups2';
+import ReservationForward from './pages/ReservationForward';
 
 function App() {
   return (
@@ -55,6 +56,12 @@ function App() {
             <Route
               path={PATHS.RESERVATION_REQUEST}
               element={<ReservationRequest />}
+            />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[ROLES.TEACHER]} />}>
+            <Route
+              path={PATHS.RESERVATION_FORWARD}
+              element={<ReservationForward />}
             />
           </Route>
 

@@ -42,6 +42,7 @@ export default function FormMultiselectControl(props) {
         <InputLabel>{props.myLabel}</InputLabel>
         <Select
           multiple
+          disabled={props.myDisabled}
           required
           value={props.value}
           name={props.myName}
@@ -55,9 +56,7 @@ export default function FormMultiselectControl(props) {
             />
           }
           renderValue={(selected) => (
-            <Box
-              sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}
-            >
+            <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
               {selected.map((value) => (
                 <Chip
                   key={value}
