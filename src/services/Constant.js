@@ -24,10 +24,10 @@ export const MOTIVES = [
 export const FLOORS = {
   CERO: 'Planta baja',
   ONE: 'Primera planta',
-  SECOND:'Segunda planta',
+  SECOND: 'Segunda planta',
   THIRD: 'Tercera planta',
   FOURTH: 'Cuarta planta',
-}
+};
 
 export const STATUS = {
   SENT: 'sent',
@@ -66,6 +66,7 @@ export const PATHS = {
   CALENDAR: 'calendar',
   SUBJECTS: 'subjects',
   GROUPS: 'groups',
+  NOTIFICATIONS: 'notifications',
 };
 
 export const BREAD_CRUB_PATHS = {
@@ -198,6 +199,13 @@ export const BREAD_CRUB_PATHS = {
     {
       name: 'Grupos',
       route: PATHS.GROUPS,
+      link: false,
+    },
+  ],
+  NOTIFICATIONS: [
+    {
+      name: 'Notificaciones',
+      route: PATHS.NOTIFICATIONS,
       link: false,
     },
   ],

@@ -265,6 +265,14 @@ const apiSettings = {
     );
     return response;
   },
+
+  getMyRejectedReservations: async () => {
+    const response = await axios.get(`${API_URL}/reservations/rejected`);
+    const list = response.data.map((id) => {
+      return {...id};
+    });
+    return list;
+  },
 };
 
 export default apiSettings;

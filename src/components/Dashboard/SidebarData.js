@@ -3,6 +3,7 @@ import {Home, Add, Book, Group} from '@mui/icons-material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import SubjectIcon from '@mui/icons-material/Subject';
 import GroupsIcon from '@mui/icons-material/Groups';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import {ROLES, PATHS} from '../../services/Constant';
 
 export const SidebarData = (role) => {
@@ -43,6 +44,14 @@ export const SidebarData = (role) => {
     ];
   } else if (role === ROLES.REVIEWER) {
     return [
+      {
+        id: 7,
+        title: 'Notificaciones emitidas',
+        cName: 'sidebar-item',
+        icon: <NotificationsIcon sx={{marginRight: '1rem'}} />,
+        path: `${PATHS.NOTIFICATIONS}`,
+        hasSubmenu: false,
+      },
       {
         id: 2,
         title: 'Solicitudes',
@@ -89,22 +98,42 @@ export const SidebarData = (role) => {
       },
       {
         id: 3,
+        title: 'Notificaciones',
+        cName: 'sidebar-item',
+        icon: <NotificationsIcon sx={{marginRight: '1rem'}} />,
+        path: `${PATHS.NOTIFICATIONS}`,
+        hasSubmenu: false,
+      },
+      {
+        id: 4,
         title: 'Solicitudes',
         cName: 'sidebar-item',
         icon: <Book sx={{marginRight: '1rem'}} />,
         hasSubmenu: true,
         elements: [
           {
-            id: 4,
+            id: 5,
             title: 'Pendientes',
             cName: 'sidebar-item',
             path: `${PATHS.PENDING}`,
           },
           {
-            id: 5,
+            id: 6,
             title: 'Borradores',
             cName: 'sidebar-item',
             path: `${PATHS.DRAFTS}`,
+          },
+          {
+            id: 7,
+            title: 'Asignados',
+            cName: 'sidebar-item',
+            path: `${PATHS.ASSIGNED}`,
+          },
+          {
+            id: 8,
+            title: 'Rechazados',
+            cName: 'sidebar-item',
+            path: `${PATHS.REJECTED}`,
           },
         ],
       },

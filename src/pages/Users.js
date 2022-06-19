@@ -65,7 +65,7 @@ function Users() {
             alignItems: 'center',
             borderRadius: '0.5rem',
             padding: '0.5rem',
-            boxShadow: 1
+            boxShadow: 1,
           }}
         >
           <Table>
