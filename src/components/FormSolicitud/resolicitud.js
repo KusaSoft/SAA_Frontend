@@ -154,7 +154,8 @@ function Forward(props) {
                       myName="myGroupList"
                       myDisabled={true}
                       setValue={handleReservationRequest}
-                      deleteT={deleteElementFromMyGroup}
+                      deleteT={() => {}}
+                      labelActive={true}
                       list={
                         reservationRequest.subject !== ''
                           ? subjectList
@@ -182,8 +183,9 @@ function Forward(props) {
                     value={reservationRequest.otherGroupList}
                     myName="otherGroupList"
                     myDisabled={true}
+                    labelActive={true}
                     setValue={handleReservationRequest}
-                    deleteT={deleteElementFromOtherGroup}
+                    deleteT={() => {}}
                     list={
                       reservationRequest.subject !== ''
                         ? teachers

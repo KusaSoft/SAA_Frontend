@@ -409,51 +409,57 @@ function ClassroomsAssignation(props) {
         ></RequestMessage>
       </Modal>
       <Modal isOpen={isOpenModalRejected} closeModal={closeModalRejected}>
-        <FormControl
-          sx={{
-            width: '100%',
+        <div
+          style={{
+            margin: '20px',
           }}
         >
-          <FormLabel>Motivo de rechazo</FormLabel>
-          <TextField
-            multiline
-            rows={3}
-            type="text"
-            variant="outlined"
-            value={rejection_reason}
-            onChange={(e) => setRejection_reason(e.target.value)}
+          <FormControl
             sx={{
-              width: '85%',
-              padding: '1rem',
-            }}
-          />
-        </FormControl>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Button
-            variant="contained"
-            color="error"
-            onClick={() => {
-              setRejection_reason('');
-              closeModalRejected();
+              width: '100%',
             }}
           >
-            Cancelar
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={(e) => {
-              handleSumbitRejection(e);
+            <FormLabel>Motivo de rechazo</FormLabel>
+            <TextField
+              multiline
+              rows={3}
+              type="text"
+              variant="outlined"
+              value={rejection_reason}
+              onChange={(e) => setRejection_reason(e.target.value)}
+              sx={{
+                width: '85%',
+                padding: '1rem',
+              }}
+            />
+          </FormControl>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
             }}
           >
-            Enviar
-          </Button>
-        </Box>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => {
+                setRejection_reason('');
+                closeModalRejected();
+              }}
+            >
+              Cancelar
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={(e) => {
+                handleSumbitRejection(e);
+              }}
+            >
+              Enviar
+            </Button>
+          </Box>
+        </div>
       </Modal>
     </Box>
   );

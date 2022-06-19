@@ -8,10 +8,7 @@ import {
   MenuItem,
 } from '@mui/material';
 import {useTheme} from '@mui/material/styles';
-import {
-  FormControlInput,
-  Wrapper,
-} from './inputMultiselect.styles';
+import {FormControlInput, Wrapper} from './inputMultiselect.styles';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -57,19 +54,23 @@ export default function FormMultiselectControl(props) {
           }
           renderValue={(selected) => (
             <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
-              {selected.map((value) => (
-                <Chip
-                  key={value}
-                  label={value}
-                  onMouseDown={(event) => {
-                    event.stopPropagation();
-                  }}
-                  onDelete={(e) => {
-                    e.stopPropagation();
-                    props.deleteT(e, value);
-                  }}
-                />
-              ))}
+              {selected.map((value) => {
+                return props.labelActive ? (
+                  <Chip key={value} label={value} />
+                ) : (
+                  <Chip
+                    key={value}
+                    label={value}
+                    onMouseDown={(event) => {
+                      event.stopPropagation();
+                    }}
+                    onDelete={(e) => {
+                      e.stopPropagation();
+                      props.deleteT(e, value);
+                    }}
+                  />
+                );
+              })}
             </Box>
           )}
           MenuProps={MenuProps}
