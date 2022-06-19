@@ -80,11 +80,30 @@ export default function GroupOfClassrooms(props) {
                       aria-controls="panel1bh-content"
                       id="panel1bh-header"
                     >
-                      <Typography variant="h6">{floor}</Typography>
+                      <Typography
+                        variant="h6"
+                        sx={{width: '33%', flexShrink: 0}}
+                      >
+                        {floor}
+                      </Typography>
+                      <Typography
+                        variant="body"
+                        sx={{
+                          paddingLeft: '1rem',
+                        }}
+                      >
+                        Capacidad:{' '}
+                        {value[1].reduce((acc, classroom) => {
+                          if (classroom.floor === floor) {
+                            return acc + classroom.amount;
+                          }
+                          return acc;
+                        }, 0)}
+                      </Typography>
                     </AccordionSummary>
                     {value[1].map((classroom) => {
                       return classroom.floor === floor ? (
-                        <AccordionDetails>
+                        <Box>
                           <ListItem key={classroom.id}>
                             <Checkbox
                               checked={props.classroomsSelected.some(
@@ -123,7 +142,7 @@ export default function GroupOfClassrooms(props) {
                               {classroom.amount}
                             </Typography>
                           </ListItem>
-                        </AccordionDetails>
+                        </Box>
                       ) : null;
                     })}
                   </Accordion>
