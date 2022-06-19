@@ -25,7 +25,11 @@ import ClassroomAssigntaion from './pages/ClassroomAssignation';
 import Calendar from './pages/Calendar';
 import Subjects from './pages/Subjects';
 import Groups2 from './pages/Groups2';
+
 import Notifications from './pages/Notifications';
+
+import ReservationForward from './pages/ReservationForward';
+
 
 function App() {
   return (
@@ -58,6 +62,7 @@ function App() {
               element={<ReservationRequest />}
             />
           </Route>
+
           <Route
             element={
               <RequireAuth
@@ -68,6 +73,14 @@ function App() {
             <Route
               path={PATHS.NOTIFICATIONS}
               element={<Notifications />}
+            />
+          </Route>
+
+          <Route element={<RequireAuth allowedRoles={[ROLES.TEACHER]} />}>
+            <Route
+              path={PATHS.RESERVATION_FORWARD}
+              element={<ReservationForward />}
+
             />
           </Route>
 

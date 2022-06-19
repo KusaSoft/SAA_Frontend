@@ -188,67 +188,99 @@ function ClassroomsAssignation(props) {
                 </Typography>
               </Box>
             </Box>
-            <Accordion
-              //quitar estilos
-              sx={{
-                boxShadow: 'none',
-                border: 'none',
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
               }}
             >
-              <AccordionSummary
+              <Accordion
+                //quitar estilos
                 sx={{
-                  pointerEvents: 'none',
+                  flex: '3',
+                  boxShadow: 'none',
+                  border: 'none',
                 }}
-                expandIcon={
-                  <Button
-                    sx={{
-                      pointerEvents: 'auto',
-                      fontSize: '0.6rem',
-                    }}
-                    onClick={() => setOculto(!oculto)}
-                  >
-                    {oculto ? 'Ocultar detalles' : 'Ver detalles'}
-                  </Button>
-                }
-              ></AccordionSummary>
-              <AccordionDetails>
-                <Box>
+              >
+                <AccordionSummary
+                  sx={{
+                    pointerEvents: 'none',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                  expandIcon={
+                    <Button
+                      sx={{
+                        pointerEvents: 'auto',
+                        fontSize: '0.6rem',
+                      }}
+                      onClick={() => setOculto(!oculto)}
+                    >
+                      {oculto ? 'Ocultar detalles' : 'Ver detalles'}
+                    </Button>
+                  }
+                ></AccordionSummary>
+                <AccordionDetails>
                   <Box>
-                    <Typography>
-                      <b>Motivo: </b>
-                      {response.request_reason}
-                    </Typography>
-                    <Typography>
-                      <b>Materia: </b>
-                      {response.subject}
-                    </Typography>
-                    <Typography>
-                      <b>Realizada en nombre de: </b>
-                      {response.user}
-                    </Typography>
+                    <Box>
+                      <Typography>
+                        <b>Motivo: </b>
+                        {response.request_reason}
+                      </Typography>
+                      <Typography>
+                        <b>Materia: </b>
+                        {response.subject}
+                      </Typography>
+                      <Typography>
+                        <b>Realizada en nombre de: </b>
+                        {response.user}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography>
+                        <b>Grupos: </b>
+                      </Typography>
+                      {response.group_list
+                        ? response.group_list.map((group, index) => (
+                            <Typography key={index}>
+                              G{group.group} - {group.teacher}
+                            </Typography>
+                          ))
+                        : null}
+                      {response.other_groups
+                        ? response.other_groups.map((group, index) => (
+                            <Typography key={index}>
+                              G{group.group} - {group.teacher}
+                            </Typography>
+                          ))
+                        : null}
+                    </Box>
                   </Box>
-                  <Box>
-                    <Typography>
-                      <b>Grupos: </b>
-                    </Typography>
-                    {response.group_list
-                      ? response.group_list.map((group, index) => (
-                          <Typography key={index}>
-                            G{group.group} - {group.teacher}
-                          </Typography>
-                        ))
-                      : null}
-                    {response.other_groups
-                      ? response.other_groups.map((group, index) => (
-                          <Typography key={index}>
-                            G{group.group} - {group.teacher}
-                          </Typography>
-                        ))
-                      : null}
-                  </Box>
-                </Box>
-              </AccordionDetails>
-            </Accordion>
+                </AccordionDetails>
+              </Accordion>
+              <div
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                }}
+              >
+                {DataTransform.isValidCapacity(
+                  classroomsSelected,
+                  response.total_students
+                ) ? (
+                  <Typography>
+                    Capacidad:{' '}
+                    {DataTransform.getCapacity(classroomsSelected)}
+                  </Typography>
+                ) : (
+                  <Typography color="error">
+                    Capacidad:{' '}
+                    {DataTransform.getCapacity(classroomsSelected)}
+                  </Typography>
+                )}
+              </div>
+            </div>
             <Divider />
             <Box
               sx={{
@@ -355,7 +387,7 @@ function ClassroomsAssignation(props) {
       <Dialog open={isOpenAlert} onClose={closeAlert}>
         <AlertMessage
           message={
-            'La cantidad de estudiantes no coincide con la capacidad de las aulas seleccionadas'
+            'La capacidad de la(s) aula(s) no es suficiente para asignar la solicitud.'
           }
           alertTitle={'Alerta!'}
         >
@@ -377,51 +409,57 @@ function ClassroomsAssignation(props) {
         ></RequestMessage>
       </Modal>
       <Modal isOpen={isOpenModalRejected} closeModal={closeModalRejected}>
-        <FormControl
-          sx={{
-            width: '100%',
+        <div
+          style={{
+            margin: '20px',
           }}
         >
-          <FormLabel>Motivo de rechazo</FormLabel>
-          <TextField
-            multiline
-            rows={3}
-            type="text"
-            variant="outlined"
-            value={rejection_reason}
-            onChange={(e) => setRejection_reason(e.target.value)}
+          <FormControl
             sx={{
-              width: '85%',
-              padding: '1rem',
-            }}
-          />
-        </FormControl>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Button
-            variant="contained"
-            color="error"
-            onClick={() => {
-              setRejection_reason('');
-              closeModalRejected();
+              width: '100%',
             }}
           >
-            Cancelar
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={(e) => {
-              handleSumbitRejection(e);
+            <FormLabel>Motivo de rechazo</FormLabel>
+            <TextField
+              multiline
+              rows={3}
+              type="text"
+              variant="outlined"
+              value={rejection_reason}
+              onChange={(e) => setRejection_reason(e.target.value)}
+              sx={{
+                width: '85%',
+                padding: '1rem',
+              }}
+            />
+          </FormControl>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
             }}
           >
-            Enviar
-          </Button>
-        </Box>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => {
+                setRejection_reason('');
+                closeModalRejected();
+              }}
+            >
+              Cancelar
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={(e) => {
+                handleSumbitRejection(e);
+              }}
+            >
+              Enviar
+            </Button>
+          </Box>
+        </div>
       </Modal>
     </Box>
   );

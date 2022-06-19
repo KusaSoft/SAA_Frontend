@@ -51,13 +51,16 @@ export const PATHS = {
   USERHOME: 'home',
   USERS: 'users',
   RESERVATION_REQUEST: 'reservationRequest/:reservationRequest',
+  RESERVATION_FORWARD: 'reservationForward/:reservationRequest',
   RESERVATION_REQUESTS: 'reservationRequest',
+  RESERVATION_FORWARDS: 'reservationForward',
   PENDING: 'pendings',
   DRAFTS: 'drafts',
   ARRIVAL: 'firstServedOrder',
   URGENCY: 'urgency',
   ASSIGNED: 'assigned',
   REJECTED: 'rejected',
+  REJECTED_RES: '/user/rejected',
   RESERVATION_REQUEST_DETAIL:
     'reservationRequest/:reservationRequest/detail',
   RESERVATION_REQUEST_EDIT: 'reservationRequest/:reservationRequest/edit',
@@ -73,6 +76,23 @@ export const BREAD_CRUB_PATHS = {
   RESERVATION_REQUEST: [
     {
       name: 'Solicitudes de reserva',
+      route: `${PATHS.RESERVATION_REQUESTS}/new`,
+      link: false,
+    },
+  ],
+  RESERVATION_FORWARD: [
+    {
+      name: 'Solicitudes',
+      route: PATHS.REJECTED,
+      link: false,
+    },
+    {
+      name: 'Rechazados',
+      route: PATHS.REJECTED_RES,
+      link: true,
+    },
+    {
+      name: 'Reenvio de solicitud de reserva',
       route: `${PATHS.RESERVATION_REQUESTS}/new`,
       link: false,
     },

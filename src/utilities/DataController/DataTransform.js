@@ -111,6 +111,13 @@ const DataTransform = {
     });
     return quantity >= capacity;
   },
+  getCapacity: (listClassrooms) => {
+    let quantity = 0;
+    listClassrooms.map((classroom) => {
+      quantity += classroom.amount;
+    });
+    return quantity;
+  },
 };
 
 export default DataTransform;
