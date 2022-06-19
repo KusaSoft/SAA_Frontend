@@ -292,7 +292,7 @@ function ContentDetail2(props) {
         }}
       >
         <Link
-          to={`/user/reservationRequest/${props.request.id}`}
+          to={`/user/reservationForward/${props.request.id}`}
           style={{
             textDecoration: 'none',
           }}
