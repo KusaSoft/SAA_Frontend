@@ -60,6 +60,7 @@ export const PATHS = {
   URGENCY: 'urgency',
   ASSIGNED: 'assigned',
   REJECTED: 'rejected',
+  REJECTED_RES: '/user/rejected',
   RESERVATION_REQUEST_DETAIL:
     'reservationRequest/:reservationRequest/detail',
   RESERVATION_REQUEST_EDIT: 'reservationRequest/:reservationRequest/edit',
@@ -86,7 +87,7 @@ export const BREAD_CRUB_PATHS = {
     },
     {
       name: 'Rechazados',
-      route: PATHS.REJECTED,
+      route: PATHS.REJECTED_RES,
       link: true,
     },
     {

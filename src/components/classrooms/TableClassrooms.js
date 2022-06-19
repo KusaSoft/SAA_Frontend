@@ -321,6 +321,7 @@ export default function TableClassrooms(props) {
               component="div"
               count={props.classrooms.length}
               rowsPerPage={rowsPerPage}
+              labelRowsPerPage={'Aulas por página'}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}

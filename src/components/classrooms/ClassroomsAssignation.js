@@ -387,7 +387,7 @@ function ClassroomsAssignation(props) {
       <Dialog open={isOpenAlert} onClose={closeAlert}>
         <AlertMessage
           message={
-            'La cantidad de estudiantes no coincide con la capacidad de las aulas seleccionadas'
+            'La capacidad de la(s) aula(s) no es suficiente para asignar la solicitud.'
           }
           alertTitle={'Alerta!'}
         >
