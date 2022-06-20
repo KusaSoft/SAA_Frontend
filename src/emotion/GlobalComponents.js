@@ -45,3 +45,13 @@ export const LinkStyled = styled(Link)`
     color: #5e83ba;
   }
 `;
+
+//image transpaert
+export const MyPaper = styled.img`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-image: url(${({src}) => src});
+  background-size: cover;
+  position: relative;
+`;
