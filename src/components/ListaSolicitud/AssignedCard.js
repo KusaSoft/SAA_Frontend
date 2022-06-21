@@ -110,8 +110,12 @@ const AssignedCard = (props) => {
               <Button
                 variant="contained"
                 color="success"
-                onClick={() => {
-                  alert('aqui metodo para confirmar');
+                onClick={async () => {
+                  const response = await apiSettings.confirm(
+                    props.request.id,
+                    'confirmed'
+                  );
+                  window.location.reload();
                 }}
               >
                 Confirmar

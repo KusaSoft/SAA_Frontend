@@ -93,13 +93,13 @@ export default function Notifications() {
                   </TableCell>
                 ) : null}
                 <TableCell sx={{fontWeight: 'bold', fontSize: '24px'}}>
-                  Fecha de emisión o reserva?
+                  Fecha de emisión
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {auth.roles[0] === 'operador'
-                ? ListO(mockOperatorNotify ? mockOperatorNotify : [])
+                ? ListO(listAllNotifications ? listAllNotifications : [])
                 : List(listMyNotications ? listMyNotications : [])}
             </TableBody>
           </Table>
