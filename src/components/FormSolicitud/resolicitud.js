@@ -335,11 +335,7 @@ function Forward(props) {
                     <Button
                       variant="contained"
                       color="error"
-                      onClick={() =>
-                        props.reservationRequest === 'new'
-                          ? navigate(-1)
-                          : navigate('/user/drafts')
-                      }
+                      onClick={() => navigate(-1)}
                     >
                       Cancelar
                     </Button>
