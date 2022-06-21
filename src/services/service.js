@@ -266,8 +266,26 @@ const apiSettings = {
     return response;
   },
 
-  getMyRejectedReservations: async () => {
-    const response = await axios.get(`${API_URL}/reservations/rejected`);
+  getMyRejectedReservations: async (userID) => {
+    const response = await axios.get(
+      `${API_URL}/reservations/rejected/${userID}`
+    );
+    const list = response.data.map((id) => {
+      return {...id};
+    });
+    return list;
+  },
+  getMyAssignedReservations: async (userID) => {
+    const response = await axios.get(
+      `${API_URL}/reservations/assigned/${userID}`
+    );
+    const list = response.data.map((id) => {
+      return {...id};
+    });
+    return list;
+  },
+  getMyNotifications: async (userID) => {
+    const response = await axios.get(`${API_URL}/notifications/${userID}`);
     const list = response.data.map((id) => {
       return {...id};
     });

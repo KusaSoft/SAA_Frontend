@@ -84,8 +84,12 @@ const RejectedCard = (props) => {
               padding: '10px',
             }}
           >
-            <b style={{fontWeight: 'bold'}}>Motivo de Rechazo: </b>{' '}
-            <b style={{color: 'red'}}>{props.request.rejection_reason}</b>
+            <b style={{fontWeight: 'bold', color: 'red'}}>
+              Motivo de Rechazo:{' '}
+            </b>{' '}
+            <b style={{fontWeight: 'normal'}}>
+              {props.request.rejection_reason}
+            </b>
           </div>
         </div>
       </CardContent>

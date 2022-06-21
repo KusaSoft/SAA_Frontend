@@ -17,9 +17,11 @@ import CachedIcon from '@mui/icons-material/Cached';
 import useAuth from '../hooks/useAuth';
 import {Navigate, Link, useNavigate} from 'react-router-dom';
 import {style} from '@mui/system';
+import useListMyNotifications from '../hooks/useListMyNotifications';
 
 export default function Notifications() {
   const {auth} = useAuth();
+  const [listMyNotications] = useListMyNotifications(auth.id);
   return (
     <WrapperLayout>
       <WrapperPage>
@@ -88,18 +90,14 @@ export default function Notifications() {
                   </TableCell>
                 ) : null}
                 <TableCell sx={{fontWeight: 'bold', fontSize: '24px'}}>
-                  Fecha de emisión
+                  Fecha de emisión o reserva?
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {/* <Lista
-                list={mockTeacherNotify ? mockTeacherNotify : []}
-                emptyMessage={'No tiene ninguna notificacion'}
-              /> */}
               {auth.roles[0] === 'operador'
                 ? ListO(mockOperatorNotify ? mockOperatorNotify : [])
-                : List(mockTeacherNotify ? mockTeacherNotify : [])}
+                : List(listMyNotications ? listMyNotications : [])}
             </TableBody>
           </Table>
         </Box>
@@ -107,23 +105,7 @@ export default function Notifications() {
     </WrapperLayout>
   );
 }
-// const Lista = (props) => {
-//   if (props.list.length !== 0) {
-//     return (
-//       <div style={{width: '80%'}}>
-//         {props.list.map((element) => {
-//           return (
-//             <div key={element[0]}>
-//               <CardNotify request={element} />
-//             </div>
-//           );
-//         })}
-//       </div>
-//     );
-//   } else {
-//     return <div>{props.emptyMessage}</div>;
-//   }
-// };
+
 const List = (list) => {
   if (list.length !== 0) {
     return list.map((element) => {
@@ -149,16 +131,8 @@ const CardNotify = (props) => {
   let navigate = useNavigate();
   const [click, setClick] = useState(0);
   return (
-    // <Link
-    //   to={
-    //     props.request.state === 'rejected' ? '../rejected' : '../assigned'
-    //   }
-    //   style={{textDecoration: 'none'}}
-    // >
     <TableRow
-      //style={{background: click === 0 ? '#F0F0F0' : 'blue'}}
       onClick={() => {
-        //redireccionar();
         setClick(1);
         {
           navigate(
@@ -170,24 +144,23 @@ const CardNotify = (props) => {
       }}
       hover
     >
-      <TableCell sx={{fontWeight: 'bold'}}>
+      <TableCell>
         {props.request.state === 'rejected'
           ? 'Solicitud rechazada'
           : 'Solicitud asignada'}
       </TableCell>
-      <TableCell sx={{fontWeight: 'bold'}}>
-        {props.request.state === 'rejected'
+      <TableCell>
+        {props.request.detail}
+        {/* {props.request.state === 'rejected'
           ? props.request.rejected_reason
           : props.request.assigned_classrooms &&
             props.request.assigned_classrooms.map((classrom) => (
               <ListItem sx={{display: 'inline'}}>
                 {classrom.name_classroom}
               </ListItem>
-            ))}
+            ))} */}
       </TableCell>
-      <TableCell sx={{fontWeight: 'bold'}}>
-        {props.request.fechaEmision}
-      </TableCell>
+      <TableCell>{props.request.reservation_date}</TableCell>
     </TableRow>
     // </Link>
   );
@@ -219,51 +192,51 @@ const CardNotifyOperator = (props) => {
 function redireccionar() {
   return <Navigate replace to="../" />;
 }
-const mockTeacherNotify = [
-  {
-    id: 1, //id notificación
-    user_id: 1,
-    reservation_request_id: 3,
-    state: 'rejected',
-    reservation_date: 'date…',
-    rejected_reason:
-      'No se pudo aceptar tu solicitud… No se pudo aceptar tu solicitud…No se pudo aceptar tu solicitud…No se pudo aceptar tu solicitud…',
-    fechaEmision: '30/06/2022',
-  },
-  {
-    id: 1, //id notificación
-    user_id: 1,
-    reservation_request_id: 3,
-    reservation_date: 'date…',
-    state: 'assigned',
-    fechaEmision: '20/06/2022',
-    assigned_classrooms: [
-      {
-        id: 2,
-        name_classroom: '690A',
-        edifice: 'edificio nuevo',
-        floor: 'primera planta',
-        amount: 120,
-      },
-      {
-        id: 3,
-        name_classroom: '691A',
-        edifice: 'edificio nuevo',
-        floor: 'primera planta',
-        amount: 90,
-      },
-    ],
-  },
-  {
-    id: 3, //id notificación
-    user_id: 1,
-    reservation_request_id: 3,
-    state: 'rejected',
-    reservation_date: 'date…',
-    rejected_reason: 'No se pudo aceptar tu solicitud…',
-    fechaEmision: '30/06/2022',
-  },
-];
+// const mockTeacherNotify = [
+//   {
+//     id: 1, //id notificación
+//     user_id: 1,
+//     reservation_request_id: 3,
+//     state: 'rejected',
+//     reservation_date: 'date…',
+//     rejected_reason:
+//       'No se pudo aceptar tu solicitud… No se pudo aceptar tu solicitud…No se pudo aceptar tu solicitud…No se pudo aceptar tu solicitud…',
+//     fechaEmision: '30/06/2022',
+//   },
+//   {
+//     id: 1, //id notificación
+//     user_id: 1,
+//     reservation_request_id: 3,
+//     reservation_date: 'date…',
+//     state: 'assigned',
+//     fechaEmision: '20/06/2022',
+//     assigned_classrooms: [
+//       {
+//         id: 2,
+//         name_classroom: '690A',
+//         edifice: 'edificio nuevo',
+//         floor: 'primera planta',
+//         amount: 120,
+//       },
+//       {
+//         id: 3,
+//         name_classroom: '691A',
+//         edifice: 'edificio nuevo',
+//         floor: 'primera planta',
+//         amount: 90,
+//       },
+//     ],
+//   },
+//   {
+//     id: 3, //id notificación
+//     user_id: 1,
+//     reservation_request_id: 3,
+//     state: 'rejected',
+//     reservation_date: 'date…',
+//     rejected_reason: 'No se pudo aceptar tu solicitud…',
+//     fechaEmision: '30/06/2022',
+//   },
+// ];
 const mockOperatorNotify = [
   {
     id: 1, //id notificación
