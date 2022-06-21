@@ -113,6 +113,7 @@ function ClassroomsAssignation(props) {
       assigned_classrooms: classroomsSelected.map(
         (classroom) => classroom.id
       ),
+      emisor_id: auth.id,
     };
     handleRequestR(newReservationStatus);
   };

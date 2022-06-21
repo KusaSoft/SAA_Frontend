@@ -187,7 +187,7 @@ export default function TableClassrooms(props) {
   const [orderBy, setOrderBy] = React.useState('amount');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -317,9 +317,13 @@ export default function TableClassrooms(props) {
               </Table>
             </TableContainer>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
+              rowsPerPageOptions={[10, 20, 30]}
               component="div"
-              count={props.classrooms.length}
+              count={
+                props.classrooms.filter((row) => {
+                  return row.amount >= props.numberOfStudents;
+                }).length
+              }
               rowsPerPage={rowsPerPage}
               labelRowsPerPage={'Aulas por página'}
               page={page}
