@@ -18,10 +18,13 @@ import useAuth from '../hooks/useAuth';
 import {Navigate, Link, useNavigate} from 'react-router-dom';
 import {style} from '@mui/system';
 import useListMyNotifications from '../hooks/useListMyNotifications';
+import useListAllNotifications from '../hooks/useListAllNotifications';
 
 export default function Notifications() {
   const {auth} = useAuth();
   const [listMyNotications] = useListMyNotifications(auth.id);
+  const [listAllNotifications] = useListAllNotifications();
+  console.log(listAllNotifications);
   return (
     <WrapperLayout>
       <WrapperPage>
@@ -132,6 +135,7 @@ const CardNotify = (props) => {
   const [click, setClick] = useState(0);
   return (
     <TableRow
+      sx={{cursor: 'pointer'}}
       onClick={() => {
         setClick(1);
         {
