@@ -37,13 +37,14 @@ export default function GroupOfClassrooms(props) {
     <Box
       sx={{
         bgcolor: 'background.paper',
-        maxWidth: '600px',
+        maxWidth: '1000px',
       }}
     >
       <TabContext value={value}>
         <Box
           sx={{
-            maxWidth: '900px',
+            width: '100%',
+            maxWidth: '1000px',
           }}
         >
           <TabList
