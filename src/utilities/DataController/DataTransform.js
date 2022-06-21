@@ -97,10 +97,10 @@ const DataTransform = {
   getClassroomsGroupByEdifice: (classrooms) => {
     let classroomsGroupByEdifice = new Map();
     classrooms.map((classroom) => {
-      if (!classroomsGroupByEdifice.has(classroom.building)) {
-        classroomsGroupByEdifice.set(classroom.building, []);
+      if (!classroomsGroupByEdifice.has(classroom.edifice)) {
+        classroomsGroupByEdifice.set(classroom.edifice, []);
       }
-      classroomsGroupByEdifice.get(classroom.building).push(classroom);
+      classroomsGroupByEdifice.get(classroom.edifice).push(classroom);
     });
     return classroomsGroupByEdifice;
   },

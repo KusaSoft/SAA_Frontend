@@ -34,9 +34,18 @@ export default function GroupOfClassrooms(props) {
   };
 
   return (
-    <Box sx={{bgcolor: 'background.paper'}}>
+    <Box
+      sx={{
+        bgcolor: 'background.paper',
+        maxWidth: '600px',
+      }}
+    >
       <TabContext value={value}>
-        <Box>
+        <Box
+          sx={{
+            maxWidth: '900px',
+          }}
+        >
           <TabList
             onChange={handleChange}
             scrollButtons="auto"
@@ -63,7 +72,11 @@ export default function GroupOfClassrooms(props) {
             }}
             value={index}
           >
-            <Box sx={{width: '100%'}}>
+            <Box
+              sx={{
+                width: '100%',
+              }}
+            >
               {[...Object.values(FLOORS)].map((floor) => {
                 return value[1].some(
                   (classroom) => floor === classroom.floor

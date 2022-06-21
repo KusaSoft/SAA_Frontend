@@ -110,7 +110,9 @@ function ClassroomsAssignation(props) {
     const newReservationStatus = {
       ...response,
       state: STATUS.ASSIGNED,
-      classrooms: classroomsSelected.map((classroom) => classroom.id),
+      assigned_classrooms: classroomsSelected.map(
+        (classroom) => classroom.id
+      ),
     };
     handleRequestR(newReservationStatus);
   };

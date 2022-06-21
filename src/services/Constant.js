@@ -23,10 +23,11 @@ export const MOTIVES = [
 
 export const FLOORS = {
   CERO: 'Planta baja',
-  ONE: 'Primera planta',
-  SECOND: 'Segunda planta',
-  THIRD: 'Tercera planta',
-  FOURTH: 'Cuarta planta',
+  ONE: 'Primer piso',
+  SECOND: 'Segundo piso',
+  THIRD: 'Tercer piso',
+  FOURTH: 'Cuarto piso',
+  INFLAB: 'Aulas INFLAB',
 };
 
 export const STATUS = {
@@ -34,6 +35,7 @@ export const STATUS = {
   DRAFT: 'draft',
   REJECTED: 'rejected',
   ASSIGNED: 'assigned',
+  CONFIRMED: 'confirmed',
 };
 
 export const ROLES = {
