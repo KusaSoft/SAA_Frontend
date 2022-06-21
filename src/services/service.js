@@ -294,6 +294,12 @@ const apiSettings = {
     });
     return list;
   },
+  confirm: async (idReservation, state) => {
+    const response = await axios.put(
+      `${API_URL}/reservations/confirm/${idReservation}/${state}`
+    );
+    return response.data;
+  },
 };
 
 export default apiSettings;
