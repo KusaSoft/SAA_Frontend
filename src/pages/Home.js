@@ -10,6 +10,7 @@ import {
 import background from '../assets/home.jpg';
 import manual from '../assets/manual.png';
 import {Paper, Typography} from '@mui/material';
+import {ROLES} from '../services/Constant';
 
 export default function Home() {
   const {auth} = useAuth();
@@ -42,11 +43,19 @@ export default function Home() {
           <Paper
             elevation={3}
             onClick={() => {
-              //navigate to manial link
-              window.open(
-                'https://docs.google.com/document/d/1L-xccwphLWX8PyhNUp9EyBQmUB8lnDLXDlsjMt69qIs/edit',
-                '_blank'
-              );
+              if (auth.roles[0] === ROLES.ADMIN) {
+                window.open(
+                  'https://drive.google.com/file/d/1VAHj3XyIaPV9DxDzo23BbuvPBlUgWccX/view?usp=sharing'
+                );
+              } else if (auth.roles[0] === ROLES.TEACHER) {
+                window.open(
+                  'https://drive.google.com/file/d/1y3ejx-4aqeyuSEHVNYNJ2rowsvpLL7Lv/view?usp=sharing'
+                );
+              } else {
+                window.open(
+                  'https://drive.google.com/file/d/1AQUa2MUSaTRHqltfpyuhPj-l_PSRS94E/view?usp=sharing'
+                );
+              }
             }}
             style={{
               position: 'absolute',
