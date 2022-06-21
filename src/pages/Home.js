@@ -34,7 +34,7 @@ export default function Home() {
               left: '0',
               width: '100%',
               height: '100%',
-              background: '#325CEE',
+              background: '#263752',
               opacity: '0.5',
               zIndex: '9',
             }}
@@ -86,7 +86,7 @@ export default function Home() {
                 height: '30%',
                 textAlign: 'center',
                 color: '#fff',
-                backgroundColor: '#5e83ba',
+                backgroundColor: '#0E3572',
                 padding: '5px',
               }}
             >
