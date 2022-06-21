@@ -287,6 +287,13 @@ const apiSettings = {
     });
     return list;
   },
+  getAllNotifications: async () => {
+    const response = await axios.get(`${API_URL}/notifications/all`);
+    const list = response.data.map((id) => {
+      return {...id};
+    });
+    return list;
+  },
 };
 
 export default apiSettings;

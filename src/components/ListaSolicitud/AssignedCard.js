@@ -105,6 +105,35 @@ const AssignedCard = (props) => {
                 ))}
             </List>
           </div>
+          <div style={{margin: '0'}}>
+            {props.request.state === 'assigned' ? (
+              <Button
+                variant="contained"
+                color="success"
+                onClick={() => {
+                  alert('aqui metodo para confirmar');
+                }}
+              >
+                Confirmar
+              </Button>
+            ) : null}
+            {props.request.state === 'assigned' ? (
+              <Link
+                to={`/user/reservationRequest/${props.request.id}`}
+                style={{
+                  textDecoration: 'none',
+                }}
+              >
+                <Button
+                  sx={{marginLeft: '1rem'}}
+                  variant="contained"
+                  color="primary"
+                >
+                  Reenviar
+                </Button>
+              </Link>
+            ) : null}
+          </div>
         </div>
       </CardContent>
       <CardActions
