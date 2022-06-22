@@ -26,6 +26,11 @@ import Calendar from './pages/Calendar';
 import Subjects from './pages/Subjects';
 import Groups2 from './pages/Groups2';
 
+import Notifications from './pages/Notifications';
+
+import ReservationForward from './pages/ReservationForward';
+
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -58,6 +63,27 @@ function App() {
             />
           </Route>
 
+          <Route
+            element={
+              <RequireAuth
+                allowedRoles={[ROLES.TEACHER, ROLES.REVIEWER]}
+              />
+            }
+          >
+            <Route
+              path={PATHS.NOTIFICATIONS}
+              element={<Notifications />}
+            />
+          </Route>
+
+          <Route element={<RequireAuth allowedRoles={[ROLES.TEACHER]} />}>
+            <Route
+              path={PATHS.RESERVATION_FORWARD}
+              element={<ReservationForward />}
+
+            />
+          </Route>
+
           <Route element={<RequireAuth allowedRoles={[ROLES.TEACHER]} />}>
             <Route path={PATHS.PENDING} element={<Pendientes />} />
           </Route>
@@ -70,10 +96,22 @@ function App() {
           <Route element={<RequireAuth allowedRoles={[ROLES.REVIEWER]} />}>
             <Route path={PATHS.URGENCY} element={<Urgency />} />
           </Route>
-          <Route element={<RequireAuth allowedRoles={[ROLES.REVIEWER]} />}>
+          <Route
+            element={
+              <RequireAuth
+                allowedRoles={[ROLES.REVIEWER, ROLES.TEACHER]}
+              />
+            }
+          >
             <Route path={PATHS.ASSIGNED} element={<Assigned />} />
           </Route>
-          <Route element={<RequireAuth allowedRoles={[ROLES.REVIEWER]} />}>
+          <Route
+            element={
+              <RequireAuth
+                allowedRoles={[ROLES.REVIEWER, ROLES.TEACHER]}
+              />
+            }
+          >
             <Route path={PATHS.REJECTED} element={<Rejected />} />
           </Route>
           <Route element={<RequireAuth allowedRoles={[ROLES.REVIEWER]} />}>

@@ -16,13 +16,157 @@ import {
   Checkbox,
   List,
   ListItem,
+  Tab,
+  Tabs,
   Typography,
 } from '@mui/material';
+import {TabContext, TabList, TabPanel} from '@mui/lab';
 
 export default function GroupOfClassrooms(props) {
+  const [value, setValue] = React.useState(0);
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleChangeExpanded = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
-    <Grid sx={{flexGrow: 1}} container spacing={1}>
-      <Grid item xs={12}>
+    <Box
+      sx={{
+        bgcolor: 'background.paper',
+        maxWidth: '1000px',
+      }}
+    >
+      <TabContext value={value}>
+        <Box
+          sx={{
+            width: '100%',
+            maxWidth: '1000px',
+          }}
+        >
+          <TabList
+            onChange={handleChange}
+            scrollButtons="auto"
+            aria-label="scrollable auto tabs example"
+            variant="scrollable"
+          >
+            {[...props.classrooms].map((value) => (
+              <Tab
+                key={value[0]}
+                label={value[0]}
+                onClick={() => {
+                  props.setClassroomsSelected([]);
+                }}
+              />
+            ))}
+          </TabList>
+        </Box>
+        {[...props.classrooms].map((value, index) => (
+          <TabPanel
+            sx={{
+              minWidth: {xs: 320, sm: 480},
+              minHeight: {xs: 320, sm: 480},
+              bgcolor: 'background.paper',
+            }}
+            value={index}
+          >
+            <Box
+              sx={{
+                width: '100%',
+              }}
+            >
+              {[...Object.values(FLOORS)].map((floor) => {
+                return value[1].some(
+                  (classroom) => floor === classroom.floor
+                ) ? (
+                  <Accordion
+                    expanded={expanded === floor}
+                    onChange={handleChangeExpanded(floor)}
+                    onClick={() => {
+                      props.setClassroomsSelected([]);
+                    }}
+                  >
+                    <AccordionSummary
+                      expandIcon={<ExpandMore />}
+                      aria-controls="panel1bh-content"
+                      id="panel1bh-header"
+                    >
+                      <Typography
+                        variant="h6"
+                        sx={{width: '33%', flexShrink: 0}}
+                      >
+                        {floor}
+                      </Typography>
+                      <Typography
+                        variant="body"
+                        sx={{
+                          paddingLeft: '1rem',
+                        }}
+                      >
+                        Capacidad:{' '}
+                        {value[1].reduce((acc, classroom) => {
+                          if (classroom.floor === floor) {
+                            return acc + classroom.amount;
+                          }
+                          return acc;
+                        }, 0)}
+                      </Typography>
+                    </AccordionSummary>
+                    {value[1].map((classroom) => {
+                      return classroom.floor === floor ? (
+                        <Box>
+                          <ListItem key={classroom.id}>
+                            <Checkbox
+                              checked={props.classroomsSelected.some(
+                                (classroomSelected) =>
+                                  classroomSelected.id === classroom.id
+                              )}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  props.setClassroomsSelected([
+                                    ...props.classroomsSelected.concat([
+                                      classroom,
+                                    ]),
+                                  ]);
+                                } else {
+                                  props.setClassroomsSelected([
+                                    ...props.classroomsSelected.filter(
+                                      (myClassroom) => {
+                                        return (
+                                          myClassroom.id !== classroom.id
+                                        );
+                                      }
+                                    ),
+                                  ]);
+                                }
+                              }}
+                            />
+                            <Typography
+                              sx={{
+                                paddingRight: '1rem',
+                              }}
+                            >
+                              {classroom.name_classroom}{' '}
+                            </Typography>{' '}
+                            <Typography>
+                              <b>Capacidad: </b>
+                              {classroom.amount}
+                            </Typography>
+                          </ListItem>
+                        </Box>
+                      ) : null;
+                    })}
+                  </Accordion>
+                ) : null;
+              })}
+            </Box>
+          </TabPanel>
+        ))}
+      </TabContext>
+      {/* <Grid item xs={12}>
         <Grid container justifyContent="space-between">
           {[...props.classrooms].map((value) => (
             <Grid key={value} item>
@@ -100,8 +244,9 @@ export default function GroupOfClassrooms(props) {
               </Box>
             </Grid>
           ))}
-        </Grid>
+        </Grid> 
       </Grid>
-    </Grid>
+        */}
+    </Box>
   );
 }

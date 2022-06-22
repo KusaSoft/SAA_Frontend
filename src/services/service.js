@@ -209,12 +209,8 @@ const apiSettings = {
   },
 
   getClassrooms: async (id) => {
-    // const response = await axios.get(
-    //   `${API_URL}/classrooms/${reservation_date}/${horario_ini}/${horario_end}`
-    // );
-    const response = availableClassrooms;
-    console.log(response);
-    return response;
+    const response = await axios.get(`${API_URL}/classrooms/${id}`);
+    return response.data;
   },
 
   getSubjectsAll: async () => {
@@ -264,6 +260,45 @@ const apiSettings = {
       reservationRequest
     );
     return response;
+  },
+
+  getMyRejectedReservations: async (userID) => {
+    const response = await axios.get(
+      `${API_URL}/reservations/rejected/${userID}`
+    );
+    const list = response.data.map((id) => {
+      return {...id};
+    });
+    return list;
+  },
+  getMyAssignedReservations: async (userID) => {
+    const response = await axios.get(
+      `${API_URL}/reservations/assigned/${userID}`
+    );
+    const list = response.data.map((id) => {
+      return {...id};
+    });
+    return list;
+  },
+  getMyNotifications: async (userID) => {
+    const response = await axios.get(`${API_URL}/notifications/${userID}`);
+    const list = response.data.map((id) => {
+      return {...id};
+    });
+    return list;
+  },
+  getAllNotifications: async () => {
+    const response = await axios.get(`${API_URL}/notifications/all`);
+    const list = response.data.map((id) => {
+      return {...id};
+    });
+    return list;
+  },
+  confirm: async (idReservation, state) => {
+    const response = await axios.put(
+      `${API_URL}/reservations/confirm/${idReservation}/${state}`
+    );
+    return response.data;
   },
 };
 

@@ -23,17 +23,19 @@ export const MOTIVES = [
 
 export const FLOORS = {
   CERO: 'Planta baja',
-  ONE: 'Primera planta',
-  SECOND:'Segunda planta',
-  THIRD: 'Tercera planta',
-  FOURTH: 'Cuarta planta',
-}
+  ONE: 'Primer piso',
+  SECOND: 'Segundo piso',
+  THIRD: 'Tercer piso',
+  FOURTH: 'Cuarto piso',
+  INFLAB: 'Aulas INFLAB',
+};
 
 export const STATUS = {
   SENT: 'sent',
   DRAFT: 'draft',
   REJECTED: 'rejected',
   ASSIGNED: 'assigned',
+  CONFIRMED: 'confirmed',
 };
 
 export const ROLES = {
@@ -51,13 +53,16 @@ export const PATHS = {
   USERHOME: 'home',
   USERS: 'users',
   RESERVATION_REQUEST: 'reservationRequest/:reservationRequest',
+  RESERVATION_FORWARD: 'reservationForward/:reservationRequest',
   RESERVATION_REQUESTS: 'reservationRequest',
+  RESERVATION_FORWARDS: 'reservationForward',
   PENDING: 'pendings',
   DRAFTS: 'drafts',
   ARRIVAL: 'firstServedOrder',
   URGENCY: 'urgency',
   ASSIGNED: 'assigned',
   REJECTED: 'rejected',
+  REJECTED_RES: '/user/rejected',
   RESERVATION_REQUEST_DETAIL:
     'reservationRequest/:reservationRequest/detail',
   RESERVATION_REQUEST_EDIT: 'reservationRequest/:reservationRequest/edit',
@@ -66,12 +71,30 @@ export const PATHS = {
   CALENDAR: 'calendar',
   SUBJECTS: 'subjects',
   GROUPS: 'groups',
+  NOTIFICATIONS: 'notifications',
 };
 
 export const BREAD_CRUB_PATHS = {
   RESERVATION_REQUEST: [
     {
       name: 'Solicitudes de reserva',
+      route: `${PATHS.RESERVATION_REQUESTS}/new`,
+      link: false,
+    },
+  ],
+  RESERVATION_FORWARD: [
+    {
+      name: 'Solicitudes',
+      route: PATHS.REJECTED,
+      link: false,
+    },
+    {
+      name: 'Rechazados',
+      route: PATHS.REJECTED_RES,
+      link: true,
+    },
+    {
+      name: 'Reenvio de solicitud de reserva',
       route: `${PATHS.RESERVATION_REQUESTS}/new`,
       link: false,
     },
@@ -198,6 +221,13 @@ export const BREAD_CRUB_PATHS = {
     {
       name: 'Grupos',
       route: PATHS.GROUPS,
+      link: false,
+    },
+  ],
+  NOTIFICATIONS: [
+    {
+      name: 'Notificaciones',
+      route: PATHS.NOTIFICATIONS,
       link: false,
     },
   ],

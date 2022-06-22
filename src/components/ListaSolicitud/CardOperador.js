@@ -8,6 +8,8 @@ import {
   Stack,
   Box,
   CircularProgress,
+  List,
+  ListItem,
 } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import {useModal} from '../../hooks/useModal';
@@ -128,10 +130,24 @@ const CardOperador = (props) => {
               <b style={{fontWeight: 'bold'}}> - Hasta: </b>{' '}
               {props.request.horario_end}
             </div>
-            {/* <div>
-              <b style={{fontWeight: 'bold'}}>Aula(s): </b>
-              {props.request.assigned_classrooms}
-            </div> */}
+            <div
+              style={{
+                color: 'black',
+                padding: '10px',
+              }}
+            >
+              <b style={{fontWeight: 'bold', color: 'green'}}>
+                Aulas asignadas:{' '}
+              </b>{' '}
+              <List>
+                {props.request.assigned_classrooms &&
+                  props.request.assigned_classrooms.map((classrom) => (
+                    <ListItem sx={{display: 'inline'}}>
+                      {classrom.name_classroom}
+                    </ListItem>
+                  ))}
+              </List>
+            </div>
           </CardContent>
         ) : (
           <CardContent></CardContent>
