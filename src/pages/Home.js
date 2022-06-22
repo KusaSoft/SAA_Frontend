@@ -37,11 +37,11 @@ export default function Home() {
               height: '100%',
               background: '#263752',
               opacity: '0.5',
-              zIndex: '9',
+              zIndex: '6',
             }}
           />
           <Paper
-            elevation={3}
+            elevation={1}
             onClick={() => {
               if (auth.roles[0] === ROLES.ADMIN) {
                 window.open(
@@ -59,7 +59,7 @@ export default function Home() {
             }}
             style={{
               position: 'absolute',
-              zIndex: '19',
+              zIndex: '6',
               top: '50px',
               left: '50px',
               minWidth: '180px',

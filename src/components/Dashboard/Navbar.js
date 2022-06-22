@@ -12,14 +12,13 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
+import {NavBar, NavContainer, NavContent} from './NavBar.styles';
 function Sidebar() {
-  const {setAuth} = useAuth();
   const {auth} = useAuth();
 
   return (
-    <div className="nav_container">
-      <div className="nav_content">
+    <NavContainer>
+      <NavContent>
         <Box
           sx={{
             display: 'flex',
@@ -99,8 +98,8 @@ function Sidebar() {
             }}
           />
         </Box>
-      </div>
-    </div>
+      </NavContent>
+    </NavContainer>
   );
 }
 
