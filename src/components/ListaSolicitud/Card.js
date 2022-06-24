@@ -86,14 +86,6 @@ const SimpleCard = (props) => {
             {props.request.request_reason}
           </div>
         </div>
-      </CardContent>
-      <CardActions
-        disableSpacing
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
         <Box
           sx={{
             padding: '14px',
@@ -106,96 +98,58 @@ const SimpleCard = (props) => {
             </div>
           )}
         </Box>
-        <Stack
-          direction="row"
-          spacing={1}
+      </CardContent>
+      <CardActions
+        disableSpacing
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+        }}
+      >
+        <div
           style={{
             display: 'flex',
             justifyContent: 'flex-end',
           }}
         >
-          <Fab
-            color="success"
+          <Button
+            color="info"
+            variant="outlined"
             size="small"
-            sx={{
-              '&:hover': {
-                backgroundColor: 'hover.main',
-                color: 'hover.contrastText',
-              },
+            onClick={() => {
+              openModal();
+              handleRequestUpd(props.request.id);
             }}
+            startIcon={<ContentPasteSearchIcon />}
           >
-            <ContentPasteSearchIcon
-              onClick={() => {
-                openModal();
-                handleRequestUpd(props.request.id);
-              }}
-            />
-          </Fab>
+            Detalles
+          </Button>
           {props.request.state == STATUS.DRAFT ? (
             <Link to={`/user/reservationRequest/${props.request.id}`}>
-              <Fab
-                color="primary"
+              <Button
+                color="info"
+                variant="outlined"
                 size="small"
-                sx={{
-                  '&:hover': {
-                    backgroundColor: 'hover.main',
-                    color: 'hover.contrastText',
-                  },
-                }}
+                startIcon={<Edit />}
               >
-                <Edit />
-              </Fab>
+                Editar
+              </Button>
             </Link>
           ) : (
             <></>
           )}
-          <Fab
+          <Button
             color="error"
+            variant="outlined"
             size="small"
-            sx={{
-              '&:hover': {
-                backgroundColor: 'hover.main',
-                color: 'hover.contrastText',
-              },
+            onClick={() => {
+              handleOpen();
             }}
+            startIcon={<Delete />}
           >
-            <Delete
-              onClick={() => {
-                handleOpen();
-              }}
-            />
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={style}>
-                <Typography
-                  id="modal-modal-title"
-                  variant="h6"
-                  component="h2"
-                >
-                  ¿Está seguro que desea eliminar esta solicitud?
-                </Typography>
-                <Button onClick={handleClose}>Cancelar</Button>
-                <Button
-                  sx={{marginLeft: '82px'}}
-                  onClick={async () => {
-                    await apiSettings.deleteReservationRequest(
-                      props.request.id
-                    );
-                    handleClose();
-                    recargar();
-                    //window.location.reload();
-                  }}
-                >
-                  Eliminar
-                </Button>
-              </Box>
-            </Modal>
-          </Fab>
-        </Stack>
+            Eliminar
+          </Button>
+        </div>
       </CardActions>
       <Modal open={isOpenModal} onClose={closeModal}>
         {loadingUpd ? (
@@ -212,6 +166,30 @@ const SimpleCard = (props) => {
         ) : (
           <ContentDetail request={responseUpd} />
         )}
+      </Modal>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            ¿Está seguro que desea eliminar esta solicitud?
+          </Typography>
+          <Button onClick={handleClose}>Cancelar</Button>
+          <Button
+            sx={{marginLeft: '82px'}}
+            onClick={async () => {
+              await apiSettings.deleteReservationRequest(props.request.id);
+              handleClose();
+              recargar();
+              //window.location.reload();
+            }}
+          >
+            Eliminar
+          </Button>
+        </Box>
       </Modal>
     </Card>
   );

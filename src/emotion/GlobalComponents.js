@@ -68,6 +68,13 @@ export const MyBox = styled(Box)`
   }
 `;
 
+export const MyListBox = styled(Box)`
+  width: 80%;
+  @media (max-width: 1000px) {
+    width: 100%;
+  }
+`;
+
 export const MyTable = styled(Table)`
   overflow-x: auto;
   @media (max-width: 800px) {
