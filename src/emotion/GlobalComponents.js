@@ -14,6 +14,9 @@ export const WrapperPage = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 20px 0px 20px;
+  @media (max-width: 600px) {
+    padding: 0px 8px 0px 8px;
+  }
 `;
 
 export const WrapperList = styled.div`
@@ -64,7 +67,8 @@ export const MyBox = styled(Box)`
   width: 80%;
   padding: 2rem;
   @media (max-width: 1000px) {
-    width: 90%;
+    width: 100%;
+    padding: 0.6rem;
   }
 `;
 
@@ -85,5 +89,14 @@ export const MyContainerPage = styled.div`
   padding: 20px;
   @media (max-width: 1000px) {
     padding: 10px;
+  }
+`;
+export const MyRowContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+  @media (max-width: 600px) {
+    flex-direction: column;
   }
 `;

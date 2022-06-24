@@ -12,6 +12,7 @@ import {
   CircularProgress,
   CardHeader,
   Dialog,
+  CardActions,
 } from '@mui/material';
 import React from 'react';
 import {useReservationRequest} from '../../hooks/useReservationRequest';
@@ -34,7 +35,7 @@ import ConfirmationMessage from '../Messages/ConfirmationMessage';
 import DataTransform from '../../utilities/DataController/DataTransform';
 import RedBar from '../Div/RedBar';
 import AlertMessage from '../Messages/AlertMessage';
-import {MyBox} from '../../emotion/GlobalComponents';
+import {MyBox, MyRowContainer} from '../../emotion/GlobalComponents';
 function Solicitud(props) {
   const {auth} = useAuth();
   const navigate = useNavigate();
@@ -310,88 +311,90 @@ function Solicitud(props) {
                     </FormSelectControl>
                   </Grid>
                 </Grid>
-                <Box
-                  container
-                  columns={12}
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    padding: '0 1rem',
-                  }}
-                >
-                  <Stack spacing={1} direction="row">
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        if (validateSaveFilled()) {
-                          handleRequestR(
-                            getReservationRequest(STATUS.DRAFT)
-                          );
-                          openModal();
-                        }
-                      }}
-                      startIcon={<Save />}
-                    >
-                      Guardar borrador
-                    </Button>
-                    {props.reservationRequest !== 'new' ? (
-                      <Button
-                        variant="outlined"
-                        color="redDark"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          openModal2();
-                        }}
-                        startIcon={<Delete />}
-                      >
-                        Eliminar
-                      </Button>
-                    ) : null}
-                  </Stack>
-                  <Stack spacing={1} direction="row">
-                    <Button
-                      variant="contained"
-                      color="error"
-                      onClick={() =>
-                        props.reservationRequest === 'new'
-                          ? navigate(-1)
-                          : navigate('/user/drafts')
-                      }
-                    >
-                      Cancelar
-                    </Button>
-                    <Button
-                      color="primary"
-                      type="submit"
-                      variant="contained"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        if (validateAllFilled()) {
-                          if (
-                            DataTransform.getQuantityPeriod(
-                              reservationRequest.periodIniSelected,
-                              reservationRequest.periodEndSelected
-                            ) > 3
-                          ) {
-                            openAlert();
-                          } else {
-                            handleRequestR(
-                              getReservationRequest(STATUS.SENT)
-                            );
-                            openModal1();
-                          }
-                        }
-                      }}
-                    >
-                      Enviar
-                    </Button>
-                  </Stack>
-                </Box>
               </List>
             </form>
           </CardContent>
+          <MyRowContainer>
+            <Stack
+              spacing={1}
+              direction="row"
+              sx={{
+                display: 'flex',
+                paddingTop: '1rem',
+              }}
+            >
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (validateSaveFilled()) {
+                    handleRequestR(getReservationRequest(STATUS.DRAFT));
+                    openModal();
+                  }
+                }}
+                startIcon={<Save />}
+              >
+                Guardar borrador
+              </Button>
+              {props.reservationRequest !== 'new' ? (
+                <Button
+                  variant="outlined"
+                  color="redDark"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    openModal2();
+                  }}
+                  startIcon={<Delete />}
+                >
+                  Eliminar
+                </Button>
+              ) : null}
+            </Stack>
+            <Stack
+              spacing={1}
+              direction="row"
+              sx={{
+                display: 'flex',
+                paddingTop: '1rem',
+              }}
+            >
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() =>
+                  props.reservationRequest === 'new'
+                    ? navigate(-1)
+                    : navigate('/user/drafts')
+                }
+              >
+                Cancelar
+              </Button>
+              <Button
+                color="primary"
+                type="submit"
+                variant="contained"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (validateAllFilled()) {
+                    if (
+                      DataTransform.getQuantityPeriod(
+                        reservationRequest.periodIniSelected,
+                        reservationRequest.periodEndSelected
+                      ) > 3
+                    ) {
+                      openAlert();
+                    } else {
+                      handleRequestR(getReservationRequest(STATUS.SENT));
+                      openModal1();
+                    }
+                  }
+                }}
+              >
+                Enviar
+              </Button>
+            </Stack>
+          </MyRowContainer>
         </Card>
       )}
       <Dialog open={isOpenAlert} onClose={closeAlert}>
