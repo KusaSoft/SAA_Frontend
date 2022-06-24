@@ -168,7 +168,7 @@ const AssignedCard = (props) => {
               Confirmar
             </Button>
             <Link
-              to={`/user/reservationRequest/${props.request.id}`}
+              to={`/user/reservationForward/${props.request.id}`}
               style={{
                 textDecoration: 'none',
               }}
