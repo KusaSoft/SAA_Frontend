@@ -1,6 +1,7 @@
 import {Add} from '@mui/icons-material';
 import {
   Button,
+  TableContainer,
   Table,
   TableBody,
   TableCell,
@@ -68,34 +69,36 @@ function Users() {
             boxShadow: 1,
           }}
         >
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
-                >
-                  Apellidos y Nombres
-                </TableCell>
-                {/* <TableCell>Apellido</TableCell> */}
-                <TableCell
-                  sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
-                >
-                  Email
-                </TableCell>
-                <TableCell
-                  sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
-                >
-                  Rol
-                </TableCell>
-                <TableCell
-                  sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
-                >
-                  Habilitado
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>{List(listUsers ? listUsers : [])}</TableBody>
-          </Table>
+          <TableContainer style={{overflowX: 'auto'}}>
+            <Table style={{minWidth: '800px'}}>
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
+                  >
+                    Apellidos y Nombres
+                  </TableCell>
+                  {/* <TableCell>Apellido</TableCell> */}
+                  <TableCell
+                    sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
+                  >
+                    Email
+                  </TableCell>
+                  <TableCell
+                    sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
+                  >
+                    Rol
+                  </TableCell>
+                  <TableCell
+                    sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
+                  >
+                    Habilitado
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{List(listUsers ? listUsers : [])}</TableBody>
+            </Table>
+          </TableContainer>
         </Box>
       </WrapperPage>
     </WrapperLayout>

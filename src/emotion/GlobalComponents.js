@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import {Box} from '@mui/system';
+import {Table} from '@mui/material';
 import {Link} from 'react-router-dom';
 export const WrapperLayout = styled.div`
   background: ${({theme}) => theme.palette.fondo.main};
@@ -64,5 +65,11 @@ export const MyBox = styled(Box)`
   padding: 2rem;
   @media (max-width: 1000px) {
     width: 90%;
+  }
+`;
+
+export const MyTable = styled(Table)`
+  overflow-x: auto;
+  @media (max-width: 800px) {
   }
 `;
