@@ -31,6 +31,7 @@ function MainLayout() {
                 color: '#000000',
                 borderColor: '#000000',
                 marginLeft: '1rem',
+                zIndex: '99',
               }}
               variant="outlined"
               onClick={() => setOpen(!open)}
@@ -71,9 +72,7 @@ function MainLayout() {
                     label: 'Cerrar Sesión',
                   },
                 ]}
-              >
-                
-              </MenuButton>
+              ></MenuButton>
             </BoxCenterToEnd>
           </Header>
           <Outlet />

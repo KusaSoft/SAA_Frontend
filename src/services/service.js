@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {availableClassrooms} from './Mock';
 const API_URL = 'https://tis-server2.herokuapp.com/api';
 const apiSettings = {
   getSubjects: async (userID) => {

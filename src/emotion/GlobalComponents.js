@@ -55,3 +55,14 @@ export const MyPaper = styled.img`
   background-size: cover;
   position: relative;
 `;
+
+export const MyBox = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  padding: 2rem;
+  @media (max-width: 1000px) {
+    width: 90%;
+  }
+`;
