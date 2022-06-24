@@ -102,54 +102,63 @@ const SimpleCard = (props) => {
       <CardActions
         disableSpacing
         style={{
-          display: 'flex',
+          display: 'inline-block',
           justifyContent: 'flex-end',
         }}
       >
-        <div
+        <Button
+          color="info"
+          variant="outlined"
+          size="small"
           style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
+            marginRight: '6px',
+            marginTop: '6px',
           }}
+          onClick={() => {
+            openModal();
+            handleRequestUpd(props.request.id);
+          }}
+          startIcon={<ContentPasteSearchIcon />}
         >
-          <Button
-            color="info"
-            variant="outlined"
-            size="small"
-            onClick={() => {
-              openModal();
-              handleRequestUpd(props.request.id);
+          Detalles
+        </Button>
+        {props.request.state == STATUS.DRAFT ? (
+          <Link
+            style={{
+              textDecoration: 'none',
             }}
-            startIcon={<ContentPasteSearchIcon />}
+            to={`/user/reservationRequest/${props.request.id}`}
           >
-            Detalles
-          </Button>
-          {props.request.state == STATUS.DRAFT ? (
-            <Link to={`/user/reservationRequest/${props.request.id}`}>
-              <Button
-                color="info"
-                variant="outlined"
-                size="small"
-                startIcon={<Edit />}
-              >
-                Editar
-              </Button>
-            </Link>
-          ) : (
-            <></>
-          )}
-          <Button
-            color="error"
-            variant="outlined"
-            size="small"
-            onClick={() => {
-              handleOpen();
-            }}
-            startIcon={<Delete />}
-          >
-            Eliminar
-          </Button>
-        </div>
+            <Button
+              color="info"
+              variant="outlined"
+              size="small"
+              style={{
+                marginTop: '6px',
+              }}
+              startIcon={<Edit />}
+            >
+              Editar
+            </Button>
+          </Link>
+        ) : (
+          <></>
+        )}
+        <Button
+          color="error"
+          variant="outlined"
+          size="small"
+          style={{
+            marginLeft: '6px',
+            marginTop: '6px',
+          }}
+          onClick={() => {
+            handleOpen();
+          }}
+          startIcon={<Delete />}
+        >
+          Eliminar
+        </Button>
       </CardActions>
       <Modal open={isOpenModal} onClose={closeModal}>
         {loadingUpd ? (

@@ -114,11 +114,49 @@ const AssignedCard = (props) => {
           justifyContent: 'space-between',
         }}
       >
+        <div>
+          <Button
+            color="info"
+            variant="outlined"
+            size="small"
+            style={{
+              marginRight: '6px',
+              marginTop: '6px',
+            }}
+            onClick={() => {
+              openModal();
+              handleRequestUpd(props.request.id);
+            }}
+            startIcon={<ContentPasteSearchIcon />}
+          >
+            Detalles
+          </Button>
+          <Button
+            color="error"
+            size="small"
+            style={{
+              marginLeft: '6px',
+              marginTop: '6px',
+            }}
+            variant="outlined"
+            onClick={() => {
+              handleOpen();
+            }}
+            startIcon={<Delete />}
+          >
+            Eliminar
+          </Button>
+        </div>
         {props.request.state === 'assigned' ? (
           <div>
             <Button
               variant="contained"
               color="success"
+              size="small"
+              style={{
+                marginRight: '6px',
+                marginTop: '6px',
+              }}
               onClick={async () => {
                 const response = await apiSettings.confirm(
                   props.request.id,
@@ -136,40 +174,19 @@ const AssignedCard = (props) => {
               }}
             >
               <Button
-                sx={{marginLeft: '1rem'}}
+                style={{
+                  marginLeft: '6px',
+                  marginTop: '6px',
+                }}
                 variant="contained"
                 color="primary"
+                size="small"
               >
                 Reenviar
               </Button>
             </Link>
           </div>
         ) : null}
-        <div>
-          <Button
-            color="info"
-            variant="outlined"
-            size="small"
-            onClick={() => {
-              openModal();
-              handleRequestUpd(props.request.id);
-            }}
-            startIcon={<ContentPasteSearchIcon />}
-          >
-            Detalles
-          </Button>
-          <Button
-            color="error"
-            size="small"
-            variant="outlined"
-            onClick={() => {
-              handleOpen();
-            }}
-            startIcon={<Delete />}
-          >
-            Eliminar
-          </Button>
-        </div>
       </CardActions>
       <Modal
         open={open}

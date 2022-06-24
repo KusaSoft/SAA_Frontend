@@ -80,3 +80,10 @@ export const MyTable = styled(Table)`
   @media (max-width: 800px) {
   }
 `;
+
+export const MyContainerPage = styled.div`
+  padding: 20px;
+  @media (max-width: 1000px) {
+    padding: 10px;
+  }
+`;

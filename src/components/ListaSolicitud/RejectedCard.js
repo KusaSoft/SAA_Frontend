@@ -97,112 +97,64 @@ const RejectedCard = (props) => {
         disableSpacing
         style={{
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: 'flex-end',
         }}
       >
-        <Box
-          sx={{
-            padding: '14px',
-          }}
-        >
-          {/* {props.request.state === STATUS.SENT && (
-            <div>
-              <b style={{fontWeight: 'bold'}}>Registrado el: </b>
-              {props.request.register_date}
-            </div>
-          )} */}
-        </Box>
-        <Stack
-          direction="row"
-          spacing={1}
+        <Button
+          color="info"
+          variant="outlined"
+          size="small"
           style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
+            marginRight: '6px',
+            marginTop: '6px',
           }}
+          onClick={() => {
+            openModal();
+            handleRequestUpd(props.request.id);
+          }}
+          startIcon={<ContentPasteSearchIcon />}
         >
-          <Fab
-            color="success"
-            size="small"
-            sx={{
-              '&:hover': {
-                backgroundColor: 'hover.main',
-                color: 'hover.contrastText',
-              },
-            }}
-          >
-            <ContentPasteSearchIcon
-              onClick={() => {
-                openModal();
-                handleRequestUpd(props.request.id);
-              }}
-            />
-          </Fab>
-          {props.request.state == STATUS.DRAFT ? (
-            <Link to={`/user/reservationRequest/${props.request.id}`}>
-              <Fab
-                color="primary"
-                size="small"
-                sx={{
-                  '&:hover': {
-                    backgroundColor: 'hover.main',
-                    color: 'hover.contrastText',
-                  },
-                }}
-              >
-                <Edit />
-              </Fab>
-            </Link>
-          ) : (
-            <></>
-          )}
-          <Fab
-            color="error"
-            size="small"
-            sx={{
-              '&:hover': {
-                backgroundColor: 'hover.main',
-                color: 'hover.contrastText',
-              },
-            }}
-          >
-            <Delete
-              onClick={() => {
-                handleOpen();
-              }}
-            />
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={style}>
-                <Typography
-                  id="modal-modal-title"
-                  variant="h6"
-                  component="h2"
-                >
-                  ¿Está seguro que desea eliminar esta solicitud?
-                </Typography>
-                <Button onClick={handleClose}>Cancelar</Button>
-                <Button
-                  sx={{marginLeft: '8rem'}}
-                  onClick={async () => {
-                    await apiSettings.deleteReservationRequest(
-                      props.request.id
-                    );
-                    handleClose();
-                    recargar();
-                    //window.location.reload();
-                  }}
-                >
-                  Eliminar
-                </Button>
-              </Box>
-            </Modal>
-          </Fab>
-        </Stack>
+          Detalles
+        </Button>
+        <Button
+          color="error"
+          size="small"
+          variant="outlined"
+          style={{
+            marginRight: '6px',
+            marginTop: '6px',
+          }}
+          onClick={() => {
+            handleOpen();
+          }}
+          startIcon={<Delete />}
+        >
+          Eliminar
+        </Button>
       </CardActions>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            ¿Está seguro que desea eliminar esta solicitud?
+          </Typography>
+          <Button onClick={handleClose}>Cancelar</Button>
+          <Button
+            sx={{marginLeft: '8rem'}}
+            onClick={async () => {
+              await apiSettings.deleteReservationRequest(props.request.id);
+              handleClose();
+              recargar();
+            }}
+          >
+            Eliminar
+          </Button>
+        </Box>
+      </Modal>
       <Modal open={isOpenModal} onClose={closeModal}>
         {loadingUpd ? (
           <Box

@@ -25,7 +25,7 @@ export default function Notifications() {
   const {auth} = useAuth();
   const [listMyNotications] = useListMyNotifications(auth.id);
   const [listAllNotifications] = useListAllNotifications();
-  console.log(listAllNotifications);
+
   return (
     <WrapperLayout>
       <WrapperPage>

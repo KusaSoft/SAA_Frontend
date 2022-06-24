@@ -3,6 +3,7 @@ import BasicBreadcrumbs from '../components/Breadcrumbs/Breadcrumbs';
 import ListOperador from '../components/ListaSolicitud/ListOperador';
 import {
   MyBox,
+  MyContainerPage,
   MyListBox,
   WrapperLayout,
   WrapperPage,
@@ -22,11 +23,7 @@ function Assigned() {
           title="Solicitudes asignadas"
           breadcrumbs={BREAD_CRUB_PATHS.ASSIGNED}
         />
-        <div
-          style={{
-            padding: '20px',
-          }}
-        >
+        <MyContainerPage>
           {auth.roles[0] === 'operador' ? (
             <ListOperador
               dataTypeS={'Fecha para la reserva'}
@@ -39,7 +36,7 @@ function Assigned() {
               emptyMessage={'No tiene ninguna solicitud asignada'}
             />
           )}
-        </div>
+        </MyContainerPage>
       </WrapperPage>
     </WrapperLayout>
   );

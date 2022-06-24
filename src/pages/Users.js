@@ -20,7 +20,6 @@ import {Link} from 'react-router-dom';
 
 function Users() {
   const [listUsers] = useListUsers();
-  console.log(listUsers);
   return (
     <WrapperLayout>
       <WrapperPage>
