@@ -1,6 +1,7 @@
 import {Add, FormatItalic} from '@mui/icons-material';
 import {
   Button,
+  TableContainer,
   Table,
   TableBody,
   TableCell,
@@ -120,33 +121,35 @@ function Groups2() {
               boxShadow: 1,
             }}
           >
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
-                  >
-                    Materia
-                  </TableCell>
-                  <TableCell
-                    sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
-                  >
-                    Docente
-                  </TableCell>
-                  <TableCell
-                    sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
-                  >
-                    N° de grupo
-                  </TableCell>
-                  <TableCell
-                    sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
-                  >
-                    Eliminar
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>{List(listGroups ? listGroups : [])}</TableBody>
-            </Table>
+            <TableContainer style={{overflowX: 'auto'}}>
+              <Table style={{minWidth: '800px'}}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell
+                      sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
+                    >
+                      Materia
+                    </TableCell>
+                    <TableCell
+                      sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
+                    >
+                      Docente
+                    </TableCell>
+                    <TableCell
+                      sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
+                    >
+                      N° de grupo
+                    </TableCell>
+                    <TableCell
+                      sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
+                    >
+                      Eliminar
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>{List(listGroups ? listGroups : [])}</TableBody>
+              </Table>
+            </TableContainer>
           </Box>
         </WrapperPage>
       </WrapperLayout>
