@@ -74,7 +74,7 @@ function Users() {
                 <TableCell
                   sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
                 >
-                  Nombre y Apellido
+                  Apellidos y Nombres
                 </TableCell>
                 {/* <TableCell>Apellido</TableCell> */}
                 <TableCell

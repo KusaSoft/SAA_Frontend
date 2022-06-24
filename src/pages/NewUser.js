@@ -66,7 +66,7 @@ function NewUser() {
     onSubmit: async () => {
       const responseRegister = await apiSettings.register({
         ...formik.values,
-        name: `${formik.values.firstName} ${formik.values.lastName}`,
+        name: `${formik.values.lastName}${formik.values.firstName}`,
         role: formik.values.role.toLowerCase(),
       });
       setMessageError(responseRegister.message);

@@ -77,7 +77,10 @@ export default function Notifications() {
             boxShadow: 1,
           }}
         >
-          <Table size={auth.roles[0] === 'operador' ? 'small' : 'medium'}>
+          <Table
+            //style={{minWidth: '1040px'}}
+            size={auth.roles[0] === 'operador' ? 'small' : 'medium'}
+          >
             <TableHead>
               <TableRow>
                 <TableCell sx={{fontWeight: 'bold', fontSize: '24px'}}>
