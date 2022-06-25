@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import {Box} from '@mui/system';
-import {Table} from '@mui/material';
+import {Button, Table} from '@mui/material';
 import {Link} from 'react-router-dom';
 export const WrapperLayout = styled.div`
   background: ${({theme}) => theme.palette.fondo.main};
@@ -98,5 +98,42 @@ export const MyRowContainer = styled.div`
   padding: 20px;
   @media (max-width: 600px) {
     flex-direction: column;
+  }
+`;
+
+export const FilterContainer = styled.div`
+  display: flex;
+  width: 20%;
+  height: 450px;
+  margin-top: 20px;
+  background-color: white;
+  flex-direction: column;
+  padding: 20px;
+  @media (max-width: 800px) {
+    display: none;
+  }
+`;
+
+export const ListFilterContainer = styled.div`
+  width: 70%;
+  @media (max-width: 800px) {
+    width: 100%;
+  }
+`;
+export const ListFilterWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: black;
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
+`;
+
+export const ButtonFilter = styled(Button)`
+  display: none;
+  @media (max-width: 800px) {
+    display: flex;
+    max-width: 180px;
   }
 `;

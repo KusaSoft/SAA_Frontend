@@ -51,7 +51,6 @@ const apiSettings = {
       if (
         subjectList[index].data.message !== 'no hay grupos registrados'
       ) {
-        console.log(subject.name_subject, '.......');
         const newSubject = {
           name_subject: subject.name_subject,
           group_list: [...subjectList[index].data],
@@ -59,12 +58,10 @@ const apiSettings = {
         newSubjects.push(newSubject);
       }
     });
-    console.log(newSubjects, 'siiiiiiiiiiiiiiiiiii');
     return newSubjects;
   },
 
   postReservationRequest: async (reservationRequest) => {
-    //post in form data
     const response = await axios.post(
       `${API_URL}/reservation-request`,
       reservationRequest
@@ -74,7 +71,6 @@ const apiSettings = {
   },
 
   putReservationRequest: async (reservationRequest) => {
-    //put in form data
     console.log(reservationRequest);
     let response = await axios.post(
       `${API_URL}/reservation-request/${reservationRequest.id}`,
@@ -121,20 +117,7 @@ const apiSettings = {
     const response = await axios.get(
       `${API_URL}/reservation/${userID}/${status}`
     );
-    console.log(response);
-
-    // const list = response.data.map((id) => {
-    //   return {
-    //     id: id.id,
-    //     subject: id.subject,
-    //     fecha: id.reservation_date,
-    //     motivo: id.request_reason,
-    //     state: id.state,
-    //   };
-    // });
-    // console.log(list);
     return response.data;
-    // return response.data;
   },
 
   deleteReservationRequest: async (requestID) => {
@@ -248,9 +231,7 @@ const apiSettings = {
     const response = await axios.get(`${API_URL}/roles/users/docente`);
     const list = response.data.map((id) => {
       return {label: id.name, ...id};
-      //return {label: id.name, role: id.role_id===1?(id.role_id):()};
     });
-    //const response = users; mock
     return list;
   },
   putReservationRequest: async (reservationRequest) => {

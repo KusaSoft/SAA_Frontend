@@ -1,6 +1,7 @@
 import {
   Checkbox,
   CircularProgress,
+  Dialog,
   Divider,
   Fab,
   FormControlLabel,
@@ -15,6 +16,14 @@ import {Link} from 'react-router-dom';
 import CardOperador from './CardOperador';
 import useFilter from '../../hooks/useFilter';
 import {ORDER_DATE} from '../../services/Constant';
+import {
+  ButtonFilter,
+  FilterContainer,
+  ListFilterContainer,
+  ListFilterWrapper,
+} from '../../emotion/GlobalComponents';
+import {useModal} from '../../hooks/useModal';
+import {Filter, FilterList} from '@mui/icons-material';
 const ListOperador = (props) => {
   const [
     list,
@@ -29,21 +38,22 @@ const ListOperador = (props) => {
     requestType: props.requestType,
     dateType: props.orderDate,
   });
+  const [isOpenFilter, openFilter, closeFilter] = useModal();
 
   return (
     <>
       {loading ? (
         <CircularProgress />
       ) : list.length !== 0 ? (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            color: 'black',
-          }}
-        >
-          <div style={{width: '75%'}}>
+        <ListFilterWrapper>
+          <ButtonFilter
+            variant="contained"
+            onClick={openFilter}
+            startIcon={<FilterList />}
+          >
+            Filtrar
+          </ButtonFilter>
+          <ListFilterContainer>
             {filteredList.map((element) => {
               return (
                 <div key={element[0]}>
@@ -51,18 +61,8 @@ const ListOperador = (props) => {
                 </div>
               );
             })}
-          </div>
-          <Box
-            style={{
-              display: 'flex',
-              width: '20%',
-              height: '450px',
-              marginTop: '20px',
-              backgroundColor: 'white',
-              flexDirection: 'column',
-              padding: '20px',
-            }}
-          >
+          </ListFilterContainer>
+          <FilterContainer>
             <Typography variant="h6">Motivo</Typography>
             <FormControlLabel
               label="Todos"
@@ -119,8 +119,8 @@ const ListOperador = (props) => {
               />
             </RadioGroup>
             <Divider />
-          </Box>
-        </div>
+          </FilterContainer>
+        </ListFilterWrapper>
       ) : (
         <div>
           {props.orderDate === ORDER_DATE.LEJANOS
@@ -128,6 +128,69 @@ const ListOperador = (props) => {
             : 'No existen solicitudes con urgencia'}
         </div>
       )}
+      <Dialog open={isOpenFilter} onClose={closeFilter}>
+        <div
+          style={{
+            padding: '20px',
+          }}
+        >
+          <Typography variant="h6">Motivo</Typography>
+          <FormControlLabel
+            label="Todos"
+            name="Todos"
+            control={
+              <Checkbox
+                checked={checkedList.every(
+                  (element) => element.checked === true
+                )}
+                // indeterminate={checked[0] !== checked[1]}
+                onChange={handleChangeMotive}
+              />
+            }
+          />
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              ml: 3,
+            }}
+          >
+            {checkedList.map((checked) => {
+              return (
+                <FormControlLabel
+                  label={checked.label}
+                  name={checked.label}
+                  control={
+                    <Checkbox
+                      checked={checked.checked}
+                      onChange={handleChangeMotive}
+                    />
+                  }
+                />
+              );
+            })}
+          </Box>
+          <Divider />
+          <Typography variant="h6">{props.dataTypeS}</Typography>
+          <RadioGroup
+            aria-labelledby="demo-radio-buttons-group-label"
+            defaultValue={props.orderDate}
+            name="radio-buttons-group"
+            onChange={handleChangeDateByRegister}
+          >
+            <FormControlLabel
+              value={date[0].label}
+              control={<Radio />}
+              label={date[0].label}
+            />
+            <FormControlLabel
+              value={date[1].label}
+              control={<Radio />}
+              label={date[1].label}
+            />
+          </RadioGroup>
+        </div>
+      </Dialog>
     </>
   );
 };
