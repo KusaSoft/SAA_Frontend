@@ -15,17 +15,7 @@ import ContentDetail from '../details/ContentDetail';
 import {useRequest} from '../../hooks/useRequest.hooks';
 import DataTransform from '../../utilities/DataController/DataTransform';
 import useAuth from '../../hooks/useAuth';
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+import {MyDetailContainer} from '../../emotion/GlobalComponents';
 
 const AssignedCard = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -194,7 +184,7 @@ const AssignedCard = (props) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <MyDetailContainer>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             ¿Está seguro que desea eliminar esta solicitud?
           </Typography>
@@ -209,7 +199,7 @@ const AssignedCard = (props) => {
           >
             Eliminar
           </Button>
-        </Box>
+        </MyDetailContainer>
       </Modal>
       <Modal open={isOpenModal} onClose={closeModal}>
         {loadingUpd ? (
@@ -239,7 +229,7 @@ function recargar() {
 function ContentDetail2(props) {
   const {auth} = useAuth();
   return (
-    <Box sx={style}>
+    <MyDetailContainer>
       <Typography variant="h4" align="center">
         Solicitud de reserva
       </Typography>
@@ -307,6 +297,6 @@ function ContentDetail2(props) {
         <br />
         <b>Hora Fin:</b> {props.request.horario_end}
       </Typography>
-    </Box>
+    </MyDetailContainer>
   );
 }

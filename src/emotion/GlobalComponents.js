@@ -101,6 +101,24 @@ export const MyRowContainer = styled.div`
   }
 `;
 
+export const MyDetailContainer = styled(Box)`
+  flex-direction: column;
+  width: 400px;
+  min-width: 250px;
+  background-color: white;
+  box-shadow: 24;
+  padding: 4px;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  @media (max-width: 400px) {
+    width: 280px;
+    min-width: 250px;
+  }
+`;
+
 export const FilterContainer = styled.div`
   display: flex;
   width: 20%;

@@ -11,20 +11,12 @@ import React from 'react';
 import useAuth from '../../hooks/useAuth';
 import {ROLES, PATHS, STATUS} from '../../services/Constant';
 import {Link} from 'react-router-dom';
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 4,
-};
+import { MyDetailContainer } from '../../emotion/GlobalComponents';
+
 export default function ContentDetail(props) {
   const {auth} = useAuth();
   return (
-    <Box sx={style}>
+    <MyDetailContainer>
       <Typography variant="h4" align="center">
         Solicitud de reserva
       </Typography>
@@ -101,6 +93,6 @@ export default function ContentDetail(props) {
             </Link>
           </Box>
         )}
-    </Box>
+    </MyDetailContainer>
   );
 }
