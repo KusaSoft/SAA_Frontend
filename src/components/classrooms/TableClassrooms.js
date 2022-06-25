@@ -234,7 +234,11 @@ export default function TableClassrooms(props) {
       : 0;
 
   return (
-    <Box sx={{width: '100%'}}>
+    <Box
+      sx={{
+        width: '100%',
+      }}
+    >
       <FormControl sx={{width: '100%'}}>
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"

@@ -35,16 +35,23 @@ export default function GroupOfClassrooms(props) {
 
   return (
     <Box
-      sx={{
-        bgcolor: 'background.paper',
-        maxWidth: '1000px',
-      }}
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      flexDirection="column"
+      width="95%"
+      padding={1}
     >
-      <TabContext value={value}>
+      <TabContext
+        value={value}
+        sx={{
+          width: '100%',
+          maxWidth: '100%',
+        }}
+      >
         <Box
           sx={{
             width: '100%',
-            maxWidth: '1000px',
           }}
         >
           <TabList
@@ -67,186 +74,97 @@ export default function GroupOfClassrooms(props) {
         {[...props.classrooms].map((value, index) => (
           <TabPanel
             sx={{
-              minWidth: {xs: 320, sm: 480},
-              minHeight: {xs: 320, sm: 480},
+              width: '100%',
               bgcolor: 'background.paper',
             }}
             value={index}
           >
-            <Box
-              sx={{
-                width: '100%',
-              }}
-            >
-              {[...Object.values(FLOORS)].map((floor) => {
-                return value[1].some(
-                  (classroom) => floor === classroom.floor
-                ) ? (
-                  <Accordion
-                    expanded={expanded === floor}
-                    onChange={handleChangeExpanded(floor)}
-                    onClick={() => {
-                      props.setClassroomsSelected([]);
-                    }}
-                  >
-                    <AccordionSummary
-                      expandIcon={<ExpandMore />}
-                      aria-controls="panel1bh-content"
-                      id="panel1bh-header"
-                    >
-                      <Typography
-                        variant="h6"
-                        sx={{width: '33%', flexShrink: 0}}
-                      >
-                        {floor}
-                      </Typography>
-                      <Typography
-                        variant="body"
-                        sx={{
-                          paddingLeft: '1rem',
-                        }}
-                      >
-                        Capacidad:{' '}
-                        {value[1].reduce((acc, classroom) => {
-                          if (classroom.floor === floor) {
-                            return acc + classroom.amount;
-                          }
-                          return acc;
-                        }, 0)}
-                      </Typography>
-                    </AccordionSummary>
-                    {value[1].map((classroom) => {
-                      return classroom.floor === floor ? (
-                        <Box>
-                          <ListItem key={classroom.id}>
-                            <Checkbox
-                              checked={props.classroomsSelected.some(
-                                (classroomSelected) =>
-                                  classroomSelected.id === classroom.id
-                              )}
-                              onChange={(e) => {
-                                if (e.target.checked) {
-                                  props.setClassroomsSelected([
-                                    ...props.classroomsSelected.concat([
-                                      classroom,
-                                    ]),
-                                  ]);
-                                } else {
-                                  props.setClassroomsSelected([
-                                    ...props.classroomsSelected.filter(
-                                      (myClassroom) => {
-                                        return (
-                                          myClassroom.id !== classroom.id
-                                        );
-                                      }
-                                    ),
-                                  ]);
-                                }
-                              }}
-                            />
-                            <Typography
-                              sx={{
-                                paddingRight: '1rem',
-                              }}
-                            >
-                              {classroom.name_classroom}{' '}
-                            </Typography>{' '}
-                            <Typography>
-                              <b>Capacidad: </b>
-                              {classroom.amount}
-                            </Typography>
-                          </ListItem>
-                        </Box>
-                      ) : null;
-                    })}
-                  </Accordion>
-                ) : null;
-              })}
-            </Box>
-          </TabPanel>
-        ))}
-      </TabContext>
-      {/* <Grid item xs={12}>
-        <Grid container justifyContent="space-between">
-          {[...props.classrooms].map((value) => (
-            <Grid key={value} item>
-              <Box
-                sx={{
-                  minWidth: 190,
-                  padding: 1,
-                }}
-              >
+            {[...Object.values(FLOORS)].map((floor) => {
+              return value[1].some(
+                (classroom) => floor === classroom.floor
+              ) ? (
                 <Accordion
-                  sx={{
-                    width: '100%',
+                  expanded={expanded === floor}
+                  onChange={handleChangeExpanded(floor)}
+                  onClick={() => {
+                    props.setClassroomsSelected([]);
                   }}
                 >
                   <AccordionSummary
                     expandIcon={<ExpandMore />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
+                    aria-controls="panel1bh-content"
+                    id="panel1bh-header"
                   >
-                    <Typography variant="h5">{value[0]}</Typography>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        paddingRight: '1rem',
+                        width: '33%',
+                        flexShrink: 0,
+                      }}
+                    >
+                      {floor}
+                    </Typography>
+                    <Typography variant="body">
+                      Capacidad:{' '}
+                      {value[1].reduce((acc, classroom) => {
+                        if (classroom.floor === floor) {
+                          return acc + classroom.amount;
+                        }
+                        return acc;
+                      }, 0)}
+                    </Typography>
                   </AccordionSummary>
-                  <AccordionDetails>
-                    <Box>
-                      {[...Object.values(FLOORS)].map((floor) => {
-                        return value[1].some(
-                          (classroom) => floor === classroom.floor
-                        ) ? (
-                          <List>
-                            <Typography variant="h6">{floor}</Typography>
-                            {value[1].map((classroom) => {
-                              return classroom.floor === floor ? (
-                                <ListItem key={classroom.id}>
-                                  <Checkbox
-                                    onChange={(e) => {
-                                      if (e.target.checked) {
-                                        props.setClassroomsSelected([
-                                          ...props.classroomsSelected.concat(
-                                            [classroom]
-                                          ),
-                                        ]);
-                                      } else {
-                                        props.setClassroomsSelected([
-                                          ...props.classroomsSelected.filter(
-                                            (myClassroom) => {
-                                              return (
-                                                myClassroom.id !==
-                                                classroom.id
-                                              );
-                                            }
-                                          ),
-                                        ]);
-                                      }
-                                    }}
-                                  />
-                                  <Typography
-                                    sx={{
-                                      paddingRight: '1rem',
-                                    }}
-                                  >
-                                    {classroom.name_classroom}{' '}
-                                  </Typography>{' '}
-                                  <Typography>
-                                    <b>Capacidad: </b>
-                                    {classroom.amount}
-                                  </Typography>
-                                </ListItem>
-                              ) : null;
-                            })}
-                          </List>
-                        ) : null;
-                      })}
-                    </Box>
-                  </AccordionDetails>
+                  {value[1].map((classroom) => {
+                    return classroom.floor === floor ? (
+                      <Box>
+                        <ListItem key={classroom.id}>
+                          <Checkbox
+                            checked={props.classroomsSelected.some(
+                              (classroomSelected) =>
+                                classroomSelected.id === classroom.id
+                            )}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                props.setClassroomsSelected([
+                                  ...props.classroomsSelected.concat([
+                                    classroom,
+                                  ]),
+                                ]);
+                              } else {
+                                props.setClassroomsSelected([
+                                  ...props.classroomsSelected.filter(
+                                    (myClassroom) => {
+                                      return (
+                                        myClassroom.id !== classroom.id
+                                      );
+                                    }
+                                  ),
+                                ]);
+                              }
+                            }}
+                          />
+                          <Typography
+                            sx={{
+                              paddingRight: '1rem',
+                            }}
+                          >
+                            {classroom.name_classroom}{' '}
+                          </Typography>{' '}
+                          <Typography>
+                            <b>Capacidad: </b>
+                            {classroom.amount}
+                          </Typography>
+                        </ListItem>
+                      </Box>
+                    ) : null;
+                  })}
                 </Accordion>
-              </Box>
-            </Grid>
-          ))}
-        </Grid> 
-      </Grid>
-        */}
+              ) : null;
+            })}
+          </TabPanel>
+        ))}
+      </TabContext>
     </Box>
   );
 }

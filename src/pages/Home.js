@@ -6,8 +6,8 @@ import {
   WrapperLayout,
   WrapperPage,
 } from '../emotion/GlobalComponents';
-//import an image
 import background from '../assets/home.jpg';
+import backgroundM from '../assets/home-responsive.jpg';
 import manual from '../assets/manual.png';
 import {Paper, Typography} from '@mui/material';
 import {ROLES} from '../services/Constant';
@@ -27,7 +27,7 @@ export default function Home() {
             position: 'relative',
           }}
         >
-          <MyPaper src={background}></MyPaper>
+          <MyPaper src={background} />
           <div
             style={{
               position: 'absolute',
@@ -60,8 +60,8 @@ export default function Home() {
             style={{
               position: 'absolute',
               zIndex: '6',
-              top: '50px',
-              left: '50px',
+              top: '10px',
+              left: '10px',
               minWidth: '180px',
               maxWidth: '180px',
               width: '180px',

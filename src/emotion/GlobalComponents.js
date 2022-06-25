@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import {Box} from '@mui/system';
 import {Button, Table} from '@mui/material';
 import {Link} from 'react-router-dom';
+
 export const WrapperLayout = styled.div`
   background: ${({theme}) => theme.palette.fondo.main};
   flex: 1;
@@ -55,9 +56,25 @@ export const MyPaper = styled.img`
   display: flex;
   width: 100%;
   height: 100%;
+  min-width: 500px;
+  min-height: 350px;
+  max-height: 450px;
   background-image: url(${({src}) => src});
   background-size: cover;
   position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  @media (max-width: 1000px) {
+    min-height: 400px;
+    max-height: 350px;
+  }
+  @media (max-width: 600px) {
+    min-height: 290px;
+    max-height: 290px;
+    width: 200px;
+    height: 200px;
+    image-object-position: 100%0;
+  }
 `;
 
 export const MyBox = styled(Box)`
