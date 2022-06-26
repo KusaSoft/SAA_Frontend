@@ -53,7 +53,6 @@ export const LinkStyled = styled(Link)`
 
 //image transpaert
 export const MyPaper = styled.img`
-  display: flex;
   width: 100%;
   height: 100%;
   min-width: 500px;
@@ -65,18 +64,18 @@ export const MyPaper = styled.img`
   background-position: center;
   background-repeat: no-repeat;
   @media (max-width: 1000px) {
-    min-height: 400px;
-    max-height: 350px;
-  }
-  @media (max-width: 600px) {
-    min-height: 290px;
-    max-height: 290px;
-    width: 200px;
-    height: 200px;
-    image-object-position: 100%0;
+    display: inline-block;
+    object-fit: cover;
+    object-position: top;
+    min-width: 100%;
+    min-height: 280px;
+    max-height: 280px;
   }
 `;
-
+export const ImageContainer = styled.div`
+  width: 100%;
+  height: 280px;
+`;
 export const MyBox = styled(Box)`
   display: flex;
   justify-content: center;

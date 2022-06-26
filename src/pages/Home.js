@@ -2,6 +2,7 @@ import React from 'react';
 import useAuth from '../hooks/useAuth';
 import BasicBreadcrumbs from '../components/Breadcrumbs/Breadcrumbs';
 import {
+  ImageContainer,
   MyPaper,
   WrapperLayout,
   WrapperPage,
@@ -27,7 +28,9 @@ export default function Home() {
             position: 'relative',
           }}
         >
-          <MyPaper src={background} />
+          <ImageContainer>
+            <MyPaper src={background} />
+          </ImageContainer>
           <div
             style={{
               position: 'absolute',
