@@ -35,7 +35,6 @@ export default function GroupOfClassrooms(props) {
 
   return (
     <Box
-      display="flex"
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
@@ -52,6 +51,7 @@ export default function GroupOfClassrooms(props) {
         <Box
           sx={{
             width: '100%',
+            maxWidth: '800px',
           }}
         >
           <TabList

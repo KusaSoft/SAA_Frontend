@@ -136,7 +136,7 @@ function ClassroomsAssignation(props) {
       justifyContent="center"
       alignItems="center"
       width="95%"
-      padding={2}
+      padding={1}
     >
       {loading ? (
         <CircularProgress />
@@ -361,7 +361,7 @@ function ClassroomsAssignation(props) {
                 <Button
                   variant="contained"
                   style={{
-                    marginLeft: '1rem',
+                    marginLeft: '0.5rem',
                   }}
                   onClick={(e) => {
                     if (
