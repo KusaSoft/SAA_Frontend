@@ -7,10 +7,6 @@ import {
   Box,
   Button,
   Container,
-  Divider,
-  Grid,
-  Link,
-  Paper,
   TextField,
   Typography,
 } from '@mui/material';
@@ -18,7 +14,6 @@ import AuthContext from '../contexts/AuthProvider';
 import {Email, Image, Lock, Password} from '@mui/icons-material';
 import LogoFCyT from '../assets/fcyt.png';
 import Footer from '../components/Footer/Footer';
-import {mockLogin} from '../services/Mock';
 import apiSettings from '../services/service';
 
 import Modal from '@mui/material/Modal';

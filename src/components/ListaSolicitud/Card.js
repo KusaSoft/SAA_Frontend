@@ -18,11 +18,11 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 300,
+  maxWidth: 300,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
-  p: 4,
+  p: 2,
 };
 
 const SimpleCard = (props) => {
@@ -86,14 +86,6 @@ const SimpleCard = (props) => {
             {props.request.request_reason}
           </div>
         </div>
-      </CardContent>
-      <CardActions
-        disableSpacing
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
         <Box
           sx={{
             padding: '14px',
@@ -106,96 +98,67 @@ const SimpleCard = (props) => {
             </div>
           )}
         </Box>
-        <Stack
-          direction="row"
-          spacing={1}
+      </CardContent>
+      <CardActions
+        disableSpacing
+        style={{
+          display: 'inline-block',
+          justifyContent: 'flex-end',
+        }}
+      >
+        <Button
+          color="info"
+          variant="outlined"
+          size="small"
           style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
+            marginRight: '6px',
+            marginTop: '6px',
           }}
+          onClick={() => {
+            openModal();
+            handleRequestUpd(props.request.id);
+          }}
+          startIcon={<ContentPasteSearchIcon />}
         >
-          <Fab
-            color="success"
-            size="small"
-            sx={{
-              '&:hover': {
-                backgroundColor: 'hover.main',
-                color: 'hover.contrastText',
-              },
+          Detalles
+        </Button>
+        {props.request.state == STATUS.DRAFT ? (
+          <Link
+            style={{
+              textDecoration: 'none',
             }}
+            to={`/user/reservationRequest/${props.request.id}`}
           >
-            <ContentPasteSearchIcon
-              onClick={() => {
-                openModal();
-                handleRequestUpd(props.request.id);
+            <Button
+              color="info"
+              variant="outlined"
+              size="small"
+              style={{
+                marginTop: '6px',
               }}
-            />
-          </Fab>
-          {props.request.state == STATUS.DRAFT ? (
-            <Link to={`/user/reservationRequest/${props.request.id}`}>
-              <Fab
-                color="primary"
-                size="small"
-                sx={{
-                  '&:hover': {
-                    backgroundColor: 'hover.main',
-                    color: 'hover.contrastText',
-                  },
-                }}
-              >
-                <Edit />
-              </Fab>
-            </Link>
-          ) : (
-            <></>
-          )}
-          <Fab
-            color="error"
-            size="small"
-            sx={{
-              '&:hover': {
-                backgroundColor: 'hover.main',
-                color: 'hover.contrastText',
-              },
-            }}
-          >
-            <Delete
-              onClick={() => {
-                handleOpen();
-              }}
-            />
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
+              startIcon={<Edit />}
             >
-              <Box sx={style}>
-                <Typography
-                  id="modal-modal-title"
-                  variant="h6"
-                  component="h2"
-                >
-                  ¿Está seguro que desea eliminar esta solicitud?
-                </Typography>
-                <Button onClick={handleClose}>Cancelar</Button>
-                <Button
-                  sx={{marginLeft: '82px'}}
-                  onClick={async () => {
-                    await apiSettings.deleteReservationRequest(
-                      props.request.id
-                    );
-                    handleClose();
-                    recargar();
-                    //window.location.reload();
-                  }}
-                >
-                  Eliminar
-                </Button>
-              </Box>
-            </Modal>
-          </Fab>
-        </Stack>
+              Editar
+            </Button>
+          </Link>
+        ) : (
+          <></>
+        )}
+        <Button
+          color="error"
+          variant="outlined"
+          size="small"
+          style={{
+            marginLeft: '6px',
+            marginTop: '6px',
+          }}
+          onClick={() => {
+            handleOpen();
+          }}
+          startIcon={<Delete />}
+        >
+          Eliminar
+        </Button>
       </CardActions>
       <Modal open={isOpenModal} onClose={closeModal}>
         {loadingUpd ? (
@@ -212,6 +175,41 @@ const SimpleCard = (props) => {
         ) : (
           <ContentDetail request={responseUpd} />
         )}
+      </Modal>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            ¿Está seguro que desea eliminar esta solicitud?
+          </Typography>
+          <Stack
+            spacing={1}
+            direction={'row'}
+            style={{width: '100%', justifyContent: 'space-between'}}
+          >
+            <Button color="info" variant="outlined" onClick={handleClose}>
+              Cancelar
+            </Button>
+            <Button
+              color="error"
+              variant="outlined"
+              sx={{marginLeft: '82px'}}
+              onClick={async () => {
+                await apiSettings.deleteReservationRequest(
+                  props.request.id
+                );
+                handleClose();
+                recargar();
+              }}
+            >
+              Eliminar
+            </Button>
+          </Stack>
+        </Box>
       </Modal>
     </Card>
   );

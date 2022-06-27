@@ -34,6 +34,7 @@ import ConfirmationMessage from '../Messages/ConfirmationMessage';
 import DataTransform from '../../utilities/DataController/DataTransform';
 import RedBar from '../Div/RedBar';
 import AlertMessage from '../Messages/AlertMessage';
+import {MyBox} from '../../emotion/GlobalComponents';
 function Forward(props) {
   const {auth} = useAuth();
   const navigate = useNavigate();
@@ -90,13 +91,7 @@ function Forward(props) {
     user: auth,
   });
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      width="80%"
-      padding={2}
-    >
+    <MyBox>
       {isLoading ? (
         <CircularProgress />
       ) : (
@@ -467,7 +462,7 @@ function Forward(props) {
           }}
         ></RequestMessage>
       </Dialog>
-    </Box>
+    </MyBox>
   );
 }
 

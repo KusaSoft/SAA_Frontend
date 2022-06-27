@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { STATUS } from "../services/Constant";
-import apiSettings from "../services/service";
-import { mockListSent, mockListDraft } from "../services/Mock";
-import useAuth from "./useAuth";
+import React, {useState, useEffect} from 'react';
+import {STATUS} from '../services/Constant';
+import apiSettings from '../services/service';
+import useAuth from './useAuth';
 
-const useStatusList = ({ status }) => {
-  
-  const { auth } = useAuth();
+const useStatusList = ({status}) => {
+  const {auth} = useAuth();
   const [statusList, setStatusList] = useState([]);
 
   const setStatusListData = (data) => {

@@ -136,7 +136,7 @@ function ClassroomsAssignation(props) {
       justifyContent="center"
       alignItems="center"
       width="95%"
-      padding={2}
+      padding={1}
     >
       {loading ? (
         <CircularProgress />
@@ -301,33 +301,29 @@ function ClassroomsAssignation(props) {
                   </TabList>
                 </Box>
                 <TabPanel value="1">
-                  <Box>
-                    {classrooms.filter((row) => {
-                      return row.amount >= response.total_students;
-                    }).length > 0 ? (
-                      <TableClassrooms
-                        classrooms={classrooms}
-                        numberOfStudents={response.total_students}
-                        setClassroomsSelected={setClassroomsSelected}
-                      />
-                    ) : (
-                      <Typography>
-                        No hay aulas disponibles para esta capacidad, por
-                        favor intente con contigüas.
-                      </Typography>
-                    )}
-                  </Box>
-                </TabPanel>
-                <TabPanel value="2">
-                  <Box>
-                    <GroupOfClassrooms
-                      classrooms={DataTransform.getClassroomsGroupByEdifice(
-                        classrooms ? classrooms : []
-                      )}
-                      classroomsSelected={classroomsSelected}
+                  {classrooms.filter((row) => {
+                    return row.amount >= response.total_students;
+                  }).length > 0 ? (
+                    <TableClassrooms
+                      classrooms={classrooms}
+                      numberOfStudents={response.total_students}
                       setClassroomsSelected={setClassroomsSelected}
                     />
-                  </Box>
+                  ) : (
+                    <Typography>
+                      No hay aulas disponibles para esta capacidad, por
+                      favor intente con contigüas.
+                    </Typography>
+                  )}
+                </TabPanel>
+                <TabPanel value="2">
+                  <GroupOfClassrooms
+                    classrooms={DataTransform.getClassroomsGroupByEdifice(
+                      classrooms ? classrooms : []
+                    )}
+                    classroomsSelected={classroomsSelected}
+                    setClassroomsSelected={setClassroomsSelected}
+                  />
                 </TabPanel>
               </TabContext>
             </Box>
@@ -365,7 +361,7 @@ function ClassroomsAssignation(props) {
                 <Button
                   variant="contained"
                   style={{
-                    marginLeft: '1rem',
+                    marginLeft: '0.5rem',
                   }}
                   onClick={(e) => {
                     if (

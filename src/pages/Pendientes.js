@@ -1,7 +1,11 @@
 import React from 'react';
 import BasicBreadcrumbs from '../components/Breadcrumbs/Breadcrumbs';
 import Lista from '../components/ListaSolicitud/Lista';
-import {WrapperLayout, WrapperPage} from '../emotion/GlobalComponents';
+import {
+  MyContainerPage,
+  WrapperLayout,
+  WrapperPage,
+} from '../emotion/GlobalComponents';
 import useStatusList from '../hooks/useStatusList';
 import {BREAD_CRUB_PATHS, STATUS} from '../services/Constant';
 
@@ -19,16 +23,12 @@ function Pendientes() {
           title="Solicitudes pendientes"
           breadcrumbs={BREAD_CRUB_PATHS.PENDING}
         />
-        <div
-          style={{
-            padding: '20px',
-          }}
-        >
+        <MyContainerPage>
           <Lista
             list={sentList ? sentList : []}
             emptyMessage={'No tiene ninguna solicitud pendiente'}
           />
-        </div>
+        </MyContainerPage>
       </WrapperPage>
     </WrapperLayout>
   );

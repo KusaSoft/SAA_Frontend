@@ -5,6 +5,7 @@ import {BREAD_CRUB_PATHS} from '../services/Constant';
 import {
   ListItem,
   Button,
+  TableContainer,
   Table,
   TableBody,
   TableCell,
@@ -16,15 +17,15 @@ import {
 import CachedIcon from '@mui/icons-material/Cached';
 import useAuth from '../hooks/useAuth';
 import {Navigate, Link, useNavigate} from 'react-router-dom';
-import {style} from '@mui/system';
+import {fontWeight, minWidth, style} from '@mui/system';
 import useListMyNotifications from '../hooks/useListMyNotifications';
 import useListAllNotifications from '../hooks/useListAllNotifications';
-
+import {MyTable} from '../emotion/GlobalComponents';
 export default function Notifications() {
   const {auth} = useAuth();
   const [listMyNotications] = useListMyNotifications(auth.id);
   const [listAllNotifications] = useListAllNotifications();
-  console.log(listAllNotifications);
+
   return (
     <WrapperLayout>
       <WrapperPage>
@@ -77,32 +78,37 @@ export default function Notifications() {
             boxShadow: 1,
           }}
         >
-          <Table size={auth.roles[0] === 'operador' ? 'small' : 'medium'}>
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{fontWeight: 'bold', fontSize: '24px'}}>
-                  Motivo
-                </TableCell>
-
-                <TableCell sx={{fontWeight: 'bold', fontSize: '24px'}}>
-                  {auth.roles[0] === 'operador' ? 'Materia' : 'Detalle'}
-                </TableCell>
-                {auth.roles[0] === 'operador' ? (
+          <TableContainer style={{overflowX: 'auto'}}>
+            <Table
+              style={{minWidth: '800px'}}
+              size={auth.roles[0] === 'operador' ? 'small' : 'medium'}
+            >
+              <TableHead>
+                <TableRow>
                   <TableCell sx={{fontWeight: 'bold', fontSize: '24px'}}>
-                    Docente
+                    Motivo
                   </TableCell>
-                ) : null}
-                <TableCell sx={{fontWeight: 'bold', fontSize: '24px'}}>
-                  Fecha de emisión
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {auth.roles[0] === 'operador'
-                ? ListO(listAllNotifications ? listAllNotifications : [])
-                : List(listMyNotications ? listMyNotications : [])}
-            </TableBody>
-          </Table>
+
+                  <TableCell sx={{fontWeight: 'bold', fontSize: '24px'}}>
+                    {auth.roles[0] === 'operador' ? 'Materia' : 'Detalle'}
+                  </TableCell>
+                  {auth.roles[0] === 'operador' ? (
+                    <TableCell sx={{fontWeight: 'bold', fontSize: '24px'}}>
+                      Docente
+                    </TableCell>
+                  ) : null}
+                  <TableCell sx={{fontWeight: 'bold', fontSize: '24px'}}>
+                    Fecha de emisión
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {auth.roles[0] === 'operador'
+                  ? ListO(listAllNotifications ? listAllNotifications : [])
+                  : List(listMyNotications ? listMyNotications : [])}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Box>
       </WrapperPage>
     </WrapperLayout>
@@ -153,18 +159,8 @@ const CardNotify = (props) => {
           ? 'Solicitud rechazada'
           : 'Solicitud asignada'}
       </TableCell>
-      <TableCell>
-        {props.request.detail}
-        {/* {props.request.state === 'rejected'
-          ? props.request.rejected_reason
-          : props.request.assigned_classrooms &&
-            props.request.assigned_classrooms.map((classrom) => (
-              <ListItem sx={{display: 'inline'}}>
-                {classrom.name_classroom}
-              </ListItem>
-            ))} */}
-      </TableCell>
-      <TableCell>{props.request.reservation_date}</TableCell>
+      <TableCell>{props.request.detail}</TableCell>
+      <TableCell>{props.request.notification_date}</TableCell>
     </TableRow>
     // </Link>
   );
@@ -185,138 +181,8 @@ const CardNotifyOperator = (props) => {
       </TableCell>
       <TableCell>{props.request.subject}</TableCell>
       <TableCell>{props.request.userName}</TableCell>
-      <TableCell sx={{fontWeight: 'bold'}}>
-        {props.request.fechaEmision}
-      </TableCell>
+      <TableCell>{props.request.notification_date}</TableCell>
     </TableRow>
     // </Link>
   );
 };
-
-function redireccionar() {
-  return <Navigate replace to="../" />;
-}
-// const mockTeacherNotify = [
-//   {
-//     id: 1, //id notificación
-//     user_id: 1,
-//     reservation_request_id: 3,
-//     state: 'rejected',
-//     reservation_date: 'date…',
-//     rejected_reason:
-//       'No se pudo aceptar tu solicitud… No se pudo aceptar tu solicitud…No se pudo aceptar tu solicitud…No se pudo aceptar tu solicitud…',
-//     fechaEmision: '30/06/2022',
-//   },
-//   {
-//     id: 1, //id notificación
-//     user_id: 1,
-//     reservation_request_id: 3,
-//     reservation_date: 'date…',
-//     state: 'assigned',
-//     fechaEmision: '20/06/2022',
-//     assigned_classrooms: [
-//       {
-//         id: 2,
-//         name_classroom: '690A',
-//         edifice: 'edificio nuevo',
-//         floor: 'primera planta',
-//         amount: 120,
-//       },
-//       {
-//         id: 3,
-//         name_classroom: '691A',
-//         edifice: 'edificio nuevo',
-//         floor: 'primera planta',
-//         amount: 90,
-//       },
-//     ],
-//   },
-//   {
-//     id: 3, //id notificación
-//     user_id: 1,
-//     reservation_request_id: 3,
-//     state: 'rejected',
-//     reservation_date: 'date…',
-//     rejected_reason: 'No se pudo aceptar tu solicitud…',
-//     fechaEmision: '30/06/2022',
-//   },
-// ];
-const mockOperatorNotify = [
-  {
-    id: 1, //id notificación
-    user_id: 1,
-    reservation_request_id: 3,
-    state: 'rejected',
-    reservation_date: 'date…',
-    rejected_reason: 'No se pudo aceptar tu solicitud…',
-    subject: 'intro a la progra',
-    userName: 'Corina Flores',
-    fechaEmision: '10/06/2022',
-  },
-  {
-    id: 1, //id notificación
-    user_id: 1,
-    reservation_request_id: 3,
-    reservation_date: 'date…',
-    state: 'assigned',
-    subject: 'Elementos de la programacion',
-    userName: 'Leticia Blanco',
-    fechaEmision: '12/06/22',
-    assigned_classrooms: [
-      {
-        id: 2,
-        name_classroom: '690A',
-        edifice: 'edificio nuevo',
-        floor: 'primera planta',
-        amount: 120,
-      },
-      {
-        id: 3,
-        name_classroom: '691A',
-        edifice: 'edificio nuevo',
-        floor: 'primera planta',
-        amount: 90,
-      },
-      {
-        id: 4,
-        name_classroom: '692A',
-        edifice: 'edificio nuevo',
-        floor: 'primera planta',
-        amount: 120,
-      },
-    ],
-  },
-  {
-    id: 3, //id notificación
-    user_id: 4,
-    reservation_request_id: 5,
-    reservation_date: 'date…',
-    state: 'assigned',
-    subject: 'Elementos de la programacion',
-    userName: 'Leticia Blanco',
-    fechaEmision: '12/06/22',
-    assigned_classrooms: [
-      {
-        id: 2,
-        name_classroom: '690',
-        edifice: 'edificio nuevo',
-        floor: 'primera planta',
-        amount: 120,
-      },
-      {
-        id: 3,
-        name_classroom: '690B',
-        edifice: 'edificio nuevo',
-        floor: 'primera planta',
-        amount: 90,
-      },
-      {
-        id: 4,
-        name_classroom: '690C',
-        edifice: 'edificio nuevo',
-        floor: 'primera planta',
-        amount: 120,
-      },
-    ],
-  },
-];

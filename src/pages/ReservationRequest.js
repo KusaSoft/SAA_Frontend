@@ -2,10 +2,7 @@ import React from 'react';
 import {useParams} from 'react-router-dom';
 import BasicBreadcrumbs from '../components/Breadcrumbs/Breadcrumbs';
 import Solicitud from '../components/FormSolicitud/solicitud';
-import {
-  WrapperLayout,
-  WrapperPage,
-} from '../emotion/GlobalComponents';
+import {WrapperLayout, WrapperPage} from '../emotion/GlobalComponents';
 import {BREAD_CRUB_PATHS} from '../services/Constant';
 
 export default function ReservationRequest() {

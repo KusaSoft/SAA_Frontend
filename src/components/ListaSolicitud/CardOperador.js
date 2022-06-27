@@ -10,6 +10,7 @@ import {
   CircularProgress,
   List,
   ListItem,
+  Button,
 } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import {useModal} from '../../hooks/useModal';
@@ -160,31 +161,18 @@ const CardOperador = (props) => {
           justifyContent: 'flex-end',
         }}
       >
-        <Stack
-          direction="row"
-          spacing={1}
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
+        <Button
+          color="info"
+          variant="outlined"
+          size="small"
+          onClick={() => {
+            openModal();
+            handleRequestUpd(props.request.id);
           }}
+          startIcon={<ContentPasteSearchIcon />}
         >
-          <Fab
-            color="success"
-            size="small"
-            sx={{
-              '&:hover': {
-                backgroundColor: 'hover.main',
-                color: 'hover.contrastText',
-              },
-            }}
-            onClick={() => {
-              openModal();
-              handleRequestUpd(props.request.id);
-            }}
-          >
-            <ContentPasteSearchIcon />
-          </Fab>
-        </Stack>
+          Detalles
+        </Button>
       </CardActions>
       <Modal open={isOpenModal} onClose={closeModal}>
         {loadingUpd ? (

@@ -56,7 +56,7 @@ export const useReservationRequest = ({request, user}) => {
     setTeachers(subjectListMap);
     if (request !== 'new' && request !== null) {
       const response = await apiSettings.getReservationRequest(request);
-      console.log(...response.group_list.map((group) => group.id));
+      
       setReservationRequest({
         teacher: user.user,
         subject: response.subject !== null ? response.subject : '',

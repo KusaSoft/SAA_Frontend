@@ -2,12 +2,13 @@ import React from 'react';
 import useAuth from '../hooks/useAuth';
 import BasicBreadcrumbs from '../components/Breadcrumbs/Breadcrumbs';
 import {
+  ImageContainer,
   MyPaper,
   WrapperLayout,
   WrapperPage,
 } from '../emotion/GlobalComponents';
-//import an image
 import background from '../assets/home.jpg';
+import backgroundM from '../assets/home-responsive.jpg';
 import manual from '../assets/manual.png';
 import {Paper, Typography} from '@mui/material';
 import {ROLES} from '../services/Constant';
@@ -27,7 +28,9 @@ export default function Home() {
             position: 'relative',
           }}
         >
-          <MyPaper src={background}></MyPaper>
+          <ImageContainer>
+            <MyPaper src={background} />
+          </ImageContainer>
           <div
             style={{
               position: 'absolute',
@@ -37,31 +40,31 @@ export default function Home() {
               height: '100%',
               background: '#263752',
               opacity: '0.5',
-              zIndex: '9',
+              zIndex: '6',
             }}
           />
           <Paper
-            elevation={3}
+            elevation={1}
             onClick={() => {
               if (auth.roles[0] === ROLES.ADMIN) {
                 window.open(
-                  'https://drive.google.com/file/d/1VAHj3XyIaPV9DxDzo23BbuvPBlUgWccX/view?usp=sharing'
+                  'https://docs.google.com/document/d/1L-xccwphLWX8PyhNUp9EyBQmUB8lnDLXDlsjMt69qIs/edit?usp=sharing'
                 );
               } else if (auth.roles[0] === ROLES.TEACHER) {
                 window.open(
-                  'https://drive.google.com/file/d/1y3ejx-4aqeyuSEHVNYNJ2rowsvpLL7Lv/view?usp=sharing'
+                  'https://docs.google.com/document/d/16U9GNHYEpnFzxdpOS4kUjZrrMNBX-ePvzHAj5ENwBCw/edit?usp=sharing'
                 );
               } else {
                 window.open(
-                  'https://drive.google.com/file/d/1AQUa2MUSaTRHqltfpyuhPj-l_PSRS94E/view?usp=sharing'
+                  'https://docs.google.com/document/d/1feCvNgNFIjhvl3GIlTVcLEMW7J0cEujYET8EAl_H66c/edit?usp=sharing'
                 );
               }
             }}
             style={{
               position: 'absolute',
-              zIndex: '19',
-              top: '50px',
-              left: '50px',
+              zIndex: '6',
+              top: '10px',
+              left: '10px',
               minWidth: '180px',
               maxWidth: '180px',
               width: '180px',

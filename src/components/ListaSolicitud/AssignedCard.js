@@ -15,18 +15,18 @@ import ContentDetail from '../details/ContentDetail';
 import {useRequest} from '../../hooks/useRequest.hooks';
 import DataTransform from '../../utilities/DataController/DataTransform';
 import useAuth from '../../hooks/useAuth';
+import {MyDetailContainer} from '../../emotion/GlobalComponents';
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  maxWidth: 300,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
-  p: 4,
+  p: 2,
 };
-
 const AssignedCard = (props) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -105,39 +105,6 @@ const AssignedCard = (props) => {
                 ))}
             </List>
           </div>
-          <div style={{margin: '0'}}>
-            {props.request.state === 'assigned' ? (
-              <Button
-                variant="contained"
-                color="success"
-                onClick={async () => {
-                  const response = await apiSettings.confirm(
-                    props.request.id,
-                    'confirmed'
-                  );
-                  window.location.reload();
-                }}
-              >
-                Confirmar
-              </Button>
-            ) : null}
-            {props.request.state === 'assigned' ? (
-              <Link
-                to={`/user/reservationRequest/${props.request.id}`}
-                style={{
-                  textDecoration: 'none',
-                }}
-              >
-                <Button
-                  sx={{marginLeft: '1rem'}}
-                  variant="contained"
-                  color="primary"
-                >
-                  Reenviar
-                </Button>
-              </Link>
-            ) : null}
-          </div>
         </div>
       </CardContent>
       <CardActions
@@ -147,109 +114,115 @@ const AssignedCard = (props) => {
           justifyContent: 'space-between',
         }}
       >
-        <Box
-          sx={{
-            padding: '14px',
-          }}
-        >
-          {/* {props.request.state === STATUS.SENT && (
-            <div>
-              <b style={{fontWeight: 'bold'}}>Registrado el: </b>
-              {props.request.register_date}
-            </div>
-          )} */}
-        </Box>
-        <Stack
-          direction="row"
-          spacing={1}
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-          }}
-        >
-          <Fab
-            color="success"
+        <div>
+          <Button
+            color="info"
+            variant="outlined"
             size="small"
-            sx={{
-              '&:hover': {
-                backgroundColor: 'hover.main',
-                color: 'hover.contrastText',
-              },
+            style={{
+              marginRight: '6px',
+              marginTop: '6px',
             }}
+            onClick={() => {
+              openModal();
+              handleRequestUpd(props.request.id);
+            }}
+            startIcon={<ContentPasteSearchIcon />}
           >
-            <ContentPasteSearchIcon
-              onClick={() => {
-                openModal();
-                handleRequestUpd(props.request.id);
-              }}
-            />
-          </Fab>
-          {props.request.state == STATUS.DRAFT ? (
-            <Link to={`/user/reservationRequest/${props.request.id}`}>
-              <Fab
-                color="primary"
-                size="small"
-                sx={{
-                  '&:hover': {
-                    backgroundColor: 'hover.main',
-                    color: 'hover.contrastText',
-                  },
-                }}
-              >
-                <Edit />
-              </Fab>
-            </Link>
-          ) : (
-            <></>
-          )}
-          <Fab
+            Detalles
+          </Button>
+          <Button
             color="error"
             size="small"
-            sx={{
-              '&:hover': {
-                backgroundColor: 'hover.main',
-                color: 'hover.contrastText',
-              },
+            style={{
+              marginLeft: '6px',
+              marginTop: '6px',
             }}
+            variant="outlined"
+            onClick={() => {
+              handleOpen();
+            }}
+            startIcon={<Delete />}
           >
-            <Delete
-              onClick={() => {
-                handleOpen();
+            Eliminar
+          </Button>
+        </div>
+        {props.request.state === 'assigned' ? (
+          <div>
+            <Button
+              variant="contained"
+              color="success"
+              size="small"
+              style={{
+                marginRight: '6px',
+                marginTop: '6px',
               }}
-            />
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
+              onClick={async () => {
+                const response = await apiSettings.confirm(
+                  props.request.id,
+                  'confirmed'
+                );
+                window.location.reload();
+              }}
             >
-              <Box sx={style}>
-                <Typography
-                  id="modal-modal-title"
-                  variant="h6"
-                  component="h2"
-                >
-                  ¿Está seguro que desea eliminar esta solicitud?
-                </Typography>
-                <Button onClick={handleClose}>Cancelar</Button>
-                <Button
-                  sx={{marginLeft: '8rem'}}
-                  onClick={async () => {
-                    await apiSettings.deleteReservationRequest(
-                      props.request.id
-                    );
-                    handleClose();
-                    recargar();
-                    //window.location.reload();
-                  }}
-                >
-                  Eliminar
-                </Button>
-              </Box>
-            </Modal>
-          </Fab>
-        </Stack>
+              Confirmar
+            </Button>
+            <Link
+              to={`/user/reservationForward/${props.request.id}`}
+              style={{
+                textDecoration: 'none',
+              }}
+            >
+              <Button
+                style={{
+                  marginLeft: '6px',
+                  marginTop: '6px',
+                }}
+                variant="contained"
+                color="primary"
+                size="small"
+              >
+                Reenviar
+              </Button>
+            </Link>
+          </div>
+        ) : null}
       </CardActions>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            ¿Está seguro que desea eliminar esta solicitud?
+          </Typography>
+          <Stack
+            spacing={1}
+            direction={'row'}
+            style={{width: '100%', justifyContent: 'space-between'}}
+          >
+            <Button color="info" variant="outlined" onClick={handleClose}>
+              Cancelar
+            </Button>
+            <Button
+              color="error"
+              variant="outlined"
+              sx={{marginLeft: '82px'}}
+              onClick={async () => {
+                await apiSettings.deleteReservationRequest(
+                  props.request.id
+                );
+                handleClose();
+                recargar();
+              }}
+            >
+              Eliminar
+            </Button>
+          </Stack>
+        </Box>
+      </Modal>
       <Modal open={isOpenModal} onClose={closeModal}>
         {loadingUpd ? (
           <Box
@@ -278,7 +251,7 @@ function recargar() {
 function ContentDetail2(props) {
   const {auth} = useAuth();
   return (
-    <Box sx={style}>
+    <MyDetailContainer>
       <Typography variant="h4" align="center">
         Solicitud de reserva
       </Typography>
@@ -346,6 +319,6 @@ function ContentDetail2(props) {
         <br />
         <b>Hora Fin:</b> {props.request.horario_end}
       </Typography>
-    </Box>
+    </MyDetailContainer>
   );
 }

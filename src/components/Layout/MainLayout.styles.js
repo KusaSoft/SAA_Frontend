@@ -19,8 +19,11 @@ export const Dashboard = styled.div`
   height: 100vh;
   width: ${(props) => (props.open ? '300px' : '0px')};
   min-width: ${(props) => (props.open ? '300px' : '0px')};
-  z-index: 11;
+  z-index: 10;
   background: ${({theme}) => theme.palette.navBar.main};
+  @media (max-width: 1000px) {
+    position: absolute;
+  }
 `;
 
 export const LayoutSite = styled.div`
@@ -43,4 +46,7 @@ export const Header = styled.div`
   fontsize: 0.9rem;
   background: ${({theme}) => theme.palette.header.main};
   justify-content: space-between;
+  @media (max-width: 1000px) {
+    z-index: 11;
+  }
 `;

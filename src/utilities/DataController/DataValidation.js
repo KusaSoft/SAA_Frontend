@@ -67,7 +67,9 @@ const DataValidation = {
         isEmpty: false,
       },
       mygroup: {
-        isEmpty: false,
+        isEmpty: formatInput(
+          empty(reservationRequest.myGroupList.toString(), allFilled)
+        ),
       },
       date: {
         ...errors.date,
@@ -105,7 +107,6 @@ const DataValidation = {
   validateOnSubmit: (reservationRequest, errors) => {
     let allFilled = true;
     const formatInput = (method) => {
-      console.log(method);
       const [value, correctly] = method;
       allFilled = correctly;
       return value;
@@ -169,7 +170,6 @@ const DataValidation = {
         ),
       },
     };
-    console.log(allFilled);
     return [allFilled, newErrors];
   },
 };

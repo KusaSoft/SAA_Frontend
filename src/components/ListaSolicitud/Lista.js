@@ -1,22 +1,16 @@
 import React from 'react';
+import {MyBox, MyListBox} from '../../emotion/GlobalComponents';
 
 import SimpleCard from './Card';
-
 
 const Lista = (props) => {
   if (props.list.length !== 0) {
     return (
-
-      <div style={{width: '80%'}}>
+      <MyListBox>
         {props.list.map((element) => {
-          return (
-            <div key={element[0]}>
-              <SimpleCard request={element} />
-
-            </div>
-          );
+          return <SimpleCard request={element} key={element[0]} />;
         })}
-      </div>
+      </MyListBox>
     );
   } else {
     return <div>{props.emptyMessage}</div>;
