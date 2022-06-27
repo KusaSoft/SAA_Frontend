@@ -15,16 +15,17 @@ import ContentDetail from '../details/ContentDetail';
 import {useRequest} from '../../hooks/useRequest.hooks';
 import DataTransform from '../../utilities/DataController/DataTransform';
 import useAuth from '../../hooks/useAuth';
+import {MyDetailContainer, MyBox} from '../../emotion/GlobalComponents';
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  maxWidth: 300,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
-  p: 4,
+  p: 2,
 };
 
 const RejectedCard = (props) => {
@@ -142,17 +143,29 @@ const RejectedCard = (props) => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             ¿Está seguro que desea eliminar esta solicitud?
           </Typography>
-          <Button onClick={handleClose}>Cancelar</Button>
-          <Button
-            sx={{marginLeft: '8rem'}}
-            onClick={async () => {
-              await apiSettings.deleteReservationRequest(props.request.id);
-              handleClose();
-              recargar();
-            }}
+          <Stack
+            spacing={1}
+            direction={'row'}
+            style={{width: '100%', justifyContent: 'space-between'}}
           >
-            Eliminar
-          </Button>
+            <Button color="info" variant="outlined" onClick={handleClose}>
+              Cancelar
+            </Button>
+            <Button
+              color="error"
+              variant="outlined"
+              sx={{marginLeft: '82px'}}
+              onClick={async () => {
+                await apiSettings.deleteReservationRequest(
+                  props.request.id
+                );
+                handleClose();
+                recargar();
+              }}
+            >
+              Eliminar
+            </Button>
+          </Stack>
         </Box>
       </Modal>
       <Modal open={isOpenModal} onClose={closeModal}>
@@ -182,7 +195,7 @@ function recargar() {
 function ContentDetail2(props) {
   const {auth} = useAuth();
   return (
-    <Box sx={style}>
+    <MyDetailContainer>
       <Typography variant="h4" align="center">
         Solicitud de reserva
       </Typography>
@@ -258,6 +271,6 @@ function ContentDetail2(props) {
           </Button>
         </Link>
       </Box>
-    </Box>
+    </MyDetailContainer>
   );
 }
