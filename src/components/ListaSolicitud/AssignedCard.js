@@ -16,7 +16,17 @@ import {useRequest} from '../../hooks/useRequest.hooks';
 import DataTransform from '../../utilities/DataController/DataTransform';
 import useAuth from '../../hooks/useAuth';
 import {MyDetailContainer} from '../../emotion/GlobalComponents';
-
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  maxWidth: 300,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 2,
+};
 const AssignedCard = (props) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -184,22 +194,34 @@ const AssignedCard = (props) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <MyDetailContainer>
+        <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             ¿Está seguro que desea eliminar esta solicitud?
           </Typography>
-          <Button onClick={handleClose}>Cancelar</Button>
-          <Button
-            sx={{marginLeft: '8rem'}}
-            onClick={async () => {
-              await apiSettings.deleteReservationRequest(props.request.id);
-              handleClose();
-              recargar();
-            }}
+          <Stack
+            spacing={1}
+            direction={'row'}
+            style={{width: '100%', justifyContent: 'space-between'}}
           >
-            Eliminar
-          </Button>
-        </MyDetailContainer>
+            <Button color="info" variant="outlined" onClick={handleClose}>
+              Cancelar
+            </Button>
+            <Button
+              color="error"
+              variant="outlined"
+              sx={{marginLeft: '82px'}}
+              onClick={async () => {
+                await apiSettings.deleteReservationRequest(
+                  props.request.id
+                );
+                handleClose();
+                recargar();
+              }}
+            >
+              Eliminar
+            </Button>
+          </Stack>
+        </Box>
       </Modal>
       <Modal open={isOpenModal} onClose={closeModal}>
         {loadingUpd ? (
