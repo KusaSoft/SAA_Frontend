@@ -48,15 +48,15 @@ export default function Home() {
             onClick={() => {
               if (auth.roles[0] === ROLES.ADMIN) {
                 window.open(
-                  'https://drive.google.com/file/d/1VAHj3XyIaPV9DxDzo23BbuvPBlUgWccX/view?usp=sharing'
+                  'https://docs.google.com/document/d/1L-xccwphLWX8PyhNUp9EyBQmUB8lnDLXDlsjMt69qIs/edit?usp=sharing'
                 );
               } else if (auth.roles[0] === ROLES.TEACHER) {
                 window.open(
-                  'https://drive.google.com/file/d/1y3ejx-4aqeyuSEHVNYNJ2rowsvpLL7Lv/view?usp=sharing'
+                  'https://docs.google.com/document/d/16U9GNHYEpnFzxdpOS4kUjZrrMNBX-ePvzHAj5ENwBCw/edit?usp=sharing'
                 );
               } else {
                 window.open(
-                  'https://drive.google.com/file/d/1AQUa2MUSaTRHqltfpyuhPj-l_PSRS94E/view?usp=sharing'
+                  'https://docs.google.com/document/d/1feCvNgNFIjhvl3GIlTVcLEMW7J0cEujYET8EAl_H66c/edit?usp=sharing'
                 );
               }
             }}
