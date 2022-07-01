@@ -291,7 +291,7 @@ function ContentDetail2(props) {
         <List>
           {props.request.assigned_classrooms &&
             props.request.assigned_classrooms.map((classrom) => (
-              <ListItem sx={{display: 'inline'}}>
+              <ListItem>
                 {/* no muestra nada porque va a busar a la DB y ahi aun no estan las aulas */}
                 {classrom.name_classroom}
               </ListItem>
