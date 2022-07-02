@@ -272,7 +272,13 @@ function ClassroomsAssignation(props) {
                   classroomsSelected,
                   response.total_students
                 ) ? (
-                  <Typography>
+                  <Typography
+                    sx={{
+                      color: 'green',
+                      size: '1.5rem',
+                      fontWeight: 'bold',
+                    }}
+                  >
                     Capacidad:{' '}
                     {DataTransform.getCapacity(classroomsSelected)}
                   </Typography>
@@ -321,6 +327,7 @@ function ClassroomsAssignation(props) {
                     classrooms={DataTransform.getClassroomsGroupByEdifice(
                       classrooms ? classrooms : []
                     )}
+                    totalStudents={response.total_students}
                     classroomsSelected={classroomsSelected}
                     setClassroomsSelected={setClassroomsSelected}
                   />
