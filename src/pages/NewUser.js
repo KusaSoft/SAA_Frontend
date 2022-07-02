@@ -42,11 +42,19 @@ function NewUser() {
       firstName: Yup.string()
         .min(3, 'Mínimo 3 caracteres')
         .max(30, 'Nombre demasiado largo, máximo 30 caracteres')
-        .required('El nombre es requerido'),
+        .required('El nombre es requerido')
+        .matches(
+          /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/,
+          'Solo se permiten letras para este campo'
+        ),
       lastName: Yup.string()
         .min(3, 'Mínimo 3 caracteres')
         .max(30, 'Apellido demasiado largo, máximo 30 caracteres')
-        .required('El apellido es requerido'),
+        .required('El apellido es requerido')
+        .matches(
+          /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/,
+          'Solo se permiten letras para este campo'
+        ),
       email: Yup.string()
         .email('Debe ser un email valido')
         .max(255)
@@ -66,7 +74,7 @@ function NewUser() {
     onSubmit: async () => {
       const responseRegister = await apiSettings.register({
         ...formik.values,
-        name: `${formik.values.lastName}${formik.values.firstName}`,
+        name: `${formik.values.lastName} ${formik.values.firstName}`,
         role: formik.values.role.toLowerCase(),
       });
       setMessageError(responseRegister.message);

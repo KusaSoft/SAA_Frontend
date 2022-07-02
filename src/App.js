@@ -29,7 +29,7 @@ import Groups2 from './pages/Groups2';
 import Notifications from './pages/Notifications';
 
 import ReservationForward from './pages/ReservationForward';
-
+import Expired from './pages/Expired';
 
 function App() {
   return (
@@ -80,7 +80,6 @@ function App() {
             <Route
               path={PATHS.RESERVATION_FORWARD}
               element={<ReservationForward />}
-
             />
           </Route>
 
@@ -114,6 +113,17 @@ function App() {
           >
             <Route path={PATHS.REJECTED} element={<Rejected />} />
           </Route>
+
+          <Route
+            element={
+              <RequireAuth
+                allowedRoles={[ROLES.REVIEWER, ROLES.TEACHER]}
+              />
+            }
+          >
+            <Route path={PATHS.EXPIRED} element={<Expired />} />
+          </Route>
+
           <Route element={<RequireAuth allowedRoles={[ROLES.REVIEWER]} />}>
             <Route
               path={PATHS.CLASSROOM_ASSIGNATION}

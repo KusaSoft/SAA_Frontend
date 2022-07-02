@@ -83,6 +83,12 @@ export const SidebarData = (role) => {
             cName: 'sidebar-item',
             path: `${PATHS.REJECTED}`,
           },
+          {
+            id: 7,
+            title: 'Caducados',
+            cName: 'sidebar-item',
+            path: `${PATHS.EXPIRED}`,
+          },
         ],
       },
     ];
@@ -134,6 +140,12 @@ export const SidebarData = (role) => {
             title: 'Rechazados',
             cName: 'sidebar-item',
             path: `${PATHS.REJECTED}`,
+          },
+          {
+            id: 9,
+            title: 'Caducados',
+            cName: 'sidebar-item',
+            path: `${PATHS.EXPIRED}`,
           },
         ],
       },

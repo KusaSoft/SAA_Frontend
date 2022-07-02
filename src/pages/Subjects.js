@@ -36,7 +36,11 @@ function Subjects() {
       nameSubject: Yup.string()
         .min(6, 'Mínimo 6 caracteres')
         .max(60, 'Nombre demasiado largo, máximo 60 caracteres')
-        .required('Se requiere el nombre de la materia'),
+        .required('Se requiere el nombre de la materia')
+        .matches(
+          /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/,
+          'Solo se permiten letras para este campo'
+        ),
     }),
     onSubmit: async () => {
       const responseRegister = await apiSettings.registerSubject({
