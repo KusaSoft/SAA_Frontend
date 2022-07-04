@@ -40,6 +40,23 @@ const empty = (value, valid) => {
 const DataValidation = {
   validateStringField: () => {},
   validateArrayField: () => {},
+  validateDateField: (date, errors) => {
+    let allFilled = true;
+    const formatInput = (method) => {
+      const [value, correctly] = method;
+      allFilled = correctly;
+      return value;
+    };
+    const newErrors = {
+      ...errors,
+      date: {
+        ...errors.date,
+        isEmpty: false,
+        isError: !formatInput(dateValidation(date, allFilled)),
+      },
+    };
+    return newErrors;
+  },
   validateHourField: (ini, end, errors) => {
     let allFilled = true;
     const formatInput = (method) => {

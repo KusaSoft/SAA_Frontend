@@ -247,6 +247,7 @@ function Solicitud(props) {
                           max: '500',
                         },
                       }}
+                      setError={(e) => {}}
                       myMaxLength="3"
                       setValue={handleReservationRequest}
                     >
@@ -268,6 +269,11 @@ function Solicitud(props) {
                           min: DateController.getToday(),
                         },
                         value: reservationRequest.dateReservation,
+                      }}
+                      setError={(e) => {
+                        setErrors({
+                          ...DataValidation.validateDateField(e, errors),
+                        });
                       }}
                       myDefaultValue={reservationRequest.dateReservation}
                     >

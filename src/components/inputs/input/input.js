@@ -11,6 +11,7 @@ export default function FormInputControl(props) {
           value={props.value}
           onChange={(e) => {
             props.setValue(e, e.target.value, props.myName);
+            props.setError(e.target.value);
           }}
           label={props.myLabel}
           type={props.myType}
