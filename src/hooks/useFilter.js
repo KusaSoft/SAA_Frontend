@@ -41,6 +41,35 @@ export default function useFilter({requestType, dateType}) {
     setLoading(false);
   };
 
+  const fetchListUpdate = async () => {
+    const data = await requestType();
+    if (dateType === ORDER_DATE.LEJANOS) {
+      data.sort((a, b) => {
+        return new Date(a.register_date) - new Date(b.register_date);
+      });
+    } else {
+      data.sort((a, b) => {
+        return new Date(a.reservation_date) - new Date(b.reservation_date);
+      });
+      data.reverse();
+    }
+    setList(data);
+    setFilteredList([
+      ...data.filter((element) => {
+        return filteredList.some((elementChecked) => {
+          return elementChecked.id === element.id;
+        });
+      }),
+    ]);
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      fetchListUpdate();
+    }, 6500);
+    return () => clearInterval(timer);
+  });
+
   useEffect(() => {
     fetchList();
   }, []);
