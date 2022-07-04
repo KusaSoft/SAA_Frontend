@@ -48,6 +48,7 @@ import GroupOfClassrooms from './GroupsOfClassrooms';
 import {STATUS} from '../../services/Constant';
 import RequestMessage from '../Messages/RequestMessage';
 import AlertMessage from '../Messages/AlertMessage';
+import RedBar from '../Div/RedBar';
 
 const AccordionSummary = styled((props) => (
   <MuiAccordionSummary
@@ -69,6 +70,7 @@ function ClassroomsAssignation(props) {
   const [isOpenModal, openModal, closeModal] = useModal(false);
   const [isOpenAlert, openAlert, closeAlert] = useModal(false);
   const [rejection_reason, setRejection_reason] = useState('');
+  const [sent, setSent] = useState(false);
   const [
     isOpenModalRejected,
     openModalRejected,
@@ -417,12 +419,14 @@ function ClassroomsAssignation(props) {
       <Modal isOpen={isOpenModalRejected} closeModal={closeModalRejected}>
         <div
           style={{
-            margin: '20px',
+            padding: '10px',
           }}
         >
           <FormControl
             sx={{
-              width: '100%',
+              width: '90%',
+              minWidth: '280px',
+              padding: '1.2rem',
             }}
           >
             <FormLabel>Motivo de rechazo</FormLabel>
@@ -432,12 +436,16 @@ function ClassroomsAssignation(props) {
               type="text"
               variant="outlined"
               value={rejection_reason}
-              onChange={(e) => setRejection_reason(e.target.value)}
-              sx={{
-                width: '85%',
-                padding: '1rem',
+              onChange={(e) => {
+                setRejection_reason(e.target.value);
+                setSent(false);
               }}
             />
+            {rejection_reason.length < 10 && sent ? (
+              <RedBar>
+                El motivo de rechazo debe tener un minimo de 10 caracteres.
+              </RedBar>
+            ) : null}
           </FormControl>
           <Box
             sx={{
@@ -449,6 +457,7 @@ function ClassroomsAssignation(props) {
               variant="contained"
               color="error"
               onClick={() => {
+                setSent(false);
                 setRejection_reason('');
                 closeModalRejected();
               }}
@@ -459,7 +468,10 @@ function ClassroomsAssignation(props) {
               variant="contained"
               color="primary"
               onClick={(e) => {
-                handleSumbitRejection(e);
+                setSent(true);
+                if (rejection_reason.length > 10) {
+                  handleSumbitRejection(e);
+                }
               }}
             >
               Enviar
