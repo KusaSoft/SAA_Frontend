@@ -13,6 +13,7 @@ import {
   CardHeader,
   Dialog,
   CardActions,
+  Divider,
 } from '@mui/material';
 import React from 'react';
 import {useReservationRequest} from '../../hooks/useReservationRequest';
@@ -257,8 +258,25 @@ function Solicitud(props) {
                     </FormInputControl>
                   </Grid>
                 </Grid>
+                <Divider
+                  style={{
+                    margin: '1rem 0rem',
+                  }}
+                />
                 <Grid container spacing={2} columns={12}>
                   <Grid item sm={6} xs={12}>
+                    <b>
+                      <i
+                        style={{
+                          color: '#070150',
+                          fontSize: '0.8rem',
+                          marginLeft: '1rem',
+                        }}
+                      >
+                        Nota: Solo se puede realizar reservas con más de un
+                        día de antelación.
+                      </i>
+                    </b>
                     <FormInputControl
                       myLabel="Fecha *"
                       myType="date"
@@ -266,7 +284,7 @@ function Solicitud(props) {
                       myName="dateReservation"
                       myInputProps={{
                         inputProps: {
-                          min: DateController.getToday(),
+                          min: DateController.getTomorrow(),
                         },
                         value: reservationRequest.dateReservation,
                       }}

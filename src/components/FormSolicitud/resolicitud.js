@@ -35,6 +35,7 @@ import DataTransform from '../../utilities/DataController/DataTransform';
 import RedBar from '../Div/RedBar';
 import AlertMessage from '../Messages/AlertMessage';
 import {MyBox} from '../../emotion/GlobalComponents';
+import DataValidation from '../../utilities/DataController/DataValidation';
 function Forward(props) {
   const {auth} = useAuth();
   const navigate = useNavigate();
@@ -86,6 +87,7 @@ function Forward(props) {
     validateAllFilled,
     validateSaveFilled,
     getReservationRequest,
+    setErrors,
   } = useReservationRequest({
     request: `${props.reservationRequest}`,
     user: auth,
@@ -261,6 +263,18 @@ function Forward(props) {
                 </Grid>
                 <Grid container spacing={2} columns={12}>
                   <Grid item sm={6} xs={12}>
+                    <b>
+                      <i
+                        style={{
+                          color: '#070150',
+                          fontSize: '0.8rem',
+                          marginLeft: '1rem',
+                        }}
+                      >
+                        Nota: Solo se puede realizar reservas con más de un
+                        día de antelación.
+                      </i>
+                    </b>
                     <FormInputControl
                       myLabel="Fecha *"
                       myType="date"
@@ -268,9 +282,14 @@ function Forward(props) {
                       myName="dateReservation"
                       myInputProps={{
                         inputProps: {
-                          min: DateController.getToday(),
+                          min: DateController.getTomorrow(),
                         },
                         value: reservationRequest.dateReservation,
+                      }}
+                      setError={(e) => {
+                        setErrors({
+                          ...DataValidation.validateDateField(e, errors),
+                        });
                       }}
                       myDefaultValue={reservationRequest.dateReservation}
                     >
@@ -289,6 +308,15 @@ function Forward(props) {
                       myLabel="Hora Inicio *"
                       myValue={reservationRequest.periodIniSelected}
                       setValue={handleReservationRequest}
+                      setError={(e) => {
+                        setErrors({
+                          ...DataValidation.validateHourField(
+                            e,
+                            reservationRequest.periodEndSelected,
+                            errors
+                          ),
+                        });
+                      }}
                       myName="periodIniSelected"
                       list={[
                         ...PERIODSRANGE.slice(0, PERIODSRANGE.length - 1),
@@ -306,6 +334,15 @@ function Forward(props) {
                       myLabel="Hora Fin *"
                       myValue={reservationRequest.periodEndSelected}
                       myName="periodEndSelected"
+                      setError={(e) => {
+                        setErrors({
+                          ...DataValidation.validateHourField(
+                            reservationRequest.periodIniSelected,
+                            e,
+                            errors
+                          ),
+                        });
+                      }}
                       setValue={handleReservationRequest}
                       list={[...PERIODSRANGE.slice(1)]}
                     >
