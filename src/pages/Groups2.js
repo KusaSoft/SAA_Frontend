@@ -60,7 +60,10 @@ function Groups2() {
       numberGroup: Yup.number()
         .positive()
         .min(1, 'Debe ser número positivo')
-        .max(99, 'Máximo un número de 2 cifras')
+        .max(
+          40,
+          'El numero de grupo es demasiado grande, no debe superar 40'
+        )
         .required('Se requiere el numero de grupo'),
     }),
     onSubmit: async () => {
