@@ -41,6 +41,28 @@ export default function useFilter({requestType, dateType}) {
     setLoading(false);
   };
 
+  const updateFilteredList = (data) => {
+    let newData = [...data];
+    //filter by MOTIVE
+    newData = newData.filter((element) => {
+      return checkedList.find((item) => {
+        return item.label === element.request_reason;
+      });
+    });
+
+    if (date[0].value) {
+      newData.sort((a, b) => {
+        return new Date(a.register_date) - new Date(b.register_date);
+      });
+    } else {
+      newData.sort((a, b) => {
+        return new Date(a.reservation_date) - new Date(b.reservation_date);
+      });
+      newData.reverse();
+    }
+
+    setFilteredList(newData);
+  };
   const fetchListUpdate = async () => {
     const data = await requestType();
     if (dateType === ORDER_DATE.LEJANOS) {
@@ -53,14 +75,8 @@ export default function useFilter({requestType, dateType}) {
       });
       data.reverse();
     }
+    updateFilteredList(data);
     setList(data);
-    setFilteredList([
-      ...data.filter((element) => {
-        return filteredList.some((elementChecked) => {
-          return elementChecked.id === element.id;
-        });
-      }),
-    ]);
   };
 
   useEffect(() => {
@@ -75,7 +91,6 @@ export default function useFilter({requestType, dateType}) {
   }, []);
   const handleChangeMotive = (event) => {
     const {checked, value, name} = event.target;
-    console.log(checked, value, name);
     let newCheckedList = checkedList;
     if (name !== 'Todos') {
       newCheckedList = checkedList.map((element) => {
@@ -103,7 +118,6 @@ export default function useFilter({requestType, dateType}) {
                 : element2.label === 'Otros' &&
                   !MOTIVES.includes(element.request_reason)
               : false;
-          console.log(res, element2, element.request_reason);
           return res;
         });
       })
