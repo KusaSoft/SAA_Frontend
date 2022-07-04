@@ -14,7 +14,7 @@ import RejectedCard from '../components/ListaSolicitud/RejectedCard';
 import useListMyRejects from '../hooks/useListMyRejects';
 function Expired() {
   const {auth} = useAuth();
-  const [listRejected] = useListMyRejects(auth.id);
+  const [listRejected] = [];
   return (
     <WrapperLayout>
       <WrapperPage>
@@ -23,18 +23,19 @@ function Expired() {
           breadcrumbs={BREAD_CRUB_PATHS.EXPIRED}
         />
         <MyContainerPage>
-          {/* {auth.roles[0] === 'operador' ? (
-            <ListOperador
+          {auth.roles[0] === 'operador' ? (
+            <>
+              {/* <ListOperador
               dataTypeS={'Fecha para la reserva'}
               requestType={apiSettings.getRejectedReservations}
-              orderDate={ORDER_DATE.LEJANOS}
-            />
+              orderDate={ORDER_DATE.LEJANOS}/> */}
+            </>
           ) : (
             <Lista
               list={listRejected ? listRejected : []}
-              emptyMessage={'No tiene ninguna solicitud rechazada'}
+              emptyMessage={'No tiene ninguna solicitud caducada'}
             />
-          )} */}
+          )}
         </MyContainerPage>
       </WrapperPage>
     </WrapperLayout>

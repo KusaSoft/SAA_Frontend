@@ -12,8 +12,9 @@ import {
   TextField,
   Grid,
   Autocomplete,
+  Stack,
 } from '@mui/material';
-import React from 'react';
+import React, {useState} from 'react';
 import BasicBreadcrumbs from '../components/Breadcrumbs/Breadcrumbs';
 
 import {WrapperLayout, WrapperPage} from '../emotion/GlobalComponents';
@@ -25,11 +26,26 @@ import {Link} from 'react-router-dom';
 import {useModal} from '../hooks/useModal';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  maxWidth: 300,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 2,
+};
 function Subjects() {
   const [listSubjects] = useListSubjects();
   const [listUsers] = useListUsers();
   const [isOpenModal, openModal, closeModal] = useModal(false);
   //console.log(listUsers);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [messageError, setMessageError] = useState('');
   const formik = useFormik({
     initialValues: {
       nameSubject: '',
@@ -286,6 +302,37 @@ function Subjects() {
               </Grid>
             </Grid>
           </form>
+        </Box>
+      </Modal>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            {messageError}
+          </Typography>
+          <Stack
+            spacing={1}
+            direction={'row'}
+            style={{width: '100%', justifyContent: 'space-between'}}
+          >
+            <Button
+              //color="info"
+              variant="outlined"
+              onClick={() => {
+                {
+                  messageError === 'Nueva materia registrada con exito'
+                    ? window.location.reload()
+                    : handleClose();
+                }
+              }}
+            >
+              Continuar
+            </Button>
+          </Stack>
         </Box>
       </Modal>
     </>

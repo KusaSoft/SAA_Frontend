@@ -11,8 +11,12 @@ import {
   Modal,
   TextField,
   Grid,
+  Stack,
+  Dialog,
+  DialogTitle,
+  Alert,
 } from '@mui/material';
-import React from 'react';
+import React, {useState} from 'react';
 import BasicBreadcrumbs from '../components/Breadcrumbs/Breadcrumbs';
 
 import {WrapperLayout, WrapperPage} from '../emotion/GlobalComponents';
@@ -24,10 +28,25 @@ import {useModal} from '../hooks/useModal';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import apiSettings from '../services/service';
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  maxWidth: 300,
+  bgcolor: 'red',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 2,
+};
 function Subjects() {
   const [listSubjects] = useListSubjects();
   const [isOpenModal, openModal, closeModal] = useModal(false);
   //console.log(listUsers);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [messageError, setMessageError] = useState('');
   const formik = useFormik({
     initialValues: {
       nameSubject: '',
@@ -47,10 +66,12 @@ function Subjects() {
         ...formik.values,
         name_subject: `${formik.values.nameSubject}`,
       });
-      // setMessageError(responseRegister.message);
-      // responseRegister.successful === true ? openModal() : openModal();
+      setMessageError(responseRegister.message);
+      closeModal();
+      formik.resetForm();
+      handleOpen();
       //alert('funciona');
-      window.location.reload();
+      //window.location.reload();
     },
   });
   return (
@@ -221,6 +242,58 @@ function Subjects() {
             </Grid>
           </form>
         </Box>
+      </Modal>
+      <Modal
+        open={open}
+        onClose={() => {
+          handleClose();
+          window.location.reload();
+        }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Alert
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            maxWidth: 300,
+            p: 2,
+          }}
+          severity={
+            messageError === 'Nueva materia registrada con exito'
+              ? 'success'
+              : 'error'
+          }
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            {messageError}
+          </Typography>
+          <Box
+            style={{
+              width: '100%',
+              display: 'flex',
+              marginRight: '10px',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Button
+              //color="info"
+              variant="outlined"
+              onClick={() => {
+                {
+                  messageError === 'Nueva materia registrada con exito'
+                    ? window.location.reload()
+                    : handleClose();
+                }
+              }}
+            >
+              Continuar
+            </Button>
+          </Box>
+        </Alert>
       </Modal>
     </>
   );
