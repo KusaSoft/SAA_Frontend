@@ -56,7 +56,7 @@ export const useReservationRequest = ({request, user}) => {
     setTeachers(subjectListMap);
     if (request !== 'new' && request !== null) {
       const response = await apiSettings.getReservationRequest(request);
-      
+
       setReservationRequest({
         teacher: user.user,
         subject: response.subject !== null ? response.subject : '',
@@ -207,5 +207,6 @@ export const useReservationRequest = ({request, user}) => {
     validateAllFilled,
     validateSaveFilled,
     getReservationRequest,
+    setErrors,
   };
 };

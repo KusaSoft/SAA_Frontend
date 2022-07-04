@@ -40,6 +40,29 @@ const empty = (value, valid) => {
 const DataValidation = {
   validateStringField: () => {},
   validateArrayField: () => {},
+  validateHourField: (ini, end, errors) => {
+    let allFilled = true;
+    const formatInput = (method) => {
+      const [value, correctly] = method;
+      allFilled = correctly;
+      return value;
+    };
+    const newErrors = {
+      ...errors,
+      iniPeriod: {
+        ...errors.iniPeriod,
+        isEmpty: false,
+        isError: !formatInput(isValidRange(ini, end, allFilled)),
+      },
+      endPeriod: {
+        ...errors.endPeriod,
+        isEmpty: false,
+        isError: !formatInput(isValidRange(ini, end, allFilled)),
+      },
+    };
+    return newErrors;
+  },
+
   validateOnSave: (reservationRequest, errors) => {
     let allFilled = true;
 

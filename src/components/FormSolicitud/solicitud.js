@@ -36,6 +36,7 @@ import DataTransform from '../../utilities/DataController/DataTransform';
 import RedBar from '../Div/RedBar';
 import AlertMessage from '../Messages/AlertMessage';
 import {MyBox, MyRowContainer} from '../../emotion/GlobalComponents';
+import DataValidation from '../../utilities/DataController/DataValidation';
 function Solicitud(props) {
   const {auth} = useAuth();
   const navigate = useNavigate();
@@ -87,6 +88,7 @@ function Solicitud(props) {
     validateAllFilled,
     validateSaveFilled,
     getReservationRequest,
+    setErrors,
   } = useReservationRequest({
     request: `${props.reservationRequest}`,
     user: auth,
@@ -130,6 +132,7 @@ function Solicitud(props) {
                       myLabel="Materia *"
                       myValue={reservationRequest.subject}
                       myName="subject"
+                      setError={(e) => {}}
                       setValue={handleReservationRequest}
                       list={subjectList ? [...subjectList.keys()] : []}
                     >
@@ -283,6 +286,15 @@ function Solicitud(props) {
                       myLabel="Hora Inicio *"
                       myValue={reservationRequest.periodIniSelected}
                       setValue={handleReservationRequest}
+                      setError={(e) => {
+                        setErrors({
+                          ...DataValidation.validateHourField(
+                            e,
+                            reservationRequest.periodEndSelected,
+                            errors
+                          ),
+                        });
+                      }}
                       myName="periodIniSelected"
                       list={[
                         ...PERIODSRANGE.slice(0, PERIODSRANGE.length - 1),
@@ -300,6 +312,15 @@ function Solicitud(props) {
                       myLabel="Hora Fin *"
                       myValue={reservationRequest.periodEndSelected}
                       myName="periodEndSelected"
+                      setError={(e) => {
+                        setErrors({
+                          ...DataValidation.validateHourField(
+                            reservationRequest.periodIniSelected,
+                            e,
+                            errors
+                          ),
+                        });
+                      }}
                       setValue={handleReservationRequest}
                       list={[...PERIODSRANGE.slice(1)]}
                     >
