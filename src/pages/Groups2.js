@@ -312,7 +312,11 @@ function Groups2() {
         open={open}
         onClose={() => {
           handleClose();
-          window.location.reload();
+          {
+            messageError === 'El grupo se registro exitosamente'
+              ? window.location.reload()
+              : handleClose();
+          }
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"

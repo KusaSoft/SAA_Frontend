@@ -247,7 +247,11 @@ function Subjects() {
         open={open}
         onClose={() => {
           handleClose();
-          window.location.reload();
+          {
+            messageError === 'Nueva materia registrada con exito'
+              ? window.location.reload()
+              : handleClose();
+          }
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
