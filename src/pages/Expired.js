@@ -10,11 +10,8 @@ import {
 import {BREAD_CRUB_PATHS, ORDER_DATE, STATUS} from '../services/Constant';
 import apiSettings from '../services/service';
 import useAuth from '../hooks/useAuth';
-import RejectedCard from '../components/ListaSolicitud/RejectedCard';
-import useListMyRejects from '../hooks/useListMyRejects';
 function Expired() {
   const {auth} = useAuth();
-  const [listRejected] = [];
   return (
     <WrapperLayout>
       <WrapperPage>
@@ -23,36 +20,13 @@ function Expired() {
           breadcrumbs={BREAD_CRUB_PATHS.EXPIRED}
         />
         <MyContainerPage>
-          {auth.roles[0] === 'operador' ? (
-            <>
-              {/* <ListOperador
-              dataTypeS={'Fecha para la reserva'}
-              requestType={apiSettings.getRejectedReservations}
-              orderDate={ORDER_DATE.LEJANOS}/> */}
-            </>
-          ) : (
-            <Lista
-              list={listRejected ? listRejected : []}
-              emptyMessage={'No tiene ninguna solicitud caducada'}
-            />
-          )}
+          <ListOperador
+            dataTypeS={'Fecha para la reserva'}
+            orderDate={ORDER_DATE.LEJANOS}
+          />
         </MyContainerPage>
       </WrapperPage>
     </WrapperLayout>
   );
 }
 export default Expired;
-
-const Lista = (props) => {
-  if (props.list.length !== 0) {
-    return (
-      <MyListBox>
-        {/* {props.list.map((element) => {
-          return <RejectedCard key={element[0]} request={element} />;
-        })} */}
-      </MyListBox>
-    );
-  } else {
-    return <div>{props.emptyMessage}</div>;
-  }
-};

@@ -10,11 +10,7 @@ import {
 import {BREAD_CRUB_PATHS, ORDER_DATE, STATUS} from '../services/Constant';
 import apiSettings from '../services/service';
 import useAuth from '../hooks/useAuth';
-import RejectedCard from '../components/ListaSolicitud/RejectedCard';
-import useListMyRejects from '../hooks/useListMyRejects';
 function Rejected() {
-  const {auth} = useAuth();
-  const [listRejected] = useListMyRejects(auth.id);
   return (
     <WrapperLayout>
       <WrapperPage>
@@ -23,35 +19,14 @@ function Rejected() {
           breadcrumbs={BREAD_CRUB_PATHS.REJECTED}
         />
         <MyContainerPage>
-          {auth.roles[0] === 'operador' ? (
-            <ListOperador
-              dataTypeS={'Fecha para la reserva'}
-              requestType={apiSettings.getRejectedReservations}
-              orderDate={ORDER_DATE.LEJANOS}
-            />
-          ) : (
-            <Lista
-              list={listRejected ? listRejected : []}
-              emptyMessage={'No tiene ninguna solicitud rechazada'}
-            />
-          )}
+          <ListOperador
+            dataTypeS={'Fecha para la reserva'}
+            requestType={apiSettings.getRejectedReservations}
+            orderDate={ORDER_DATE.LEJANOS}
+          />
         </MyContainerPage>
       </WrapperPage>
     </WrapperLayout>
   );
 }
 export default Rejected;
-
-const Lista = (props) => {
-  if (props.list.length !== 0) {
-    return (
-      <MyListBox>
-        {props.list.map((element) => {
-          return <RejectedCard key={element[0]} request={element} />;
-        })}
-      </MyListBox>
-    );
-  } else {
-    return <div>{props.emptyMessage}</div>;
-  }
-};
