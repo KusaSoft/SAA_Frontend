@@ -30,10 +30,30 @@ export default function useFilter({requestType, dateType}) {
       data.sort((a, b) => {
         return new Date(a.register_date) - new Date(b.register_date);
       });
+      setDate([
+        {
+          label: ORDER_DATE.PROXIMOS,
+          value: false,
+        },
+        {
+          label: ORDER_DATE.LEJANOS,
+          value: true,
+        },
+      ]);
     } else {
       data.sort((a, b) => {
         return new Date(a.reservation_date) - new Date(b.reservation_date);
       });
+      setDate([
+        {
+          label: ORDER_DATE.PROXIMOS,
+          value: true,
+        },
+        {
+          label: ORDER_DATE.LEJANOS,
+          value: false,
+        },
+      ]);
       data.reverse();
     }
     setList(data);
@@ -42,39 +62,34 @@ export default function useFilter({requestType, dateType}) {
   };
 
   const updateFilteredList = (data) => {
-    let newData = [...data];
-    //filter by MOTIVE
-    newData = newData.filter((element) => {
+    let newDataF = [...data];
+    let newData = newDataF.filter((element) => {
       return checkedList.find((item) => {
-        return item.label === element.request_reason;
+        return item.checked && item.label === element.request_reason;
       });
     });
-
-    if (date[0].value) {
-      newData.sort((a, b) => {
+    if (dateType === ORDER_DATE.LEJANOS) {
+      newData = newData.sort((a, b) => {
         return new Date(a.register_date) - new Date(b.register_date);
       });
+      if (date[0].value) {
+        setFilteredList([...newData.reverse()]);
+      } else {
+        setFilteredList([...newData]);
+      }
     } else {
-      newData.sort((a, b) => {
+      newData = newData.sort((a, b) => {
         return new Date(a.reservation_date) - new Date(b.reservation_date);
       });
-      newData.reverse();
+      if (date[1].value) {
+        setFilteredList(newData);
+      } else {
+        setFilteredList([...newData.reverse()]);
+      }
     }
-
-    setFilteredList(newData);
   };
   const fetchListUpdate = async () => {
     const data = await requestType();
-    if (dateType === ORDER_DATE.LEJANOS) {
-      data.sort((a, b) => {
-        return new Date(a.register_date) - new Date(b.register_date);
-      });
-    } else {
-      data.sort((a, b) => {
-        return new Date(a.reservation_date) - new Date(b.reservation_date);
-      });
-      data.reverse();
-    }
     updateFilteredList(data);
     setList(data);
   };
@@ -133,9 +148,29 @@ export default function useFilter({requestType, dateType}) {
 
     if (value === ORDER_DATE.LEJANOS) {
       setFilteredList([...newFilteredList]);
+      setDate([
+        {
+          label: ORDER_DATE.PROXIMOS,
+          value: false,
+        },
+        {
+          label: ORDER_DATE.LEJANOS,
+          value: true,
+        },
+      ]);
     } else {
       newFilteredList.reverse();
       setFilteredList([...newFilteredList]);
+      setDate([
+        {
+          label: ORDER_DATE.PROXIMOS,
+          value: true,
+        },
+        {
+          label: ORDER_DATE.LEJANOS,
+          value: false,
+        },
+      ]);
     }
   };
   const handleChangeDateByReservation = (event) => {
@@ -147,9 +182,29 @@ export default function useFilter({requestType, dateType}) {
 
     if (value === ORDER_DATE.PROXIMOS) {
       setFilteredList([...newFilteredList]);
+      setDate([
+        {
+          label: ORDER_DATE.PROXIMOS,
+          value: true,
+        },
+        {
+          label: ORDER_DATE.LEJANOS,
+          value: false,
+        },
+      ]);
     } else {
       newFilteredList.reverse();
       setFilteredList([...newFilteredList]);
+      setDate([
+        {
+          label: ORDER_DATE.PROXIMOS,
+          value: false,
+        },
+        {
+          label: ORDER_DATE.LEJANOS,
+          value: true,
+        },
+      ]);
     }
   };
 
