@@ -63,6 +63,9 @@ export const PATHS = {
   ASSIGNED: 'assigned',
   REJECTED: 'rejected',
   EXPIRED: 'expired',
+  ASSIGNED_O: 'assignedO',
+  REJECTED_O: 'rejectedO',
+  EXPIRED_O: 'expiredO',
   REJECTED_RES: '/user/rejected',
   RESERVATION_REQUEST_DETAIL:
     'reservationRequest/:reservationRequest/detail',

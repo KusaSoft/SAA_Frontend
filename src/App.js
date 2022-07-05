@@ -30,6 +30,9 @@ import Notifications from './pages/Notifications';
 
 import ReservationForward from './pages/ReservationForward';
 import Expired from './pages/Expired';
+import AssignedTeacher from './pages/AssignedTeacher';
+import RejectedTeacher from './pages/RejectedTeacher';
+import ExpiredTeacher from './pages/ExpiredTeacher';
 
 function App() {
   return (
@@ -89,39 +92,32 @@ function App() {
           <Route element={<RequireAuth allowedRoles={[ROLES.TEACHER]} />}>
             <Route path={PATHS.DRAFTS} element={<Borradores />} />
           </Route>
+
+          <Route element={<RequireAuth allowedRoles={[ROLES.TEACHER]} />}>
+            <Route path={PATHS.ASSIGNED} element={<AssignedTeacher />} />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[ROLES.TEACHER]} />}>
+            <Route path={PATHS.REJECTED} element={<RejectedTeacher />} />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[ROLES.TEACHER]} />}>
+            <Route path={PATHS.EXPIRED} element={<ExpiredTeacher />} />
+          </Route>
+
           <Route element={<RequireAuth allowedRoles={[ROLES.REVIEWER]} />}>
             <Route path={PATHS.ARRIVAL} element={<Arrival />} />
           </Route>
           <Route element={<RequireAuth allowedRoles={[ROLES.REVIEWER]} />}>
             <Route path={PATHS.URGENCY} element={<Urgency />} />
           </Route>
-          <Route
-            element={
-              <RequireAuth
-                allowedRoles={[ROLES.REVIEWER, ROLES.TEACHER]}
-              />
-            }
-          >
-            <Route path={PATHS.ASSIGNED} element={<Assigned />} />
+          <Route element={<RequireAuth allowedRoles={[ROLES.REVIEWER]} />}>
+            <Route path={PATHS.ASSIGNED_O} element={<Assigned />} />
           </Route>
-          <Route
-            element={
-              <RequireAuth
-                allowedRoles={[ROLES.REVIEWER, ROLES.TEACHER]}
-              />
-            }
-          >
-            <Route path={PATHS.REJECTED} element={<Rejected />} />
+          <Route element={<RequireAuth allowedRoles={[ROLES.REVIEWER]} />}>
+            <Route path={PATHS.REJECTED_O} element={<Rejected />} />
           </Route>
 
-          <Route
-            element={
-              <RequireAuth
-                allowedRoles={[ROLES.REVIEWER, ROLES.TEACHER]}
-              />
-            }
-          >
-            <Route path={PATHS.EXPIRED} element={<Expired />} />
+          <Route element={<RequireAuth allowedRoles={[ROLES.REVIEWER]} />}>
+            <Route path={PATHS.EXPIRED_O} element={<Expired />} />
           </Route>
 
           <Route element={<RequireAuth allowedRoles={[ROLES.REVIEWER]} />}>
