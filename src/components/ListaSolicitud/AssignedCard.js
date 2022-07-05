@@ -131,41 +131,26 @@ const AssignedCard = (props) => {
           >
             Detalles
           </Button>
-          <Button
-            color="error"
-            size="small"
-            style={{
-              marginLeft: '6px',
-              marginTop: '6px',
-            }}
-            variant="outlined"
-            onClick={() => {
-              handleOpen();
-            }}
-            startIcon={<Delete />}
-          >
-            Eliminar
-          </Button>
         </div>
         {props.request.state === 'assigned' ? (
           <div>
             <Button
-              variant="contained"
-              color="success"
+              color="error"
               size="small"
               style={{
-                marginRight: '6px',
+                marginLeft: '6px',
                 marginTop: '6px',
               }}
+              variant="outlined"
               onClick={async () => {
-                const response = await apiSettings.confirm(
-                  props.request.id,
-                  'confirmed'
-                );
-                window.location.reload();
+                // const response = await apiSettings.confirm(
+                //   props.request.id,
+                //   'confirmed'
+                // );
+                // window.location.reload();
               }}
             >
-              Confirmar
+              Rechazar
             </Button>
             <Link
               to={`/user/reservationForward/${props.request.id}`}
@@ -185,6 +170,24 @@ const AssignedCard = (props) => {
                 Reenviar
               </Button>
             </Link>
+            <Button
+              variant="contained"
+              color="success"
+              size="small"
+              style={{
+                marginRight: '6px',
+                marginTop: '6px',
+              }}
+              onClick={async () => {
+                const response = await apiSettings.confirm(
+                  props.request.id,
+                  'confirmed'
+                );
+                window.location.reload();
+              }}
+            >
+              Confirmar
+            </Button>
           </div>
         ) : null}
       </CardActions>

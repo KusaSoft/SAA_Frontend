@@ -123,42 +123,44 @@ const SimpleCard = (props) => {
           Detalles
         </Button>
         {props.request.state == STATUS.DRAFT ? (
-          <Link
-            style={{
-              textDecoration: 'none',
-            }}
-            to={`/user/reservationRequest/${props.request.id}`}
-          >
+          <div>
+            <Link
+              style={{
+                textDecoration: 'none',
+              }}
+              to={`/user/reservationRequest/${props.request.id}`}
+            >
+              <Button
+                color="info"
+                variant="outlined"
+                size="small"
+                style={{
+                  marginTop: '6px',
+                }}
+                startIcon={<Edit />}
+              >
+                Editar
+              </Button>
+            </Link>
             <Button
-              color="info"
+              color="error"
               variant="outlined"
               size="small"
               style={{
+                marginLeft: '6px',
                 marginTop: '6px',
               }}
-              startIcon={<Edit />}
+              onClick={() => {
+                handleOpen();
+              }}
+              startIcon={<Delete />}
             >
-              Editar
+              Eliminar
             </Button>
-          </Link>
+          </div>
         ) : (
           <></>
         )}
-        <Button
-          color="error"
-          variant="outlined"
-          size="small"
-          style={{
-            marginLeft: '6px',
-            marginTop: '6px',
-          }}
-          onClick={() => {
-            handleOpen();
-          }}
-          startIcon={<Delete />}
-        >
-          Eliminar
-        </Button>
       </CardActions>
       <Modal open={isOpenModal} onClose={closeModal}>
         {loadingUpd ? (
