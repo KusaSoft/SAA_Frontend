@@ -65,7 +65,12 @@ export default function useFilter({requestType, dateType}) {
     let newDataF = [...data];
     let newData = newDataF.filter((element) => {
       return checkedList.find((item) => {
-        return item.checked && item.label === element.request_reason;
+        return (
+          item.checked &&
+          (item.label === element.request_reason ||
+            (item.label === 'Otros' &&
+              !MOTIVES.includes(element.request_reason)))
+        );
       });
     });
     if (dateType === ORDER_DATE.LEJANOS) {
