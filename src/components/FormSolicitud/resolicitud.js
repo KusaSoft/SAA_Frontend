@@ -268,7 +268,10 @@ function Forward(props) {
                         style={{
                           color: '#070150',
                           fontSize: '0.8rem',
-                          marginLeft: '1rem',
+                          paddingLeft: '1rem',
+                          paddingRight: '1rem',
+                          display: 'flex',
+                          alignSelf: 'center',
                         }}
                       >
                         Nota: Solo se puede realizar reservas con más de un
