@@ -36,7 +36,26 @@ const CardUser = (props) => {
       <TableCell>
         {props.request.enabled == true ? (
           <Stack spacing={2} sx={{width: '100%'}}>
-            <input
+            {props.request.role.name !== 'administrador' ? (
+              <input
+                type="checkbox"
+                defaultChecked
+                onClick={async () => {
+                  const response = await apiSettings.enable(
+                    props.request.id,
+                    {
+                      id: props.request.id,
+                      role: props.request.role,
+                      enabled: !props.request.enabled,
+                    }
+                  );
+                  setNombreM({statusT: !props.request.enabled});
+                  //alert(nombreM.statusT);
+                  handleClick(!props.request.enabled);
+                }}
+              />
+            ) : null}
+            {/* <input
               type="checkbox"
               defaultChecked
               onClick={async () => {
@@ -52,7 +71,7 @@ const CardUser = (props) => {
                 //alert(nombreM.statusT);
                 handleClick(!props.request.enabled);
               }}
-            />
+            /> */}
             <Snackbar
               open={open.open}
               autoHideDuration={2000}
