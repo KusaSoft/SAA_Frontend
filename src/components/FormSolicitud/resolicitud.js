@@ -36,6 +36,7 @@ import RedBar from '../Div/RedBar';
 import AlertMessage from '../Messages/AlertMessage';
 import {MyBox} from '../../emotion/GlobalComponents';
 import DataValidation from '../../utilities/DataController/DataValidation';
+import { useRequestS } from '../../hooks/useSpecial';
 function Forward(props) {
   const {auth} = useAuth();
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ function Forward(props) {
     responseR,
     statusR,
     handleRequestR,
-  ] = useRequest({
+  ] = useRequestS({
     methodRequest: apiSettings.postReservationRequest,
   });
   const [
@@ -457,6 +458,7 @@ function Forward(props) {
                   }
                 : null
             }
+            load={loadingR}
             error={errorR}
             message={messageR}
           ></AskReservationRequest>

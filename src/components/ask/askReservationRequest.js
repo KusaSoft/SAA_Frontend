@@ -16,7 +16,7 @@ import {BoxColumn} from '../../emotion/GlobalComponents';
 export default function AskReservationRequest(props) {
   return (
     <Wrapper>
-      {props.error !== '' ? (
+      {props.error === true ? (
         <Alert severity="error">
           <AlertTitle>Error</AlertTitle>
           <ErrorOutline color="error" sx={{fontSize: 70}} />
@@ -27,7 +27,10 @@ export default function AskReservationRequest(props) {
             Continuar
           </Button>
         </Alert>
-      ) : props.reservation ? (
+      ) : props.reservation !== null &&
+        props.reservation !== undefined &&
+        props.error === false &&
+        props.load === false ? (
         <BoxColumn>
           <Typography variant="h3">Acuse de recibo</Typography>
           <Box>
@@ -79,7 +82,7 @@ export default function AskReservationRequest(props) {
                 Continuar
               </Button>
             </Link>
-          </Box>
+          </Box>{' '}
         </BoxColumn>
       ) : null}
     </Wrapper>

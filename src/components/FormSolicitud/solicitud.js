@@ -38,6 +38,7 @@ import RedBar from '../Div/RedBar';
 import AlertMessage from '../Messages/AlertMessage';
 import {MyBox, MyRowContainer} from '../../emotion/GlobalComponents';
 import DataValidation from '../../utilities/DataController/DataValidation';
+import {useRequestS} from '../../hooks/useSpecial';
 function Solicitud(props) {
   const {auth} = useAuth();
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ function Solicitud(props) {
     responseR,
     statusR,
     handleRequestR,
-  ] = useRequest({
+  ] = useRequestS({
     methodRequest: apiSettings.postReservationRequest,
   });
   const [
@@ -496,6 +497,7 @@ function Solicitud(props) {
                   }
                 : null
             }
+            load={loadingR}
             error={errorR}
             message={messageR}
           ></AskReservationRequest>
@@ -505,10 +507,10 @@ function Solicitud(props) {
         <RequestMessage
           loading={loadingR}
           successMessage={'Su solicitud se ha guardado con éxito!!'}
-          errorMessage={'Ha ocurrido un error al guardar su solicitud'}
+          errorMessage={messageR}
           error={errorR}
           closeModal={closeModal}
-          justLeave={true}
+          justLeave={'/'}
           linkExit={`/user/${PATHS.DRAFTS}`}
           linkNext={`/user/${PATHS.RESERVATION_REQUESTS}/${responseR.id}`}
         />
