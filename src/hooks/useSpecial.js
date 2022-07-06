@@ -9,17 +9,17 @@ export const useRequestS = ({methodRequest}) => {
   const [status, setStatus] = useState('');
   const handleRequest = async (request) => {
     setLoading(true);
-    setError('');
+    setError(false);
     setSuccess('');
     try {
       const response = await methodRequest(request);
       const data = response;
-      setLoading(false);
       setResponse(data.data);
       if (data.data.successful === false) {
         setSuccess(data.data.message);
         setError(true);
       }
+      setLoading(false);
     } catch (error) {
       setLoading(false);
       setError(error.message);
