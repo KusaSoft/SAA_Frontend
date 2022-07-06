@@ -16,6 +16,7 @@ import {useRequest} from '../../hooks/useRequest.hooks';
 import DataTransform from '../../utilities/DataController/DataTransform';
 import useAuth from '../../hooks/useAuth';
 import {MyDetailContainer} from '../../emotion/GlobalComponents';
+import StatusBar from '../Div/StatusBar';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -53,21 +54,17 @@ const AssignedCard = (props) => {
         <div
           style={{
             display: 'flex',
-            justifyContent: 'flex-end',
+            justifyContent: 'space-between',
             borderBottom: '1px solid #e0e0e0',
           }}
         >
-          {props.request.state === STATUS.DRAFT ? (
-            <div>
-              <b style={{fontWeight: 'bold'}}>Ultima modificación: </b>
-              {props.request.register_date}
-            </div>
-          ) : (
-            <div>
-              <b style={{fontWeight: 'bold'}}>Fecha de solicitud: </b>
-              {props.request.reservation_date}
-            </div>
-          )}
+          {props.request.state === STATUS.CONFIRMED ? (
+            <StatusBar color={'#E8F5E9'}>{'CONFIRMADO'}</StatusBar>
+          ) : null}
+          <div>
+            <b style={{fontWeight: 'bold'}}>Fecha de solicitud: </b>
+            {props.request.reservation_date}
+          </div>
         </div>
         <div
           style={{
@@ -178,31 +175,26 @@ const AssignedCard = (props) => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             ¿Está seguro que desea rechazar esta solicitud?
           </Typography>
-          <Typography id="modal-modal-description" variant="subtitle1">
-            Esta solicitud se eliminará de la lista de solicitudes una vez
-            la rechaze.
-          </Typography>
           <Stack
             spacing={1}
             direction={'row'}
             style={{width: '100%', justifyContent: 'space-between'}}
           >
-            <Button color="info" variant="outlined" onClick={handleClose}>
+            <Button color="error" variant="outlined" onClick={handleClose}>
               Cancelar
             </Button>
             <Button
-              color="error"
-              variant="outlined"
-              sx={{marginLeft: '82px'}}
-              onClick={async () => {
-                await apiSettings.deleteReservationRequest(
-                  props.request.id
+              variant="ourlined"
+              color="primary"
+              onClick={(e) => {
+                apiSettings.teacherRejected(
+                  props.request.id,
+                  'rejected',
+                  'Usted rechazo esta solicitud'
                 );
-                handleClose();
-                recargar();
               }}
             >
-              Eliminar
+              Rechazar
             </Button>
           </Stack>
         </Box>
