@@ -14,6 +14,12 @@ const useListMyRejects = (userID) => {
   useEffect(() => {
     fechListMyRejects();
   }, []);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      fechListMyRejects();
+    }, 6500);
+    return () => clearInterval(timer);
+  });
   return [myRejectsList, setListMyRejectsData];
 };
 
