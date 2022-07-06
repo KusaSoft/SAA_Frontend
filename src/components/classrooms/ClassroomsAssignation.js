@@ -408,12 +408,13 @@ function ClassroomsAssignation(props) {
         <RequestMessage
           loading={loadingR}
           successMessage={'Operacion realizada con exito!!'}
+          errorMessage={messageR}
           error={errorR}
           closeModal={closeModal}
           linkExit={
             rejection_reason !== '' ? '/user/rejected' : `/user/assigned`
           }
-          justLeave={false}
+          justLeave={errorR}
         ></RequestMessage>
       </Modal>
       <Modal isOpen={isOpenModalRejected} closeModal={closeModalRejected}>

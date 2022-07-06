@@ -3,7 +3,7 @@ import apiSettings from '../services/service';
 
 export const useRequest = ({methodRequest}) => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(false);
   const [success, setSuccess] = useState('');
   const [response, setResponse] = useState('');
   const [status, setStatus] = useState('');
@@ -16,6 +16,10 @@ export const useRequest = ({methodRequest}) => {
       const data = response;
       setLoading(false);
       setResponse(data.data);
+      if (data.data.successful === false) {
+        setSuccess(data.data.message);
+      }
+      setError(true);
     } catch (error) {
       setLoading(false);
       setError(error.message);
