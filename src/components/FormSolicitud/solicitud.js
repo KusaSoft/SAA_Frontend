@@ -276,8 +276,8 @@ function Solicitud(props) {
                           alignSelf: 'center',
                         }}
                       >
-                        Nota: Solo se puede realizar reservas con más de un
-                        día de antelación.
+                        Nota: Solo se puede realizar reservas con más de
+                        dos dias de antelación.
                       </i>
                     </b>
                     <FormInputControl

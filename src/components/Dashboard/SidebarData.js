@@ -17,14 +17,6 @@ export const SidebarData = (role) => {
         hasSubmenu: false,
         path: `${PATHS.USERS}`,
       },
-      // {
-      //   id: 3,
-      //   title: 'Calendario',
-      //   icon: <CalendarTodayIcon sx={{marginRight: '1rem'}} />,
-      //   cName: 'sidebar-item',
-      //   hasSubmenu: false,
-      //   path: `${PATHS.CALENDAR}`,
-      // },
       {
         id: 4,
         title: 'Materias',
@@ -83,12 +75,6 @@ export const SidebarData = (role) => {
             cName: 'sidebar-item',
             path: `${PATHS.REJECTED_O}`,
           },
-          {
-            id: 7,
-            title: 'Caducados',
-            cName: 'sidebar-item',
-            path: `${PATHS.EXPIRED_O}`,
-          },
         ],
       },
     ];
@@ -140,12 +126,6 @@ export const SidebarData = (role) => {
             title: 'Rechazados',
             cName: 'sidebar-item',
             path: `${PATHS.REJECTED}`,
-          },
-          {
-            id: 9,
-            title: 'Caducados',
-            cName: 'sidebar-item',
-            path: `${PATHS.EXPIRED}`,
           },
         ],
       },

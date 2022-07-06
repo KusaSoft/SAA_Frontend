@@ -138,44 +138,21 @@ const AssignedCard = (props) => {
               color="error"
               size="small"
               style={{
-                marginLeft: '6px',
+                marginRight: '6px',
                 marginTop: '6px',
               }}
-              variant="outlined"
+              variant="contained"
               onClick={async () => {
-                // const response = await apiSettings.confirm(
-                //   props.request.id,
-                //   'confirmed'
-                // );
-                // window.location.reload();
+                handleOpen();
               }}
             >
               Rechazar
             </Button>
-            <Link
-              to={`/user/reservationForward/${props.request.id}`}
-              style={{
-                textDecoration: 'none',
-              }}
-            >
-              <Button
-                style={{
-                  marginLeft: '6px',
-                  marginTop: '6px',
-                }}
-                variant="contained"
-                color="primary"
-                size="small"
-              >
-                Reenviar
-              </Button>
-            </Link>
             <Button
               variant="contained"
               color="success"
               size="small"
               style={{
-                marginRight: '6px',
                 marginTop: '6px',
               }}
               onClick={async () => {
@@ -199,7 +176,11 @@ const AssignedCard = (props) => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            ¿Está seguro que desea eliminar esta solicitud?
+            ¿Está seguro que desea rechazar esta solicitud?
+          </Typography>
+          <Typography id="modal-modal-description" variant="subtitle1">
+            Esta solicitud se eliminará de la lista de solicitudes una vez
+            la rechaze.
           </Typography>
           <Stack
             spacing={1}
