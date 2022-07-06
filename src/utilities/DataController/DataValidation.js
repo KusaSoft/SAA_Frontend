@@ -1,15 +1,24 @@
 import {invalidDates, PERIODSRANGE} from '../../services/Constant';
-
+function addDaysToDate(days) {
+  var res = new Date();
+  res.setDate(res.getDate() + days);
+  return res;
+}
 const dateValidation = (date, valid) => {
   if (date !== '') {
     const newDate = new Date(date);
     if (newDate.getDay() === 6) {
       return [false, false];
     } else {
-      return [true, valid];
+      let newDateT = addDaysToDate(2);
+      if (newDate > newDateT) {
+        return [true, valid];
+      } else {
+        return [false, false];
+      }
     }
   } else {
-    return [true, valid];
+    return [false, valid];
   }
 };
 
