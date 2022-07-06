@@ -18,8 +18,8 @@ export const useRequest = ({methodRequest}) => {
       setResponse(data.data);
       if (data.data.successful === false) {
         setSuccess(data.data.message);
+        setError(true);
       }
-      setError(true);
     } catch (error) {
       setLoading(false);
       setError(error.message);

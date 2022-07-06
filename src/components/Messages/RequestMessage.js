@@ -76,7 +76,7 @@ const RequestMessage = (
                 <Link to={linkExit} style={{textDecoration: 'none'}}>
                   <Button>Salir</Button>
                 </Link>
-                {justLeave ? (
+                {justLeave && justLeave !== '/' ? (
                   linkNext ? (
                     <Link to={linkNext} style={{textDecoration: 'none'}}>
                       <Button
