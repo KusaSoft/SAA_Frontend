@@ -281,15 +281,14 @@ const apiSettings = {
     return response.data;
   },
   teacherRejected: async (idReservation, state, rejection_reason) => {
-    // const response = await axios.post(
-    //   `${API_URL}/reservations/teacher_rejected/${idReservation}`,
-    //   {
-    //      state: state,
-    //      rejection_reason: rejection_reason,
-    //   }
-    // );
-    alert(`${idReservation} ${state} ${rejection_reason}`);
-    // return response.data;
+    const response = await axios.put(
+      `${API_URL}/reservation/reject/${idReservation}`,
+      {
+        status: 'rejected',
+        rejection_reason: rejection_reason,
+      }
+    );
+    return response.data;
   },
 };
 

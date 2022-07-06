@@ -56,8 +56,8 @@ const RequestMessage = (
             <Alert severity="error">
               <AlertTitle>Error</AlertTitle>
               <Typography variant="h6">{errorMessage}</Typography>
-              <Link to={justLeave === '/' ? justLeave : linkExit}>
-                <Button onClick={closeModal} autoFocus variant="contained">
+              <Link to={linkExit}>
+                <Button autoFocus variant="contained">
                   Salir
                 </Button>
               </Link>

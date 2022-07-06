@@ -184,17 +184,18 @@ const AssignedCard = (props) => {
               Cancelar
             </Button>
             <Button
-              variant="ourlined"
+              variant="outlined"
               color="primary"
-              onClick={(e) => {
+              onClick={async (e) => {
                 apiSettings.teacherRejected(
                   props.request.id,
                   'rejected',
                   'Usted rechazo esta solicitud'
                 );
+                window.location.reload();
               }}
             >
-              Rechazar
+              Si
             </Button>
           </Stack>
         </Box>
