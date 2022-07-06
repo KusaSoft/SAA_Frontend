@@ -414,7 +414,7 @@ function ClassroomsAssignation(props) {
           linkExit={
             rejection_reason !== '' ? '/user/rejected' : `/user/assigned`
           }
-          justLeave={errorR}
+          justLeave={'/'}
         ></RequestMessage>
       </Modal>
       <Modal isOpen={isOpenModalRejected} closeModal={closeModalRejected}>
