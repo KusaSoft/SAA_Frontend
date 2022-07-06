@@ -123,7 +123,7 @@ const SimpleCard = (props) => {
           Detalles
         </Button>
         {props.request.state == STATUS.DRAFT ? (
-          <div>
+          <>
             <Link
               style={{
                 textDecoration: 'none',
@@ -157,7 +157,7 @@ const SimpleCard = (props) => {
             >
               Eliminar
             </Button>
-          </div>
+          </>
         ) : (
           <></>
         )}
