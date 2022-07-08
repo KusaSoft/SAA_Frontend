@@ -11,7 +11,7 @@ import React from 'react';
 import useAuth from '../../hooks/useAuth';
 import {ROLES, PATHS, STATUS} from '../../services/Constant';
 import {Link} from 'react-router-dom';
-import { MyDetailContainer } from '../../emotion/GlobalComponents';
+import {MyDetailContainer} from '../../emotion/GlobalComponents';
 
 export default function ContentDetail(props) {
   const {auth} = useAuth();
@@ -73,7 +73,8 @@ export default function ContentDetail(props) {
       </Typography>
       {auth.roles.includes(ROLES.REVIEWER) &&
         props.request.state !== STATUS.ASSIGNED &&
-        props.request.state !== STATUS.REJECTED && (
+        props.request.state !== STATUS.REJECTED &&
+        props.request.state !== STATUS.CONFIRMED && (
           <Box
             sx={{
               display: 'flex',

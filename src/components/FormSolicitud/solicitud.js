@@ -13,6 +13,7 @@ import {
   CardHeader,
   Dialog,
   CardActions,
+  Divider,
 } from '@mui/material';
 import React from 'react';
 import {useReservationRequest} from '../../hooks/useReservationRequest';
@@ -36,6 +37,8 @@ import DataTransform from '../../utilities/DataController/DataTransform';
 import RedBar from '../Div/RedBar';
 import AlertMessage from '../Messages/AlertMessage';
 import {MyBox, MyRowContainer} from '../../emotion/GlobalComponents';
+import DataValidation from '../../utilities/DataController/DataValidation';
+import {useRequestS} from '../../hooks/useSpecial';
 function Solicitud(props) {
   const {auth} = useAuth();
   const navigate = useNavigate();
@@ -51,7 +54,7 @@ function Solicitud(props) {
     responseR,
     statusR,
     handleRequestR,
-  ] = useRequest({
+  ] = useRequestS({
     methodRequest: apiSettings.postReservationRequest,
   });
   const [
@@ -87,6 +90,7 @@ function Solicitud(props) {
     validateAllFilled,
     validateSaveFilled,
     getReservationRequest,
+    setErrors,
   } = useReservationRequest({
     request: `${props.reservationRequest}`,
     user: auth,
@@ -130,6 +134,7 @@ function Solicitud(props) {
                       myLabel="Materia *"
                       myValue={reservationRequest.subject}
                       myName="subject"
+                      setError={(e) => {}}
                       setValue={handleReservationRequest}
                       list={subjectList ? [...subjectList.keys()] : []}
                     >
@@ -244,6 +249,7 @@ function Solicitud(props) {
                           max: '500',
                         },
                       }}
+                      setError={(e) => {}}
                       myMaxLength="3"
                       setValue={handleReservationRequest}
                     >
@@ -253,8 +259,28 @@ function Solicitud(props) {
                     </FormInputControl>
                   </Grid>
                 </Grid>
+                <Divider
+                  style={{
+                    margin: '1rem 0rem',
+                  }}
+                />
                 <Grid container spacing={2} columns={12}>
                   <Grid item sm={6} xs={12}>
+                    <b>
+                      <i
+                        style={{
+                          color: '#070150',
+                          fontSize: '0.8rem',
+                          paddingLeft: '1rem',
+                          paddingRight: '1rem',
+                          display: 'flex',
+                          alignSelf: 'center',
+                        }}
+                      >
+                        Nota: Solo se puede realizar reservas con más de
+                        dos dias de antelación.
+                      </i>
+                    </b>
                     <FormInputControl
                       myLabel="Fecha *"
                       myType="date"
@@ -262,9 +288,14 @@ function Solicitud(props) {
                       myName="dateReservation"
                       myInputProps={{
                         inputProps: {
-                          min: DateController.getToday(),
+                          min: DateController.getTomorrow(),
                         },
                         value: reservationRequest.dateReservation,
+                      }}
+                      setError={(e) => {
+                        setErrors({
+                          ...DataValidation.validateDateField(e, errors),
+                        });
                       }}
                       myDefaultValue={reservationRequest.dateReservation}
                     >
@@ -283,6 +314,15 @@ function Solicitud(props) {
                       myLabel="Hora Inicio *"
                       myValue={reservationRequest.periodIniSelected}
                       setValue={handleReservationRequest}
+                      setError={(e) => {
+                        setErrors({
+                          ...DataValidation.validateHourField(
+                            e,
+                            reservationRequest.periodEndSelected,
+                            errors
+                          ),
+                        });
+                      }}
                       myName="periodIniSelected"
                       list={[
                         ...PERIODSRANGE.slice(0, PERIODSRANGE.length - 1),
@@ -300,6 +340,15 @@ function Solicitud(props) {
                       myLabel="Hora Fin *"
                       myValue={reservationRequest.periodEndSelected}
                       myName="periodEndSelected"
+                      setError={(e) => {
+                        setErrors({
+                          ...DataValidation.validateHourField(
+                            reservationRequest.periodIniSelected,
+                            e,
+                            errors
+                          ),
+                        });
+                      }}
                       setValue={handleReservationRequest}
                       list={[...PERIODSRANGE.slice(1)]}
                     >
@@ -448,6 +497,7 @@ function Solicitud(props) {
                   }
                 : null
             }
+            load={loadingR}
             error={errorR}
             message={messageR}
           ></AskReservationRequest>
@@ -457,10 +507,10 @@ function Solicitud(props) {
         <RequestMessage
           loading={loadingR}
           successMessage={'Su solicitud se ha guardado con éxito!!'}
-          errorMessage={'Ha ocurrido un error al guardar su solicitud'}
+          errorMessage={messageR}
           error={errorR}
           closeModal={closeModal}
-          justLeave={true}
+          justLeave={'/'}
           linkExit={`/user/${PATHS.DRAFTS}`}
           linkNext={`/user/${PATHS.RESERVATION_REQUESTS}/${responseR.id}`}
         />

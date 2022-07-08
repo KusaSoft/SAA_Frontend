@@ -2,6 +2,7 @@ import React from 'react';
 import useInput from '../../../hooks/useInput.hooks';
 import {TextField} from '@mui/material';
 import {FormControlInput, Wrapper} from './input.styles';
+import DateController from '../../../utilities/DateController';
 export default function FormInputControl(props) {
   return (
     <Wrapper maxWidth={props.maxWidth}>
@@ -11,6 +12,7 @@ export default function FormInputControl(props) {
           value={props.value}
           onChange={(e) => {
             props.setValue(e, e.target.value, props.myName);
+            props.setError(e.target.value);
           }}
           label={props.myLabel}
           type={props.myType}

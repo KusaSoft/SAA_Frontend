@@ -62,6 +62,10 @@ export const PATHS = {
   URGENCY: 'urgency',
   ASSIGNED: 'assigned',
   REJECTED: 'rejected',
+  EXPIRED: 'expired',
+  ASSIGNED_O: 'assignedO',
+  REJECTED_O: 'rejectedO',
+  EXPIRED_O: 'expiredO',
   REJECTED_RES: '/user/rejected',
   RESERVATION_REQUEST_DETAIL:
     'reservationRequest/:reservationRequest/detail',
@@ -228,6 +232,18 @@ export const BREAD_CRUB_PATHS = {
     {
       name: 'Notificaciones',
       route: PATHS.NOTIFICATIONS,
+      link: false,
+    },
+  ],
+  EXPIRED: [
+    {
+      name: 'Solicitudes',
+      route: PATHS.URGENCY,
+      link: false,
+    },
+    {
+      name: 'Caducados',
+      route: PATHS.EXPIRED,
       link: false,
     },
   ],

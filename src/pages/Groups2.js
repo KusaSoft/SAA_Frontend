@@ -15,9 +15,11 @@ import {
   Autocomplete,
   Fab,
   MenuItem,
+  Stack,
+  Alert,
 } from '@mui/material';
 import {Delete} from '@mui/icons-material';
-import React from 'react';
+import React, {useState} from 'react';
 import BasicBreadcrumbs from '../components/Breadcrumbs/Breadcrumbs';
 
 import {WrapperLayout, WrapperPage} from '../emotion/GlobalComponents';
@@ -37,6 +39,11 @@ function Groups2() {
   const [listTeachers] = useListTeachers();
   const [listGroups] = useListGroups();
   const [isOpenModal, openModal, closeModal] = useModal(false);
+  //
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [messageError, setMessageError] = useState('');
   const formik = useFormik({
     initialValues: {
       nameSubject: '',
@@ -53,7 +60,10 @@ function Groups2() {
       numberGroup: Yup.number()
         .positive()
         .min(1, 'Debe ser número positivo')
-        .max(99, 'Máximo un número de 2 cifras')
+        .max(
+          40,
+          'El numero de grupo es demasiado grande, no debe superar 40'
+        )
         .required('Se requiere el numero de grupo'),
     }),
     onSubmit: async () => {
@@ -63,10 +73,10 @@ function Groups2() {
         teacher: formik.values.nameTeacher,
         number_group: Number(formik.values.numberGroup),
       });
-      // setMessageError(responseRegister.message);
-      // responseRegister.successful === true ?  : openModal();
-      //alert('funciona');
-      window.location.reload();
+      setMessageError(responseRegister.message);
+      closeModal();
+      formik.resetForm();
+      handleOpen();
       // console.log({
       //   ...formik.values,
       //   number_group: Number(formik.values.numberGroup),
@@ -140,11 +150,11 @@ function Groups2() {
                     >
                       N° de grupo
                     </TableCell>
-                    <TableCell
+                    {/* <TableCell
                       sx={{fontWeight: 'bold', backgroundColor: '#D2D3E2'}}
                     >
                       Eliminar
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 </TableHead>
                 <TableBody>{List(listGroups ? listGroups : [])}</TableBody>
@@ -298,6 +308,62 @@ function Groups2() {
           </form>
         </Box>
       </Modal>
+      <Modal
+        open={open}
+        onClose={() => {
+          handleClose();
+          {
+            messageError === 'El grupo se registro exitosamente'
+              ? window.location.reload()
+              : handleClose();
+          }
+        }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Alert
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            maxWidth: 300,
+            p: 2,
+          }}
+          severity={
+            messageError === 'El grupo se registro exitosamente'
+              ? 'success'
+              : 'error'
+          }
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            {messageError}
+          </Typography>
+          <Box
+            style={{
+              width: '100%',
+              display: 'flex',
+              marginRight: '10px',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Button
+              //color="info"
+              variant="outlined"
+              onClick={() => {
+                {
+                  messageError === 'El grupo se registro exitosamente'
+                    ? window.location.reload()
+                    : handleClose();
+                }
+              }}
+            >
+              Continuar
+            </Button>
+          </Box>
+        </Alert>
+      </Modal>
     </>
   );
 }
@@ -323,7 +389,7 @@ const CardGroup = (props) => {
       <TableCell sx={{paddingLeft: '40px'}}>
         {props.request.number_group}
       </TableCell>
-      <TableCell>
+      {/* <TableCell>
         <Fab
           color="error"
           size="small"
@@ -382,7 +448,7 @@ const CardGroup = (props) => {
             </Box>
           </Modal>
         </Fab>
-      </TableCell>
+      </TableCell> */}
     </TableRow>
   );
 };

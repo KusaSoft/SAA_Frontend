@@ -16,6 +16,7 @@ import {useRequest} from '../../hooks/useRequest.hooks';
 import DataTransform from '../../utilities/DataController/DataTransform';
 import useAuth from '../../hooks/useAuth';
 import {MyDetailContainer} from '../../emotion/GlobalComponents';
+import StatusBar from '../Div/StatusBar';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -53,21 +54,17 @@ const AssignedCard = (props) => {
         <div
           style={{
             display: 'flex',
-            justifyContent: 'flex-end',
+            justifyContent: 'space-between',
             borderBottom: '1px solid #e0e0e0',
           }}
         >
-          {props.request.state === STATUS.DRAFT ? (
-            <div>
-              <b style={{fontWeight: 'bold'}}>Ultima modificación: </b>
-              {props.request.register_date}
-            </div>
-          ) : (
-            <div>
-              <b style={{fontWeight: 'bold'}}>Fecha de solicitud: </b>
-              {props.request.reservation_date}
-            </div>
-          )}
+          {props.request.state === STATUS.CONFIRMED ? (
+            <StatusBar color={'#E8F5E9'}>{'CONFIRMADO'}</StatusBar>
+          ) : null}
+          <div>
+            <b style={{fontWeight: 'bold'}}>Fecha de solicitud: </b>
+            {props.request.reservation_date}
+          </div>
         </div>
         <div
           style={{
@@ -131,30 +128,28 @@ const AssignedCard = (props) => {
           >
             Detalles
           </Button>
-          <Button
-            color="error"
-            size="small"
-            style={{
-              marginLeft: '6px',
-              marginTop: '6px',
-            }}
-            variant="outlined"
-            onClick={() => {
-              handleOpen();
-            }}
-            startIcon={<Delete />}
-          >
-            Eliminar
-          </Button>
         </div>
         {props.request.state === 'assigned' ? (
           <div>
+            <Button
+              color="error"
+              size="small"
+              style={{
+                marginRight: '6px',
+                marginTop: '6px',
+              }}
+              variant="contained"
+              onClick={async () => {
+                handleOpen();
+              }}
+            >
+              Rechazar
+            </Button>
             <Button
               variant="contained"
               color="success"
               size="small"
               style={{
-                marginRight: '6px',
                 marginTop: '6px',
               }}
               onClick={async () => {
@@ -167,24 +162,6 @@ const AssignedCard = (props) => {
             >
               Confirmar
             </Button>
-            <Link
-              to={`/user/reservationForward/${props.request.id}`}
-              style={{
-                textDecoration: 'none',
-              }}
-            >
-              <Button
-                style={{
-                  marginLeft: '6px',
-                  marginTop: '6px',
-                }}
-                variant="contained"
-                color="primary"
-                size="small"
-              >
-                Reenviar
-              </Button>
-            </Link>
           </div>
         ) : null}
       </CardActions>
@@ -196,29 +173,29 @@ const AssignedCard = (props) => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            ¿Está seguro que desea eliminar esta solicitud?
+            ¿Está seguro que desea rechazar esta solicitud?
           </Typography>
           <Stack
             spacing={1}
             direction={'row'}
             style={{width: '100%', justifyContent: 'space-between'}}
           >
-            <Button color="info" variant="outlined" onClick={handleClose}>
+            <Button color="error" variant="outlined" onClick={handleClose}>
               Cancelar
             </Button>
             <Button
-              color="error"
               variant="outlined"
-              sx={{marginLeft: '82px'}}
-              onClick={async () => {
-                await apiSettings.deleteReservationRequest(
-                  props.request.id
+              color="primary"
+              onClick={async (e) => {
+                apiSettings.teacherRejected(
+                  props.request.id,
+                  'rejected',
+                  'Usted rechazo esta solicitud'
                 );
-                handleClose();
-                recargar();
+                window.location.reload();
               }}
             >
-              Eliminar
+              Si
             </Button>
           </Stack>
         </Box>
@@ -291,7 +268,7 @@ function ContentDetail2(props) {
         <List>
           {props.request.assigned_classrooms &&
             props.request.assigned_classrooms.map((classrom) => (
-              <ListItem sx={{display: 'inline'}}>
+              <ListItem>
                 {/* no muestra nada porque va a busar a la DB y ahi aun no estan las aulas */}
                 {classrom.name_classroom}
               </ListItem>

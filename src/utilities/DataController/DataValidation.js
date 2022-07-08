@@ -1,15 +1,24 @@
 import {invalidDates, PERIODSRANGE} from '../../services/Constant';
-
+function addDaysToDate(days) {
+  var res = new Date();
+  res.setDate(res.getDate() + days);
+  return res;
+}
 const dateValidation = (date, valid) => {
   if (date !== '') {
     const newDate = new Date(date);
     if (newDate.getDay() === 6) {
       return [false, false];
     } else {
-      return [true, valid];
+      let newDateT = addDaysToDate(2);
+      if (newDate > newDateT) {
+        return [true, valid];
+      } else {
+        return [false, false];
+      }
     }
   } else {
-    return [true, valid];
+    return [false, valid];
   }
 };
 
@@ -40,6 +49,46 @@ const empty = (value, valid) => {
 const DataValidation = {
   validateStringField: () => {},
   validateArrayField: () => {},
+  validateDateField: (date, errors) => {
+    let allFilled = true;
+    const formatInput = (method) => {
+      const [value, correctly] = method;
+      allFilled = correctly;
+      return value;
+    };
+    const newErrors = {
+      ...errors,
+      date: {
+        ...errors.date,
+        isEmpty: false,
+        isError: !formatInput(dateValidation(date, allFilled)),
+      },
+    };
+    return newErrors;
+  },
+  validateHourField: (ini, end, errors) => {
+    let allFilled = true;
+    const formatInput = (method) => {
+      const [value, correctly] = method;
+      allFilled = correctly;
+      return value;
+    };
+    const newErrors = {
+      ...errors,
+      iniPeriod: {
+        ...errors.iniPeriod,
+        isEmpty: false,
+        isError: !formatInput(isValidRange(ini, end, allFilled)),
+      },
+      endPeriod: {
+        ...errors.endPeriod,
+        isEmpty: false,
+        isError: !formatInput(isValidRange(ini, end, allFilled)),
+      },
+    };
+    return newErrors;
+  },
+
   validateOnSave: (reservationRequest, errors) => {
     let allFilled = true;
 

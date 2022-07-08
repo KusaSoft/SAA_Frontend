@@ -12,6 +12,7 @@ export default function FormSelectControl(props) {
           label={props.myLabel}
           onChange={(e) => {
             props.setValue(e, e.target.value, props.myName);
+            props.setError(e.target.value);
           }}
           name={props.myName}
           required

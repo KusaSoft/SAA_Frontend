@@ -10,12 +10,7 @@ import useStatusList from '../hooks/useStatusList';
 import {BREAD_CRUB_PATHS, STATUS} from '../services/Constant';
 
 function Pendientes() {
-  const [value, setValue] = React.useState(0);
   const [sentList] = useStatusList({status: STATUS.SENT});
-  const [draftList] = useStatusList({status: STATUS.DRAFT});
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
   return (
     <WrapperLayout>
       <WrapperPage>

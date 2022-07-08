@@ -14,6 +14,12 @@ const useListMyAssigned = (userID) => {
   useEffect(() => {
     fechListMyAssigned();
   }, []);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      fechListMyAssigned();
+    }, 6500);
+    return () => clearInterval(timer);
+  });
   return [myAssignedsList, setListMyAssignedData];
 };
 

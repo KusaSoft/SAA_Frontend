@@ -56,9 +56,11 @@ const RequestMessage = (
             <Alert severity="error">
               <AlertTitle>Error</AlertTitle>
               <Typography variant="h6">{errorMessage}</Typography>
-              <Button onClick={closeModal} autoFocus variant="contained">
-                Continuar
-              </Button>
+              <Link to={linkExit}>
+                <Button autoFocus variant="contained">
+                  Salir
+                </Button>
+              </Link>
             </Alert>
           ) : (
             <Alert severity="success">
@@ -74,7 +76,7 @@ const RequestMessage = (
                 <Link to={linkExit} style={{textDecoration: 'none'}}>
                   <Button>Salir</Button>
                 </Link>
-                {justLeave ? (
+                {justLeave && justLeave !== '/' ? (
                   linkNext ? (
                     <Link to={linkNext} style={{textDecoration: 'none'}}>
                       <Button

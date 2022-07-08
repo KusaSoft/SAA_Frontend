@@ -12,6 +12,7 @@ import {
   Card,
   CardContent,
   Modal,
+  Alert,
 } from '@mui/material';
 import FormInputControl from '../components/inputs/input/input';
 import {useRegister} from '../hooks/useRegister';
@@ -42,11 +43,19 @@ function NewUser() {
       firstName: Yup.string()
         .min(3, 'Mínimo 3 caracteres')
         .max(30, 'Nombre demasiado largo, máximo 30 caracteres')
-        .required('El nombre es requerido'),
+        .required('El nombre es requerido')
+        .matches(
+          /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/,
+          'Solo se permiten letras para este campo'
+        ),
       lastName: Yup.string()
         .min(3, 'Mínimo 3 caracteres')
         .max(30, 'Apellido demasiado largo, máximo 30 caracteres')
-        .required('El apellido es requerido'),
+        .required('El apellido es requerido')
+        .matches(
+          /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/,
+          'Solo se permiten letras para este campo'
+        ),
       email: Yup.string()
         .email('Debe ser un email valido')
         .max(255)
@@ -66,7 +75,7 @@ function NewUser() {
     onSubmit: async () => {
       const responseRegister = await apiSettings.register({
         ...formik.values,
-        name: `${formik.values.lastName}${formik.values.firstName}`,
+        name: `${formik.values.lastName} ${formik.values.firstName}`,
         role: formik.values.role.toLowerCase(),
       });
       setMessageError(responseRegister.message);
@@ -296,39 +305,35 @@ function NewUser() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box
+        <Alert
           sx={{
             position: 'absolute',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: 300,
-            bgcolor: 'background.paper',
-            border: '2px solid #000',
-            boxShadow: 24,
-            p: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
+            maxWidth: 300,
+            p: 2,
           }}
+          severity={
+            messageError === 'Enviado exitosamente' ? 'success' : 'error'
+          }
         >
           <Typography id="modal-modal-title" variant="h6" component="h2">
             {messageError}
             {messageError === 'Enviado exitosamente'
               ? ''
               : //: `${(<br />)}Correo no valido`}
-                ',\n correo no válido'}
+                '\n'}
           </Typography>
           <Link
             to={messageError === 'Enviado exitosamente' ? '../users' : ''}
             style={{textDecoration: 'none'}}
           >
-            <Button sx={{}} onClick={closeModal}>
+            <Button variant="outlined" onClick={closeModal}>
               Continuar
             </Button>
           </Link>
-        </Box>
+        </Alert>
       </Modal>
     </>
   );

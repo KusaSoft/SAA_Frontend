@@ -30,10 +30,30 @@ export default function useFilter({requestType, dateType}) {
       data.sort((a, b) => {
         return new Date(a.register_date) - new Date(b.register_date);
       });
+      setDate([
+        {
+          label: ORDER_DATE.PROXIMOS,
+          value: false,
+        },
+        {
+          label: ORDER_DATE.LEJANOS,
+          value: true,
+        },
+      ]);
     } else {
       data.sort((a, b) => {
         return new Date(a.reservation_date) - new Date(b.reservation_date);
       });
+      setDate([
+        {
+          label: ORDER_DATE.PROXIMOS,
+          value: true,
+        },
+        {
+          label: ORDER_DATE.LEJANOS,
+          value: false,
+        },
+      ]);
       data.reverse();
     }
     setList(data);
@@ -41,12 +61,56 @@ export default function useFilter({requestType, dateType}) {
     setLoading(false);
   };
 
+  const updateFilteredList = (data) => {
+    let newDataF = [...data];
+    let newData = newDataF.filter((element) => {
+      return checkedList.find((item) => {
+        return (
+          item.checked &&
+          (item.label === element.request_reason ||
+            (item.label === 'Otros' &&
+              !MOTIVES.includes(element.request_reason)))
+        );
+      });
+    });
+    if (dateType === ORDER_DATE.LEJANOS) {
+      newData = newData.sort((a, b) => {
+        return new Date(a.register_date) - new Date(b.register_date);
+      });
+      if (date[0].value) {
+        setFilteredList([...newData.reverse()]);
+      } else {
+        setFilteredList([...newData]);
+      }
+    } else {
+      newData = newData.sort((a, b) => {
+        return new Date(a.reservation_date) - new Date(b.reservation_date);
+      });
+      if (date[1].value) {
+        setFilteredList(newData);
+      } else {
+        setFilteredList([...newData.reverse()]);
+      }
+    }
+  };
+  const fetchListUpdate = async () => {
+    const data = await requestType();
+    updateFilteredList(data);
+    setList(data);
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      fetchListUpdate();
+    }, 6500);
+    return () => clearInterval(timer);
+  });
+
   useEffect(() => {
     fetchList();
   }, []);
   const handleChangeMotive = (event) => {
     const {checked, value, name} = event.target;
-    console.log(checked, value, name);
     let newCheckedList = checkedList;
     if (name !== 'Todos') {
       newCheckedList = checkedList.map((element) => {
@@ -74,7 +138,6 @@ export default function useFilter({requestType, dateType}) {
                 : element2.label === 'Otros' &&
                   !MOTIVES.includes(element.request_reason)
               : false;
-          console.log(res, element2, element.request_reason);
           return res;
         });
       })
@@ -90,9 +153,29 @@ export default function useFilter({requestType, dateType}) {
 
     if (value === ORDER_DATE.LEJANOS) {
       setFilteredList([...newFilteredList]);
+      setDate([
+        {
+          label: ORDER_DATE.PROXIMOS,
+          value: false,
+        },
+        {
+          label: ORDER_DATE.LEJANOS,
+          value: true,
+        },
+      ]);
     } else {
       newFilteredList.reverse();
       setFilteredList([...newFilteredList]);
+      setDate([
+        {
+          label: ORDER_DATE.PROXIMOS,
+          value: true,
+        },
+        {
+          label: ORDER_DATE.LEJANOS,
+          value: false,
+        },
+      ]);
     }
   };
   const handleChangeDateByReservation = (event) => {
@@ -104,9 +187,29 @@ export default function useFilter({requestType, dateType}) {
 
     if (value === ORDER_DATE.PROXIMOS) {
       setFilteredList([...newFilteredList]);
+      setDate([
+        {
+          label: ORDER_DATE.PROXIMOS,
+          value: true,
+        },
+        {
+          label: ORDER_DATE.LEJANOS,
+          value: false,
+        },
+      ]);
     } else {
       newFilteredList.reverse();
       setFilteredList([...newFilteredList]);
+      setDate([
+        {
+          label: ORDER_DATE.PROXIMOS,
+          value: false,
+        },
+        {
+          label: ORDER_DATE.LEJANOS,
+          value: true,
+        },
+      ]);
     }
   };
 

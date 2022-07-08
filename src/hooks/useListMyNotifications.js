@@ -14,6 +14,12 @@ const useListMyNotifications = (userID) => {
   useEffect(() => {
     fechListMyNotifications();
   }, []);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      fechListMyNotifications();
+    }, 6500);
+    return () => clearInterval(timer);
+  });
   return [myNotificationsList, setListMyNotificationsData];
 };
 

@@ -117,7 +117,7 @@ const RejectedCard = (props) => {
         >
           Detalles
         </Button>
-        <Button
+        {/* <Button
           color="error"
           size="small"
           variant="outlined"
@@ -131,7 +131,7 @@ const RejectedCard = (props) => {
           startIcon={<Delete />}
         >
           Eliminar
-        </Button>
+        </Button> */}
       </CardActions>
       <Modal
         open={open}
@@ -151,7 +151,7 @@ const RejectedCard = (props) => {
             <Button color="info" variant="outlined" onClick={handleClose}>
               Cancelar
             </Button>
-            <Button
+            {/* <Button
               color="error"
               variant="outlined"
               sx={{marginLeft: '82px'}}
@@ -164,7 +164,7 @@ const RejectedCard = (props) => {
               }}
             >
               Eliminar
-            </Button>
+            </Button> */}
           </Stack>
         </Box>
       </Modal>

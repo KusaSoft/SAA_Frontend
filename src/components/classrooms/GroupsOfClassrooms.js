@@ -21,6 +21,7 @@ import {
   Typography,
 } from '@mui/material';
 import {TabContext, TabList, TabPanel} from '@mui/lab';
+import DataTransform from '../../utilities/DataController/DataTransform';
 
 export default function GroupOfClassrooms(props) {
   const [value, setValue] = React.useState(0);
@@ -86,14 +87,14 @@ export default function GroupOfClassrooms(props) {
                 <Accordion
                   expanded={expanded === floor}
                   onChange={handleChangeExpanded(floor)}
-                  onClick={() => {
-                    props.setClassroomsSelected([]);
-                  }}
                 >
                   <AccordionSummary
                     expandIcon={<ExpandMore />}
                     aria-controls="panel1bh-content"
                     id="panel1bh-header"
+                    onClick={() => {
+                      props.setClassroomsSelected([]);
+                    }}
                   >
                     <Typography
                       variant="h6"
@@ -124,6 +125,27 @@ export default function GroupOfClassrooms(props) {
                               (classroomSelected) =>
                                 classroomSelected.id === classroom.id
                             )}
+                            disabled={
+                              DataTransform.isValidCapacity(
+                                props.classroomsSelected,
+                                props.totalStudents
+                              ) &&
+                              !props.classroomsSelected.some(
+                                (classroomSelected) =>
+                                  classroomSelected.id === classroom.id
+                              )
+                                ? true
+                                : DataTransform.isValidCapacity(
+                                    props.classroomsSelected,
+                                    props.totalStudents
+                                  ) &&
+                                  props.classroomsSelected.some(
+                                    (classroomSelected) =>
+                                      classroomSelected.id === classroom.id
+                                  )
+                                ? false
+                                : false
+                            }
                             onChange={(e) => {
                               if (e.target.checked) {
                                 props.setClassroomsSelected([

@@ -19,7 +19,7 @@ export const useReservationRequest = ({request, user}) => {
     periodEndSelected: '',
     motiveRequest: '',
     totalStudents: '',
-    dateReservation: DateController.getToday(),
+    dateReservation: DateController.getTomorrow(),
     status:
       request !== 'new' && request !== undefined
         ? STATUS.DRAFT
@@ -56,7 +56,7 @@ export const useReservationRequest = ({request, user}) => {
     setTeachers(subjectListMap);
     if (request !== 'new' && request !== null) {
       const response = await apiSettings.getReservationRequest(request);
-      
+
       setReservationRequest({
         teacher: user.user,
         subject: response.subject !== null ? response.subject : '',
@@ -94,7 +94,7 @@ export const useReservationRequest = ({request, user}) => {
           response.total_students !== null ? response.total_students : '',
         dateReservation: response.reservation_date
           ? response.reservation_date
-          : DateController.getToday(),
+          : DateController.getTomorrow(),
         status: STATUS.DRAFT,
       });
       console.log(response.reservation_date, 'reservation request');
@@ -207,5 +207,6 @@ export const useReservationRequest = ({request, user}) => {
     validateAllFilled,
     validateSaveFilled,
     getReservationRequest,
+    setErrors,
   };
 };
